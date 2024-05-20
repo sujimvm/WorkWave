@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "https://mybatis.org/dtd/mybatis-3-config.dtd">
+  
+  <configuration>
+  	<typeAliases>
+  		<typeAlias type="com.Team2Project.WorkWave.model.ApplyDTO" alias="aDTO"/> <!-- 지원 -->
+  		<typeAlias type="com.Team2Project.WorkWave.model.CareerDTO" alias="crDTO"/> <!-- 경력 -->
+  		<typeAlias type="com.Team2Project.WorkWave.model.ComBoardDTO" alias="bDTO"/> <!-- 공고 -->
+  		<typeAlias type="com.Team2Project.WorkWave.model.CompanyDTO" alias="cDTO"/> <!-- 기업 -->
+  		<typeAlias type="com.Team2Project.WorkWave.model.EduDTO" alias="eDTO"/> <!-- 학력 -->
+  		<typeAlias type="com.Team2Project.WorkWave.model.InterestDTO" alias="iDTO"/> <!-- 관심기업 -->
+  		<typeAlias type="com.Team2Project.WorkWave.model.LicenseDTO" alias="lDTO"/> <!-- 자격증 -->
+  		<typeAlias type="com.Team2Project.WorkWave.model.NoticeDTO" alias="nDTO"/> <!-- 공지사항 -->
+  		<typeAlias type="com.Team2Project.WorkWave.model.PositionDTO" alias="psDTO"/> <!-- 포지션제안 -->
+  		<typeAlias type="com.Team2Project.WorkWave.model.ProfileDTO" alias="pDTO"/> <!-- 이력서 -->
+  		<typeAlias type="com.Team2Project.WorkWave.model.UserDTO" alias="uDTO"/> <!-- 개인회원 -->
+  	</typeAliases>
+  </configuration>
