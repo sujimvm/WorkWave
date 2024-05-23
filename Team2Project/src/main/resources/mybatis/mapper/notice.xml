@@ -4,4 +4,20 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.Team2Project.WorkWave.model.NoticeMapper">
+  
+  	<select id="noticeList" parameterType="map" resultType="nDTO">
+  		<![CDATA[
+		select * from (select row_number() over(order by notice_date desc) rnum, b.* from notice b)
+		where rnum >= #{startNo} and rnum <= #{endNo}
+	 	]]>
+  	</select>
+  	
+  	<select id="countNotices" resultType="int">
+        SELECT COUNT(*) FROM NOTICE
+    </select>
+  
+  	<select id="noticeCont" resultType="nDTO" parameterType="page">
+  		select * from notice where notice_key = #{no}
+  	</select>
+  
   </mapper>

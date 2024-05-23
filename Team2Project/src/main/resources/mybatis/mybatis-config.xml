@@ -15,5 +15,6 @@
   		<typeAlias type="com.Team2Project.WorkWave.model.PositionDTO" alias="psDTO"/> <!-- 포지션제안 -->
   		<typeAlias type="com.Team2Project.WorkWave.model.ProfileDTO" alias="pDTO"/> <!-- 이력서 -->
   		<typeAlias type="com.Team2Project.WorkWave.model.UserDTO" alias="uDTO"/> <!-- 개인회원 -->
+  		<typeAlias type="com.Team2Project.WorkWave.model.Page" alias="page"/> <!-- 페이지 -->
   	</typeAliases>
   </configuration>
