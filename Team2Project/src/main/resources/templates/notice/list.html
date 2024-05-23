@@ -1,10 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <title>Notice List</title>
+    <style type="text/css">
+    
+    .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+        }
+        .pagination li {
+            margin: 0 5px;
+        }
+        .pagination a {
+            text-decoration: none;
+        }
+    
+    </style>
 </head>
 <body>
+    <h1>Notice List</h1>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>날짜</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="notice : ${nList}">
+                <td th:text="${notice.notice_key}"></td>
+                <td>
+                    <a th:href="@{/notice_cont(no=${notice.notice_key})}" 
+                       th:text="${notice.notice_title}">
+                    </a>
+                </td>
+                <td th:text="${notice.notice_date}"></td>
+            </tr>
+        </tbody>
+    </table>
 
+    <!-- Page navigation -->
+    <ul class="pagination">
+        <li th:if="${paging.page > paging.block}">
+            <a th:href="@{/notice.go(page=1)}">[⋘]</a>
+        </li>
+        <li th:if="${paging.page > paging.block}">
+            <a th:href="@{/notice.go(page=${paging.startBlock - 1})}">[☚]</a>
+        </li>
+
+        <li th:each="i : ${#numbers.sequence(paging.startBlock, paging.endBlock)}">
+            <a th:href="@{/notice.go(page=${i})}" th:text="'[' + ${i} + ']'"></a>
+        </li>
+
+        <li th:if="${paging.endBlock < paging.allPage}">
+            <a th:href="@{/notice.go(page=${paging.endBlock + 1})}">[➤]</a>
+        </li>
+        <li th:if="${paging.endBlock < paging.allPage}">
+            <a th:href="@{/notice.go(page=${paging.allPage})}">[⋙]</a>
+        </li>
+    </ul>
 </body>
 </html>

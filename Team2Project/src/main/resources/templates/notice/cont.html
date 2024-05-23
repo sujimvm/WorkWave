@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<div align="center">
+	<h2>공지사항 상세 페이지</h2>
+	
+		<table border="1">
+			<thead>
+				<tr>
+					<th>공지</th>
+					<td th:text="${nCont.notice_title}">
+					</td>
+					<td th:text="${nCont.notice_date.substring(0, 10)}">
+					</td>
+				</tr>
+			</thead>
+			
+			<tbody align="center">
+				<tr>
+					<td th:text="${nCont.notice_cont}" colspan="3">
+					</td>
+				</tr>
+			</tbody>
+			
+			<tfoot>
+				<tr>
+			        <td style="text-align: left;">
+    					<!-- 이전 버튼 -->
+					    <button onclick="window.history.back()">이전</button>
+					</td>
+					<td></td>
+					<td style="text-align: right;">
+					    <!-- 맨 위로 올라가는 버튼 -->
+					    <button onclick="window.scrollTo(0, 0)">맨 위로</button>
+					</td>
+    			</tr>
+			</tfoot>
+			
+		</table>
+	</div>
+</body>
+</html>
