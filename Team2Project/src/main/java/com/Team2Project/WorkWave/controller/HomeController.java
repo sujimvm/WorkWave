@@ -13,9 +13,9 @@ public class HomeController {
 		return "index";
 	}
 	
-	@GetMapping("member.go")
-	public String memberLogin() {
-		return "member/login";
+	@GetMapping("user.go")
+	public String userLogin() {
+		return "user/login";
 	}
 	
 	@GetMapping("company.go")
