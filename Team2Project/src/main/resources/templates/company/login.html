@@ -5,5 +5,36 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+	<div align="center">
+		<h2>기업 로그인 페이지</h2>
+		<br>
+		
+		<form th:action="@{company_login.go}" method="post">
+		<table border="1">
+			<tr>
+				<th>아이디</th>
+				<td>
+					<input name="company_id" required>				
+				</td>
+			</tr>
+		
+			<tr>
+				<th>비밀번호</th>
+				<td>
+					<input type="password" name="company_pwd" required>
+				</td>
+			</tr>
+			
+			<tr>
+				<td colspan="2" align="center">
+				<input type="submit" value="로그인">
+				<input type="reset" value="초기화">
+			</tr>
+			
+		</table>
+	</form>
+	
+	</div>
 </body>
 </html>

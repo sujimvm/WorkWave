@@ -4,4 +4,9 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.Team2Project.WorkWave.model.CompanyMapper">
+  
+  	<select id="docompanyLogin" resultType="cDTO" parameterType="String">
+        select company_key, company_id, company_pwd from companies where company_id = #{company_id}
+    </select>
+  
   </mapper>
