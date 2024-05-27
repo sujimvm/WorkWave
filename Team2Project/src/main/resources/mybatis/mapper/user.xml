@@ -8,5 +8,13 @@
   	<select id="doLogin" resultType="uDTO" parameterType="String">
         select user_key, user_id, user_pwd from users where user_id = #{user_id}
     </select>
+    
+    <insert id="insertUser" parameterType="uDTO">
+        <selectKey keyProperty="user_key" resultType="int" order="BEFORE">
+            SELECT user_key_seq.NEXTVAL FROM dual
+        </selectKey>
+        INSERT INTO users (user_key, user_id, user_pwd, user_name, user_phone, user_email, user_addr, user_birth, user_gender, user_join_date, user_confirm)
+        VALUES (#{user_key}, #{user_id}, #{user_pwd}, #{user_name}, #{user_phone}, #{user_email}, #{user_addr}, #{user_birth,jdbcType=DATE}, #{user_gender,jdbcType=VARCHAR}, sysdate, #{user_confirm,jdbcType=VARCHAR})
+    </insert>
   
   </mapper>
