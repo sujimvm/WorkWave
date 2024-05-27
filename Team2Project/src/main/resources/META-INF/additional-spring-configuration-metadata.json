@@ -1,0 +1,42 @@
+{"properties": [
+  {
+    "name": "redis",
+    "type": "java.lang.String",
+    "description": "A description for 'redis'"
+  },
+  {
+    "name": "host",
+    "type": "java.lang.String",
+    "description": "A description for 'host'"
+  },
+  {
+    "name": "port",
+    "type": "java.lang.String",
+    "description": "A description for 'port'"
+  },
+  {
+    "name": "repositories",
+    "type": "java.lang.String",
+    "description": "A description for 'repositories'"
+  },
+  {
+    "name": "enabled",
+    "type": "java.lang.String",
+    "description": "A description for 'enabled'"
+  },
+  {
+    "name": "coolsms.senderNumber",
+    "type": "java.lang.String",
+    "description": "A description for 'coolsms.senderNumber'"
+  },
+  {
+    "name": "coolsms.apiKey",
+    "type": "java.lang.String",
+    "description": "A description for 'coolsms.apiKey'"
+  },
+  {
+    "name": "coolsms.apiSecret",
+    "type": "java.lang.String",
+    "description": "A description for 'coolsms.apiSecret'"
+  }
+]}
