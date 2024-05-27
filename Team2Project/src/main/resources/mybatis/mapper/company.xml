@@ -6,7 +6,11 @@
   <mapper namespace="com.Team2Project.WorkWave.model.CompanyMapper">
   
   	<select id="docompanyLogin" resultType="cDTO" parameterType="String">
-        select company_key, company_id, company_pwd from companies where company_id = #{company_id}
+        select company_key, company_id, company_pwd from company where company_id = #{company_id}
+    </select>
+    
+    <select id="companyIdCheck" resultType="cDTO" parameterType="String">
+    	select * from company where company_id = #{company_id}
     </select>
   
   </mapper>
