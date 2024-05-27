@@ -6,13 +6,16 @@ import java.io.PrintWriter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Team2Project.WorkWave.model.CompanyDTO;
 import com.Team2Project.WorkWave.model.CompanyMapper;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
@@ -60,6 +63,31 @@ public class CompanyController {
           
       }
       
+	}
+	
+	@GetMapping("company_insert.go")
+	public String signUp(Model model) {
+		return "company/insert";
+	}
+	
+	@GetMapping("/idcheck.go")
+	@ResponseBody
+	public String companyIdCheck(@RequestParam("id") String comId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		String res = "사용가능한 아이디입니다.";
+		
+		response.setContentType("text/html; charset=UTF-8");
+		
+		CompanyDTO idCheck = this.mapper.companyIdCheck(comId);
+		
+		System.out.println(idCheck);
+		
+		if(idCheck != null) {
+			res = "이미 등록된 아이디입니다.";
+		}
+		
+		return res;
+		
 	}
 	
 	

@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface CompanyMapper {
 	
 	CompanyDTO docompanyLogin(String company_id);
+	
+	CompanyDTO companyIdCheck(String company_id);
 }
