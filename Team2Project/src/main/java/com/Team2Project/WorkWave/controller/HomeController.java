@@ -4,6 +4,8 @@ package com.Team2Project.WorkWave.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import jakarta.servlet.http.HttpSession;
+
 
 @Controller
 public class HomeController {
@@ -22,15 +24,20 @@ public class HomeController {
 	public String companyLogin() {
 		return "company/login";
 	}
-	
-	@GetMapping("guest.go")
-	public String guestLogin() {
-		return "main";
+
+	@GetMapping("logout")
+	public String logout(HttpSession session) {
+		session.invalidate(); //세션의 모든 속성을 삭제
+		return "/";
 	}
 	
-	@GetMapping("usermain.go")
-	public String usermain() {
-		return "user/main";
+	@GetMapping("main.go")
+	public String goMain(HttpSession session) {
+		String member_type = "";
+		if (session.getAttribute("member_type") != null) {
+			member_type = (String)session.getAttribute("member_type") + "/";
+		}
+		return member_type+"main";
 	}
 	
 }

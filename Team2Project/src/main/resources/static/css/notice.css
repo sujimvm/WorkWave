@@ -1,0 +1,14 @@
+@charset "UTF-8";
+    
+.pagination {
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+.pagination li {
+    margin: 0 5px;
+}
+.pagination a {
+    text-decoration: none;
+}
+    

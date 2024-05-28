@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Work Wave 이력서 작성</title>
+<link rel="stylesheet" th:href="@{/css/include.css}">
+<link rel="stylesheet" th:href="@{/css/profile.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 
@@ -410,8 +412,8 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-
-<div>
+	<div th:include="include/header::userHeader"></div>
+	<div layout:fragment="content" class="content">
 		<div></div> <!-- 인적사항 (출력 / 수정) -->
 		
 		<div><!-- 이력서 입력 폼 -->
@@ -574,9 +576,8 @@ $(document).ready(function(){
 				</div><!-- 버튼 -->
 				
 			</form>
-			
 		</div>
 	</div>
-
+	<div th:include="include/footer::footer"></div>
 </body>
 </html>

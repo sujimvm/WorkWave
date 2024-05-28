@@ -1,21 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>비밀번호 재확인</title>
+<title>Work Wave 비밀번호 재확인</title>
+<link rel="stylesheet" th:href="@{/css/include.css}">
+<link rel="stylesheet" th:href="@{/css/user.css}">
 </head>
 <body>
-
 	<div align="center">
 		<hr width="30%" color="gray">
 			<h3>비밀번호 재확인</h3>
 		<hr width="30%" color="gray">
-	
-		
-		
 
 		<form method="post" action="/user_modify_ok.go">
-			
 			<table border="1" width="400">
 				<tr>
 					<th>아이디</th>
@@ -38,9 +35,7 @@
 					</td>
 				</tr>
 			</table>
-			
 		</form>
-	
 	</div>
 </body>
 </html>

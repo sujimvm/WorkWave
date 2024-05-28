@@ -55,10 +55,10 @@ public class CompanyController {
       }else {
     	  // 로그인 성공 처리
 		  session.setAttribute("company_login", company_login);
-		  session.setAttribute("company_type", "company");
+		  session.setAttribute("member_type", "company");
 		  out.println("<script>");
 		  out.println("alert('성공.')");
-		  out.println("location.href='/'");
+		  out.println("location.href='/main.go'");
 		  out.println("</script>");
           
       }

@@ -5,11 +5,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	
 	<div align="center">
 		<h2>유저 로그인 페이지</h2>
 		<br>
-		
 		<form th:action="@{user_login.go}" method="post">
 		<table border="1">
 			<tr>
@@ -31,17 +29,14 @@
 				<input type="submit" value="로그인">
 				<input type="reset" value="초기화">
 			</tr>
-			
 		</table>
 	</form>
 	<br>
-	
 		<a th:href="@{/user_insert.go}">[회원가입]</a>
 		<br>
 		<a th:href="@{/find_id.go}">[유저 아이디 찾기]</a>
 		<br>
 		<a th:href="@{/find_password.go}">[유저 비밀번호 찾기]</a>
 	</div>
-
 </body>
 </html>
