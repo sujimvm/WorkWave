@@ -28,7 +28,7 @@ public class HomeController {
 	@GetMapping("logout")
 	public String logout(HttpSession session) {
 		session.invalidate(); //세션의 모든 속성을 삭제
-		return "/";
+		return "index";
 	}
 	
 	@GetMapping("main.go")
@@ -37,6 +37,8 @@ public class HomeController {
 		if (session.getAttribute("member_type") != null) {
 			member_type = (String)session.getAttribute("member_type") + "/";
 		}
+		
+		System.out.println("메인 경로 >> "+member_type+"main");
 		return member_type+"main";
 	}
 	

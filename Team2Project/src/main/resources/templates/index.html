@@ -6,11 +6,13 @@
 <link rel="stylesheet" th:href="@{/css/include.css}">
 </head>
 <body>
-	<div th:include="include/header::userHeader"></div>
+	<div th:include="include/header::guestHeader"></div>
 	<div layout:fragment="content" class="content">
 		<ul>
-			<li><a th:href="@{user.go}">개인회원</a></li>
-			<li><a th:href="@{company.go}">기업회원</a></li>
+			<li><a th:href="@{user.go}">개인회원로그인</a></li>
+			<li><a th:href="@{company.go}">기업회원로그인</a></li>
+			<li><a th:href="@{user_insert.go}">개인회원가입</a></li>
+			<li><a th:href="@{company_insert.go}">기업회원가입</a></li>
 			<li><a th:href="@{main.go}">비회원</a></li>
 			<li><a th:href="@{comboard.go}">공고리스트</a></li>
 			<li><a th:href="@{company_insert.go}">기업회원가입페이지</a></li>
