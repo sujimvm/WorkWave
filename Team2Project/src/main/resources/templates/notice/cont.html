@@ -1,18 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="EUC-KR">
-<title>Insert title here</title>
+<meta charset="UTF-8">
+    <title>Work Wave Notice Content</title>
+<link rel="stylesheet" th:href="@{/css/include.css}">
+<link rel="stylesheet" th:href="@{/css/notice.css}">
+
 </head>
 <body>
-	
-	<div align="center">
-	<h2>공지사항 상세 페이지</h2>
+	<div th:include="include/header::guestHeader"></div>
+	<div layout:fragment="content" class="content">
+	<h2>怨듭��ы�� ���� ���댁�</h2>
 	
 		<table border="1">
 			<thead>
 				<tr>
-					<th>공지</th>
+					<th>怨듭�</th>
 					<td th:text="${nCont.notice_title}">
 					</td>
 					<td th:text="${nCont.notice_date.substring(0, 10)}">
@@ -30,18 +33,19 @@
 			<tfoot>
 				<tr>
 			        <td style="text-align: left;">
-    					<!-- 이전 버튼 -->
-					    <button onclick="window.history.back()">이전</button>
+    					<!-- �댁�� 踰��� -->
+					    <button onclick="window.history.back()">�댁��</button>
 					</td>
 					<td></td>
 					<td style="text-align: right;">
-					    <!-- 맨 위로 올라가는 버튼 -->
-					    <button onclick="window.scrollTo(0, 0)">맨 위로</button>
+					    <!-- 留� ��濡� �щ�쇨��� 踰��� -->
+					    <button onclick="window.scrollTo(0, 0)">留� ��濡�</button>
 					</td>
     			</tr>
 			</tfoot>
 			
 		</table>
 	</div>
+	<div th:include="include/footer::footer"></div>
 </body>
 </html>

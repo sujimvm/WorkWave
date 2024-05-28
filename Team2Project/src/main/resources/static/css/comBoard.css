@@ -1,0 +1,11 @@
+@charset "UTF-8";
+
+.codeTotalDiv{
+	display: -webkit-inline-box;
+}
+.codeDiv{
+	width:400px;;
+	height: 300px;
+	overflow: scroll;
+}
+

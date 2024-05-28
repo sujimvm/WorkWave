@@ -59,10 +59,10 @@ public class UserController {
 		} else {
 			// 로그인 성공 처리
 			session.setAttribute("user_login", user_login);
-			session.setAttribute("user_type", "user");
+			session.setAttribute("member_type", "user");
 			out.println("<script>");
 			out.println("alert('성공.')");
-			out.println("location.href='/usermain.go'");
+			out.println("location.href='main.go'");
 			out.println("</script>");
 
 		}

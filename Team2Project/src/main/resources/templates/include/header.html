@@ -7,16 +7,21 @@
 <body>
 	<div th:fragment="guestHeader">
 		<div class="testCSS">
+			<a th:href="@{/}">HOME</a>
 			<h2>이곳은 guestHeader</h2>
 		</div>
 	</div>
 	<div th:fragment="userHeader">
 		<div class="testCSS">
+			<a th:href="@{/}">HOME</a>
+			<a th:href="@{/logout}">LOGOUT</a>
 			<h2>이곳은 userHeader</h2>
 		</div>
 	</div>
 	<div th:fragment="companyHeader">
 		<div class="testCSS">
+			<a th:href="@{/}">HOME</a>
+			<a th:href="@{/logout}">LOGOUT</a>
 			<h2>이곳은 companyHeader</h2>
 		</div>
 	</div>
