@@ -1,10 +1,19 @@
 package com.Team2Project.WorkWave.controller;
 
 import com.Team2Project.WorkWave.service.EmailService;
+import com.Team2Project.WorkWave.service.MessageService;
 import com.Team2Project.WorkWave.service.TokenService;
+
+import net.nurigo.sdk.message.model.Message;
+import net.nurigo.sdk.message.response.SingleMessageSentResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
@@ -24,6 +33,10 @@ public class VeriController {
 
     @Autowired
     private TokenService tokenService;
+    
+    @Autowired
+    private MessageService messageService;
+    
 
     @PostMapping("/sendCode")
     @ResponseBody
@@ -77,4 +90,70 @@ public class VeriController {
         }
         return response;
     }
+    
+    
+	@PostMapping("/send_sms.go")
+    @ResponseBody
+    public ResponseEntity<?> sendSms(@RequestParam("mgrPhone") String mgrPhone) {
+        
+    	String phone = mgrPhone;
+                
+        String verificationCode = String.format("%06d", (int) (Math.random() * 1000000));
+        
+        messageService.saveSMS(phone, verificationCode);
+        SingleMessageSentResponse response = messageService.sendOne(phone, verificationCode);
+        
+        if (response.getStatusCode().equals("2000")) { // assuming 2000 means success
+            return ResponseEntity.ok().body("{\"status\": 200, \"message\": \"인증번호가 전화번호로 전송되었습니다.\"}");
+        } else {
+            return ResponseEntity.status(500).body("{\"status\": 500, \"message\": \"인증번호 전송에 실패했습니다.\"}");
+        }
+    }
+	
+	@PostMapping("/re_send_sms.go")
+    @ResponseBody
+    public ResponseEntity<?> reSendSms(@RequestParam("mgrPhone") String mgrPhone) {
+		
+    	String phone = mgrPhone;
+    	
+    	messageService.removeVerifyCode(phone);
+                
+        String verificationCode = String.format("%06d", (int) (Math.random() * 1000000));
+        
+        messageService.saveSMS(phone, verificationCode);
+        SingleMessageSentResponse response = messageService.sendOne(phone, verificationCode);
+        
+        if (response.getStatusCode().equals("2000")) { // assuming 2000 means success
+            return ResponseEntity.ok().body("{\"status\": 200, \"message\": \"인증번호가 전화번호로 전송되었습니다.\"}");
+        } else {
+            return ResponseEntity.status(500).body("{\"status\": 500, \"message\": \"인증번호 전송에 실패했습니다.\"}");
+        }
+    }
+	
+	@PostMapping("/smsCodeCheck.go")
+	@ResponseBody
+	public Map<String, String> smsCodeCheck(@RequestBody Map<String, String> reqMap) {
+		
+		Map<String, String> response = new HashMap<>();
+		
+		String phone = reqMap.get("phone");
+		String verify_code = reqMap.get("code");
+		
+		if(phone == null || phone.isEmpty() || verify_code == null || verify_code.isEmpty()) {
+			throw new IllegalArgumentException("Email and code are required");
+		}
+		
+		String store_code = messageService.getVerifyCode(phone);
+		
+		if(verify_code != null && verify_code.equals(store_code)) {
+			messageService.removeVerifyCode(phone);
+			response.put("status", "success");
+			response.put("message", "인증 성공");
+		}else {
+			response.put("status", "fail");
+			response.put("message", "인증 실패: 코드가 일치하지 않습니다.");
+		}
+		
+		return response;
+	}
 }

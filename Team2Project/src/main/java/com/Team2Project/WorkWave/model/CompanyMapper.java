@@ -9,4 +9,6 @@ public interface CompanyMapper {
 	CompanyDTO docompanyLogin(String company_id);
 	
 	CompanyDTO companyIdCheck(String company_id);
+	
+	int insertCompany(CompanyDTO dto);
 }

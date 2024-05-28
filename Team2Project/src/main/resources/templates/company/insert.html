@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -90,14 +90,18 @@ $(function(){
 			$.ajax({
 				url : "/send_sms.go",
 				type : "POST",
-				data : JSON.stringify({ mgrPhone : mgrPhone }),
+				data : { mgrPhone : mgrPhone },
 				dataType : "JSON",
-				contentType : "application/json",
-				accept : "application/json",
 				success : function(result) {
-					debugger;
-					$("#phone_check_result").text(result);
-					debugger;
+					console.log(result);
+	                if (result.status == 200) {
+	                	$("#verifyBox").show();
+	                    alert("인증번호가 전화번호로 전송되었습니다.");
+	                    $("#resendbtn").show();
+	                    $("#mgr_phone_check").hide();	                    
+	                } else {
+	                    alert("인증번호 전송에 실패했습니다.");
+	                }
 				},
 				
 				error : function() {
@@ -108,7 +112,79 @@ $(function(){
 		});
 	});
 	
+$(function(){
 	
+	$("#resendbtn").on('click',function() {
+		
+		var mgrPhone = $("#company_mgr_phone").val();
+		
+		debugger;
+		
+		$.ajax({
+			url : "/re_send_sms.go",
+			type : "POST",
+			data : { mgrPhone : mgrPhone },
+			dataType : "JSON",
+			success : function(result) {
+				console.log(result);
+                if (result.status == 200) {
+                    alert("인증번호가 전화번호로 재전송되었습니다.");                   
+                } else {
+                    alert("인증번호 전송에 실패했습니다.");
+                }
+			},
+			
+			error : function() {
+				alert("데이터 통신 오류입니다.~~~");
+			}
+		});
+		
+	});
+});
+	
+$(function(){
+	
+	$("#phone_verify_check").on('click',function() {
+		
+		var phone = $("#company_mgr_phone").val();
+		var code = $("#phone_verify").val();
+		
+		debugger;
+		
+		$.ajax({
+			url : "/smsCodeCheck.go",
+			type: "POST",
+			dataType: 'json',
+	        contentType: 'application/json',
+	        data: JSON.stringify({ phone: phone, code: code }),
+			success : function(response) {
+				debugger;
+				if (response.status === "success") {
+                    $('#phone_code_check').text(response.message);
+                } else {
+                    $('#phone_code_check').text(response.message);
+                }
+			},
+			
+			error : function() {
+				alert("데이터 통신 오류입니다.~~~");
+			}
+		});
+		
+	});
+});
+	
+$('#company_pwd').on('input', function() {
+    var pwd = $(this).val();
+    var pwdPattern = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,20}$/;
+    if (pwdPattern.test(pwd)) {
+        $('#pwdCheckmark').show();
+        $('#pwdError').hide();
+    } else {
+        $('#pwdCheckmark').hide();
+        $('#pwdError').show();
+    }
+});
 	
 </script>
 <style type="text/css">
@@ -123,6 +199,7 @@ table {
 </head>
 <body>
 
+	<form method="post" action="#" th:action="@{/company_insert_ok.go}" th:object="${company}">
 	<div align="center">
 		<table border="1">
 			<tr>
@@ -133,7 +210,7 @@ table {
 				<th>사업자 등록번호</th>
 				<td>
 					<div>
-						<input type="text" name="company_number" id="company_number">
+						<input type="text" name="company_number" id="company_number" th:field="*{company_number}" required>
 					</div>
 					<div>
 						<button id="company_number_btn">조회</button>
@@ -144,47 +221,47 @@ table {
 
 			<tr>
 				<th>회사명</th>
-				<td><input type="text" name="company_name"></td>
+				<td><input type="text" name="company_name" id="company_name" th:field="*{company_name}" required></td>
 			</tr>
 
 			<tr>
 				<th>대표자명</th>
-				<td><input type="text" name="company_ceo"></td>
+				<td><input type="text" name="company_ceo" id="company_ceo" th:field="*{company_ceo}" required></td>
 			</tr>
 
 			<tr>
 				<th>회사주소</th>
-				<td><input type="text" name="company_addr"></td>
+				<td><input type="text" name="company_addr" id="company_addr" th:field="*{company_addr}" required></td>
 			</tr>
 			
 			<tr>
 				<th>회사로고</th>
-				<td><input type="file" name="company_logo"></td>
+				<td><input type="file" name="com_board_logo" id="com_board_logo" th:field="*{com_board_logo}"></td>
 			</tr>
 			
 			<tr>
 				<th>회사홈페이지</th>
-				<td><input type="text" name="company_homepage"></td>
+				<td><input type="text" name="company_homepage" id="company_homepage" th:field="*{company_homepage}"></td>
 			</tr>
 			
 			<tr>
 				<th>회사대표번호</th>
-				<td><input type="text" name="company_phone"></td>
+				<td><input type="text" name="company_phone" id="company_phone" th:field="*{company_phone}" required></td>
 			</tr>
 			
 			<tr>
 				<th>회사설립일</th>
-				<td><input type="text" name="company_regdate"></td>
+				<td><input type="text" name="company_regdate" id="company_regdate" th:field="*{company_regdate}" required></td>
 			</tr>
 			
 			<tr>
 				<th>회사 근무인원</th>
-				<td><input type="text" name="company_emp_count"></td>
+				<td><input type="text" name="company_emp_count" id="company_emp_count" th:field="*{company_emp_count}" required></td>
 			</tr>
 			
 			<tr>
 				<th>회사 총 수익</th>
-				<td><input type="text" name="company_sal"></td>
+				<td><input type="text" name="company_sal" id="company_sal" th:field="*{company_sal}" required><span>만원</span></td>
 			</tr>
 
 			<!-- 발급번호가 실제인지 아닌지만 확인하는 용 DB 저장 X -->
@@ -212,7 +289,7 @@ table {
 			<tr>
 				<th>아이디</th>
 				<td>
-					<input name="company_id" id="company_id">
+					<input name="company_id" id="company_id" th:field="*{company_id}" required>
 					<input type="button" value="중복확인" id="company_id_check">
 					<span id="idcheck_result"></span>
 				</td>
@@ -221,35 +298,48 @@ table {
 			<tr>
 				<th>비밀번호</th>
 				<td>
-					<input name="company_pwd" type="password">
+					<input name="company_pwd" type="password" id="company_pwd" th:field="*{company_pwd}" required>
 				</td>
 			</tr>
 			
 			<tr>
 				<th>이름</th>
 				<td>
-					<input name="company_mgr_name">
+					<input name="company_mgr_name" id="company_mgr_name" th:field="*{company_mgr_name}" required>
 				</td>
 			</tr>
 			
 			<tr>
 				<th>연락처</th>
 				<td>
-					<input name="company_mgr_phone" id="company_mgr_phone">
+					<input name="company_mgr_phone" id="company_mgr_phone" th:field="*{company_mgr_phone}" required>
 					<input type="button" value="인증번호 발송" id="mgr_phone_check">
+					<input type="button" value="재전송" id="resendbtn" style="display: none;">
 					<span id="phone_check_result"></span>
+				</td>
+			</tr>
+			
+			<tr id="verifyBox" style="display: none;">
+				<th>본인인증 확인번호</th>
+				<td>
+					<input type="text" name="phone_verify_code" id="phone_verify">
+					<button id="phone_verify_check" name="phone_verify_check">확인</button>
+					<span name="" id="phone_code_check"></span>
 				</td>
 			</tr>
 			
 			<tr>
 				<th>이메일</th>
 				<td>
-					<input name="company_mgr_email">
+					<input name="company_mgr_email" id="company_mgr_email" th:field="*{company_mgr_phone}" required="required">
 				</td>
 			</tr>
 			
 		</table>
+		
+		<input type="submit" value="회원가입">
 	</div>
+	</form>
 
 </body>
 </html>

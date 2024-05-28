@@ -66,7 +66,8 @@ public class CompanyController {
 	}
 	
 	@GetMapping("company_insert.go")
-	public String signUp(Model model) {
+	public String signUpForm(Model model) {
+		model.addAttribute("company", new CompanyDTO());
 		return "company/insert";
 	}
 	
@@ -88,6 +89,27 @@ public class CompanyController {
 		
 		return res;
 		
+	}
+	
+	@PostMapping("/company_insert_ok.go")
+	public void companySignUp(CompanyDTO dto, HttpServletResponse response) throws IOException {
+		int res = mapper.insertCompany(dto);
+		
+		response.setContentType("text/html; charset=UTF-8");
+		
+		PrintWriter out = response.getWriter();
+		
+		if(res == 1) {
+			out.println("<script>");
+			out.println("<alert('회원가입을 완료하였습니다.')>");
+			out.println("location.href=company_login.go");
+			out.println("</script>");
+		}else {
+			out.println("<script>");
+			out.println("<alert('회원가입을 실패하였습니다.')>");
+			out.println("history.back()");
+			out.println("</script>");
+		}
 	}
 	
 	
