@@ -1,5 +1,9 @@
 package com.Team2Project.WorkWave.model;
 
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Data;
 
 @Data
@@ -11,7 +15,10 @@ public class CompanyDTO {
 	private String company_addr;
 	private String company_phone;
 	private String company_homepage;
-	private String company_regdate;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date company_regdate;
+	
 	private String company_join_date;
 	private String company_ceo;
 	private String company_confirm;

@@ -174,17 +174,52 @@ $(function(){
 	});
 });
 	
-$('#company_pwd').on('input', function() {
-    var pwd = $(this).val();
-    var pwdPattern = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,20}$/;
-    if (pwdPattern.test(pwd)) {
-        $('#pwdCheckmark').show();
-        $('#pwdError').hide();
-    } else {
-        $('#pwdCheckmark').hide();
-        $('#pwdError').show();
-    }
+$(function(){
+	$('#company_pwd').on('input', function() {
+        var pwd = $(this).val();
+        var pwdPattern = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,20}$/;
+        if (pwdPattern.test(pwd)) {
+            $('#pwdCheckmark').show();
+            $('#pwdError').hide();
+        } else {
+            $('#pwdCheckmark').hide();
+            $('#pwdError').show();
+        }
+	});
 });
+
+$(function(){
+	var pwd_check = false;
+	
+	$("#company_pwd_check").focusout(function(){
+		pwdCheck($(this).val());
+	});
+	
+	function pwdCheck(pwd){
+		if(pwd==""){
+			$("#pwd_check").text("");
+            return;
+		}
+		
+		if($("#company_pwd_check").val() === $("#company_pwd").val()){
+			$("#pwd_check_ok").show();
+			$("#pwd_check_err").hide();
+		}else{
+			$("#pwd_check_ok").hide();
+			$("#pwd_check_err").show();
+		}
+	};
+});
+
+	function insertCheck(){
+		if($("#company_number_result").val() === "등록되지않은 사업자등록번호입니다."){
+			debugger;
+			alert('사업자등록번호를 확인하여주십시오.');
+			$("#company_number").focus();
+			return false;
+		}
+	};
+		
 	
 </script>
 <style type="text/css">
@@ -194,6 +229,13 @@ table {
 
 #td_color{
 	background-color: lightgray;
+}
+
+.checkmark {
+            display: none;
+            color: green;
+            font-size: 16px;
+            margin-left: 5px;
 }
 </style>
 </head>
@@ -251,7 +293,7 @@ table {
 			
 			<tr>
 				<th>회사설립일</th>
-				<td><input type="text" name="company_regdate" id="company_regdate" th:field="*{company_regdate}" required></td>
+				<td><input type="date" name="company_regdate" id="company_regdate" th:field="*{company_regdate}" required></td>
 			</tr>
 			
 			<tr>
@@ -262,20 +304,6 @@ table {
 			<tr>
 				<th>회사 총 수익</th>
 				<td><input type="text" name="company_sal" id="company_sal" th:field="*{company_sal}" required><span>만원</span></td>
-			</tr>
-
-			<!-- 발급번호가 실제인지 아닌지만 확인하는 용 DB 저장 X -->
-			<tr>
-				<th>사업자 등록증명서 발급번호</th>
-				<td>
-					<div>
-						<input type="text" name="com_proof_no" id="comProofNo">
-					</div>
-					<div>
-						<button id="test_btn2">조회</button>
-						<span id="result2"></span>
-					</div>
-				</td>
 			</tr>
 		</table>
 		
@@ -299,6 +327,18 @@ table {
 				<th>비밀번호</th>
 				<td>
 					<input name="company_pwd" type="password" id="company_pwd" th:field="*{company_pwd}" required>
+					<span id="pwdCheckmark" class="checkmark">✔</span>
+                    <span id="pwdError" style="display:none; color: red; font-size: 12px;">비밀번호는 8자 이상 20자 이하이며 특수문자 1자를 포함해야 합니다.</span>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>비밀번호 확인</th>
+				<td>
+					<input name="company_pwd_check" type="password" id="company_pwd_check" required>
+					<span id="pwdCheckmark" class="checkmark">✔</span>
+                    <span id="pwd_check_err" style="display:none; color: red; font-size: 12px;">위의 비밀번호와 입력된 비밀번호가 다릅니다.</span>
+                    <span id="pwd_check_ok" style="display:none; color: green; font-size: 12px;">✔</span>
 				</td>
 			</tr>
 			
@@ -324,20 +364,20 @@ table {
 				<td>
 					<input type="text" name="phone_verify_code" id="phone_verify">
 					<button id="phone_verify_check" name="phone_verify_check">확인</button>
-					<span name="" id="phone_code_check"></span>
+					<span id="phone_code_check"></span>
 				</td>
 			</tr>
 			
 			<tr>
 				<th>이메일</th>
 				<td>
-					<input name="company_mgr_email" id="company_mgr_email" th:field="*{company_mgr_phone}" required="required">
+					<input type="email" name="company_mgr_email" id="company_mgr_email" th:field="*{company_mgr_phone}" required="required">
 				</td>
 			</tr>
 			
 		</table>
 		
-		<input type="submit" value="회원가입">
+		<input type="submit" value="회원가입" th:onclick="return insertCheck()">
 	</div>
 	</form>
 
