@@ -28,4 +28,9 @@ public class HomeController {
 		return "main";
 	}
 	
+	@GetMapping("usermain.go")
+	public String usermain() {
+		return "user/main";
+	}
+	
 }

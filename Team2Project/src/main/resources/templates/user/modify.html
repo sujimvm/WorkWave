@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>비밀번호 재확인</title>
+</head>
+<body>
+
+	<div align="center">
+		<hr width="30%" color="gray">
+			<h3>비밀번호 재확인</h3>
+		<hr width="30%" color="gray">
+	
+		
+		
+
+		<form method="post" action="/user_modify_ok.go">
+			
+			<table border="1" width="400">
+				<tr>
+					<th>아이디</th>
+					<td th:text=${session.user_login.user_id}></td>
+				</tr>
+				<tr>
+					<th>비밀번호</th>
+					<td>
+						<input type="password" name="user_pwd" placeholder="비밀번호를 입력해주세요">
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<small>타인에게 노출되지 않도록 주의하세요</small>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="확인">
+					</td>
+				</tr>
+			</table>
+			
+		</form>
+	
+	</div>
+</body>
+</html>

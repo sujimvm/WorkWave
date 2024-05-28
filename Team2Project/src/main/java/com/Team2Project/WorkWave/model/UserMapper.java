@@ -23,6 +23,7 @@ public interface UserMapper {
 	@Select("SELECT user_id, user_pwd FROM users WHERE user_name = #{userName} AND user_id = #{userId} AND user_email = #{userEmail}")
 	UserDTO findUserPassword(@Param("userName") String userName, @Param("userId") String userId, @Param("userEmail") String userEmail);
 	
+	UserDTO modify(String user_id);
 	
 }
 	
