@@ -14,12 +14,17 @@
         <!-- <link th:href="@{/bootstrap/css/common.css}" rel="stylesheet" /> -->
     </th:block>
     <body>
-        <th:block layout:fragment="header" th:include="@{../include/userHeader}"></th:block>
+       <!-- <th:block layout:fragment="header" th:include="@{../include/userHeader}"></th:block>  -->
 		<h2>로그인 성공</h2>
         <div layout:fragment="content" class="content">
+        	<span th:text="${session.user_login.user_id}">사용자</span>님!</h1>
             <h2>로그인 성공</h2>
-        </div>
+        </div>  
         
-        <th:block layout:fragment="footer" th:include="@{../include/Footer}"></th:block>	
+        <button type="button" th:onclick="|location.href='@{/user_modify.go(num=${session.user_login.user_id})}'|">회원수정</button>
+
+       
+        <!-- <th:block layout:fragment="footer" th:include="@{../include/Footer}"></th:block> -->
+ 
     </body>
 </html>
