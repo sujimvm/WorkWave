@@ -4,4 +4,22 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.Team2Project.WorkWave.model.ComBoardMapper">
+    	<select id="getJobList" resultType="bDTO">
+	  		select * from com_board b join company c on c.company_key = b.company_key
+	  	</select>
+	  	<select id="getJobCodeGroupList" resultType="codeDTO">
+	  		select * from jobdata where length(code) = 2 order by code
+	  	</select>
+	  	<select id="getJobCodeSubList" resultType="codeDTO">
+	  		select * from jobdata where length(code) = 3 order by code
+	  	</select>
+	  	<select id="getJobCodeStepList" resultType="codeDTO">
+	  		select * from jobdata where length(code) = 4 order by code
+	  	</select>
+	  	<select id="getLocationCodeGroupList" resultType="codeDTO">
+	  		select * from locationdata where length(code) = 2 order by code
+	  	</select>
+	  	<select id="getLocationCodeSubList" resultType="codeDTO">
+	  		select * from locationdata where length(code) = 5 order by code
+	  	</select>
   </mapper>
