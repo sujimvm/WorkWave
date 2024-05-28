@@ -4,6 +4,7 @@ package com.Team2Project.WorkWave.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +97,40 @@ public class UserController {
         }
         return response;
     }
-
+	
+	@GetMapping("/find_id.go")
+	public String findIdForm() {
+		return "user/find_id";
+	}
+	
+	@GetMapping("/find_password.go")
+	public String findPwdForm() {
+		return "user/find_password";
+	}
+	
+	@GetMapping("/find_id_ok.go")
+    public String findUserId(@RequestParam("user_name") String userName,
+                             @RequestParam("user_email") String userEmail,
+                             Model model) {
+        String user_id = userService.findUserId(userName, userEmail);
+        model.addAttribute("userId", user_id);
+        return "user/find_id_result";
+    }
+	
+	@GetMapping("/find_password_ok.go")
+    public String findUserPassword(@RequestParam("user_name") String userName,
+                                   @RequestParam("user_id") String userId,
+                                   @RequestParam("user_email") String userEmail,
+                                   Model model) {
+        // 사용자의 비밀번호를 검색
+        UserDTO user_pwd = userService.findUserPassword(userName, userId, userEmail);
+        
+        // 검색된 비밀번호 정보를 모델에 추가
+        model.addAttribute("user_pwd", user_pwd);
+        
+        // 비밀번호 결과를 표시할 뷰 이름을 반환
+        return "user/find_password_result";
+    }
 	
 	
 }

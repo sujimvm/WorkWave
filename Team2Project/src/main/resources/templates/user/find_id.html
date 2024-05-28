@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>아이디 찾기</title>
+</head>
+<body>
+
+<div align="center">
+    <h2>아이디 찾기</h2>
+    <br>
+    
+    <form th:action="@{/find_id_ok.go}" method="get">
+        <table>
+            <tr>
+                <th>이름</th>
+                <td>
+                    <input type="text" name="user_name" required>
+                </td>
+            </tr>
+        
+            <tr>
+                <th>이메일</th>
+                <td>
+                    <input type="email" name="user_email" required>
+                </td>
+            </tr>
+            
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="아이디 찾기">
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+</body>
+</html>
