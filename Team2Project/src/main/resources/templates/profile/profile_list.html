@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div>
+		<div> <!--이력서 타이틀 -->
+		<h1>이력서 관리</h1>
+		<input type="button" value="이력서 등록" th:onclick ="|location.href='@{profile_writer}'|">
+		</div>
+		
+		<div> <!-- 이력서 목록 -->
+		<br>
+			<table border="1" width="600">
+			<tr>
+				<th>이력서 제목</th>
+				<th>이력서 관리</th>
+			</tr>
+			<tr th:if="${#lists.isEmpty(ProfileList)}">
+				<td colspan="3" align="center">
+					<h2>이력서 목록이 비어 있습니다..</h2>
+				</td>
+			</tr>
+			
+				<!-- Y인 이력서를 우선적으로 처리 -->
+			<tr th:unless="${#lists.isEmpty(ProfileList)}">
+				<tr th:each="dto : ${ProfileList}" th:if="${dto.profile_default == 'Y'}">
+					<td>
+						<a th:href="@{profile_content(no=${dto.profile_key})}" th:text="${dto.profile_name}"></a>
+					</td>
+					<td>
+						<input type="button" value="수정" th:onclick="location.href='@{profile_modify}'|">
+						<input type="button" value="삭제" th:onclick="location.href='@{profile_delect}'|">
+					</td>
+				</tr>
+				<!-- 나머지 이력서 -->
+				<tr th:each="dto : ${ProfileList}" th:unless="${dto.profile_default == 'Y'}">
+					
+					<td>
+						<a th:href="@{profile_content(no=${dto.profile_key})}" th:text="${dto.profile_name}"></a>
+					</td>
+					<td>
+						<input type="button" value="수정" th:onclick="location.href='@{profile_modify}'|">
+						<input type="button" value="삭제" th:onclick="location.href='@{profile_delect}'|">
+						<input type="button" value="대표이력서등록" th:onclick="|location.href='@{profile_default(no=${dto.profile_key})}'|">
+					</td>
+				</tr>
+			</tr>
+		</table>
+		</div>
+	</div>
+	
+	
+</body>
+</html>

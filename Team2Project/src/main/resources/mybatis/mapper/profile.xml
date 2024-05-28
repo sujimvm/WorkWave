@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.Team2Project.WorkWave.model.ProfileMapper">
+  
+  	
+  	<select id="category" resultType="codeDTO">
+  	
+	select * from jobData where length(code)=2
+  	
+  	</select>
+ 
+  	<select id="categorysub" parameterType="String" resultType="codeDTO">
+  	
+	   select * from jobData where length(code) = 3 and code like #{no} || '%'
+  	
+  	</select>
+  	
+  	
+  	<select id="categorystep" parameterType="String" resultType="codeDTO">
+  	
+	   select * from jobData where length(code) = 4 and code like #{no} || '%'
+  	
+  	</select>
+  	
+  	
+  	<select id="schoolname" parameterType="codeDTO" resultType="codeDTO">
+   		SELECT * FROM schoolData WHERE code LIKE #{code}||'%' and name LIKE '%'|| #{name} ||'%'
+  	</select>
+  	
+  	<select id="department" parameterType="codeDTO" resultType="codeDTO">
+  	
+  	select * from schoolData where length(code) = 8 and code like #{code} || '%' and name like '%' || #{name} || '%'
+  		
+  	</select>
+  	
+  	<select id="license" parameterType="String" resultType="lDTO">
+  	
+  	select * from license where license_name like '%' || #{license_name} || '%'
+  	
+  	</select>
+  	
+  	<select id="profileList" resultType="pDTO" parameterType="int">
+  	
+  	select * from profile where user_key = #{userKey}
+  	
+  	</select>
+  	
+  	<select id="profileinfo" parameterType="int" resultType="pDTO">
+ 	
+	  	select 
+		    p.*,
+		    u.user_name,
+		    u.user_phone,
+		    u.user_email,
+		    u.user_addr,
+		    u.user_birth,
+		    u.user_gender
+		from 
+		    profile p
+		LEFT JOIN 
+		    users u ON p.user_key = u.user_key
+		WHERE 
+		    p.profile_key = #{no}
+			  	
+  	</select>
+  	
+  	<select id="profileCkeck" parameterType="int" resultType="int">
+  	
+  	select count(*) from profile where user_key = #{no}
+  	
+  	</select>
+  	
+  	
+  	
+  	
+  	<select id="eduList" parameterType="int" resultType="eDTO">
+  	
+  	SELECT * FROM edu WHERE profile_key = #{no}
+  	
+  	</select>
+  	
+	<select id="careerList" parameterType="int" resultType="crDTO">
+  	
+  	SELECT * FROM career WHERE profile_key = #{no}
+  	
+  	</select>
+  	
+  	<select id="licenseList" parameterType="int" resultType="lDTO">
+  	
+  	SELECT * FROM license WHERE profile_key = #{no}
+  	
+  	</select>
+  	
+  	
+  	<insert id="profileInsert" parameterType="pDTO">
+  		<selectKey keyProperty="profile_key" resultType="int" order="BEFORE">
+            SELECT user_key_seq.NEXTVAL FROM dual
+        </selectKey>
+   	
+  	insert into profile VALUES (#{profile_key},#{user_key},#{profile_name},#{profile_image},#{profile_job},
+  	 #{profile_group1},#{profile_sub1},#{profile_step1},#{profile_group2},#{profile_sub2}, #{profile_step2},
+  	  #{profile_default},#{profile_pay}, #{profile_history}, #{profile_apply}, #{profile_character},
+  	   #{profile_plan},#{profile_ppt})
+  	</insert>
+  	
+  	<update id="defaultChangeY" parameterType="int">
+  	
+  	update profile set profile_default = 'Y' where profile_key = #{defaultKey}
+  	
+  	</update>
+  	
+  	<update id="defaultChangeN">
+  	
+  	update profile set profile_default = 'N' where profile_default = 'Y'
+  	
+  	</update>
+  	
+
+  </mapper>

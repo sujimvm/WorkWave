@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+<div>
+		<div><!-- 이력서 출력 폼 -->
+			<h1 th:text="${Content.profile_name}"></h1>
+			
+			<div>
+				<table border="1" width="650">
+				<tr>
+					<td rowspan="3">
+					
+					<img th:src="@{/image/profile_image.png}" alt="Profile Image"></td>
+					<td th:text="${Content.user_name}"></td>
+					<td th:text="${Content.user_gender}"></td>
+					<td th:text="${#strings.substringBefore(Content.user_birth, ' ')}"></td>
+				</tr>
+				<tr>
+					<td>휴대폰</td>
+					<td th:text="${Content.user_phone}"></td>
+					<td>Email</td>
+					<td th:text="${Content.user_email}"></td>
+				</tr>
+				<tr>
+					<td>주소</td>
+					<td th:text="${Content.user_addr}"></td>
+				</tr>
+				
+				
+				</table>
+			
+			
+			</div> <!-- 인적사항 (출력 / 수정) -->
+			
+			<div class="edu_div" >
+			<h2>학력</h2>
+			
+				 <ul>
+                    <li th:each="edu : ${EduList}" th:text="${edu.edu_name}"></li>
+                </ul>
+			 
+			</div><!--학력  -->
+				
+		 <div class="career_div">
+			<h2>경력</h2>
+			 <ul>
+		        <li th:each="career : ${CareerList}" th:text="${career.career_company}"></li>
+		    </ul>
+			
+			</div> 
+			
+			<div class="license_div">
+			<h2>자격증</h2>
+			<ul>
+		        <li th:each="license : ${License}" th:text="${license.license_name}"></li>
+		    </ul>
+				
+			</div>	<!-- 자격증 --> 
+			
+			<div class="history_div">
+			<h2>성장과정</h2>
+			<span th:text="${Content.profile_history}"></span>
+			
+			<h2>지원동기</h2>
+				<span th:text="${Content.profile_apply}"></span>
+				
+			<h2>성격 장단점</h2>
+			<span th:text="${Content.profile_character}"></span>
+			
+			<h2>입사 후 포부</h2>
+			<span th:text="${Content.profile_character}"></span>
+			
+			</div>
+			
+			
+			<div class="Portfolio_div">
+			<h2>포트폴리오</h2>
+			<span th:text="${Content.profile_ppt}"></span>
+			
+			</div>
+			
+			<div class="hopejob_div">
+			<h2>희망근무조건</h2>
+			<span>희망근무형태</span>&nbsp;<span th:text="${Content.profile_job}"></span><br>
+			<span>희망연봉</span>&nbsp;<span th:text="${Content.profile_pay}"></span>
+			
+			
+			</table>
+			
+			
+			</div> <!-- 희망근무조건 -->
+				
+		</div> 
+	</div>
+
+</body>
+</html>

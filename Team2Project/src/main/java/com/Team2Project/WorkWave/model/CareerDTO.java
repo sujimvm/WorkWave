@@ -12,6 +12,7 @@ public class CareerDTO {
 	private String career_loc;
 	private String career_position;
 	private String career_bye;
+	private String career_company;
 
 
     // 생성자, Getter 및 Setter 생략 (필요시 추가)
