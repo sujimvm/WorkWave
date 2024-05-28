@@ -5,251 +5,251 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script>
-   $(function() {
+	$(function() {
 
-      $('#company_number_btn')
-            .on(
-                  'click',
-                  function() {
+		$('#company_number_btn')
+				.on(
+						'click',
+						function() {
 
-                     var data = $("#company_number").val();
+							var data = $("#company_number").val();
 
-                     console.log(data);
+							console.log(data);
 
-                     var data1 = {
-                        "b_no" : [ data ]
-                     };
+							var data1 = {
+								"b_no" : [ data ]
+							};
 
-                     console.log(data1);
+							console.log(data1);
 
-                     debugger;
-                     $
-                           .ajax({
-                              url : "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=cjlBlZd9MpuLsL8wGluvUW%2F2cbWcUcNP7nr%2FuWO7Gbl%2Be7Li1KYbOlQm3cWN0GKnxnFI%2BjSewI3AAMiTKFJk0Q%3D%3D", // serviceKey 값을 xxxxxx에 입력
-                              type : "POST",
-                              data : JSON.stringify(data1), // json 을 string으로 변환하여 전송
-                              dataType : "JSON",
-                              contentType : "application/json",
-                              accept : "application/json",
-                              success : function(result) {
-                                 debugger;
-                                 var data2 = result.data[0].tax_type_cd;
-                                 debugger;
-                                 if (data2 == "") {
-                                    $('#company_number_result').text(
-                                          '등록되지않은 사업자등록번호입니다.')
-                                    debugger;
-                                 } else {
-                                    $('#company_number_result').text(
-                                          '등록된 사업자등록번호입니다.')
-                                    debugger;
-                                 }
-                              },
-                              error : function(result) {
-                                 console.log(result.responseText); //responseText의 에러메세지 확인
-                              }
-                           });
-                  });
-      
-   });
-   
-   $(function(){
-      
-      $("#company_id_check").on('click',function() {
-         
-         var comId = $("#company_id").val();
-         
-         debugger;
-         
-         $.ajax({
-            url : "/idcheck.go",
-            data :{ id: comId },
-            dataType : "text",
-            success : function(result) {
-               debugger;
-               $("#idcheck_result").text(result);
-               debugger;
-            },
-            
-            error : function() {
-               alert("데이터 통신 오류입니다.~~~");
-            }
-         });
-         
-      });
-   });
-   
+							debugger;
+							$
+									.ajax({
+										url : "https://api.odcloud.kr/api/nts-businessman/v1/status?serviceKey=cjlBlZd9MpuLsL8wGluvUW%2F2cbWcUcNP7nr%2FuWO7Gbl%2Be7Li1KYbOlQm3cWN0GKnxnFI%2BjSewI3AAMiTKFJk0Q%3D%3D", // serviceKey 값을 xxxxxx에 입력
+										type : "POST",
+										data : JSON.stringify(data1), // json 을 string으로 변환하여 전송
+										dataType : "JSON",
+										contentType : "application/json",
+										accept : "application/json",
+										success : function(result) {
+											debugger;
+											var data2 = result.data[0].tax_type_cd;
+											debugger;
+											if (data2 == "") {
+												$('#company_number_result').text(
+														'등록되지않은 사업자등록번호입니다.')
+												debugger;
+											} else {
+												$('#company_number_result').text(
+														'등록된 사업자등록번호입니다.')
+												debugger;
+											}
+										},
+										error : function(result) {
+											console.log(result.responseText); //responseText의 에러메세지 확인
+										}
+									});
+						});
+		
+	});
+	
+	$(function(){
+		
+		$("#company_id_check").on('click',function() {
+			
+			var comId = $("#company_id").val();
+			
+			debugger;
+			
+			$.ajax({
+				url : "/idcheck.go",
+				data :{ id: comId },
+				dataType : "text",
+				success : function(result) {
+					debugger;
+					$("#idcheck_result").text(result);
+					debugger;
+				},
+				
+				error : function() {
+					alert("데이터 통신 오류입니다.~~~");
+				}
+			});
+			
+		});
+	});
+	
 $(function(){
-      
-      $("#mgr_phone_check").on('click',function() {
-         
-         var mgrPhone = $("#company_mgr_phone").val();
-         
-         debugger;
-         
-         $.ajax({
-            url : "/send_sms.go",
-            type : "POST",
-            data : JSON.stringify({ mgrPhone : mgrPhone }),
-            dataType : "JSON",
-            contentType : "application/json",
-            accept : "application/json",
-            success : function(result) {
-               debugger;
-               $("#phone_check_result").text(result);
-               debugger;
-            },
-            
-            error : function() {
-               alert("데이터 통신 오류입니다.~~~");
-            }
-         });
-         
-      });
-   });
-   
-   
-   
+		
+		$("#mgr_phone_check").on('click',function() {
+			
+			var mgrPhone = $("#company_mgr_phone").val();
+			
+			debugger;
+			
+			$.ajax({
+				url : "/send_sms.go",
+				type : "POST",
+				data : JSON.stringify({ mgrPhone : mgrPhone }),
+				dataType : "JSON",
+				contentType : "application/json",
+				accept : "application/json",
+				success : function(result) {
+					debugger;
+					$("#phone_check_result").text(result);
+					debugger;
+				},
+				
+				error : function() {
+					alert("데이터 통신 오류입니다.~~~");
+				}
+			});
+			
+		});
+	});
+	
+	
+	
 </script>
 <style type="text/css">
 table {
-   border-spacing: 0;
+	border-spacing: 0;
 }
 
 #td_color{
-   background-color: lightgray;
+	background-color: lightgray;
 }
 </style>
 </head>
 <body>
 
-   <div align="center">
-      <table border="1">
-         <tr>
-            <td colspan="2" id="td_color">기업 정보</td>
-         </tr>
+	<div align="center">
+		<table border="1">
+			<tr>
+				<td colspan="2" id="td_color">기업 정보</td>
+			</tr>
 
-         <tr>
-            <th>사업자 등록번호</th>
-            <td>
-               <div>
-                  <input type="text" name="company_number" id="company_number">
-               </div>
-               <div>
-                  <button id="company_number_btn">조회</button>
-                  <span id="company_number_result"></span>
-               </div>
-            </td>
-         </tr>
+			<tr>
+				<th>사업자 등록번호</th>
+				<td>
+					<div>
+						<input type="text" name="company_number" id="company_number">
+					</div>
+					<div>
+						<button id="company_number_btn">조회</button>
+						<span id="company_number_result"></span>
+					</div>
+				</td>
+			</tr>
 
-         <tr>
-            <th>회사명</th>
-            <td><input type="text" name="company_name"></td>
-         </tr>
+			<tr>
+				<th>회사명</th>
+				<td><input type="text" name="company_name"></td>
+			</tr>
 
-         <tr>
-            <th>대표자명</th>
-            <td><input type="text" name="company_ceo"></td>
-         </tr>
+			<tr>
+				<th>대표자명</th>
+				<td><input type="text" name="company_ceo"></td>
+			</tr>
 
-         <tr>
-            <th>회사주소</th>
-            <td><input type="text" name="company_addr"></td>
-         </tr>
-         
-         <tr>
-            <th>회사로고</th>
-            <td><input type="file" name="company_logo"></td>
-         </tr>
-         
-         <tr>
-            <th>회사홈페이지</th>
-            <td><input type="text" name="company_homepage"></td>
-         </tr>
-         
-         <tr>
-            <th>회사대표번호</th>
-            <td><input type="text" name="company_phone"></td>
-         </tr>
-         
-         <tr>
-            <th>회사설립일</th>
-            <td><input type="text" name="company_regdate"></td>
-         </tr>
-         
-         <tr>
-            <th>회사 근무인원</th>
-            <td><input type="text" name="company_emp_count"></td>
-         </tr>
-         
-         <tr>
-            <th>회사 총 수익</th>
-            <td><input type="text" name="company_sal"></td>
-         </tr>
+			<tr>
+				<th>회사주소</th>
+				<td><input type="text" name="company_addr"></td>
+			</tr>
+			
+			<tr>
+				<th>회사로고</th>
+				<td><input type="file" name="company_logo"></td>
+			</tr>
+			
+			<tr>
+				<th>회사홈페이지</th>
+				<td><input type="text" name="company_homepage"></td>
+			</tr>
+			
+			<tr>
+				<th>회사대표번호</th>
+				<td><input type="text" name="company_phone"></td>
+			</tr>
+			
+			<tr>
+				<th>회사설립일</th>
+				<td><input type="text" name="company_regdate"></td>
+			</tr>
+			
+			<tr>
+				<th>회사 근무인원</th>
+				<td><input type="text" name="company_emp_count"></td>
+			</tr>
+			
+			<tr>
+				<th>회사 총 수익</th>
+				<td><input type="text" name="company_sal"></td>
+			</tr>
 
-         <!-- 발급번호가 실제인지 아닌지만 확인하는 용 DB 저장 X -->
-         <tr>
-            <th>사업자 등록증명서 발급번호</th>
-            <td>
-               <div>
-                  <input type="text" name="com_proof_no" id="comProofNo">
-               </div>
-               <div>
-                  <button id="test_btn2">조회</button>
-                  <span id="result2"></span>
-               </div>
-            </td>
-         </tr>
-      </table>
-      
-      <table border="1">
-         <tr>
-            <td colspan="2">
-               인사담당자 정보
-            </td>
-         </tr>
-         
-         <tr>
-            <th>아이디</th>
-            <td>
-               <input name="company_id" id="company_id">
-               <input type="button" value="중복확인" id="company_id_check">
-               <span id="idcheck_result"></span>
-            </td>
-         </tr>
-         
-         <tr>
-            <th>비밀번호</th>
-            <td>
-               <input name="company_pwd" type="password">
-            </td>
-         </tr>
-         
-         <tr>
-            <th>이름</th>
-            <td>
-               <input name="company_mgr_name">
-            </td>
-         </tr>
-         
-         <tr>
-            <th>연락처</th>
-            <td>
-               <input name="company_mgr_phone" id="company_mgr_phone">
-               <input type="button" value="인증번호 발송" id="mgr_phone_check">
-               <span id="phone_check_result"></span>
-            </td>
-         </tr>
-         
-         <tr>
-            <th>이메일</th>
-            <td>
-               <input name="company_mgr_email">
-            </td>
-         </tr>
-         
-      </table>
-   </div>
+			<!-- 발급번호가 실제인지 아닌지만 확인하는 용 DB 저장 X -->
+			<tr>
+				<th>사업자 등록증명서 발급번호</th>
+				<td>
+					<div>
+						<input type="text" name="com_proof_no" id="comProofNo">
+					</div>
+					<div>
+						<button id="test_btn2">조회</button>
+						<span id="result2"></span>
+					</div>
+				</td>
+			</tr>
+		</table>
+		
+		<table border="1">
+			<tr>
+				<td colspan="2">
+					인사담당자 정보
+				</td>
+			</tr>
+			
+			<tr>
+				<th>아이디</th>
+				<td>
+					<input name="company_id" id="company_id">
+					<input type="button" value="중복확인" id="company_id_check">
+					<span id="idcheck_result"></span>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>비밀번호</th>
+				<td>
+					<input name="company_pwd" type="password">
+				</td>
+			</tr>
+			
+			<tr>
+				<th>이름</th>
+				<td>
+					<input name="company_mgr_name">
+				</td>
+			</tr>
+			
+			<tr>
+				<th>연락처</th>
+				<td>
+					<input name="company_mgr_phone" id="company_mgr_phone">
+					<input type="button" value="인증번호 발송" id="mgr_phone_check">
+					<span id="phone_check_result"></span>
+				</td>
+			</tr>
+			
+			<tr>
+				<th>이메일</th>
+				<td>
+					<input name="company_mgr_email">
+				</td>
+			</tr>
+			
+		</table>
+	</div>
 
 </body>
 </html>
