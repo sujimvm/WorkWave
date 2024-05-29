@@ -52,6 +52,16 @@ public interface ProfileMapper {
 		// 기본 이력서로 변경 메서드
 		public void defaultChangeN();
 
+		//대표 이력서로 변경 메서드
+		public int nowInsertProfileKey(int no);
 		
+		// 학력 추가하는 메서드
+		public int EduInsert(EduDTO edto);
+		
+		// 경력 추가하는 메서드
+		public int CareerInsert(CareerDTO crdto);
 
+		// 자격증 추가하는 메서드
+		public int LicenseInsert(LicenseDTO ldto);
+		
 }

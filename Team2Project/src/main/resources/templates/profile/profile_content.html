@@ -14,7 +14,7 @@
 			<div>
 				<table border="1" width="650">
 					<tr>
-						<td rowspan="3"><img th:src="@{/image/profile_image.png}" alt="Profile Image"></td>
+						<td rowspan="3"><img th:src="@{'/image/profile/'+${Content.profile_image}}" alt="Profile Image"></td>
 						<td th:text="${Content.user_name}"></td>
 						<td th:text="${Content.user_gender}"></td>
 						<td th:text="${#strings.substringBefore(Content.user_birth, ' ')}"></td>
