@@ -218,20 +218,31 @@
 			return false;
 		}
 		
-		if($("#phone_code_check").text() !== "인증 성공"){
+		/* if($("#phone_code_check").text() !== "인증 성공"){
 			debugger;
 			alert('휴대폰 본인인증 번호를 확인하여주십시오.');
 			$("#phone_verify").focus();
 			return false;
-		}
+		} */
 	};
+	
+	$(function(){
+		$()
+	})
 		
 </script>
+<style type="text/css">
+
+#fileguide{
+	font-size: 10px;
+}
+
+</style>
 </head>
 <body>
 	<div th:include="include/header::companyHeader"></div>
 	<div layout:fragment="content" class="content">
-		<form method="post" action="#" th:action="@{/company_insert_ok.go}" th:object="${company}">
+		<form method="post" action="#" th:action="@{/company_insert_ok.go}" th:object="${company}" enctype="multipart/form-data">
 			<div align="center">
 				<table border="1">
 					<tr>
@@ -263,7 +274,10 @@
 					</tr>
 					<tr>
 						<th>회사로고</th>
-						<td><input type="file" name="com_board_logo" id="com_board_logo" th:field="*{com_board_logo}"></td>
+						<td>
+							<input type="file" name="logo" id="logo" accept=".jpeg, .jpg, .png">
+							<p id="fileguide">파일의 크기는 5MB이하 만 가능합니다.</p>
+						</td>
 					</tr>
 					<tr>
 						<th>회사홈페이지</th>
@@ -333,14 +347,14 @@
 							<span id="phone_check_result"></span>
 						</td>
 					</tr>
-					<tr id="verifyBox" style="display: none;">
+					<!-- <tr id="verifyBox" style="display: none;">
 						<th>본인인증 확인번호</th>
 						<td>
 							<input type="text" name="phone_verify_code" id="phone_verify">
 							<input type="button" value="확인" id="phone_verify_check" name="phone_verify_check" required>
 							<span id="phone_code_check"></span>
 						</td>
-					</tr>
+					</tr> -->
 					<tr>
 						<th>이메일</th>
 						<td>
