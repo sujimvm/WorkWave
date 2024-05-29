@@ -10,12 +10,12 @@
 <body>
 	<div th:include="include/header::guestHeader"></div>
 	<div layout:fragment="content" class="content">
-	<h2>怨듭��ы�� ���� ���댁�</h2>
+	<h2>공지사항 상세 페이지</h2>
 	
 		<table border="1">
 			<thead>
 				<tr>
-					<th>怨듭�</th>
+					<th>제목</th>
 					<td th:text="${nCont.notice_title}">
 					</td>
 					<td th:text="${nCont.notice_date.substring(0, 10)}">
@@ -33,13 +33,13 @@
 			<tfoot>
 				<tr>
 			        <td style="text-align: left;">
-    					<!-- �댁�� 踰��� -->
-					    <button onclick="window.history.back()">�댁��</button>
+    					
+					    <button onclick="window.history.back()">목록</button>
 					</td>
 					<td></td>
 					<td style="text-align: right;">
-					    <!-- 留� ��濡� �щ�쇨��� 踰��� -->
-					    <button onclick="window.scrollTo(0, 0)">留� ��濡�</button>
+					    
+					    <button onclick="window.scrollTo(0, 0)">맨 위로</button>
 					</td>
     			</tr>
 			</tfoot>

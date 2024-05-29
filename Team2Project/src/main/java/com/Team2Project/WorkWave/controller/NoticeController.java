@@ -63,4 +63,11 @@ public class NoticeController {
 		return "notice/cont";
 	}
 	
+	@GetMapping("FAQ.go")
+	public String FAQ() {
+		
+		return "notice/FAQ";
+	}
+	
+	
 }
