@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class EduDTO {
-	private String edu_key;
-	private String profile_key;
+	private int edu_key;
+	private int profile_key;
 	private String edu_kind;
 	private String edu_name;
 	private String edu_start_date;
