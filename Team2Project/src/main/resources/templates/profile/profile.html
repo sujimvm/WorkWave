@@ -342,9 +342,9 @@ $(document).ready(function(){
 		<div class="license_input_form">
 		<ul>
 			<li>
-			<input name="lDtoList[0l.license_name" class="license_name" placeholder="자격증명">
-			<input name="lDtoList[0l.license_barhang" class="license_barhang" placeholder="발행처">
-			<input name="lDtoList[0l.license_date" placeholder="취득년월">
+			<input name="lDtoList[0].license_name" class="license_name" placeholder="자격증명">
+			<input name="lDtoList[0].license_barhang" class="license_barhang" placeholder="발행처">
+			<input name="lDtoList[0].license_date" placeholder="취득년월">
 			</li>
 		</ul>
 		<button class="removeForm">삭제</button></div>
@@ -420,7 +420,7 @@ $(document).ready(function(){
 			<form method="POST" action="profile_insert" enctype="multipart/form-data">
 				<input name="profile_name" size="40" placeholder="이력서 제목을 작성해주세요">
 				<hr>
-				<input type="file" name="profile_image_name">
+				<input type="file" name="profile_image_input">
 				<div class="profile_job_div">
 				 	<!-- 선택된 카테고리 값을 저장할 숨겨진 필드들 -->
 					<h2>희망직무</h2>
@@ -541,7 +541,7 @@ $(document).ready(function(){
 				
 					<h2>포트폴리오</h2>
 					<div>
-						<input type="file" name="profile_ppt_name">
+						<input type="file" name="profile_ppt_input">
 					</div>
 				
 				</div><!-- 포트폴리오 -->

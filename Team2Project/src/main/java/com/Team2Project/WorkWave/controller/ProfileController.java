@@ -42,7 +42,10 @@ public class ProfileController {
 
 	// 이력서 추가 메서드
 	@PostMapping("profile_insert")
-	public void profileInsert(ProfileDTO dto, HttpServletResponse response, HttpSession session, @ModelAttribute(value = "CodeListDTO") CodeListDTO codelistDTO) throws IOException {
+	public void profileInsert(ProfileDTO dto, HttpServletResponse response, HttpSession session, 
+			@ModelAttribute(value = "CodeListDTO") CodeListDTO codelistDTO,
+			@RequestParam("profile_ppt_input") MultipartFile ppt_file,
+			@RequestParam("profile_image_input") MultipartFile image_file) throws IOException {
 
 	
 		// 파일을 저장할 디렉토리 설정
@@ -51,23 +54,23 @@ public class ProfileController {
 		String pptUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\ppt\\profile";
 
 		// 이미지 파일 업로드
-		MultipartFile profileImage = dto.getProfile_image_name();
-		
-
-		if (profileImage != null && !profileImage.isEmpty()) {
-			String imageName = uploadFileService.upload(profileImage, imageUploadDir);
-			dto.setProfile_image(imageName);
+		if (image_file.getOriginalFilename() != null) {
+			if (image_file != null && !image_file.isEmpty()) {
+				String imageName = uploadFileService.upload(image_file, imageUploadDir);
+				dto.setProfile_image(imageName);
+				dto.setProfile_image_name(image_file.getOriginalFilename());
+			}
 		}
 
+		dto.setProfile_ppt("");
+		dto.setProfile_ppt_name("");
+		
 		// PPT 파일 업로드
-		MultipartFile profilePpt = dto.getProfile_ppt_name();
-	
-		if (profilePpt != null && !profilePpt.isEmpty()) {
-			try {
-				String pptName = uploadFileService.upload(profilePpt, pptUploadDir);
+		if (image_file.getOriginalFilename() != null) {
+			if (ppt_file != null && !ppt_file.isEmpty()) {
+				String pptName = uploadFileService.upload(ppt_file, pptUploadDir);
 				dto.setProfile_ppt(pptName);
-			} catch (Exception e) {
-				e.printStackTrace();
+				dto.setProfile_ppt_name(ppt_file.getOriginalFilename());
 			}
 		}
 
@@ -119,40 +122,40 @@ public class ProfileController {
 		 }
 		*/
 		
-		//경력 데이터 저장
-		CareerDTO crdtoArr = codelistDTO.getCrDtoList().get(0);
+		
+		  //경력 데이터 저장 
+		CareerDTO crdtoArr = codelistDTO.getCrDtoList().get(0); 
 		for(int i= 0; i < crdtoArr.getCareer_company().split(",").length; i++) {
-			
-			CareerDTO crdto = new CareerDTO();
-			
-			crdto.setProfile_key(nowInsertProfileKey);
-			crdto.setCareer_company(crdtoArr.getCareer_company().split(",")[i]);
-			crdto.setCareer_cont(crdtoArr.getCareer_cont().split(",")[i]);
-			crdto.setCareer_position(crdtoArr.getCareer_position().split(",")[i]);
-			crdto.setCareer_bye(crdtoArr.getCareer_bye().split(",")[i]);
-			crdto.setCareer_start_date(crdtoArr.getCareer_start_date().split(",")[i]);
-			crdto.setCareer_end_date(crdtoArr.getCareer_end_date().split(",")[i]);
-			
-			this.mapper.CareerInsert(crdto);
-			
-		}
-		
-		//자격증 데이터 저장
+		  
+		  CareerDTO crdto = new CareerDTO();
+		  
+		  crdto.setProfile_key(nowInsertProfileKey);
+		  crdto.setCareer_company(crdtoArr.getCareer_company().split(",")[i]);
+		  crdto.setCareer_cont(crdtoArr.getCareer_cont().split(",")[i]);
+		  crdto.setCareer_position(crdtoArr.getCareer_position().split(",")[i]);
+		  crdto.setCareer_bye(crdtoArr.getCareer_bye().split(",")[i]);
+		  crdto.setCareer_start_date(crdtoArr.getCareer_start_date().split(",")[i]);
+		  crdto.setCareer_end_date(crdtoArr.getCareer_end_date().split(",")[i]);
+		  
+		  this.mapper.CareerInsert(crdto);
+		  
+		  }
+		  
+		  //자격증 데이터 저장 
 		LicenseDTO ldtoArr = codelistDTO.getLDtoList().get(0);
-		
-		for(int i=0; i < ldtoArr.getLicense_name().split(",").length; i++) {
-			
-			LicenseDTO ldto = new LicenseDTO();
-			
-			ldto.setProfile_key(nowInsertProfileKey);
-			ldto.setLicense_name(ldtoArr.getLicense_name().split(",")[i]);
-			ldto.setLicense_barhang(ldtoArr.getLicense_barhang().split(",")[i]);
-			ldto.setLicense_date(ldtoArr.getLicense_date().split(",")[i]);
-			
-			this.mapper.LicenseInsert(ldto);
-		}
-		
-		
+		  
+		  for(int i=0; i < ldtoArr.getLicense_name().split(",").length; i++) {
+		  
+		  LicenseDTO ldto = new LicenseDTO();
+		  
+		  ldto.setProfile_key(nowInsertProfileKey);
+		  ldto.setLicense_name(ldtoArr.getLicense_name().split(",")[i]);
+		  ldto.setLicense_barhang(ldtoArr.getLicense_barhang().split(",")[i]);
+		  ldto.setLicense_date(ldtoArr.getLicense_date().split(",")[i]);
+		  
+		  this.mapper.LicenseInsert(ldto); }
+		  
+		 
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 

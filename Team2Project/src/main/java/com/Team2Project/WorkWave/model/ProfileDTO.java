@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class ProfileDTO {
 	
-	private MultipartFile profile_ppt_name;
-	private MultipartFile profile_image_name;
+	private String profile_ppt_name; 
+	private String profile_image_name;
 	private int profile_key;
 	private int user_key;
 	private String profile_name;
