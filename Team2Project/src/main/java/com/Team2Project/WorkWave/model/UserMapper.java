@@ -25,6 +25,18 @@ public interface UserMapper {
 	
 	UserDTO modify(String user_id);
 	
+
+	public int updateok(UserDTO dto);
+	
+	
+	UserDTO delete(String user_id);
+	
+	public int deleteok(int user_key);
+	
+	
+	
+	
+
 }
 	
 	
