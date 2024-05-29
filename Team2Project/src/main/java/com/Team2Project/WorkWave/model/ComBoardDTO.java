@@ -1,5 +1,7 @@
 package com.Team2Project.WorkWave.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.Data;
 
 @Data
@@ -39,7 +41,8 @@ public class ComBoardDTO {
 	private String company_emp_count;
 	private String company_sal;
 	private String company_number;
-	private String com_board_logo;
+	private String company_logo;
+	private String company_logo_name;
 	private String company_mgr_name;
 	private String company_mgr_phone;
 	private String company_mgr_email;

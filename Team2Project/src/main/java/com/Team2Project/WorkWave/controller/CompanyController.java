@@ -1,6 +1,5 @@
 package com.Team2Project.WorkWave.controller;
 
-
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -11,153 +10,182 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.Team2Project.WorkWave.model.CompanyDTO;
 import com.Team2Project.WorkWave.model.CompanyMapper;
+import com.Team2Project.WorkWave.model.ProfileDTO;
+import com.Team2Project.WorkWave.model.UserDTO;
+import com.Team2Project.WorkWave.service.UploadFileService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 
-
+@RequiredArgsConstructor
 @Controller
 public class CompanyController {
 
 	@Autowired
 	private CompanyMapper mapper;
-	
+
+	@Autowired
+	UploadFileService uploadFileService;
+
 	@PostMapping("/company_login.go")
-	public void login(@RequestParam("company_id") String company_id,
-	                    @RequestParam("company_pwd") String company_pwd,
-	                    HttpSession session, HttpServletResponse response) throws IOException {
-	      
-      response.setContentType("text/html; charset=UTF-8");
-      
-      PrintWriter out = response.getWriter();
-      
-      CompanyDTO company_login = this.mapper.docompanyLogin(company_id);
-      
-      // 로그인 실패 처리
-      if(company_login == null) {
-         // 아이디가 존재하지 않는 경우
-    	 out.println("<script>");
-    	 out.println("alert('아이디가 존재하지 않습니다.')");
-    	 out.println("history.back()");
-    	 out.println("</script>");
-    	 out.flush();
-      }else if(!company_login.getCompany_pwd().equals(company_pwd)) {
-	       // 비밀번호가 틀린 경우
-    	   out.println("<script>");
-    	   out.println("alert('비밀번호가 틀렸습니다.')");
-    	   out.println("history.back()");
-           out.println("</script>");
-           out.flush();
-      }else {
-    	  // 로그인 성공 처리
-		  session.setAttribute("company_login", company_login);
-		  session.setAttribute("member_type", "company");
-		  out.println("<script>");
-		  out.println("alert('성공.')");
-		  out.println("location.href='/main.go'");
-		  out.println("</script>");
-          
-      }
-      
+	public void login(@RequestParam("company_id") String company_id, @RequestParam("company_pwd") String company_pwd,
+			HttpSession session, HttpServletResponse response) throws IOException {
+
+		response.setContentType("text/html; charset=UTF-8");
+
+		PrintWriter out = response.getWriter();
+
+		CompanyDTO company_login = this.mapper.docompanyLogin(company_id);
+
+		// 로그인 실패 처리
+		if (company_login == null) {
+			// 아이디가 존재하지 않는 경우
+			out.println("<script>");
+			out.println("alert('아이디가 존재하지 않습니다.')");
+			out.println("history.back()");
+			out.println("</script>");
+			out.flush();
+		} else if (!company_login.getCompany_pwd().equals(company_pwd)) {
+			// 비밀번호가 틀린 경우
+			out.println("<script>");
+			out.println("alert('비밀번호가 틀렸습니다.')");
+			out.println("history.back()");
+			out.println("</script>");
+			out.flush();
+		} else {
+			// 로그인 성공 처리
+			session.setAttribute("company_login", company_login);
+			session.setAttribute("member_type", "company");
+			out.println("<script>");
+			out.println("alert('성공.')");
+			out.println("location.href='/main.go'");
+			out.println("</script>");
+
+		}
+
 	}
-	
+
 	@GetMapping("company_insert.go")
 	public String signUpForm(Model model) {
 		model.addAttribute("company", new CompanyDTO());
 		return "company/insert";
 	}
-	
+
 	@GetMapping("/idcheck.go")
 	@ResponseBody
-	public String companyIdCheck(@RequestParam("id") String comId, HttpServletRequest request, HttpServletResponse response) throws IOException {
-		
+	public String companyIdCheck(@RequestParam("id") String comId, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+
 		String res = "사용가능한 아이디입니다.";
-		
+
 		response.setContentType("text/html; charset=UTF-8");
-		
+
 		CompanyDTO idCheck = this.mapper.companyIdCheck(comId);
-		
-		System.out.println(idCheck);
-		
-		if(idCheck != null) {
+
+		if (idCheck != null) {
 			res = "이미 등록된 아이디입니다.";
 		}
-		
+
 		return res;
-		
+
 	}
-	
+
 	@PostMapping("/company_insert_ok.go")
-	public void companySignUp(CompanyDTO dto, HttpServletResponse response) throws IOException {
+	public void companySignUp(@RequestParam("logo") MultipartFile file, CompanyDTO dto, HttpServletResponse response) throws IOException {
 		String str1 = dto.getCompany_number().substring(0, 3);
 		String str2 = dto.getCompany_number().substring(3, 5);
 		String str3 = dto.getCompany_number().substring(5);
-		
-		dto.setCompany_number(str1+"-"+str2+"-"+str3);
-		
+
+		dto.setCompany_number(str1 + "-" + str2 + "-" + str3);
+
 		String com_mgr_phone1 = dto.getCompany_mgr_phone().substring(0, 3);
 		String com_mgr_phone2 = dto.getCompany_mgr_phone().substring(3, 7);
 		String com_mgr_phone3 = dto.getCompany_mgr_phone().substring(7);
-		
-		dto.setCompany_mgr_phone(com_mgr_phone1+"-"+com_mgr_phone2+"-"+com_mgr_phone3);
-		
-		if(dto.getCompany_phone().length()==8) {
+
+		dto.setCompany_mgr_phone(com_mgr_phone1 + "-" + com_mgr_phone2 + "-" + com_mgr_phone3);
+
+		if (dto.getCompany_phone().length() == 8) {
 			String com_phone1 = dto.getCompany_phone().substring(0, 4);
 			String com_phone2 = dto.getCompany_phone().substring(4);
-			
-			dto.setCompany_phone(com_phone1+"-"+com_phone2);
-		}else if(dto.getCompany_phone().length()==9) {
+
+			dto.setCompany_phone(com_phone1 + "-" + com_phone2);
+		} else if (dto.getCompany_phone().length() == 9) {
 			String com_phone1 = dto.getCompany_phone().substring(0, 2);
 			String com_phone2 = dto.getCompany_phone().substring(2, 5);
 			String com_phone3 = dto.getCompany_phone().substring(5);
-			
-			dto.setCompany_phone(com_phone1+"-"+com_phone2+"-"+com_phone3);
-		}else if(dto.getCompany_phone().length()==10) {
-			if(dto.getCompany_phone().substring(0,2)=="02") {
+
+			dto.setCompany_phone(com_phone1 + "-" + com_phone2 + "-" + com_phone3);
+		} else if (dto.getCompany_phone().length() == 10) {
+			if (dto.getCompany_phone().substring(0, 2) == "02") {
 				String com_phone1 = dto.getCompany_phone().substring(0, 2);
 				String com_phone2 = dto.getCompany_phone().substring(2, 6);
 				String com_phone3 = dto.getCompany_phone().substring(6);
-				
-				dto.setCompany_phone(com_phone1+"-"+com_phone2+"-"+com_phone3);
-			}else {
+
+				dto.setCompany_phone(com_phone1 + "-" + com_phone2 + "-" + com_phone3);
+			} else {
 				String com_phone1 = dto.getCompany_phone().substring(0, 3);
 				String com_phone2 = dto.getCompany_phone().substring(3, 6);
 				String com_phone3 = dto.getCompany_phone().substring(6);
-				
-				dto.setCompany_phone(com_phone1+"-"+com_phone2+"-"+com_phone3);
+
+				dto.setCompany_phone(com_phone1 + "-" + com_phone2 + "-" + com_phone3);
 			}
-		}else {
+		} else {
 			String com_phone1 = dto.getCompany_phone().substring(0, 3);
 			String com_phone2 = dto.getCompany_phone().substring(3, 7);
 			String com_phone3 = dto.getCompany_phone().substring(7);
+
+			dto.setCompany_phone(com_phone1 + "-" + com_phone2 + "-" + com_phone3);
+		}
+
+		dto.setCompany_homepage("http://" + dto.getCompany_homepage());
+		System.out.println(file.getOriginalFilename().isEmpty());
+		// 파일을 저장할 디렉토리 설정
+		
+		dto.setCompany_logo_name("");
+		
+		dto.setCompany_logo("");
+		
+		System.out.println(dto.getCompany_logo()+"g");
+		System.out.println(dto.getCompany_logo_name()+"d");
+		
+		if (file.getOriginalFilename() != null) {
+			if (file != null && !file.isEmpty()) {
+			String logoUploadDir ="C:\\Users\\clxkd\\OneDrive\\바탕 화면\\project1\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\logo";
 			
-			dto.setCompany_phone(com_phone1+"-"+com_phone2+"-"+com_phone3);
+			dto.setCompany_logo_name(file.getOriginalFilename());
+			
+		    String imageName = uploadFileService.upload(file, logoUploadDir);
+		    dto.setCompany_logo(imageName);
+			}
+		
 		}
 		
+		System.out.println(dto.getCompany_logo_name() + "t");
+
 		int res = mapper.insertCompany(dto);
-		
+
 		response.setContentType("text/html; charset=UTF-8");
-		
+
 		PrintWriter out = response.getWriter();
-		
-		if(res == 1) {
+
+		if (res == 1) {
 			out.println("<script>");
 			out.println("alert('회원가입을 완료하였습니다.')");
-			out.println("location.href=company.go");
+			out.println("location.href='company.go'");
 			out.println("</script>");
-		}else {
+		} else {
 			out.println("<script>");
 			out.println("alert('회원가입을 실패하였습니다.')");
 			out.println("history.back()");
 			out.println("</script>");
 		}
 	}
-	
-	
-	
-	
+
 }

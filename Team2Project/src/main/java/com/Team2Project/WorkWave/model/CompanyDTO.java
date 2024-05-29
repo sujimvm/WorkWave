@@ -3,6 +3,7 @@ package com.Team2Project.WorkWave.model;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -25,9 +26,12 @@ public class CompanyDTO {
 	private int company_emp_count;
 	private int company_sal;
 	
-	
+	// 유저가 업로드할 때의 파일 이름
+	private String company_logo_name;
 	private String company_number;
-	private String com_board_logo;
+		
+	// 저장된 후 이미지 파일 이름
+	private String company_logo;
 	private String company_mgr_name;
 	private String company_mgr_phone;
 	private String company_mgr_email;
