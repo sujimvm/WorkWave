@@ -10,10 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Team2Project.WorkWave.model.UserDTO;
 import com.Team2Project.WorkWave.model.UserMapper;
@@ -137,35 +139,49 @@ public class UserController {
 
 	}
 
-	
+ 
 	  @PostMapping("/user_modify_ok.go")
-	  public void modifyOk(@RequestParam("user_pwd") String pwd, Model model, HttpServletResponse response
-			  				,HttpSession session) throws IOException {
-	  
-		 response.setContentType("text/html; charset=UTF-8");
+	  public String modifyOk(@RequestParam("user_pwd") String pwd, HttpSession session, RedirectAttributes redirectAttributes) throws IOException {
 
+	      UserDTO dto = (UserDTO) session.getAttribute("user_login");
+	      UserDTO modify = this.mapper.modify(dto.getUser_id());
+
+	      if (modify.getUser_pwd().equals(pwd)) {
+	          redirectAttributes.addFlashAttribute("Modify", modify);
+	          return "redirect:/update.go";
+	      } else {
+	          return "redirect:/user_modify.go"; 
+	      }
+	  }
+
+	 @GetMapping("/update.go")
+	 public String updatePage(@ModelAttribute("Modify") UserDTO modify, Model model) {
+	        
+		 model.addAttribute("Modify", modify);
+		 
+	     return "user/modify_ok"; 
+	    }
+	 
+	 @PostMapping("/user_update.go")
+	 public void updateok(UserDTO dto, HttpServletResponse response) throws IOException {
+		 
+		response.setContentType("text/html; charset=UTF-8");
+			
 		PrintWriter out = response.getWriter();
 		
-		UserDTO dto = (UserDTO)session.getAttribute("user_login");
+		int result = this.mapper.updateok(dto);
 		
-	  UserDTO modify = this.mapper.modify(dto.getUser_id());
-	  
-	  if(modify.getUser_pwd().equals(pwd)) {
-		  
-		  model.addAttribute("Modify", modify);
-		  
-		  	out.println("<script>");
-			out.println("alert('비밀번호 일치')");
-			out.println("location.href='/update.go'");
+		
+		if(result > 0) {
+			out.println("<script>");
+			out.println("alert('회원 수정 성공')");
+			out.println("location.href='main.go'");
 			out.println("</script>");
-		  
-	  }else {
-		  
-		  	out.println("<script>");
-			out.println("alert('비밀번호가 틀립니다')");
+		}else {
+			out.println("<script>");
+			out.println("alert('회원 수정 실패')");
 			out.println("history.back()");
 			out.println("</script>");
-
 	  }
 	
 	 }
@@ -224,8 +240,4 @@ public class UserController {
 	         out.println("</script>");
 	     }
 	 }
-
-
-
 }
-

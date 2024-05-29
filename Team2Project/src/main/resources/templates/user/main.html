@@ -14,9 +14,7 @@
         </div>  
         <button type="button" th:onclick="|location.href='@{/user_modify.go(num=${session.user_login.user_id})}'|">회원수정</button>
 
-
         <button type="button" th:onclick="|location.href='@{/user_delete.go(num=${session.user_login.user_id})}'|">회원삭제</button>
-        
 
 	</div>
 	<div th:include="include/footer::footer"></div>

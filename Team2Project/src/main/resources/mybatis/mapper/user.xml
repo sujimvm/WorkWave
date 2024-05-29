@@ -21,11 +21,11 @@
     	SELECT * FROM users WHERE USER_ID = #{user_id}
     </select>
 
-
     
     <update id="updateok" parameterType="uDTO">
   		update users set user_pwd = #{user_pwd}, user_email = #{user_email}, user_phone = #{user_phone}, user_addr = #{user_addr} where user_key = #{user_key}
   	</update>
+
 	
 	<select id="delete" resultType="uDTO" parameterType="String">
     SELECT * FROM users WHERE user_id = #{user_id}
@@ -35,9 +35,6 @@
 	    DELETE FROM users WHERE user_key = #{user_key}
 	</delete>
 	
-	
-  	
-  	
 
   
   </mapper>

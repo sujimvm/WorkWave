@@ -19,11 +19,13 @@ public class CompanyDTO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date company_regdate;
 	
-	private String company_join_date;
+	private Date company_join_date;
 	private String company_ceo;
 	private String company_confirm;
 	private int company_emp_count;
 	private int company_sal;
+	
+	
 	private String company_number;
 	private String com_board_logo;
 	private String company_mgr_name;
