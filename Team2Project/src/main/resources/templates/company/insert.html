@@ -187,10 +187,41 @@
 	});
 
 	function insertCheck(){
-		if($("#company_number_result").val() === "등록되지않은 사업자등록번호입니다."){
+		var pwd = $('#company_pwd').val();
+		var pwdPattern = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,20}$/;
+		
+		if($("#company_number_result").text() !== "등록된 사업자등록번호입니다."){
 			debugger;
 			alert('사업자등록번호를 확인하여주십시오.');
 			$("#company_number").focus();
+			return false;
+		}
+		
+		if($("#idcheck_result").text() !== "사용가능한 아이디입니다."){
+			debugger;
+			alert('아이디를 확인하여주십시오.');
+			$("#company_id").focus();
+			return false;
+		}
+		
+		if(!pwdPattern.test(pwd)){
+			debugger;
+			alert('비밀번호를 확인하여주십시오.');
+			$("#company_pwd").focus();
+			return false;
+		}
+		
+		if($("#company_pwd").val()!=$("#company_pwd_check").val()){
+			debugger;
+			alert('비밀번호 확인을 확인하여주십시오.');
+			$("#company_pwd_check").focus();
+			return false;
+		}
+		
+		if($("#phone_code_check").text() !== "인증 성공"){
+			debugger;
+			alert('휴대폰 본인인증 번호를 확인하여주십시오.');
+			$("#phone_verify").focus();
 			return false;
 		}
 	};
@@ -211,9 +242,9 @@
 						<td>
 							<div>
 								<input type="text" name="company_number" id="company_number" th:field="*{company_number}" required>
+								<input type="button" id="company_number_btn" value="조회" required>
 							</div>
 							<div>
-								<button id="company_number_btn">조회</button>
 								<span id="company_number_result"></span>
 							</div>
 						</td>
@@ -266,7 +297,7 @@
 						<th>아이디</th>
 						<td>
 							<input name="company_id" id="company_id" th:field="*{company_id}" required>
-							<input type="button" value="중복확인" id="company_id_check">
+							<input type="button" value="중복확인" id="company_id_check" required>
 							<span id="idcheck_result"></span>
 						</td>
 					</tr>
@@ -306,18 +337,18 @@
 						<th>본인인증 확인번호</th>
 						<td>
 							<input type="text" name="phone_verify_code" id="phone_verify">
-							<button id="phone_verify_check" name="phone_verify_check">확인</button>
+							<input type="button" value="확인" id="phone_verify_check" name="phone_verify_check" required>
 							<span id="phone_code_check"></span>
 						</td>
 					</tr>
 					<tr>
 						<th>이메일</th>
 						<td>
-							<input type="email" name="company_mgr_email" id="company_mgr_email" th:field="*{company_mgr_phone}" required="required">
+							<input type="email" name="company_mgr_email" id="company_mgr_email" th:field="*{company_mgr_email}" required="required">
 						</td>
 					</tr>
 				</table>
-				<input type="submit" value="회원가입" th:onclick="return insertCheck()">
+				<input type="submit" value="회원가입" onclick="return insertCheck()">
 			</div>
 		</form>
 	<div th:include="include/footer::footer"></div>

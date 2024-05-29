@@ -93,6 +93,51 @@ public class CompanyController {
 	
 	@PostMapping("/company_insert_ok.go")
 	public void companySignUp(CompanyDTO dto, HttpServletResponse response) throws IOException {
+		String str1 = dto.getCompany_number().substring(0, 3);
+		String str2 = dto.getCompany_number().substring(3, 5);
+		String str3 = dto.getCompany_number().substring(5);
+		
+		dto.setCompany_number(str1+"-"+str2+"-"+str3);
+		
+		String com_mgr_phone1 = dto.getCompany_mgr_phone().substring(0, 3);
+		String com_mgr_phone2 = dto.getCompany_mgr_phone().substring(3, 7);
+		String com_mgr_phone3 = dto.getCompany_mgr_phone().substring(7);
+		
+		dto.setCompany_mgr_phone(com_mgr_phone1+"-"+com_mgr_phone2+"-"+com_mgr_phone3);
+		
+		if(dto.getCompany_phone().length()==8) {
+			String com_phone1 = dto.getCompany_phone().substring(0, 4);
+			String com_phone2 = dto.getCompany_phone().substring(4);
+			
+			dto.setCompany_phone(com_phone1+"-"+com_phone2);
+		}else if(dto.getCompany_phone().length()==9) {
+			String com_phone1 = dto.getCompany_phone().substring(0, 2);
+			String com_phone2 = dto.getCompany_phone().substring(2, 5);
+			String com_phone3 = dto.getCompany_phone().substring(5);
+			
+			dto.setCompany_phone(com_phone1+"-"+com_phone2+"-"+com_phone3);
+		}else if(dto.getCompany_phone().length()==10) {
+			if(dto.getCompany_phone().substring(0,2)=="02") {
+				String com_phone1 = dto.getCompany_phone().substring(0, 2);
+				String com_phone2 = dto.getCompany_phone().substring(2, 6);
+				String com_phone3 = dto.getCompany_phone().substring(6);
+				
+				dto.setCompany_phone(com_phone1+"-"+com_phone2+"-"+com_phone3);
+			}else {
+				String com_phone1 = dto.getCompany_phone().substring(0, 3);
+				String com_phone2 = dto.getCompany_phone().substring(3, 6);
+				String com_phone3 = dto.getCompany_phone().substring(6);
+				
+				dto.setCompany_phone(com_phone1+"-"+com_phone2+"-"+com_phone3);
+			}
+		}else {
+			String com_phone1 = dto.getCompany_phone().substring(0, 3);
+			String com_phone2 = dto.getCompany_phone().substring(3, 7);
+			String com_phone3 = dto.getCompany_phone().substring(7);
+			
+			dto.setCompany_phone(com_phone1+"-"+com_phone2+"-"+com_phone3);
+		}
+		
 		int res = mapper.insertCompany(dto);
 		
 		response.setContentType("text/html; charset=UTF-8");
@@ -101,12 +146,12 @@ public class CompanyController {
 		
 		if(res == 1) {
 			out.println("<script>");
-			out.println("<alert('회원가입을 완료하였습니다.')>");
-			out.println("location.href=company_login.go");
+			out.println("alert('회원가입을 완료하였습니다.')");
+			out.println("location.href=company.go");
 			out.println("</script>");
 		}else {
 			out.println("<script>");
-			out.println("<alert('회원가입을 실패하였습니다.')>");
+			out.println("alert('회원가입을 실패하였습니다.')");
 			out.println("history.back()");
 			out.println("</script>");
 		}
