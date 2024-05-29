@@ -185,15 +185,6 @@ public class UserController {
 	  }
 	
 	 }
-	 @GetMapping("/update.go")
-	 public String update() {
-		 
-		 return "user/modify_ok";
-	 }
-
-		
-	
-	 
 	 
 	 @GetMapping("/user_delete.go")
 	 public String delete(@RequestParam("num") String user_id, Model model) {
