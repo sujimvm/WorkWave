@@ -182,12 +182,62 @@ public class UserController {
 			out.println("alert('회원 수정 실패')");
 			out.println("history.back()");
 			out.println("</script>");
-		}
-	}
-	 
+	  }
 	
+	 }
+	 @GetMapping("/update.go")
+	 public String update() {
+		 
+		 return "user/modify_ok";
+	 }
+
+		
+	
+	 
+	 
+	 @GetMapping("/user_delete.go")
+	 public String delete(@RequestParam("num") String user_id, Model model) {
+	     UserDTO delete = this.mapper.delete(user_id);
+	     model.addAttribute("del", delete);
+	     return "user/delete";
+	 }
+
+	 @PostMapping("/user_delete_ok.go")
+	 public void deleteok(@RequestParam("user_pwd") String userPwd, HttpSession session, HttpServletResponse response) throws IOException {
+	     response.setContentType("text/html; charset=UTF-8");
+	     PrintWriter out = response.getWriter();
+
+	     // 세션에 저장된 유저 정보를 가져옴
+	     UserDTO user = (UserDTO) session.getAttribute("user_login");
+
+	     if (user != null) {
+	         // 입력된 비밀번호와 세션에 저장된 유저의 비밀번호가 일치하는지 확인
+	         if (userPwd.equals(user.getUser_pwd())) {
+	             int result = this.mapper.deleteok(user.getUser_key());
+
+	             if (result > 0) {
+	                 
+	                 out.println("<script>");
+	                 out.println("alert('회원 삭제 성공')");
+	                 out.println("location.href='user.go'");
+	                 out.println("</script>");
+	             } else {
+	                 out.println("<script>");
+	                 out.println("alert('회원 삭제 실패')");
+	                 out.println("history.back()");
+	                 out.println("</script>");
+	             }
+	         } else {
+	             out.println("<script>");
+	             out.println("alert('비밀번호가 일치하지 않습니다.')");
+	             out.println("history.back()");
+	             out.println("</script>");
+	         }
+	     } else {
+	         out.println("<script>");
+	         out.println("alert('회원 정보를 찾을 수 없습니다.')");
+	         out.println("history.back()");
+	         out.println("</script>");
+	     }
+	 }
 }
-	 
-	 
-
-

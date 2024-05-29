@@ -24,10 +24,20 @@ public interface UserMapper {
 	UserDTO findUserPassword(@Param("userName") String userName, @Param("userId") String userId, @Param("userEmail") String userEmail);
 	
 	UserDTO modify(String user_id);
-	
+
+
 	public int updateok(UserDTO dto);
 	
 	
+	UserDTO delete(String user_id);
+	
+	public int deleteok(int user_key);
+	
+	
+	
+
+	public int updateok(UserDTO dto);
+
 }
 	
 	
