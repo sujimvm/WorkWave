@@ -2,14 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
 <title>Work Wave</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 </head>
 <body>
-	<div th:include="include/header::guestHeader"></div>
+<div th:replace="~{include/header :: guestHeader}"></div> 
 	<div layout:fragment="content" class="content">
 		<h2>guest Content</h2>
 	</div>
-	<div th:include="include/footer::footer"></div>
+	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>

@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
 <title>Work Wave FAQ</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/FAQ.css}">
@@ -32,7 +33,7 @@
 </script>
 </head>
 <body onload="showList('user')">
-	<div th:include="include/header::guestHeader"></div>
+	<div th:replace="~{include/header :: guestHeader}"></div> 
 	<div layout:fragment="content" class="content">
 		<h2>FAQ</h2>
 
@@ -303,7 +304,7 @@
 			</div>
 		</div>
 	</div>
-	<div th:include="include/footer::footer"></div>
+	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>
 

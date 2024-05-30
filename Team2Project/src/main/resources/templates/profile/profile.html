@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
 <title>Work Wave 이력서 작성</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/profile.css}">
@@ -511,7 +512,7 @@ $(document).ready(function(){
 	</form>
  -->
 
-	<div th:include="include/header::userHeader"></div>
+	<div th:replace="~{include/header :: guestHeader}"></div> 
 	<div layout:fragment="content" class="content">
 		<div></div> <!-- 인적사항 (출력 / 수정) -->
 		
@@ -681,6 +682,6 @@ $(document).ready(function(){
 			</form>
 		</div>
 	</div>
-	<div th:include="include/footer::footer"></div>
+	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>
