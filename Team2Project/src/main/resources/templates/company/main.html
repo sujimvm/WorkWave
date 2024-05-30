@@ -11,8 +11,19 @@
 <body>
 	<div th:include="include/header::companyHeader"></div>
 	<div layout:fragment="content" class="content">
-		<h2>company Content</h2>
+		<h2><span th:text="${session.companyInfo.company_name}"></span>&nbsp;안녕하세요!</h2>
 	</div>
+	
+	<button type="button" th:onclick="|location.href='@{/company_modify.go}'|">회원수정</button>
+
+    <button type="button" th:onclick="|location.href='@{/company_delete.go}'|">회원삭제</button>
+
+    <button type="button" th:onclick="|location.href='@{/com_board_insert.go}'|">공고등록</button>
+
+    <button type="button" th:onclick="|location.href='@{/com_board_modify.go}'|">공고수정</button>
+
+    <button type="button" th:onclick="|location.href='@{/com_board_delete.go}'|">공고삭제</button>
+	
 	<div th:include="include/footer::footer"></div>
 </body>
 </html>

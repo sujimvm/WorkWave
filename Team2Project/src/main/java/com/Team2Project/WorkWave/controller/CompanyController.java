@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Team2Project.WorkWave.model.CompanyDTO;
 import com.Team2Project.WorkWave.model.CompanyMapper;
@@ -34,15 +36,18 @@ public class CompanyController {
 	@Autowired
 	UploadFileService uploadFileService;
 
+	// 기업회원 로그인
 	@PostMapping("/company_login.go")
-	public void login(@RequestParam("company_id") String company_id, @RequestParam("company_pwd") String company_pwd,
-			HttpSession session, HttpServletResponse response) throws IOException {
+	public void login(@RequestParam("company_id") String company_id, 
+					  @RequestParam("company_pwd") String company_pwd,
+					  HttpSession session,
+					  HttpServletResponse response) throws IOException {
 
 		response.setContentType("text/html; charset=UTF-8");
 
 		PrintWriter out = response.getWriter();
 
-		CompanyDTO company_login = this.mapper.docompanyLogin(company_id);
+		CompanyDTO company_login = this.mapper.companyInfo(company_id);
 
 		// 로그인 실패 처리
 		if (company_login == null) {
@@ -61,7 +66,7 @@ public class CompanyController {
 			out.flush();
 		} else {
 			// 로그인 성공 처리
-			session.setAttribute("company_login", company_login);
+			session.setAttribute("companyInfo", company_login);
 			session.setAttribute("member_type", "company");
 			out.println("<script>");
 			out.println("alert('성공.')");
@@ -72,33 +77,19 @@ public class CompanyController {
 
 	}
 
+	// 기업회원가입 페이지로 이동
 	@GetMapping("company_insert.go")
 	public String signUpForm(Model model) {
 		model.addAttribute("company", new CompanyDTO());
 		return "company/insert";
 	}
 
-	@GetMapping("/idcheck.go")
-	@ResponseBody
-	public String companyIdCheck(@RequestParam("id") String comId, HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
 
-		String res = "사용가능한 아이디입니다.";
-
-		response.setContentType("text/html; charset=UTF-8");
-
-		CompanyDTO idCheck = this.mapper.companyIdCheck(comId);
-
-		if (idCheck != null) {
-			res = "이미 등록된 아이디입니다.";
-		}
-
-		return res;
-
-	}
-
+	// 회원가입 완료
 	@PostMapping("/company_insert_ok.go")
-	public void companySignUp(@RequestParam("logo") MultipartFile file, CompanyDTO dto, HttpServletResponse response) throws IOException {
+	public void companySignUp(@RequestParam("logo") MultipartFile file, 
+							  CompanyDTO dto, 
+							  HttpServletResponse response) throws IOException {
 		String str1 = dto.getCompany_number().substring(0, 3);
 		String str2 = dto.getCompany_number().substring(3, 5);
 		String str3 = dto.getCompany_number().substring(5);
@@ -186,6 +177,179 @@ public class CompanyController {
 			out.println("history.back()");
 			out.println("</script>");
 		}
+	}
+	
+	// 기업회원 정보 수정하기전 비밀번호 확인 페이지 이동
+	@GetMapping("/company_modify.go")
+	public String companyModify(HttpSession session, Model model) {
+		
+		model.addAttribute("companyInfo", session.getAttribute("companyInfo"));
+		
+		return "company/modify";
+		
+	}
+	
+	// 비밀번호 입력후 기업회원 정보 수정 페이지로 이동
+	@PostMapping("/company_modify_ok.go")
+	public String companyModifyOk(@RequestParam("company_pwd") String pwd,
+								  @RequestParam("company_number") String company_no,
+								  HttpSession session, 
+								  HttpServletResponse response) throws IOException {
+		
+		CompanyDTO companyDto = (CompanyDTO)session.getAttribute("companyInfo");
+		System.out.println(companyDto);
+		
+		String str1 = company_no.substring(0, 3);
+		String str2 = company_no.substring(3, 5);
+		String str3 = company_no.substring(5);
+
+		String companyNumber = str1 + "-" + str2 + "-" + str3;
+		
+		System.out.println(companyNumber.trim());
+		
+		response.setContentType("text/html; charset=UTF-8");
+		
+		PrintWriter out = response.getWriter();
+		
+		if(companyDto.getCompany_pwd().equals(pwd)) {
+			if(companyDto.getCompany_number().equals(companyNumber)) {
+				session.setAttribute("companyInfo", companyDto);
+		        return "company/modify_ok";
+			}else {
+				out.println("<script>");
+				out.println("alert('사업자등록번호가 틀립니다. 다시한번 확인해 주십시오.')");
+				out.println("</script>");
+				return "company/modify";
+			}
+		}else {
+			out.println("<script>");
+			out.println("alert('비밀번호가 틀립니다. 다시한번 확인해 주십시오.')");
+			out.println("</script>");
+			return "company/modify";
+		}
+		
+	}
+	
+	// 회원정보를 수정 확정하는 메서드
+	@PostMapping("/comapany_update.go")
+	@ResponseBody
+	public void companyInfoUpdate(@RequestParam("logo") MultipartFile file, 
+			  					  CompanyDTO dto, 
+			  					  HttpServletResponse response,
+			  					  HttpSession session) throws IOException {
+		
+		
+		
+		CompanyDTO original_company_dto = (CompanyDTO) session.getAttribute("companyInfo");
+		
+		dto.setCompany_logo_name(original_company_dto.getCompany_logo_name());
+		dto.setCompany_logo(original_company_dto.getCompany_logo());
+		
+		if (file.getOriginalFilename() != null) {
+			if (file != null && !file.isEmpty()) {
+			String logoUploadDir ="C:\\Users\\clxkd\\OneDrive\\바탕 화면\\project1\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\logo";
+			
+			dto.setCompany_logo_name(file.getOriginalFilename());
+			
+		    String imageName = uploadFileService.upload(file, logoUploadDir);
+		    dto.setCompany_logo(imageName);
+			}
+		}
+		
+		if(!original_company_dto.getCompany_phone().equals(dto.getCompany_phone())) {
+			if (dto.getCompany_phone().length() == 8) {
+				String com_phone1 = dto.getCompany_phone().substring(0, 4);
+				String com_phone2 = dto.getCompany_phone().substring(4);
+
+				dto.setCompany_phone(com_phone1 + "-" + com_phone2);
+			} else if (dto.getCompany_phone().length() == 9) {
+				String com_phone1 = dto.getCompany_phone().substring(0, 2);
+				String com_phone2 = dto.getCompany_phone().substring(2, 5);
+				String com_phone3 = dto.getCompany_phone().substring(5);
+
+				dto.setCompany_phone(com_phone1 + "-" + com_phone2 + "-" + com_phone3);
+			} else if (dto.getCompany_phone().length() == 10) {
+				if (dto.getCompany_phone().substring(0, 2) == "02") {
+					String com_phone1 = dto.getCompany_phone().substring(0, 2);
+					String com_phone2 = dto.getCompany_phone().substring(2, 6);
+					String com_phone3 = dto.getCompany_phone().substring(6);
+
+					dto.setCompany_phone(com_phone1 + "-" + com_phone2 + "-" + com_phone3);
+				} else {
+					String com_phone1 = dto.getCompany_phone().substring(0, 3);
+					String com_phone2 = dto.getCompany_phone().substring(3, 6);
+					String com_phone3 = dto.getCompany_phone().substring(6);
+
+					dto.setCompany_phone(com_phone1 + "-" + com_phone2 + "-" + com_phone3);
+				}
+			} else {
+				String com_phone1 = dto.getCompany_phone().substring(0, 3);
+				String com_phone2 = dto.getCompany_phone().substring(3, 7);
+				String com_phone3 = dto.getCompany_phone().substring(7);
+
+				dto.setCompany_phone(com_phone1 + "-" + com_phone2 + "-" + com_phone3);
+			}
+			
+		}
+		
+		if(!original_company_dto.getCompany_mgr_phone().equals(dto.getCompany_mgr_phone())) {
+			String com_mgr_phone1 = dto.getCompany_mgr_phone().substring(0, 3);
+			String com_mgr_phone2 = dto.getCompany_mgr_phone().substring(3, 7);
+			String com_mgr_phone3 = dto.getCompany_mgr_phone().substring(7);
+
+			dto.setCompany_mgr_phone(com_mgr_phone1 + "-" + com_mgr_phone2 + "-" + com_mgr_phone3);
+		}
+		
+		if(!original_company_dto.getCompany_homepage().equals(dto.getCompany_homepage())) {
+			dto.setCompany_homepage("http://" + dto.getCompany_homepage());
+		}
+		
+		int result = this.mapper.companyUpdate(dto);
+		
+		response.setContentType("text/html; charset=UTF-8");
+		
+		PrintWriter out = response.getWriter();
+		
+		if(result == 1) {
+			session.removeAttribute("companyInfo");
+			
+			CompanyDTO updatedto = this.mapper.companyInfo(dto.getCompany_id());
+			
+			session.setAttribute("companyInfo", updatedto);
+			session.setAttribute("member_type", "company");
+			
+			out.println("<script>");
+			out.println("alert('회원정보수정 완료하였습니다.')");
+			out.println("location.href='/main.go'");
+			out.println("</script>");
+		}else {
+			out.println("<script>");
+			out.println("alert('회원정보수정 완료하였습니다.')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
+		
+	}
+	
+	// 아이디 중복검사
+	@PostMapping("/idcheck.go")
+	@ResponseBody
+	public String companyIdCheck(@RequestParam("id") String comId, 
+								 HttpServletRequest request,
+								 HttpServletResponse response) throws IOException {
+
+		String res = "사용가능한 아이디입니다.";
+
+		response.setContentType("text/html; charset=UTF-8");
+
+		CompanyDTO idCheck = this.mapper.companyInfo(comId);
+
+		if (idCheck != null) {
+			res = "이미 등록된 아이디입니다.";
+		}
+
+		return res;
+
 	}
 
 }
