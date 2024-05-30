@@ -1,0 +1,49 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	
+	<div align="center">
+		<hr width="30%" color="red">
+			<h3>게시물 전체 리스트</h3>
+		<hr width="30%" color="red">
+		<br> <br>
+		
+		<table border="1" width="400">
+			<tr>
+				<td colspan="4" align="right">
+					총 게시물 : <span th:text="${#lists.size(List)}"></span> 개
+				</td>
+			</tr>
+			
+			<tr>
+				<th>글 No.</th>	<th>글제목</th>
+				<th>조회수</th> <th>작성일자</th>
+			</tr>
+			
+			<tr th:if="${not #strings.isEmpty(List)}" th:each="dto : ${List}">
+				<td th:text="${dto.chat_key}"></td>
+				<td>
+					<a th:href="@{board_cont(no=${dto.chat_key})}" th:text="${dto.chat_title}"></a>
+				</td>
+				<td th:text="${dto.chat_hit}"></td>
+				<td th:text="${dto.chat_date.substring(0,10)}"></td>		
+			</tr>
+			
+			<tr th:if="${#strings.isEmpty(List)}">
+				<td colspan="4" align="center">
+					<h3>전체 게시물 목록이 없습니다...</h3>
+				</td>
+			</tr>
+
+		</table>
+		<br> <br>
+		
+		<input type="button" value="글쓰기" th:onclick="|location.href='@{chat_write}'|">
+
+	</div>
+</body>
+</html> -->
