@@ -48,12 +48,10 @@ public class ProfileController {
 			@RequestParam("profile_image_input") MultipartFile image_file) throws IOException {
 
 	
-		// 파일을 저장할 디렉토리 설정
 		String imageUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\profile";
 		
 		String pptUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\ppt\\profile";
 
-		// 이미지 파일 업로드
 		if (image_file.getOriginalFilename() != null) {
 			if (image_file != null && !image_file.isEmpty()) {
 				String imageName = uploadFileService.upload(image_file, imageUploadDir);
@@ -65,7 +63,6 @@ public class ProfileController {
 		dto.setProfile_ppt("");
 		dto.setProfile_ppt_name("");
 		
-		// PPT 파일 업로드
 		if (image_file.getOriginalFilename() != null) {
 			if (ppt_file != null && !ppt_file.isEmpty()) {
 				String pptName = uploadFileService.upload(ppt_file, pptUploadDir);
@@ -74,12 +71,11 @@ public class ProfileController {
 			}
 		}
 
-		// 세션에서 로그인한 사용자 정보 가져오기
 		UserDTO userdto = (UserDTO) session.getAttribute("user_login");
 
 		if (userdto == null) {
-			response.sendRedirect("/user.go"); // 로그인 페이지로 리다이렉트
-			return; // 메서드 종료
+			response.sendRedirect("/user.go"); 
+			return; 
 		}
 		dto.setUser_key(userdto.getUser_key());
 
@@ -90,10 +86,10 @@ public class ProfileController {
 			dto.setProfile_default("Y");
 		}
 
-		// 프로필 정보 삽입
+	
 		int check = this.mapper.profileInsert(dto);
 		
-		// 유저키의 프로필키(max) 가져오기
+		// 유저키의 프로필키(max) 
 		int nowInsertProfileKey = this.mapper.nowInsertProfileKey(dto.getUser_key());
 		
 		/*
