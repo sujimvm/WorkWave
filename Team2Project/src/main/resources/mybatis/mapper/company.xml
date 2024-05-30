@@ -4,14 +4,6 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.Team2Project.WorkWave.model.CompanyMapper">
-  
-  	<select id="docompanyLogin" resultType="cDTO" parameterType="String">
-        select company_key, company_id, company_pwd from company where company_id = #{company_id}
-    </select>
-    
-    <select id="companyIdCheck" resultType="cDTO" parameterType="String">
-    	select * from company where company_id = #{company_id}
-    </select>
     
     <insert id="insertCompany" parameterType="cDTO">
     	<selectKey keyProperty="company_key" resultType="int" order="BEFORE">
@@ -21,5 +13,13 @@
 VALUES 
 (#{company_key}+1, #{company_id}, #{company_pwd}, #{company_name}, #{company_number}, #{company_phone}, #{company_addr}, #{company_homepage}, #{company_ceo}, #{company_emp_count}, #{company_sal}, #{company_logo}, #{company_regdate,jdbcType=DATE}, #{company_mgr_name}, #{company_mgr_phone}, #{company_mgr_email}, sysdate, 'Y', #{company_logo_name})
     </insert>
+    
+    <select id="companyInfo" parameterType="String" resultType="cDTO">
+    	select * from company where company_id = #{company_id}
+    </select>
+    
+    <update id="companyUpdate" parameterType="cDTO">
+    	update company set company_pwd = #{company_pwd}, company_addr = #{company_addr}, company_phone = #{company_phone}, company_homepage = #{company_homepage}, company_logo = #{company_logo}, company_logo_name = #{company_logo_name}, company_emp_count = #{company_emp_count}, company_sal = #{company_sal}, company_mgr_name = #{company_mgr_name}, company_mgr_email = #{company_mgr_email}, company_mgr_phone = #{company_mgr_phone} where company_id = #{company_id}
+    </update>
   
   </mapper>

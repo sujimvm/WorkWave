@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" th:href="@{/css/include.css}">
+<link rel="stylesheet" th:href="@{/css/company.css}">
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
+<script>
+$(function(){
+	$('#company_pwd').on('input', function() {
+        var pwd = $(this).val();
+        var pwdPattern = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,20}$/;
+        if (pwdPattern.test(pwd)) {
+            $('#pwdCheckmark').show();
+            $('#pwdError').hide();
+        } else {
+            $('#pwdCheckmark').hide();
+            $('#pwdError').show();
+        }
+	});
+});
+
+$(function(){
+	var pwd_check = false;
+	$("#company_pwd_check").focusout(function(){
+		pwdCheck($(this).val());
+	});
+	
+	function pwdCheck(pwd){
+		if(pwd==""){
+			$("#pwd_check").text("");
+            return;
+		}
+		
+		if($("#company_pwd_check").val() === $("#company_pwd").val()){
+			$("#pwd_check_ok").show();
+			$("#pwd_check_err").hide();
+		}else{
+			$("#pwd_check_ok").hide();
+			$("#pwd_check_err").show();
+		}
+	};
+});
+
+function insertCheck(){
+	var pwd = $('#company_pwd').val();
+	var pwdPattern = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,20}$/;
+	
+	if(!pwdPattern.test(pwd)){
+		debugger;
+		alert('비밀번호를 확인하여주십시오.');
+		$("#company_pwd").focus();
+		return false;
+	}
+	
+	if($("#company_pwd").val()!=$("#company_pwd_check").val()){
+		debugger;
+		alert('비밀번호 확인을 확인하여주십시오.');
+		$("#company_pwd_check").focus();
+		return false;
+	}
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+    var companyPhoneInput = document.getElementById('company_phone');
+    companyPhoneInput.value = companyPhoneInput.value.replace(/-/g, '');
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var companyMgrPhoneInput = document.getElementById('company_mgr_phone');
+    companyMgrPhoneInput.value = companyMgrPhoneInput.value.replace(/-/g, '');
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var companyHomepageInput = document.getElementById('company_homepage');
+    companyHomepageInput.value = companyHomepageInput.value.replace(/^https?:\/\//i, '');
+});
+</script>
+</head>
+<body>
+
+	<div th:include="include/header::companyHeader"></div>
+	<div layout:fragment="content" class="content">
+		<hr width="30%" color="gray">
+		<h3>
+			<span th:text="${session.companyInfo.company_name} + '정보 수정 페이지'"></span>
+		</h3>
+		<hr width="30%" color="gray">
+
+		<form method="post" action="/comapany_update.go" enctype="multipart/form-data">
+			<table border="1" width="500">
+				<tr>
+					<th>사업자 등록 번호</th>
+					<td><input name="company_number" readonly
+						th:value="${session.companyInfo.company_number}"></td>
+				</tr>
+				<tr>
+					<th>회원 아이디</th>
+					<td><input name="company_id" readonly
+						th:value="${session.companyInfo.company_id}"></td>
+				</tr>
+				<tr>
+					<th>비밀번호</th>
+					<td><input name="company_pwd" type="password"
+						id="company_pwd" th:value="${session.companyInfo.company_pwd}" required> <span
+						id="pwdCheckmark" class="checkmark">✔</span> <span id="pwdError"
+						style="display: none; color: red; font-size: 12px;">비밀번호는
+						8자 이상 20자 이하이며 특수문자 1자를 포함해야 합니다.</span></td>
+				</tr>
+				<tr>
+					<th>비밀번호 확인</th>
+					<td><input name="company_pwd_check" type="password"
+						id="company_pwd_check" required> <span id="pwdCheckmark"
+						class="checkmark">✔</span> <span id="pwd_check_err"
+						style="display: none; color: red; font-size: 12px;">위의
+						비밀번호와 입력된 비밀번호가 다릅니다.</span> <span id="pwd_check_ok"
+						style="display: none; color: green; font-size: 12px;">✔</span></td>
+				</tr>
+				<tr>
+					<th>기업 이름</th>
+					<td><input name="company_name" readonly
+						th:value="${session.companyInfo.company_name}"></td>
+				</tr>
+				<tr>
+					<th>기업 대표 이름</th>
+					<td><input name="company_ceo" readonly
+						th:value="${session.companyInfo.company_ceo}"></td>
+				</tr>
+				<tr>
+					<th>기업 주소</th>
+					<td><input name="company_addr"
+						th:value="${session.companyInfo.company_addr}"></td>
+				</tr>
+				<tr>
+					<th>기업 전화번호</th>
+					<td><input name="company_phone" id="company_phone"
+						th:value="${session.companyInfo.company_phone}"></td>
+				</tr>
+				<tr>
+					<th>기업 홈페이지</th>
+					<td><input name="company_homepage" id="company_homepage"
+						th:value="${session.companyInfo.company_homepage}"></td>
+				</tr>
+				<tr>
+					<th>기업 로고</th>
+					<td><input type="file" name="logo" id="logo" accept=".jpeg, .jpg, .png"></td>
+				</tr>
+				<tr>
+					<th>기업 근무인원</th>
+					<td><input name="company_emp_count"
+						th:value="${session.companyInfo.company_emp_count}"></td>
+				</tr>
+				<tr>
+					<th>기업 총 수익</th>
+					<td><input name="company_sal"
+						th:value="${session.companyInfo.company_sal}">만원</td>
+				</tr>
+				<tr>
+					<th>인사담당자 이름</th>
+					<td><input name="company_mgr_name"
+						th:value="${session.companyInfo.company_mgr_name}"></td>
+				</tr>
+				<tr>
+					<th>인사담당자 이메일</th>
+					<td><input name="company_mgr_email"
+						th:value="${session.companyInfo.company_mgr_email}"></td>
+				</tr>
+				<tr>
+					<th>인사담당자 전화번호</th>
+					<td><input name="company_mgr_phone" id="company_mgr_phone"
+						th:value="${session.companyInfo.company_mgr_phone}"></td>
+				</tr>
+				<tr>
+					<td colspan="2" align="center"><input type="submit"
+						value="회원수정" onclick="return insertCheck()">&nbsp;&nbsp; <input type="reset" value="다시작성">
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<div th:include="include/footer::footer"></div>
+	
+</body>
+</html>
