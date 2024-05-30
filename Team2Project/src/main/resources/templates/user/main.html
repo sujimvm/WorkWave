@@ -7,16 +7,19 @@
 <link rel="stylesheet" th:href="@{/css/user.css}">
 </head>
 <body>
-	<div th:include="include/header::userHeader"></div>
+   <div th:include="include/header::userHeader"></div>
         <div layout:fragment="content" class="content">
-        	<span th:text="${session.user_login.user_id}">사용자</span>님!</h1>
+           <span th:text="${session.user_login.user_name}">사용자</span>님!
             <h2>로그인 성공</h2>
         </div>  
-        <button type="button" th:onclick="|location.href='@{/user_modify.go(num=${session.user_login.user_id})}'|">회원수정</button>
+        
+        
+        <button type="button" th:onclick="|location.href='@{/user_modify.go}'|">회원수정</button>
 
-        <button type="button" th:onclick="|location.href='@{/user_delete.go(num=${session.user_login.user_id})}'|">회원삭제</button>
-
-	</div>
-	<div th:include="include/footer::footer"></div>
+        <button type="button" th:onclick="|location.href='@{/user_delete.go}'|">회원삭제</button>
+   
+   
+   
+   <div th:include="include/footer::footer"></div>
 </body>
 </html>

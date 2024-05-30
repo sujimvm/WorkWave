@@ -5,8 +5,8 @@
   
   <mapper namespace="com.Team2Project.WorkWave.model.UserMapper">
   
-  	<select id="doLogin" resultType="uDTO" parameterType="String">
-        select user_key, user_id, user_pwd from users where user_id = #{user_id}
+     <select id="doLogin" resultType="uDTO" parameterType="String">
+        select * from users where user_id = #{user_id}
     </select>
     
     <insert id="insertUser" parameterType="uDTO">
@@ -17,24 +17,19 @@
         VALUES (#{user_key}, #{user_id}, #{user_pwd}, #{user_name}, #{user_phone}, #{user_email}, #{user_addr}, #{user_birth,jdbcType=DATE}, #{user_gender,jdbcType=VARCHAR}, sysdate, #{user_confirm,jdbcType=VARCHAR})
     </insert>
     
-    <select id="modify" resultType="uDTO" parameterType="String">
-    	SELECT * FROM users WHERE USER_ID = #{user_id}
-    </select>
-
-    
     <update id="updateok" parameterType="uDTO">
-  		update users set user_pwd = #{user_pwd}, user_email = #{user_email}, user_phone = #{user_phone}, user_addr = #{user_addr} where user_key = #{user_key}
-  	</update>
+        update users set user_pwd = #{user_pwd}, user_email = #{user_email}, user_phone = #{user_phone}, user_addr = #{user_addr} where user_key = #{user_key}
+     </update>
 
-	
-	<select id="delete" resultType="uDTO" parameterType="String">
+   
+   <select id="delete" resultType="uDTO" parameterType="String">
     SELECT * FROM users WHERE user_id = #{user_id}
-	</select>
-	
-	<delete id="deleteok" parameterType="int">
-	    DELETE FROM users WHERE user_key = #{user_key}
-	</delete>
-	
+   </select>
+   
+   <delete id="deleteok" parameterType="int">
+       DELETE FROM users WHERE user_key = #{user_key}
+   </delete>
+   
 
   
   </mapper>
