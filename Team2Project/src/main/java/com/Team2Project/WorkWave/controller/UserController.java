@@ -2,6 +2,7 @@ package com.Team2Project.WorkWave.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,208 +28,229 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class UserController {
 
-	@Autowired
-	private UserMapper mapper;
+   @Autowired
+   private UserMapper mapper;
 
-	@Autowired
-	private UserService userService;
+   @Autowired
+   private UserService userService;
 
-	@PostMapping("/user_login.go")
-	public void login(@RequestParam("user_id") String user_id, @RequestParam("user_pwd") String user_pwd,
-			HttpSession session, HttpServletResponse response) throws IOException {
+   // 유저 로그인
+   @PostMapping("/user_login.go")
+   public void login(@RequestParam("user_id") String user_id, @RequestParam("user_pwd") String user_pwd,
+         HttpSession session, HttpServletResponse response) throws IOException {
 
-		response.setContentType("text/html; charset=UTF-8");
+      response.setContentType("text/html; charset=UTF-8");
 
-		PrintWriter out = response.getWriter();
+      PrintWriter out = response.getWriter();
 
-		UserDTO user_login = this.mapper.doLogin(user_id);
+      UserDTO user_login = this.mapper.doLogin(user_id);
 
-		// 로그인 실패 처리
-		if (user_login == null) {
-			// 아이디가 존재하지 않는 경우
-			out.println("<script>");
-			out.println("alert('아이디가 존재하지 않습니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-			out.flush();
-		} else if (!user_login.getUser_pwd().equals(user_pwd)) {
-			// 비밀번호가 틀린 경우
-			out.println("<script>");
-			out.println("alert('비밀번호가 틀렸습니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-			out.flush();
-		} else {
-			// 로그인 성공 처리
-			session.setAttribute("user_login", user_login);
-			session.setAttribute("member_type", "user");
-			out.println("<script>");
-			out.println("alert('성공.')");
-			out.println("location.href='main.go'");
-			out.println("</script>");
+      // 로그인 실패 처리
+      if (user_login == null) {
+         // 아이디가 존재하지 않는 경우
+         out.println("<script>");
+         out.println("alert('아이디가 존재하지 않습니다.')");
+         out.println("history.back()");
+         out.println("</script>");
+         out.flush();
+      } else if (!user_login.getUser_pwd().equals(user_pwd)) {
+         // 비밀번호가 틀린 경우
+         out.println("<script>");
+         out.println("alert('비밀번호가 틀렸습니다.')");
+         out.println("history.back()");
+         out.println("</script>");
+         out.flush();
+      } else {
+         // 로그인 성공 처리
+         session.setAttribute("user_login", user_login);
+         session.setAttribute("member_type", "user");
+         out.println("<script>");
+         out.println("alert('성공.')");
+         out.println("location.href='main.go'");
+         out.println("</script>");
 
-		}
+      }
 
-	}
+   }
 
-	@GetMapping("/user_insert.go")
-	public String userInsertForm(Model model) {
-		model.addAttribute("user", new UserDTO());
-		return "user/insert";
-	}
+   // 유저 회원가입 페이지 이동
+   @GetMapping("/user_insert.go")
+   public String userInsertForm(Model model) {
+      model.addAttribute("user", new UserDTO());
+      return "user/insert";
+   }
 
-	@PostMapping("/insertUser")
-	public String insertUser(UserDTO user) {
-		userService.insertUser(user);
-		return "user/insert_success"; // 성공 페이지로 리디렉션
-	}
+   // 유저 회원가입 성공
+   @PostMapping("/insertUser")
+   public String insertUser(UserDTO user) {
+      userService.insertUser(user);
+      return "user/login"; // 성공 페이지로 리디렉션
+   }
 
-	@PostMapping("/checkUserId")
-	@ResponseBody
-	public Map<String, String> checkUserId(@RequestBody Map<String, String> request) {
-		String userId = request.get("userId");
-		boolean isAvailable = userService.isUserIdAvailable(userId);
-		Map<String, String> response = new HashMap<>();
-		if (isAvailable) {
-			response.put("status", "available");
-		} else {
-			response.put("status", "unavailable");
-		}
-		return response;
-	}
+   // 유저 정보 수정받기 전 비밀번호 확인 페이지로 이동
+   @GetMapping("/user_modify.go")
+   public String modify(HttpSession session) {
+      
+      UserDTO userInfo = (UserDTO)session.getAttribute("user_login");
+      
+      session.setAttribute("userInfo", userInfo);
+      
+      return "user/modify";
 
-	@GetMapping("/find_id.go")
-	public String findIdForm() {
-		return "user/find_id";
-	}
+   }
 
-	@GetMapping("/find_password.go")
-	public String findPwdForm() {
-		return "user/find_password";
-	}
+   // 유저 수정 비밀번호 확인 성공 시 유저 수정 페이지로 이동
+   @PostMapping("/user_modify_ok.go")
+   public String modifyOk(@RequestParam("user_pwd") String pwd,
+                     HttpSession session,
+                      HttpServletResponse response) throws IOException {
 
-	@GetMapping("/find_id_ok.go")
-	public String findUserId(@RequestParam("user_name") String userName, @RequestParam("user_email") String userEmail,
-			Model model) {
-		String user_id = userService.findUserId(userName, userEmail);
-		model.addAttribute("userId", user_id);
-		return "user/find_id_result";
-	}
+      response.setContentType("text/html; charset=UTF-8");
 
-	@GetMapping("/find_password_ok.go")
-	public String findUserPassword(@RequestParam("user_name") String userName, @RequestParam("user_id") String userId,
-			@RequestParam("user_email") String userEmail, Model model) {
-		// 사용자의 비밀번호를 검색
-		UserDTO user_pwd = userService.findUserPassword(userName, userId, userEmail);
+      PrintWriter out = response.getWriter();
+      
+      UserDTO userInfo = (UserDTO)session.getAttribute("user_login");
 
-		// 검색된 비밀번호 정보를 모델에 추가
-		model.addAttribute("user_pwd", user_pwd);
+      if (userInfo.getUser_pwd().equals(pwd)) {
+         out.println("<script>");
+         out.println("alert('비밀번호가 일치합니다.')");
+         out.println("</script>");
+         return "user/modify_ok";
+      } else {
+         out.println("<script>");
+         out.println("alert('비밀번호가 틀렸습니다')");
+         out.println("</script>");
+         return "user/modify";
+      }
+   }
+   
 
-		// 비밀번호 결과를 표시할 뷰 이름을 반환
-		return "user/find_password_result";
-	}
+   @PostMapping("/user_update.go")
+   public void updateok(UserDTO dto, HttpServletResponse response) throws IOException {
 
-	@GetMapping("/user_modify.go")
-	public String modify(@RequestParam("num") String user_id, Model model) {
+      response.setContentType("text/html; charset=UTF-8");
 
-		UserDTO modify = this.mapper.modify(user_id);
+      PrintWriter out = response.getWriter();
 
-		model.addAttribute("Modify", modify);
+      int result = this.mapper.updateok(dto);
 
-		return "user/modify";
+      if (result > 0) {
+         out.println("<script>");
+         out.println("alert('회원 수정 성공')");
+         out.println("location.href='main.go'");
+         out.println("</script>");
+      } else {
+         out.println("<script>");
+         out.println("alert('회원 수정 실패')");
+         out.println("history.back()");
+         out.println("</script>");
+      }
 
-	}
+   }
 
- 
-	  @PostMapping("/user_modify_ok.go")
-	  public String modifyOk(@RequestParam("user_pwd") String pwd, HttpSession session, RedirectAttributes redirectAttributes) throws IOException {
+   @GetMapping("/user_delete.go")
+   public String delete(HttpSession session) {
+	   
+      UserDTO delete = (UserDTO)session.getAttribute("user_login");
+      
+      session.setAttribute("del", delete);
+      
+      return "user/delete";
+      
+   }
+   
 
-	      UserDTO dto = (UserDTO) session.getAttribute("user_login");
-	      UserDTO modify = this.mapper.modify(dto.getUser_id());
+   @PostMapping("/user_delete_ok.go")
+   public void deleteok(@RequestParam("user_pwd") String userPwd, HttpSession session, HttpServletResponse response)
+         throws IOException {
+	   
+      response.setContentType("text/html; charset=UTF-8");
+      
+      PrintWriter out = response.getWriter();
 
-	      if (modify.getUser_pwd().equals(pwd)) {
-	          redirectAttributes.addFlashAttribute("Modify", modify);
-	          return "redirect:/update.go";
-	      } else {
-	          return "redirect:/user_modify.go"; 
-	      }
-	  }
+      // 세션에 저장된 유저 정보를 가져옴
+      UserDTO user = (UserDTO) session.getAttribute("user_login");
 
-	 @GetMapping("/update.go")
-	 public String updatePage(@ModelAttribute("Modify") UserDTO modify, Model model) {
-	        
-		 model.addAttribute("Modify", modify);
-		 
-	     return "user/modify_ok"; 
-	    }
-	 
-	 @PostMapping("/user_update.go")
-	 public void updateok(UserDTO dto, HttpServletResponse response) throws IOException {
-		 
-		response.setContentType("text/html; charset=UTF-8");
-			
-		PrintWriter out = response.getWriter();
-		
-		int result = this.mapper.updateok(dto);
-		
-		
-		if(result > 0) {
-			out.println("<script>");
-			out.println("alert('회원 수정 성공')");
-			out.println("location.href='main.go'");
-			out.println("</script>");
-		}else {
-			out.println("<script>");
-			out.println("alert('회원 수정 실패')");
-			out.println("history.back()");
-			out.println("</script>");
-	  }
-	
-	 }
-	 
-	 @GetMapping("/user_delete.go")
-	 public String delete(@RequestParam("num") String user_id, Model model) {
-	     UserDTO delete = this.mapper.delete(user_id);
-	     model.addAttribute("del", delete);
-	     return "user/delete";
-	 }
+      if (user != null) {
+         // 입력된 비밀번호와 세션에 저장된 유저의 비밀번호가 일치하는지 확인
+         if (userPwd.equals(user.getUser_pwd())) {
+        	 
+            int result = this.mapper.deleteok(user.getUser_key());
 
-	 @PostMapping("/user_delete_ok.go")
-	 public void deleteok(@RequestParam("user_pwd") String userPwd, HttpSession session, HttpServletResponse response) throws IOException {
-	     response.setContentType("text/html; charset=UTF-8");
-	     PrintWriter out = response.getWriter();
+            if (result > 0) {
 
-	     // 세션에 저장된 유저 정보를 가져옴
-	     UserDTO user = (UserDTO) session.getAttribute("user_login");
+               out.println("<script>");
+               out.println("alert('회원 삭제 성공')");
+               out.println("location.href='user.go'");
+               out.println("</script>");
+            } else {
+               out.println("<script>");
+               out.println("alert('회원 삭제 실패')");
+               out.println("history.back()");
+               out.println("</script>");
+            }
+         } else {
+            out.println("<script>");
+            out.println("alert('비밀번호가 일치하지 않습니다.')");
+            out.println("history.back()");
+            out.println("</script>");
+         }
+      } else {
+         out.println("<script>");
+         out.println("alert('회원 정보를 찾을 수 없습니다.')");
+         out.println("history.back()");
+         out.println("</script>");
+      }
+   }
 
-	     if (user != null) {
-	         // 입력된 비밀번호와 세션에 저장된 유저의 비밀번호가 일치하는지 확인
-	         if (userPwd.equals(user.getUser_pwd())) {
-	             int result = this.mapper.deleteok(user.getUser_key());
+   // 아이디 유효성 검사
+   @PostMapping("/checkUserId")
+   @ResponseBody
+   public Map<String, String> checkUserId(@RequestBody Map<String, String> request) {
+      String userId = request.get("userId");
+      boolean isAvailable = userService.isUserIdAvailable(userId);
+      Map<String, String> response = new HashMap<>();
+      if (isAvailable) {
+         response.put("status", "available");
+      } else {
+         response.put("status", "unavailable");
+      }
+      return response;
+   }
 
-	             if (result > 0) {
-	                 
-	                 out.println("<script>");
-	                 out.println("alert('회원 삭제 성공')");
-	                 out.println("location.href='user.go'");
-	                 out.println("</script>");
-	             } else {
-	                 out.println("<script>");
-	                 out.println("alert('회원 삭제 실패')");
-	                 out.println("history.back()");
-	                 out.println("</script>");
-	             }
-	         } else {
-	             out.println("<script>");
-	             out.println("alert('비밀번호가 일치하지 않습니다.')");
-	             out.println("history.back()");
-	             out.println("</script>");
-	         }
-	     } else {
-	         out.println("<script>");
-	         out.println("alert('회원 정보를 찾을 수 없습니다.')");
-	         out.println("history.back()");
-	         out.println("</script>");
-	     }
-	 }
+   // 아이디 찾기 페이지 이동
+   @GetMapping("/find_id.go")
+   public String findIdForm() {
+      return "user/find_id";
+   }
+
+   // 비밀번호 찾기 페이지 이동
+   @GetMapping("/find_password.go")
+   public String findPwdForm() {
+      return "user/find_password";
+   }
+
+   // 아이디 찾기 성공
+   @GetMapping("/find_id_ok.go")
+   public String findUserId(@RequestParam("user_name") String userName, @RequestParam("user_email") String userEmail,
+         Model model) {
+      String user_id = userService.findUserId(userName, userEmail);
+      model.addAttribute("userId", user_id);
+      return "user/find_id_result";
+   }
+
+   // 비밀번호 찾기 성공
+   @GetMapping("/find_password_ok.go")
+   public String findUserPassword(@RequestParam("user_name") String userName, @RequestParam("user_id") String userId,
+         @RequestParam("user_email") String userEmail, Model model) {
+      // 사용자의 비밀번호를 검색
+      UserDTO user_pwd = userService.findUserPassword(userName, userId, userEmail);
+
+      // 검색된 비밀번호 정보를 모델에 추가
+      model.addAttribute("user_pwd", user_pwd);
+
+      // 비밀번호 결과를 표시할 뷰 이름을 반환
+      return "user/find_password_result";
+   }
+
 }
