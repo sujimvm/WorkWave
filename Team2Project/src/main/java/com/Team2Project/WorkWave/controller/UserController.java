@@ -81,10 +81,21 @@ public class UserController {
    }
 
    // 유저 회원가입 성공
-   @PostMapping("/insertUser")
-   public String insertUser(UserDTO user) {
+   @PostMapping("/user_insert_ok.go")
+   public String insertUser(UserDTO user,
+		   					HttpServletResponse response) throws IOException {
+	   
+	  response.setContentType("text/html; charset=UTF-8");
+
+	  PrintWriter out = response.getWriter();
+	   
       userService.insertUser(user);
-      return "user/login"; // 성공 페이지로 리디렉션
+      
+      out.println("<script>");
+      out.println("alert('회원가입 성공')");
+      out.println("</script>");
+      
+      return "index"; 
    }
 
    // 유저 정보 수정받기 전 비밀번호 확인 페이지로 이동
@@ -124,7 +135,7 @@ public class UserController {
       }
    }
    
-
+   // 유저 회원 수정 성공 시 경로
    @PostMapping("/user_update.go")
    public void updateok(UserDTO dto, HttpServletResponse response) throws IOException {
 
@@ -147,7 +158,8 @@ public class UserController {
       }
 
    }
-
+   
+   // 유저 정보 삭제 시 삭제 페이지 이동
    @GetMapping("/user_delete.go")
    public String delete(HttpSession session) {
 	   
@@ -159,7 +171,7 @@ public class UserController {
       
    }
    
-
+   
    @PostMapping("/user_delete_ok.go")
    public void deleteok(@RequestParam("user_pwd") String userPwd, HttpSession session, HttpServletResponse response)
          throws IOException {
