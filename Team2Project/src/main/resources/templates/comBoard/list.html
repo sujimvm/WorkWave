@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
 <title>Work Wave 공고리스트</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
@@ -10,7 +11,7 @@
 </head>
 
 <body>
-	<div th:include="include/header::guestHeader"></div>
+<div th:replace="~{include/header :: guestHeader}"></div> 
 	<div layout:fragment="content" class="content">
 		<div>
 			<div id="jobCodeOutputDiv"><span>분류검색</span></div>
@@ -75,6 +76,6 @@
 		</div> <!-- 리스트 -->
 		<div></div> <!-- 페이징 -->
 	</div>
-	<div th:include="include/footer::footer"></div>
+	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>

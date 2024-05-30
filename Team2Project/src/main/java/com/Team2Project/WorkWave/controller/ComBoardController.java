@@ -43,7 +43,7 @@ public class ComBoardController {
 		Map<String, List<CodeDTO>> map = new HashMap<>();
 		
 		map.put("group", this.mapper.getJobCodeGroupList());
-		map.put("sub", this.mapper.getJobCodeSubList());
+		map.put("sub", this.mapper.getJobCodeSubList()); 
 		map.put("step", this.mapper.getJobCodeStepList());
 		
 		return map;
@@ -59,5 +59,12 @@ public class ComBoardController {
 		map.put("sub", this.mapper.getLocationCodeSubList());
 		
 		return map;
+	}
+	
+
+	@GetMapping("comboard/add")
+	public String goAddComBoard() {
+		
+		return "comBoard/list";
 	}
 }
