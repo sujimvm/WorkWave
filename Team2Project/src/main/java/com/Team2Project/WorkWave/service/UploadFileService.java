@@ -13,26 +13,26 @@ public String upload(MultipartFile file, String uploadDir) {
 		
 	 String fileOriName = file.getOriginalFilename();
 	 
-     String fileExtension = fileOriName.substring(fileOriName.lastIndexOf(".")); //파일 확장자
+     String fileExtension = fileOriName.substring(fileOriName.lastIndexOf(".")); //확장자
      
-     UUID uuid = UUID.randomUUID(); //고유한 이름 생성
+     UUID uuid = UUID.randomUUID(); 
      
      String uniqueName = uuid.toString().replaceAll("-", "") + fileExtension;
      
-     File saveFile = new File(uploadDir + File.separator + uniqueName); //separator운영체제에 맞는 파일 구분자
+     File saveFile = new File(uploadDir + File.separator + uniqueName); 
 
      try {
          if (!saveFile.exists()) {
-             saveFile.mkdirs(); //디렉토리 생성
+             saveFile.mkdirs(); 
          }
-         file.transferTo(saveFile); // 저장할 경로에 파일 전송
+         file.transferTo(saveFile); 
          System.out.println("[UploadFileService] FILE UPLOAD SUCCESS!!");
-         return uniqueName; // 파일 고유한 이름 반환
+         return uniqueName; 
      } catch (Exception e) {
          e.printStackTrace();
          System.out.println("[UploadFileService] FILE UPLOAD FAIL!!");
          return null;
      }
- }
+   }
 
 }

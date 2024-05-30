@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:white-space="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="UTF-8">
 <title>Work Wave 이력서 상세보기</title>
@@ -55,16 +55,16 @@
 			
 			<div class="history_div">
 				<h2>성장과정</h2>
-				<span th:text="${Content.profile_history}"></span>
+				<span style="white-space: pre-line" th:text="${Content.profile_history}"></span>
 				
 				<h2>지원동기</h2>
-					<span th:text="${Content.profile_apply}"></span>
+					<span style="white-space: pre-line" th:text="${Content.profile_apply}"></span>
 					
 				<h2>성격 장단점</h2>
-				<span th:text="${Content.profile_character}"></span>
+				<span style="white-space: pre-line" th:text="${Content.profile_character}"></span>
 				
 				<h2>입사 후 포부</h2>
-				<span th:text="${Content.profile_character}"></span>
+				<span style="white-space: pre-line" th:text="${Content. profile_plan}"></span>
 			</div>
 			
 			<div class="Portfolio_div">
