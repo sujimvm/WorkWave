@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
 <title>Work Wave 회원가입</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/join.css}">
@@ -9,8 +10,6 @@
 <script th:src="@{/js/userInsert.js}"></script>
 </head>
 <body>
-	
-	<div th:include="include/header::guestHeader"></div>
 	<div layout:fragment="content" class="content">
 	
 	<div align="center">
@@ -88,6 +87,5 @@
         </table>
     </form>
     </div>
-    <div th:include="include/footer::footer"></div>
 </body>
 </html>

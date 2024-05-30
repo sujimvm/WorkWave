@@ -2,11 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
 <title>Work Wave</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 </head>
 <body>
-	<div th:include="include/header::guestHeader"></div>
+	<div th:replace="~{include/header :: guestHeader}"></div> 
 	<div layout:fragment="content" class="content">
 		<ul>
 			<li><a th:href="@{user.go}">개인회원로그인</a></li>
@@ -15,7 +16,6 @@
 			<li><a th:href="@{company_insert.go}">기업회원가입</a></li>
 			<li><a th:href="@{main.go}">비회원</a></li>
 			<li><a th:href="@{comboard.go}">공고리스트</a></li>
-			<li><a th:href="@{company_insert.go}">기업회원가입페이지</a></li>
 			<li><a th:href="@{FAQ.go}">고객센터</a></li>
 			<li><a th:href="@{notice.go}">공지사항</a></li>
 			<li><a th:href="@{profile_writer}">이력서 작성</a></li>
@@ -23,6 +23,6 @@
 			<li><a th:href="@{chat.go}">유저 게시판</a></li>
 		</ul>
 	</div>
-	<div th:include="include/footer::footer"></div>
+	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>

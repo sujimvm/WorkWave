@@ -1,13 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:white-space="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
 <title>Work Wave 이력서 상세보기</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 <body>
-	<div th:include="include/header::userHeader"></div>
+<div th:replace="~{include/header :: guestHeader}"></div> 
 	<div layout:fragment="content" class="content">
 		<div><!-- 이력서 출력 폼 -->
 			<h1 th:text="${Content.profile_name}"></h1>
@@ -79,6 +80,6 @@
 			</div> <!-- 희망근무조건 -->
 		</div> 
 	</div>
-	<div th:include="include/footer::footer"></div>
+	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>

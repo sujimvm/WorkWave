@@ -2,13 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
     <title>Work Wave Notice Content</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/notice.css}">
 
 </head>
 <body>
-	<div th:include="include/header::guestHeader"></div>
+	<div th:replace="~{include/header :: guestHeader}"></div> 
 	<div layout:fragment="content" class="content">
 	<h2>공지사항 상세 페이지</h2>
 	
@@ -46,6 +47,6 @@
 			
 		</table>
 	</div>
-	<div th:include="include/footer::footer"></div>
+	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>

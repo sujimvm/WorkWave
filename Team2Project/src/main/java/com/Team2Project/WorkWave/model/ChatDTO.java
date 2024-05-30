@@ -7,11 +7,11 @@ public class ChatDTO {
 
 	private String chat_key;
 	private String user_key;
-	private String title;
-	private String cont;
-	private Integer hit;
-	private String date;
-	private String update;
-	private Integer like;
-	private String tag;
+	private String chat_title;
+	private String chat_cont;
+	private int chat_hit;
+	private String chat_date;
+	private String chat_update;
+	private int chat_like;
+	private String chat_tag;
 }

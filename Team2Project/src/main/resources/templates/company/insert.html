@@ -2,8 +2,10 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
 <title>Work Wave 기업회원가입</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
+<link rel="stylesheet" th:href="@{/css/join.css}">
 <link rel="stylesheet" th:href="@{/css/company.css}">
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
@@ -241,8 +243,11 @@
 </style>
 </head>
 <body>
-	<div th:include="include/header::companyHeader"></div>
+	<div th:replace="~{include/header :: guestHeader}"></div> 
 	<div layout:fragment="content" class="content">
+	
+	<h1>성환아 위에 join.CSS 붙여놨어 / 맞춰서 수정해주렴 </h1>
+	
 		<form method="post" action="#" th:action="@{/company_insert_ok.go}"
 			th:object="${company}" enctype="multipart/form-data">
 			<div align="center">
@@ -370,6 +375,6 @@
 				<input type="submit" value="회원가입" onclick="return insertCheck()">
 			</div>
 		</form>
-		<div th:include="include/footer::footer"></div>
+	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>

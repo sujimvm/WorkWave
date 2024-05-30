@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
 <title>Insert title here</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/company.css}">
@@ -81,8 +82,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </head>
 <body>
-
-	<div th:include="include/header::companyHeader"></div>
+	<div th:replace="~{include/header :: guestHeader}"></div>
 	<div layout:fragment="content" class="content">
 		<hr width="30%" color="gray">
 		<h3>
@@ -181,7 +181,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			</table>
 		</form>
 	</div>
-	<div th:include="include/footer::footer"></div>
-	
+	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>
