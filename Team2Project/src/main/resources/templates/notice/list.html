@@ -2,59 +2,59 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="image/icon/logo_icon.png"/> 
-    <title>Work Wave Notice List</title>
+<title>Insert title here</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
-<link rel="stylesheet" th:href="@{/css/notice.css}">
-
+<link rel="stylesheet" th:href="@{/css/FAQ.css}">
 </head>
 <body>
-	<div th:replace="~{include/header :: guestHeader}"></div>
-	<div layout:fragment="content" class="content">
-	    <h1>Notice List</h1>
-	    
-	    <table>
-	        <thead>
-	            <tr>
-	                <th>번호</th>
-	                <th>제목</th>
-	                <th>날짜</th>
-	            </tr>
-	        </thead>
-	        <tbody>
-	            <tr th:each="notice : ${nList}">
-	                <td th:text="${notice.notice_key}"></td>
-	                <td>
-	                    <a th:href="@{/notice_cont(no=${notice.notice_key})}" 
-	                       th:text="${notice.notice_title}">
-	                    </a>
-	                </td>
-	                <td th:text="${notice.notice_date}"></td>
-	            </tr>
-	        </tbody>
-	    </table>
+	<div th:replace="~{include/header :: guestHeader}"></div> 
+    <div layout:fragment="content" class="content">
 	
-	    <!-- Page navigation -->
-	    <ul class="pagination">
-	        <li th:if="${paging.page > paging.block}">
-	            <a th:href="@{/notice.go(page=1)}">[⋘]</a>
-	        </li>
-	        <li th:if="${paging.page > paging.block}">
-	            <a th:href="@{/notice.go(page=${paging.startBlock - 1})}">[☚]</a>
-	        </li>
-	
-	        <li th:each="i : ${#numbers.sequence(paging.startBlock, paging.endBlock)}">
-	            <a th:href="@{/notice.go(page=${i})}" th:text="'[' + ${i} + ']'"></a>
-	        </li>
-	
-	        <li th:if="${paging.endBlock < paging.allPage}">
-	            <a th:href="@{/notice.go(page=${paging.endBlock + 1})}">[➤]</a>
-	        </li>
-	        <li th:if="${paging.endBlock < paging.allPage}">
-	            <a th:href="@{/notice.go(page=${paging.allPage})}">[⋙]</a>
-	        </li>
-	    </ul>
+	<div class="mainContainer">
+	<div class="sidebar active">
+      	<h3>고객센터</h3>
+        <a th:href="@{/userFAQ.go}">개인회원</a>
+        <a th:href="@{/companyFAQ.go}">기업회원</a>
+        <a th:href="@{/notice.go}">공지사항</a>
+        <a th:href="@{/find_id.go}">아이디 찾기</a>
+        <a th:href="@{/find_password.go}">비밀번호 찾기</a>
+        <a th:href="@{/resign}">회원탈퇴</a>
+      </div>
+		
+		<div class="faq-list">
+        <div class="content">
+            <h3>공지사항</h3>
+            <ul class="notice-list">
+                <li th:each="notice : ${nList}">
+                    <span th:text="${notice.notice_key}"></span>
+                    <a th:href="@{/notice_cont(no=${notice.notice_key})}" th:text="${notice.notice_title}"></a>
+                    <span th:text="${notice.notice_date}"></span>
+                </li>
+            </ul>
+
+            <!-- Page navigation -->
+            <ul class="pagination">
+                <li th:if="${paging != null and paging.page > paging.block}">
+                    <a th:href="@{/notice.go(page=1)}">[⋘]</a>
+                </li>
+                <li th:if="${paging != null and paging.page > paging.block}">
+                    <a th:href="@{/notice.go(page=${paging.startBlock - 1})}">[☚]</a>
+                </li>
+
+                <li th:each="i : ${#numbers.sequence(paging.startBlock, paging.endBlock)}">
+                    <a th:href="@{/notice.go(page=${i})}" th:text="'[' + ${i} + ']'"></a>
+                </li>
+
+                <li th:if="${paging != null and paging.endBlock < paging.allPage}">
+                    <a th:href="@{/notice.go(page=${paging.endBlock + 1})}">[➤]</a>
+                </li>
+                <li th:if="${paging != null and paging.endBlock < paging.allPage}">
+                    <a th:href="@{/notice.go(page=${paging.allPage})}">[⋙]</a>
+                </li>
+            </ul>
+        </div>
 	</div>
-	<div th:replace="~{include/footer :: footer}"></div>
+	</div>
+    <div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>

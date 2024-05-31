@@ -27,6 +27,21 @@ public class NoticeController {
 	// DB 상의 전체 게시물의 수
 	private int totalRecord = 0;
 	
+	// 개인회원 FAQ로 이동
+	@GetMapping("userFAQ.go")
+	public String userFAQ() {
+		
+		return "notice/userFAQ";
+	}
+	
+	// 기업회원 FAQ로 이동
+	@GetMapping("companyFAQ.go")
+	public String companyFAQ() {
+		
+		return "notice/companyFAQ";
+	}
+	
+	// 공지사항 리스트 페이지 이동 
 	@GetMapping("notice.go")
 	public String noticeList(HttpServletRequest request, Model model) {
 		
@@ -52,6 +67,7 @@ public class NoticeController {
 		return "notice/list";
 	}
 	
+	// 공지사항 상세정보 페이지 이동
 	@GetMapping("notice_cont")
 	public String noticeCont(@RequestParam("no") int no, Model model) {
 		
@@ -63,11 +79,7 @@ public class NoticeController {
 		return "notice/cont";
 	}
 	
-	@GetMapping("FAQ.go")
-	public String FAQ() {
-		
-		return "notice/FAQ";
-	}
+	
 	
 	
 }
