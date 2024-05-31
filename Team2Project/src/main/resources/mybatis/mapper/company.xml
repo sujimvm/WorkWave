@@ -7,11 +7,11 @@
     
     <insert id="insertCompany" parameterType="cDTO">
     	<selectKey keyProperty="company_key" resultType="int" order="BEFORE">
-            SELECT max(company_key) FROM company
+            SELECT key_seq.NEXTVAL FROM dual
         </selectKey>
-        INSERT INTO company (company_key, company_id, company_pwd, company_name, company_number, company_phone, company_addr, company_homepage, company_ceo, company_emp_count, company_sal, company_logo, company_regdate, company_mgr_name, company_mgr_phone, company_mgr_email, company_join_date, company_confirm, company_logo_name) 
+        INSERT INTO company (company_key, company_id, company_pwd, company_name, company_number, company_phone, company_addr, company_homepage, company_ceo, company_emp_count, company_sal, company_logo, company_regdate, company_mgr_name, company_mgr_phone, company_mgr_email, company_join_date, company_logo_name) 
 VALUES 
-(#{company_key}+1, #{company_id}, #{company_pwd}, #{company_name}, #{company_number}, #{company_phone}, #{company_addr}, #{company_homepage}, #{company_ceo}, #{company_emp_count}, #{company_sal}, #{company_logo}, #{company_regdate,jdbcType=DATE}, #{company_mgr_name}, #{company_mgr_phone}, #{company_mgr_email}, sysdate, 'Y', #{company_logo_name})
+(#{company_key}, #{company_id}, #{company_pwd}, #{company_name}, #{company_number}, #{company_phone}, #{company_addr}, #{company_homepage}, #{company_ceo}, #{company_emp_count}, #{company_sal}, #{company_logo}, #{company_regdate,jdbcType=DATE}, #{company_mgr_name}, #{company_mgr_phone}, #{company_mgr_email}, sysdate, #{company_logo_name})
     </insert>
     
     <select id="companyInfo" parameterType="String" resultType="cDTO">
@@ -21,5 +21,21 @@ VALUES
     <update id="companyUpdate" parameterType="cDTO">
     	update company set company_pwd = #{company_pwd}, company_addr = #{company_addr}, company_phone = #{company_phone}, company_homepage = #{company_homepage}, company_logo = #{company_logo}, company_logo_name = #{company_logo_name}, company_emp_count = #{company_emp_count}, company_sal = #{company_sal}, company_mgr_name = #{company_mgr_name}, company_mgr_email = #{company_mgr_email}, company_mgr_phone = #{company_mgr_phone} where company_id = #{company_id}
     </update>
+    
+    <select id="findCompanyId" parameterType="String" resultType="String">
+    	select company_id from company where company_mgr_name = #{company_mgr_name} and company_number = #{companyNumber}
+    </select>
+    
+    <select id="findCompanyPwd" parameterType="String" resultType="String">
+    	select company_pwd from company where company_mgr_name = #{company_mgr_name} and company_number = #{companyNumber} and company_id = #{company_id}
+    </select>
+    
+    <update id="companyPwdUpdate" parameterType="String">
+    	update company set company_pwd = #{company_pwd} where company_id = #{company_id}
+    </update>
+    
+    <delete id="companyDelete" parameterType="int">
+    	delete from company where company_key = #{company_key}
+    </delete>
   
   </mapper>
