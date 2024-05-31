@@ -17,6 +17,8 @@ public class EduDTO {
 	private String edu_hakjum;
 	private String edu_submajor;
 	private String edu_nonmun;
+	private String edu_nonmun_name;
+	
 
 
     // 생성자, Getter 및 Setter 생략 (필요시 추가)
