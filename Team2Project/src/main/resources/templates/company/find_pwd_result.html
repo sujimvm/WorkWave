@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
+<title>Work Wave 비밀번호 찾기 결과</title>
+<link rel="stylesheet" th:href="@{/css/include.css}">
+<link rel="stylesheet" th:href="@{/css/company.css}">
+<script src="https://code.jquery.com/jquery-3.7.1.js"
+	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+	crossorigin="anonymous"></script>
+<script>
+$(function(){
+	$('#company_pwd').on('input', function() {
+        var pwd = $(this).val();
+        var pwdPattern = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,20}$/;
+        if (pwdPattern.test(pwd)) {
+            $('#pwdCheckmark').show();
+            $('#pwdError').hide();
+        } else {
+            $('#pwdCheckmark').hide();
+            $('#pwdError').show();
+        }
+	});
+});
+
+$(function(){
+	var pwd_check = false;
+	$("#company_pwd_check").focusout(function(){
+		pwdCheck($(this).val());
+	});
+	
+	function pwdCheck(pwd){
+		if(pwd==""){
+			$("#pwd_check").text("");
+            return;
+		}
+		
+		if($("#company_pwd_check").val() === $("#company_pwd").val()){
+			$("#pwd_check_ok").show();
+			$("#pwd_check_err").hide();
+		}else{
+			$("#pwd_check_ok").hide();
+			$("#pwd_check_err").show();
+		}
+	};
+});
+
+function pwdCheck(){
+	var pwd = $('#company_pwd').val();
+	var pwdPattern = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,20}$/;
+	
+	if(!pwdPattern.test(pwd)){
+		debugger;
+		alert('비밀번호를 확인하여주십시오.');
+		$("#company_pwd").focus();
+		return false;
+	}
+	
+	if($("#company_pwd").val()!=$("#company_pwd_check").val()){
+		debugger;
+		alert('비밀번호 확인을 확인하여주십시오.');
+		$("#company_pwd_check").focus();
+		return false;
+	}
+};
+</script>
+</head>
+<body>
+
+	<div align="center">
+		<form th:action="@{/company_pwd_update}" method="post">
+			<input type="hidden" name="company_id" th:value="${companyId}">
+			<table border="1">
+				<tr>
+					<th>비밀번호 재설정</th>
+				</tr>
+				<tr>
+					<td><input name="company_pwd" type="password"
+							id="company_pwd" required placeholder="새 비밀번호를 입력해주세요"> <span
+							id="pwdCheckmark" class="checkmark">✔</span> <span id="pwdError"
+							style="display: none; color: red; font-size: 12px;">비밀번호는
+								8자 이상 20자 이하이며 특수문자 1자를 포함해야 합니다.</span></td>
+					</tr>
+				<tr>
+					<td><input name="company_pwd_check" type="password"
+							id="company_pwd_check" required placeholder="새 비밀번호 확인"> <span id="pwdCheckmark"
+							class="checkmark">✔</span> <span id="pwd_check_err"
+							style="display: none; color: red; font-size: 12px;">위의
+								비밀번호와 입력된 비밀번호가 다릅니다.</span> <span id="pwd_check_ok"
+							style="display: none; color: green; font-size: 12px;">✔</span></td>
+				</tr>
+				
+				<tr>
+					<td align="center">
+						<input type="submit" value="비밀번호 설정" onclick="return pwdCheck()">
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+</body>
+</html>

@@ -22,7 +22,6 @@ public class CompanyDTO {
 	
 	private Date company_join_date;
 	private String company_ceo;
-	private String company_confirm;
 	private int company_emp_count;
 	private int company_sal;
 	
