@@ -7,13 +7,39 @@
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script th:src="@{/js/comBoard.js}"></script>
+<script th:src="@{/js/comBoardAdd.js}"></script>
 </head>
 <body>
 	<div th:replace="~{include/header :: guestHeader}"></div> 
 	<div layout:fragment="content" class="content">
-		
-	
+		<form action="">
+			<div>
+				<div>
+					<div>
+						<h3>접수기간</h3>
+					</div>
+					<div>
+						<table>
+							<tr>
+								<th>시작일</th>
+								<td><input type="date" name="com_board_start_date"></td>
+							</tr>
+							<tr>
+								<th>시작일</th>
+								<td><input type="date" name="com_board_emd_date"></td>
+							</tr>
+						</table>
+					</div>
+				</div><!-- 접수기간/방법 -->	
+				<div></div><!-- 모집내용 -->	
+				<div></div><!-- 근무조건 -->	
+				<div></div><!-- 지원조건 -->	
+				<div></div><!-- 상세모집내용 -->	
+				<div></div><!-- 근무지정보 -->	
+				<div></div><!-- 근무지정보 -->	
+				<div></div><!-- 담당자정보 -->	
+			</div>
+		</form>
 	</div>
 	<div th:replace="~{include/footer :: footer}"></div>
 </body>

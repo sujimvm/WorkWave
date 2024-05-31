@@ -65,6 +65,6 @@ public class ComBoardController {
 	@GetMapping("comboard/add")
 	public String goAddComBoard() {
 		
-		return "comBoard/list";
+		return "comBoard/add";
 	}
 }
