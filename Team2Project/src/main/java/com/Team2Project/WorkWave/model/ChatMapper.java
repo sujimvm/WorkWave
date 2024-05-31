@@ -8,4 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ChatMapper {
 
 	public List<ChatDTO> list();
+	
+	public ChatDTO getContent(int no);
 }

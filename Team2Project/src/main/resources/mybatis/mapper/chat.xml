@@ -5,8 +5,12 @@
   
   <mapper namespace="com.Team2Project.WorkWave.model.ChatMapper">
   	
-  	<select id="list" resultType="ChatDTO">
+  	<select id="list" resultType="chatDTO">
 		select * from chat order by chat_key desc
+	</select>
+	
+	<select id="getContent" parameterType="int" resultType="chatDTO">
+		select * from chat where user_key = #{user_key}
 	</select>
 
   </mapper>
