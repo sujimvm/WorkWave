@@ -35,4 +35,21 @@ public String upload(MultipartFile file, String uploadDir) {
      }
    }
 
+// 회원 정보 수정이나 삭제시 저장되어있던 이미지파일 삭제
+public void deleteFile(String fileName, String fileDir) {
+	
+	String filePath = fileDir + "\\" + fileName;
+	
+	File delete_file = new File(filePath);
+	
+	if(delete_file.exists()) {
+		// 파일경로가 존재하면 삭제
+		delete_file.delete();
+		System.out.println("파일을 삭제하였습니다.");
+	}else {
+		System.out.println("파일이 존재하지 않습니다.");
+	}
+	
+}
+
 }

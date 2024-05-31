@@ -249,6 +249,8 @@ public class CompanyController {
 			if (file != null && !file.isEmpty()) {
 			String logoUploadDir ="C:\\Users\\clxkd\\OneDrive\\바탕 화면\\project1\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\logo";
 			
+			uploadFileService.deleteFile(dto.getCompany_logo(), logoUploadDir);
+			
 			dto.setCompany_logo_name(file.getOriginalFilename());
 			
 		    String imageName = uploadFileService.upload(file, logoUploadDir);
