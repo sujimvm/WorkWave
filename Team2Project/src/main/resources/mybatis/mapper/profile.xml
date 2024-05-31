@@ -117,19 +117,17 @@
   	update profile set profile_default = 'N' where profile_default = 'Y'
   	
   	</update>
-  	
-	<insert id="EduInsert" parameterType="eDTO">
-  		<selectKey keyProperty="edu_key" resultType="int" order="BEFORE">
-            SELECT user_key_seq.NEXTVAL FROM dual
-        </selectKey>
-   	
-  	insert into edu VALUES (#{edu_key},#{profile_key},#{edu_kind},#{edu_name},#{edu_start_date},#{edu_end_date},
-  	 #{edu_major},#{edu_degree},#{edu_hakjum},#{edu_status},#{edu_transfer}, #{edu_nonmun},#{edu_submajor})
-  	</insert>
+
 
   	<select id="nowInsertProfileKey" parameterType="int" resultType="int">
   	
   	SELECT max(profile_key) FROM profile WHERE user_key = #{no}
+  	
+  	</select>
+  	
+  	<select id="nowInsertTempProfileKey" parameterType="int" resultType="int">
+  	
+  	SELECT max(profile_key) FROM profile_Temp WHERE user_key = #{no}
   	
   	</select>
   	
@@ -143,6 +141,16 @@
   	 #{career_start_date},#{career_end_date})
   	</insert>
   	
+  	<insert id="EduInsert" parameterType="eDTO">
+  		<selectKey keyProperty="edu_key" resultType="int" order="BEFORE">
+            SELECT user_key_seq.NEXTVAL FROM dual
+        </selectKey>
+   	
+  	insert into edu VALUES (#{edu_key},#{profile_key},#{edu_kind},#{edu_name},#{edu_major},#{edu_degree},#{edu_hakjum},#{edu_status},#{edu_transfer},#{edu_nonmun},#{edu_submajor},#{edu_start_date},#{edu_end_date},
+  	,#{edu_nonmun_name})
+  	</insert>
+  	
+  	
   	<insert id="LicenseInsert" parameterType="lDTO">
   		<selectKey keyProperty="license_key" resultType="int" order="BEFORE">
             SELECT user_key_seq.NEXTVAL FROM dual
@@ -151,6 +159,24 @@
   	insert into license VALUES (#{license_key},#{profile_key},#{license_name},#{license_barhang},#{license_date})
   	</insert>
   	
+  	
+  	<insert id="profileTempInsert" parameterType="pDTO">
+  		<selectKey keyProperty="profile_key" resultType="int" order="BEFORE">
+            SELECT user_key_seq.NEXTVAL FROM dual
+        </selectKey>
+   	
+  	insert into profile_Temp VALUES (#{profile_key},#{user_key},#{profile_name},#{profile_image},#{profile_job},
+  	 #{profile_group1},#{profile_sub1},#{profile_step1},#{profile_group2},#{profile_sub2}, #{profile_step2},
+  	  #{profile_default},#{profile_pay}, #{profile_history}, #{profile_apply}, #{profile_character},
+  	   #{profile_plan},#{profile_ppt},#{profile_image_name},#{profile_ppt_name})
+  	</insert>
+  	
+  	
+	<select id="profileTempList" resultType="pDTO" parameterType="int">
+	
+	select * from profile_Temp where user_key = #{userKey}
+	
+	</select>
   	
   	
   	

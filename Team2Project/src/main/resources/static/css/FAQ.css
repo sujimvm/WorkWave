@@ -2,78 +2,161 @@
 
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100vh; /* 전체 뷰포트 높이 설정 */
+    display: flex;
+    flex-direction: column;
 }
 
-h2 {
-    text-align: center;
+header, footer {
+    height: 50px; /* 헤더와 푸터의 높이를 지정 */
+    background-color: #f1f1f1;
+    flex-shrink: 0; /* 헤더와 푸터의 높이가 고정되도록 설정 */
 }
 
 .mainContainer {
     display: flex;
-    justify-content: space-between;
-    padding: 20px;
+    flex-grow: 1;
+    position: relative;
+    top: 0;
+    height: calc(100vh - 100px); /* 헤더와 푸터 높이를 제외한 높이 */
+    justify-content: center; /* 컨테이너 내의 내용물을 가로로 가운데 정렬 */
+    align-items: center; /* 컨테이너 내의 내용물을 세로로 가운데 정렬 */
 }
 
 .sidebar {
-    width: 20%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    width: 250px;
+    height: 400px;
+    background-color: #ffffff; /* 배경색을 흰색으로 설정 */
+    color: #333; /* 글자 색상을 어두운 회색으로 설정 */
+    padding-top: 10px;
+    transition: width 0.3s;
+    border-right: 1px solid #ddd; /* 오른쪽에 얇은 경계선 추가 */
+    margin-right: 20px; /* 사이드바와 리스트 사이에 여백 추가 */
 }
 
-.sidebar button {
-    width: 100%;
-    padding: 15px;
-    margin: 10px 0;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #f4f4f4;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+.sidebar h3 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 24px;
+    font-weight: 600;
 }
 
-.sidebar button:hover {
-    background-color: #e9e9e9;
-}
-
-.content {
-    width: 75%;
-    padding-left: 20px;
-}
-
-.listContainer {
-    display: none;
-    width: 100%;
-}
-
-.listContainer.active {
+.sidebar a {
     display: block;
+    color: #333; /* 링크 색상 */
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 18px;
+    border-bottom: 1px solid #eee; /* 링크 사이에 얇은 경계선 추가 */
+    transition: background 0.3s, color 0.3s;
 }
 
-ul {
-    list-style: none;
+.sidebar a:hover {
+    background-color: #f1f1f1; /* 마우스 오버 시 배경색 변경 */
+    color: #000; /* 마우스 오버 시 글자 색상 변경 */
+}
+
+.sidebar a.active {
+    background-color: #e0e0e0; /* 활성화된 링크 배경색 */
+    color: #000; /* 활성화된 링크 글자 색상 */
+}
+
+.faq-list {
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto; /* FAQ 리스트가 길어질 경우 스크롤 가능하도록 설정 */
+    max-width: 800px; /* 리스트의 최대 너비 설정 */
+}
+
+.faq-list h3 {
+    margin-top: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.faq-list ul {
+    list-style-type: none;
     padding: 0;
 }
 
-li {
-    margin-bottom: 10px;
+.faq-list li {
+    font-size: 14px;
+    margin-bottom: 8px;
     cursor: pointer;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
 }
 
-li:hover {
-    background-color: #f9f9f9;
+.faq-list .highlighted {
+    font-weight: bold;
+    color: #007BFF;
 }
 
 .FAQCont {
     display: none;
     margin-top: 10px;
     padding: 10px;
-    background-color: #e0f7fa;
-    border-left: 3px solid #ccc;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
 }
 
-.highlighted {
-    color: #0000ff;
+.notice-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.notice-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.notice-list li span, .notice-list li a {
+    flex: 1;
+    text-align: left;
+}
+
+.notice-list li span {
+    width: 10%;
+}
+
+.notice-list li a {
+    width: 80%;
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.notice-list li a:hover {
+    text-decoration: underline;
+}
+
+.notice-list li a:visited {
+    color: #551A8B;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.pagination li {
+    margin: 0 5px;
+}
+
+.pagination a {
+    text-decoration: none;
+    color: #007BFF;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+
+.pagination a:hover {
+    background-color: #f1f1f1;
 }

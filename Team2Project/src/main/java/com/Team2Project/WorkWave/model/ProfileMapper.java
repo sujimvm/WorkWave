@@ -28,6 +28,9 @@ public interface ProfileMapper {
 		//사용자 이력서 리스트 가져오는 메서드
 		public List<ProfileDTO> profileList(int userKey);
 		
+		//사용자 미완성 리스트 가져오는 메서드
+		public List<ProfileDTO> profileTempList(int userKey);
+		
 		// 이력서 학력 가져오는 메서드
 		public List<EduDTO> eduList(int no);
 		
@@ -43,6 +46,9 @@ public interface ProfileMapper {
 		// 이력서 추가하는 메서드
 		public int profileInsert(ProfileDTO dto);
 		
+		// 이력서 임시저장 메서드
+		public int profileTempInsert(ProfileDTO dto);
+		
 		// 기본 이력서 있는지 확인하는 메서드
 		public int profileCkeck(int no);
 		
@@ -55,6 +61,9 @@ public interface ProfileMapper {
 		//대표 이력서로 변경 메서드
 		public int nowInsertProfileKey(int no);
 		
+		//미완성 이력서 프로필 킬 가져오는 메서드
+		public int nowInsertTempProfileKey(int no);
+		
 		// 학력 추가하는 메서드
 		public int EduInsert(EduDTO edto);
 		
@@ -63,5 +72,9 @@ public interface ProfileMapper {
 
 		// 자격증 추가하는 메서드
 		public int LicenseInsert(LicenseDTO ldto);
+		
+	
+		
+		
 		
 }

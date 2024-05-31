@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
+<title>Work Wave 통합 로그인</title>
+<link rel="stylesheet" th:href="@{/css/include.css}">
+<link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+	
+	<div class="tab-container">
+	
+		<div class="top-links">
+	      <a th:href="@{/}">HOME</a>
+	      <a th:href="@{FAQ.go}">고객센터</a>
+    	</div>
+	
+		<h3>Work Wave 통합 로그인</h3>
+		
+    <div class="tabs">
+      <div class="tab active" onclick="showForm('userLogin')">개인회원</div>
+      <div class="tab" onclick="showForm('companyLogin')">기업회원</div>
+    </div>
+
+    <div id="userLogin" class="form-container">
+      <form th:action="@{user_login.go}" method="post">
+        <input type="text" name="user_id" placeholder="아이디" required>
+        <input type="password" name="user_pwd" placeholder="비밀번호" required>
+        <input type="submit" value="로그인">
+      </form>
+      <a th:href="@{/user_insert.go}">회원가입</a>
+    </div>
+
+    <div id="companyLogin" class="form-container" style="display:none;">
+      <form th:action="@{company_login.go}" method="post">
+        <input type="text" name="company_id" placeholder="기업회원 아이디" required>
+        <input type="password" name="company_pwd" placeholder="비밀번호" required>
+        <input type="submit" value="로그인">
+      </form>
+      <a th:href="@{/company_insert.go}">회원가입</a>
+    </div>
+    <br>
+    <div class="link-container">
+      <a th:href="@{/find_id.go}">아이디 찾기</a> |
+      <a th:href="@{/find_password.go}">비밀번호 찾기</a>
+      
+    </div>
+    
+  </div>
+  
+  	
+
+  <script>
+    function showForm(formId) {
+      document.getElementById('userLogin').style.display = 'none';
+      document.getElementById('companyLogin').style.display = 'none';
+      document.getElementById(formId).style.display = 'block';
+
+      var tabs = document.getElementsByClassName('tab');
+      for (var i = 0; i < tabs.length; i++) {
+        tabs[i].classList.remove('active');
+      }
+      document.querySelector('[onclick="showForm(\'' + formId + '\')"]').classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
