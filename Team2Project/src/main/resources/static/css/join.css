@@ -18,7 +18,7 @@ body {
 
 form {
     background-color: #fff;
-    padding: 40px;
+    padding: 45px;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 350px; /* 또는 원하는 너비 */
@@ -43,7 +43,7 @@ select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box;
+    box-sizing: border-box;	
 }
 
 button {

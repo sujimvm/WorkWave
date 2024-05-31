@@ -6,6 +6,16 @@
 <title>Work Wave 회원가입</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/join.css}">
+<style type="text/css">
+	 a {
+	 	font-size: 11px;
+	 }
+	 
+	 h2 {
+	 	margin-bottom: 0;
+	 }
+
+</style>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script th:src="@{/js/userInsert.js}"></script>
 </head>
@@ -18,6 +28,7 @@
         	<tr>
         		<td colspan="2">
         			<h2>개인회원 회원가입</h2>
+        			<a th:href="@{company_insert.go}">기업회원이세요..?</a>
         		</td>
         	</tr>
             <tr>
