@@ -74,10 +74,8 @@ public class VeriController {
             if (storedCode != null && storedCode.equals(code)) {
                 tokenService.removeTokenByEmail(email);
                 response.put("status", "success");
-                response.put("message", "인증 성공");
             } else {
                 response.put("status", "fail");
-                response.put("message", "인증 실패: 코드가 일치하지 않습니다.");
             }
         } catch (IllegalArgumentException e) {
             logger.error("Validation error in verifyCode: ", e);
