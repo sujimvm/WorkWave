@@ -7,37 +7,38 @@
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/join.css}">
 <style type="text/css">
-	 a {
-	 	font-size: 11px;
-	 }
-	 
-	 h2 {
-	 	margin-bottom: 0;
-	 }
+    a {
+       font-size: 11px;
+    }
+    
+    h2 {
+       margin-bottom: 0;
+    }
 
 </style>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 <script th:src="@{/js/userInsert.js}"></script>
 </head>
 <body>
-	<div layout:fragment="content" class="content">
-	
-	<div align="center">
+   <div layout:fragment="content" class="content">
+   
+   <div align="center">
     <form id="signupForm" action="#" th:action="@{/user_insert_ok.go}" th:object="${user}" method="post">
         <table>
-        	<tr>
-        		<td colspan="2">
-        			<h2>개인회원 회원가입</h2>
-        			<a th:href="@{company_insert.go}">기업회원이세요..?</a>
-        		</td>
-        	</tr>
+           <tr>
+              <td colspan="2">
+                 <h2>개인회원 회원가입</h2>
+                 <a th:href="@{company_insert.go}">기업회원이세요..?</a>
+              </td>
+           </tr>
             <tr>
                
                 <td>
-                	<div class="inputgroup">
-	                    <input type="text" id="user_id" th:field="*{user_id}" placeholder="아이디" required>
-	                    <button type="button" id="checkIdBtn">중복 확인</button>
-	                </div>
+                   <div class="inputgroup">
+                       <input type="text" id="user_id" th:field="*{user_id}" placeholder="아이디" required>
+                       <button type="button" id="checkIdBtn">중복 확인</button>
+                   </div>
                     <span id="checkmark" class="checkmark">✔</span>
                 </td>
             </tr>
@@ -54,18 +55,18 @@
             </tr>
             <tr>
                 <td>
-                	<div class="inputgroup">
-	                    <input type="text" id="user_email" th:field="*{user_email}" placeholder="이메일" required>
-	                    <button type="button" id="sendCode">인증번호 발송</button>
+                   <div class="inputgroup">
+                       <input type="text" id="user_email" th:field="*{user_email}" placeholder="이메일" required>
+                       <button type="button" id="sendCode">인증번호 발송</button>
                     </div>
                 </td>
             </tr>
             <tr id="veriCodeContainer" style="display: none;">
                 <td>
-                	<div class="inputgroup">
-	                    <input type="text" id="veri_code">
-	                    <button type="button" id="verifyCode">인증번호 확인</button>
-	                </div>
+                   <div class="inputgroup">
+                       <input type="text" id="veri_code">
+                       <button type="button" id="verifyCode">인증번호 확인</button>
+                   </div>
                     <span id="veriCheckmark" class="checkmark">✔</span>
                 </td>
             </tr>
@@ -73,12 +74,20 @@
                 <td><input type="text" id="user_phone" th:field="*{user_phone}" placeholder="휴대폰 번호" required></td>
             </tr>
             <tr>
-                <td><input type="text" id="user_addr" th:field="*{user_addr}" placeholder="주소" required></td>
+                <td>
+                   <input type="text" id="user_addr" th:field="*{user_addr}" 
+                   onclick="daumPostcode()" placeholder="주소" required>
+                </td>
             </tr>
             <tr>
                 <td>
-                	<input type="date" id="user_birth" th:field="*{user_birth}"
-                			th:value="${#dates.format(user.user_birth, 'yyyy-MM-dd')}" required>
+                   <input type="text" id="user_addr_detail" placeholder="상세주소" required>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                   <input type="date" id="user_birth" th:field="*{user_birth}"
+                         th:value="${#dates.format(user.user_birth, 'yyyy-MM-dd')}" required>
                 </td>
             </tr>
             <tr>

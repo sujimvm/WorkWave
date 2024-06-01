@@ -4,22 +4,61 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
   <mapper namespace="com.Team2Project.WorkWave.model.ComBoardMapper">
+  		<!-- 공고리스트 -->
     	<select id="getJobList" resultType="bDTO">
 	  		select * from com_board b join company c on c.company_key = b.company_key
 	  	</select>
+	  	
+  		<!-- 업무코드 대분류 -->
 	  	<select id="getJobCodeGroupList" resultType="codeDTO">
 	  		select * from jobdata where length(code) = 2 order by code
 	  	</select>
+	  	
+  		<!-- 업무코드 중분류 -->
 	  	<select id="getJobCodeSubList" resultType="codeDTO">
 	  		select * from jobdata where length(code) = 3 order by code
 	  	</select>
+	  	
+  		<!-- 업무코드 소분류 -->
 	  	<select id="getJobCodeStepList" resultType="codeDTO">
 	  		select * from jobdata where length(code) = 4 order by code
 	  	</select>
+	  	
+  		<!-- 지역코드 대분류 -->
 	  	<select id="getLocationCodeGroupList" resultType="codeDTO">
 	  		select * from locationdata where length(code) = 2 order by code
 	  	</select>
+	  	
+  		<!-- 지역코드 중분류 -->
 	  	<select id="getLocationCodeSubList" resultType="codeDTO">
 	  		select * from locationdata where length(code) = 5 order by code
+	  	</select>
+	  	
+  		<!-- 공고등록 -->
+	  	<insert id="addComBoard" parameterType="bDTO">
+	  		insert into com_board values(key_seq.nextval, #{company_key}, #{com_board_title}, #{com_board_start_date,jdbcType=DATE},
+	  		#{com_board_end_date,jdbcType=DATE}, #{com_board_group}, #{com_board_sub}, #{com_board_step}, #{com_board_jobtype},
+	  		#{com_board_mojib}, #{com_board_week}, #{com_board_time}, #{com_board_career}, #{com_board_edu}, #{com_board_sal},
+	  		#{com_board_conditions}, #{com_board_benefits}, #{com_board_mgr_name}, #{com_board_mgr_phone}, #{com_board_mgr_email},
+	  		#{com_board_cont}, sysdate)
+	  	</insert>
+	  	
+	  	<!-- 임시테이블 공고삭제 -->
+	  	<delete id="deleteComBoardTemp" parameterType="int">
+	  		delete from com_board where com_board_key = #{temp_key}
+	  	</delete>
+  		
+  		<!-- 공고등록 임시저장 -->
+	  	<insert id="addComBoardTemp" parameterType="bDTO">
+	  		insert into com_board_temp values(key_seq.nextval, #{company_key}, #{com_board_title}, #{com_board_start_date,jdbcType=DATE},
+	  		#{com_board_end_date,jdbcType=DATE}, #{com_board_group}, #{com_board_sub}, #{com_board_step}, #{com_board_jobtype},
+	  		#{com_board_mojib}, #{com_board_week}, #{com_board_time}, #{com_board_career}, #{com_board_edu}, #{com_board_sal},
+	  		#{com_board_conditions}, #{com_board_benefits}, #{com_board_mgr_name}, #{com_board_mgr_phone}, #{com_board_mgr_email},
+	  		#{com_board_cont}, sysdate)
+	  	</insert>
+	  	
+	  	<!-- 공고등록 임시저장 기본키 조회 -->
+	  	<select id="selectTempPk" parameterType="int" resultType="int">
+	  		select max(com_board_key) from com_board_temp where company_key = #{company_key}
 	  	</select>
   </mapper>

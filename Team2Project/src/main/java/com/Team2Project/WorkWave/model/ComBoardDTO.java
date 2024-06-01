@@ -9,34 +9,40 @@ import lombok.Data;
 
 @Data
 public class ComBoardDTO {
-	private int com_board_key; // 키
-	private int company_key; // 기업키(외래키)
-	private String com_board_title; // 공고명
-	private String com_board_start_date; // 공고시작일
-	private String com_board_emd_date; // 공고마감일
-	private String com_board_group; // 대분류
-	private String com_board_sub; // 중분류
-	private String com_board_step; // 소분류
-	private String com_board_jobtype; // 고용형태
-	private int com_board_mojib; // 모집인원
-	private String com_board_week; // 근무요일
-	private String com_board_time; // 근무시간
-	private String com_board_career; // 경력
-	private String com_board_edu; // 학력
-	private int com_board_sal; // 급여
-	private String com_board_conditions; // 우대조건
-	private String com_board_benefits; // 복리후생
-	private String com_board_com_name; // 담당자 이름
-	private String com_board_com_phone; // 담당자 전화번호
-	private String com_board_com_email; // 담당자 이메일
-	private String com_board_cont; // 공고내용
-	private String com_board_image1; // 기업이미지
-	private String com_board_image1_name; // 기업이미지 이름
-	private String com_board_image2; // 기업이미지
-	private String com_board_image2_name; // 기업이미지 이름
-	private String com_board_image3; // 기업이미지
-	private String com_board_image3_name; // 기업이미지 이름
-	private Date com_board_date; // 공고등록일
+    private int com_board_key; // Primary Key
+    private int company_key; // Foreign Key referencing company_key in company table
+    
+    private int temp_key; // Foreign Key referencing company_key in company table
+    
+    private String com_board_title; // 공고명
+    private String com_board_group; // 대분류
+    private String com_board_sub; // 중분류
+    private String com_board_step; // 소분류
+    private String com_board_jobtype; // 고용형태
+    private String com_board_mojib; // 모집인원
+    
+    private String com_board_sal; // 급여
+    private String com_board_week; // 근무요일
+    private String com_board_time; // 근무시간
+    private String com_board_benefits; // 복리후생
+
+    private String com_board_career; // 경력
+    private String com_board_edu; // 학력
+    private String com_board_conditions; // 우대조건
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date com_board_start_date; // 공고시작일
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date com_board_end_date; // 공고마감일
+
+    private String com_board_cont; // 공고내용
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date com_board_date; // 공고등록일
+
+    private String com_board_mgr_name; // 담당자 이름
+    private String com_board_mgr_phone; // 담당자 전화번호
+    private String com_board_mgr_email; // 담당자 이메일
 
 	//기업정보
 	private String company_id;

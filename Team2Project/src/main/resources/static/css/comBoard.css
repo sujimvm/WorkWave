@@ -9,3 +9,7 @@
 	overflow: scroll;
 }
 
+.date_empty:before {
+        content: attr(data-placeholder);
+        width: calc(100% - 42px);
+      }
