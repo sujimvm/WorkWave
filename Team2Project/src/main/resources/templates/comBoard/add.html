@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="image/icon/logo_icon.png"/> 
+<link rel="icon" href="/image/icon/logo_icon.png"/> 
 <title>Work Wave 공고작성</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
@@ -12,8 +12,101 @@
 <body>
 	<div th:replace="~{include/header :: guestHeader}"></div> 
 	<div layout:fragment="content" class="content">
-		<form action="">
-			<div>
+		<form method="post" action="/comBoard/addOk" id="addForm">
+			<input type="hidden" name="temp_key" id="temp_key" value=0>
+			<div>	
+				<div>
+					<div>
+						<h3>모집내용</h3>
+					</div>
+					<div>
+						<table>
+							<tr>
+								<th>공고제목</th>
+								<td><input name="com_board_title"></td>
+							</tr>
+							<tr>
+								<th>업종</th>
+								<td>
+									<input name="com_board_group">
+									<input name="com_board_sub">
+									<input name="com_board_step">
+								</td>
+							</tr>
+							<tr>
+								<th>고용형태</th>
+								<td><input name="com_board_jobtype"></td>
+							</tr>
+							<tr>
+								<th>모집인원</th>
+								<td><input name="com_board_mojib"><span>명</span></td>
+							</tr>
+						</table>
+					</div>
+				</div><!-- 모집내용 -->
+					
+				<div>
+					<div>
+						<h3>근무조건</h3>
+					</div>
+					<div>
+						<table>
+							<tr>
+								<th>급여</th>
+								<td><span>연봉 : </span><input name="com_board_sal"><span>만원</span></td>
+							</tr>
+							<tr>
+								<th>근무요일</th>
+								<td><span>주</span><input type="number" name="com_board_week" max="7"><span>일</span></td>
+							</tr>
+							<tr>
+								<th>근무시간</th>
+								<td><input name="com_board_time"></td>
+							</tr>
+							<tr>
+								<th>복리후생</th>
+								<td><input name="com_board_benefits"></td>
+							</tr>
+						</table>
+					</div>
+				</div><!-- 근무조건 -->	
+				
+				<div>
+				
+					<div>
+						<h3>지원조건</h3>
+					</div>
+					<div>
+						<table>
+							<tr>
+								<th>경력</th>
+								<td><input name="com_board_career"></td>
+							</tr>
+							<tr>
+								<th>학력</th>
+								<td><input name="com_board_edu"></td>
+							</tr>
+							<tr>
+								<th>우대조건</th>
+								<td><input name="com_board_conditions"></td>
+							</tr>
+						</table>
+					</div>
+				</div><!-- 지원조건 -->	
+				
+				<div>
+					<div>
+						<h3>상세모집내용</h3>
+					</div>
+					<div>
+						<table>
+							<tr>
+								<td colspan="2"><textarea rows="" cols="" name="com_board_cont"></textarea></td>
+							</tr>
+						</table>
+					</div>
+				</div><!-- 상세모집내용 -->	
+				
 				<div>
 					<div>
 						<h3>접수기간</h3>
@@ -25,19 +118,38 @@
 								<td><input type="date" name="com_board_start_date"></td>
 							</tr>
 							<tr>
-								<th>시작일</th>
-								<td><input type="date" name="com_board_emd_date"></td>
+								<th>마감일</th>
+								<td><input type="date" name="com_board_end_date"></td>
 							</tr>
 						</table>
 					</div>
-				</div><!-- 접수기간/방법 -->	
-				<div></div><!-- 모집내용 -->	
-				<div></div><!-- 근무조건 -->	
-				<div></div><!-- 지원조건 -->	
-				<div></div><!-- 상세모집내용 -->	
-				<div></div><!-- 근무지정보 -->	
-				<div></div><!-- 근무지정보 -->	
-				<div></div><!-- 담당자정보 -->	
+				</div><!-- 접수기간 -->
+				
+				<div>
+					<div>
+						<h3>담당자정보</h3>
+					</div>
+					<div>
+						<table>
+							<tr>
+								<th>담당자 이름</th>
+								<td><input name="com_board_mgr_name"></td>
+							</tr>
+							<tr>
+								<th>담당자 전화번호</th>
+								<td><input name="com_board_mgr_phone"></td>
+							</tr>
+							<tr>
+								<th>담당자 이메일</th>
+								<td><input name="com_board_mgr_email"></td>
+							</tr>
+						</table>
+					</div>
+				</div><!-- 담당자정보 -->	
+				<div>
+					<input type="button" value="중간 저장" id="addTempBt">
+					<input type="submit" value="공고 등록">
+				</div>
 			</div>
 		</form>
 	</div>

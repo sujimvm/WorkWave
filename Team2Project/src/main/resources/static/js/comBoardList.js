@@ -61,7 +61,7 @@ $(document).ready(function() {
 // 직업 대분류 조회 
 function getJobCodeGroup() {
 	$.ajax({
-		url: 'jobCodeGroup.go',
+		url: '/comBoard/jobCode',
 		type: 'post',
 		dataType: 'json',
 		success: function(jobCodeList) {
@@ -92,7 +92,7 @@ function getJobCodeGroup() {
 // 지역 대분류 조회
 function getLocationCodeGroup() {
 	$.ajax({
-		url: 'locationCodeGroup.go',
+		url: '/comBoard/locationCode',
 		type: 'post',
 		dataType: 'json',
 		success: function(locationCodeList) {
@@ -118,7 +118,7 @@ function getLocationCodeGroup() {
 // 공고리스트 조회 및 출력
 function getComBoardList() {
 	$.ajax({
-		url: 'comboardList.go',
+		url: '/comBoard/list',
 		type: 'post',
 		dataType: 'json',
 		success: function(list) {

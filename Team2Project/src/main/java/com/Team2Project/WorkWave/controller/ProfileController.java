@@ -134,9 +134,10 @@ public class ProfileController {
 		
 		/*
 		 * //학력 데이터 저장 EduDTO eduDto = new EduDTO();
-		 * eduDto.setProfile_key(nowInsertProfileKey);
 		 * 
-		 * this.mapper.EduInsert(eduDto);
+		 * edu.setProfile_key(nowInsertProfileKey);
+		 * 
+		 * this.mapper.EduInsert(edu);
 		 */
 		 
 		

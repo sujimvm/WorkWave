@@ -14,4 +14,9 @@ public interface ComBoardMapper {
 	List<CodeDTO> getJobCodeStepList(); // 직업소분류리스트
 	List<CodeDTO> getLocationCodeGroupList(); // 지역 대분류 리스트
 	List<CodeDTO> getLocationCodeSubList(); // 지역 중분류 리스트
+	
+	int addComBoard(ComBoardDTO dto); // 공고등록
+	void deleteComBoardTemp(int temp_key); //임시테이블 공고삭제
+	int addComBoardTemp(ComBoardDTO dto); // 공고 임시저장
+	int selectTempPk(int company_key); // 공고 임시저장
 }
