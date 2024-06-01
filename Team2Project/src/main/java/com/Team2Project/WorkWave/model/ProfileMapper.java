@@ -65,16 +65,34 @@ public interface ProfileMapper {
 		public int nowInsertTempProfileKey(int no);
 		
 		// 학력 추가하는 메서드
-		public int EduInsert(EduDTO edto);
+		public void EduInsert(EduDTO edto);
 		
 		// 경력 추가하는 메서드
 		public int CareerInsert(CareerDTO crdto);
 
 		// 자격증 추가하는 메서드
 		public int LicenseInsert(LicenseDTO ldto);
+
+		//이력서 삭제하는 메서드
+		public int profileDelect(int pro_key);
 		
-	
+		//이력서 업데이트 메서드
+		public int updateProfile(ProfileDTO profileDto);
+		public int updateCareer(CareerDTO careerDto);
+		public int updateLicense(LicenseDTO licenDto);
+		
+		//이력서 중간저장 불러오는 메서드
+		public ProfileDTO profileTempinfo(int no);
+		public List<CareerDTO> careerTempinfo(int no);
+		public List<LicenseDTO> licenseTempinfo(int no);
+		
+		
+		//중간 이력서 중간 저장
+		public int updateProfileTemp(ProfileDTO profileDto);
+		public int updateCareerTemp(CareerDTO careerDto);
+		public int updateLicenseTemp(LicenseDTO licenDto);
 		
 		
 		
+
 }

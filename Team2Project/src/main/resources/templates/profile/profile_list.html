@@ -35,8 +35,8 @@
 						<a th:href="@{profile_content(no=${dto.profile_key})}" th:text="${dto.profile_name}"></a>
 					</td>
 					<td>
-						<input type="button" value="수정" th:onclick="location.href='@{profile_modify}'|">
-						<input type="button" value="삭제" th:onclick="location.href='@{profile_delect}'|">
+						<input type="button" value="수정" th:onclick="|location.href='@{profile_modify(no=${dto.profile_key})}'|">
+						<input type="button" value="삭제" th:onclick="|location.href='@{profile_delect(no=${dto.profile_key})}'|">
 					</td>
 				</tr>
 				<!-- 나머지 이력서 -->
@@ -46,8 +46,8 @@
 						<a th:href="@{profile_content(no=${dto.profile_key})}" th:text="${dto.profile_name}"></a>
 					</td>
 					<td>
-						<input type="button" value="수정" th:onclick="location.href='@{profile_modify}'|">
-						<input type="button" value="삭제" th:onclick="location.href='@{profile_delect}'|">
+						<input type="button" value="수정" th:onclick="|location.href='@{profile_modify(no=${dto.profile_key})}'|">
+						<input type="button" value="삭제" th:onclick="|location.href='@{profile_delect(no=${dto.profile_key})}'|">
 						<input type="button" value="대표이력서등록" th:onclick="|location.href='@{profile_default(no=${dto.profile_key})}'|">
 					</td>
 				</tr>
@@ -71,7 +71,7 @@
     	<tr th:unless="${#lists.isEmpty(ProfileTempList)}" th:each="temp : ${ProfileTempList}">
       		  <td th:text="${temp.profile_name}"></td>
       		  <td>
-	            <input type="button" value="추가작성" th:onclick="|location.href='@{/profileTemp_add/{id}(id=${temp.profile_key})}'|">
+	            <input type="button" value="추가작성" th:onclick="|location.href='@{profileTemp_add(no=${temp.profile_key})}'|">
 	            <input type="button" value="삭제" th:onclick="|location.href='@{/profile_delete/{id}(id=${temp.profile_key})}'|">
        	      </td>
         </tr>

@@ -15,10 +15,10 @@
 			<div>
 				<table border="1" width="650">
 					<tr>
-						<td rowspan="3"><img th:src="@{'/image/profile/'+${Content.profile_image}}" alt="Profile Image"></td>
+						<td rowspan="3"><img th:src="@{'/image/profile/'+${Content.profile_image}}" alt="Profile Image" width="170" height="200"></td>
 						<td th:text="${Content.user_name}"></td>
 						<td th:text="${Content.user_gender}"></td>
-						<td th:text="${#strings.substringBefore(Content.user_birth, ' ')}"></td>
+						<td colspan="2" th:text="${#strings.substringBefore(Content.user_birth, ' ')}"></td>
 					</tr>
 					<tr>
 						<td>휴대폰</td>
@@ -28,7 +28,7 @@
 					</tr>
 					<tr>
 						<td>주소</td>
-						<td th:text="${Content.user_addr}"></td>
+						<td colspan="3" th:text="${Content.user_addr}"></td>
 					</tr>
 				</table>
 			</div> <!-- 인적사항 (출력 / 수정) -->
@@ -42,9 +42,29 @@
 				
 			<div class="career_div">
 				<h2>경력</h2>
-				<ul>
-					<li th:each="career : ${CareerList}" th:text="${career.career_company}"></li>
-				</ul>
+			<table border="1" width="700">
+			    <thead>
+			        <tr>
+			            <th>회사명</th>
+			            <th>기간</th>
+			            <th>내용</th>
+			            <th>직급</th>
+			            <th>퇴사사유</th>
+			        </tr>
+			    </thead>
+			    <tbody>
+			        <tr th:each="career : ${CareerList}">
+			            <td th:text="${career.career_company}"></td>
+			            <td th:text="${career.career_start_date + ' ~ ' + career.career_end_date}"></td>
+			            <td>
+			                <textarea th:text="${career.career_cont}" readonly></textarea>
+			            </td>
+			            <td th:text="${career.career_position}"></td>
+			            <td th:text="${career.career_bye}"></td>
+			        </tr>
+			    </tbody>
+			</table>
+
 			</div> 
 			
 			<div class="license_div">
@@ -68,10 +88,12 @@
 				<span style="white-space: pre-line" th:text="${Content. profile_plan}"></span>
 			</div>
 			
+
 			<div class="Portfolio_div">
-				<h2>포트폴리오</h2>
-				<span th:text="${Content.profile_ppt}"></span>
+			    <h2>포트폴리오</h2>
+			    <a th:href="@{/download/ppt/{filename}(filename=${Content.profile_ppt})}" th:text="${Content.profile_ppt}"></a>
 			</div>
+			
 			
 			<div class="hopejob_div">
 				<h2>희망근무조건</h2>
