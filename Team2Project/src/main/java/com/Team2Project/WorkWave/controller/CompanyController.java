@@ -84,8 +84,11 @@ public class CompanyController {
 
 	// 회원가입 완료
 	@PostMapping("/company_insert_ok.go")
-	public void companySignUp(@RequestParam("logo") MultipartFile file, CompanyDTO dto, HttpServletResponse response)
+	public void companySignUp(@RequestParam("logo") MultipartFile file,
+							  CompanyDTO dto, 
+							  HttpServletResponse response)
 			throws IOException {
+		
 		String str1 = dto.getCompany_number().substring(0, 3);
 		String str2 = dto.getCompany_number().substring(3, 5);
 		String str3 = dto.getCompany_number().substring(5);
@@ -165,7 +168,7 @@ public class CompanyController {
 		if (res == 1) {
 			out.println("<script>");
 			out.println("alert('회원가입을 완료하였습니다.')");
-			out.println("location.href='company.go'");
+			out.println("location.href='login.go'");
 			out.println("</script>");
 		} else {
 			out.println("<script>");
@@ -330,14 +333,14 @@ public class CompanyController {
 	public String companyIdCheck(@RequestParam("id") String comId, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 
-		String res = "사용가능한 아이디입니다.";
+		String res = "available";
 
 		response.setContentType("text/html; charset=UTF-8");
 
 		CompanyDTO idCheck = this.mapper.companyInfo(comId);
 
 		if (idCheck != null) {
-			res = "이미 등록된 아이디입니다.";
+			res = "unavailable";
 		}
 
 		return res;
