@@ -152,7 +152,7 @@ $(document).ready(function(){
 
  
  	
- 	
+ 	/* 
 	//학교분류에 따라 학교폼 가져오기
 	var selectedOption = 0; //학교 구분 저장할 변수
 	var edu_input_form_text = `
@@ -357,7 +357,7 @@ $(document).ready(function(){
 	    $(".edu_submajor").val(subdepartment);
 	});
 	
-		
+		 */
 	
 	
 	
@@ -474,20 +474,11 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
-<!-- 
-	<form method="post" action="dateReqTest" id="dateReqTest">
-		<input name="eDtoList[0].edu_key" value="1">
-		<input name="eDtoList[0].edu_key" value="2">
-		<input name="eDtoList[0].edu_key" value="3">
-		<input name="eDtoList[0].edu_key" value="4">
-		<input name="eDtoList[0].edu_key" value="5">
-		<input type="submit" value="test 전송" id="testBt"> 
-	</form>
- -->
 
 	<div th:replace="~{include/header :: guestHeader}"></div> 
 	<div layout:fragment="content" class="content">
-		<div></div> <!-- 인적사항 (출력 / 수정) -->
+		<div>
+		</div> <!-- 인적사항 (출력 / 수정) -->
 		
 		<div><!-- 이력서 입력 폼 -->
 			<form id="profileForm" method="POST" action="profile_insert" enctype="multipart/form-data">
@@ -530,22 +521,40 @@ $(document).ready(function(){
 				
 				<hr>
 				
-				<div class="edu_div"> 
+				<div class="edu_div"> <!-- 학력분야 -->
 					<h2>학력</h2>
-					<div>
-		       			<div id="add_edu_input_form"></div>
-					</div>
-					
-					<button type="button" id="addEducation">학력 추가</button>
-					<div>
-		       			<ul id="search_school"></ul>
-		       			<ul id="search_major"></ul>
-		       			
-					</div>
-					
-					<div id="edu_submajor_form">
-						<ul id="search_submajor"></ul>
-					</div>
+				<table border="1">
+					<tr>
+						<th>고등학교
+			               <input type="hidden" name="edu_kind" value="고등학교"></th>
+						<td><input name="edu_name" placeholder="학교명"></td>
+						<td><input name="edu_end_date" placeholder="졸업년도"></td>
+						<td><input  name="edu_status" placeholder="졸업상태"></td>
+					</tr>
+				<!-- 	<tr>
+						<td>
+						<select class="edu_kind" name="edu_kind">
+				        	<option value="" disabled selected>학교구분</option>
+							<option value="대학(2,3년)">대학(2,3년)</option>
+							<option value="대학교(4년)">대학교(4년)</option>
+						</select>
+						</td>
+						<td><input name="edu_name" placeholder="학교명"></td>
+						<td><input name="edu_major" placeholder="전공명"></td>
+						<td><input name="edu_start_date" placeholder="입학년도"></td>
+						<td><input name="edu_end_date" placeholder="졸업년도"></td>
+						<td><input  name="edu_status" placeholder="졸업상태"></td>
+					</tr>
+					<tr>
+						<th>대학원
+			               <input type="hidden" name="edu_kind" value="학교구분"></th>
+						<td><input name="edu_name" placeholder="학교명"></td>
+						<td><input name="edu_major" placeholder="전공명"></td>
+						<td><input name="edu_start_date" placeholder="입학년도"></td>
+						<td><input name="edu_end_date" placeholder="졸업년도"></td>
+						<td><input  name="edu_status" placeholder="졸업상태"></td>
+					</tr> -->
+				</table>
 		       			
 				</div> <!-- 학력 -->
 				<hr>

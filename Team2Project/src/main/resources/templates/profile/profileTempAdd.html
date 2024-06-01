@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
+<title>Work Wave 이력서 추가 작성</title>
+<link rel="stylesheet" th:href="@{/css/include.css}">
+<link rel="stylesheet" th:href="@{/css/profile.css}">
+</head>
+ <style>
+        #textareaSize {
+            width: 50%;
+            height: 200px;
+        }
+    </style>
+<body>
+		<div th:replace="~{include/header :: guestHeader}"></div> 
+		<div layout:fragment="content" class="content"></div>
+		
+		<!-- 이력서 추가 작성 -->
+		<form method="POST" action="profile_tempAdd_ok" enctype="multipart/form-data">
+			<input type="hidden" name="profile_key" th:value="${profileTemp.profile_key}">
+			
+			<div> <!-- 인적사항 -->
+			 <input name="profile_name" size="40"  th:value="${profileTemp.profile_name}">
+			   <h1>인적사항</h1>
+			 <table>
+	    <tr>
+	        <td><input type="text" th:value="${profileTemp.user_name}" name="user_name"></td>
+	        <td>
+	            <select name="user_gender">
+	                <option th:selected="${profileTemp.user_gender == 'Male'}" value="Male">Male</option>
+	                <option th:selected="${profileTemp.user_gender == 'Female'}" value="Female">Female</option>
+	            </select>
+	        </td>
+	        <td><input type="date" th:value="${#strings.substringBefore(profileTemp.user_birth, ' ')}" name="user_birth"></td>
+	        <td><input type="email" th:value="${profileTemp.user_email}" name="user_email"></td>
+	        <td rowspan="3"><img th:src="@{'/image/profile/' + ${profileTemp.profile_image}}" alt="Profile Image" width="170" height="200"></td>
+	    </tr>
+	    <tr>
+	        <td><input  th:value="${profileTemp.user_phone}" name="user_phone"></td>
+	        <td><input  th:value="${profileTemp.user_addr}" name="user_addr"></td>
+	    </tr>
+		 </table>
+		</div>
+		
+		
+		<div> <!-- 학력 -->
+		<h1>학력</h1>
+			
+		</div>	
+		
+		<div> <!-- 경력 -->
+		<h1>경력</h1>
+		<table border="1" width="700">
+			 <thead>
+			     <tr>
+				     <th>회사명</th>
+				     <th>기간</th>
+				     <th>내용</th>
+				     <th>직급</th>
+				     <th>퇴사사유</th>
+				 </tr>
+			 </thead>
+				<tbody>
+    <tr th:each="career : ${careerTemp}">
+        <td><input type="text" th:value="${career.career_company}" name="career_company"></td>
+        <td>
+            <input type="date" th:value="${#strings.substringBefore(career.career_start_date, ' ')}" name="career_start_date">
+            ~
+            <input type="date" th:value="${#strings.substringBefore(career.career_end_date, ' ')}" name="career_end_date">
+        </td>
+        <td>
+            <textarea name="career_cont" th:text="${career.career_cont}"></textarea>
+        </td>
+        <td><input type="text" th:value="${career.career_position}" name="career_position"></td>
+        <td><input type="text" th:value="${career.career_bye}" name="career_bye"></td>
+    </tr>
+</tbody>
+
+		</table>
+		</div>
+		
+		<div>	<!-- 자격증 -->
+		<h1>자격증</h1>
+			<ul>
+			     <li th:each="license : ${licenseTemp}">
+			        <input type="text" th:value="${license.license_name}" name="license_name">
+			        <input type="text" th:value="${license.license_barhang}" name="license_barhang">
+			        <input type="date" th:value="${license.license_date}" name="license_date">
+    			</li>
+			</ul>
+		</div>	
+		
+		<div> <!-- 자기소개 -->
+		<h2>성장과정</h2>
+        <textarea name="profile_history" id="textareaSize" style="white-space: pre-line" th:text="${profileTemp.profile_history}"></textarea>
+        
+        <h2>지원동기</h2>
+        <textarea name="profile_apply" id="textareaSize" style="white-space: pre-line" th:text="${profileTemp.profile_apply}"></textarea>
+        
+        <h2>성격 장단점</h2>
+        <textarea name="profile_character" id="textareaSize" style="white-space: pre-line" th:text="${profileTemp.profile_character}"></textarea>
+        
+        <h2>입사 후 포부</h2>
+        <textarea name="profile_plan" id="textareaSize" style="white-space: pre-line" th:text="${profileTemp.profile_plan}"></textarea>
+		
+		</div><br><br>
+		
+		<div align="center"> <!-- 버튼 -->
+		<input type="submit" value="작성완료">
+		</div>
+		
+	</form>
+		
+		<div th:replace="~{include/footer :: footer}"></div>
+</body>
+</html>

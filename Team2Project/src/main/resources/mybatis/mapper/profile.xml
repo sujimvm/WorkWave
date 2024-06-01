@@ -67,6 +67,25 @@
 			  	
   	</select>
   	
+  		<select id="profileTempinfo" parameterType="int" resultType="pDTO">
+ 	
+	  	select 
+		    p.*,
+		    u.user_name,
+		    u.user_phone,
+		    u.user_email,
+		    u.user_addr,
+		    u.user_birth,
+		    u.user_gender
+		from 
+		    profile_temp p
+		LEFT JOIN 
+		    users u ON p.user_key = u.user_key
+		WHERE 
+		    p.profile_key = #{no}
+			  	
+  	</select>
+  	
   	<select id="profileCkeck" parameterType="int" resultType="int">
   	
   	select count(*) from profile where user_key = #{no}
@@ -88,9 +107,23 @@
   	
   	</select>
   	
+  	<select id="careerTempinfo" parameterType="int" resultType="crDTO">
+  	
+  	SELECT * FROM career_temp WHERE profile_key = #{no}
+  	
+  	</select>
+  	
+  	
+  	
   	<select id="licenseList" parameterType="int" resultType="lDTO">
   	
   	SELECT * FROM license WHERE profile_key = #{no}
+  	
+  	</select>
+  	
+  	<select id="licenseTempinfo" parameterType="int" resultType="lDTO">
+  	
+  	SELECT * FROM license_temp WHERE profile_key = #{no}
   	
   	</select>
   	
@@ -146,8 +179,9 @@
             SELECT user_key_seq.NEXTVAL FROM dual
         </selectKey>
    	
-  	insert into edu VALUES (#{edu_key},#{profile_key},#{edu_kind},#{edu_name},#{edu_major},#{edu_degree},#{edu_hakjum},#{edu_status},#{edu_transfer},#{edu_nonmun},#{edu_submajor},#{edu_start_date},#{edu_end_date},
-  	,#{edu_nonmun_name})
+	  INSERT INTO edu (edu_key, profile_key,edu_name,edu_status,edu_end_date)
+	VALUES (#{edu_key}, #{profile_key},#{edu_name}, #{edu_status},#{edu_end_date});
+
   	</insert>
   	
   	
@@ -177,7 +211,84 @@
 	select * from profile_Temp where user_key = #{userKey}
 	
 	</select>
+	
+	<delete id="profileDelect" parameterType="int">
+	
+	delete from profile where PROFILE_KEY = #{pro_key}
+	
+	</delete>
+
+	<update id="updateProfile" parameterType="pDTO">
+	 UPDATE profile SET 
+        profile_name = #{profile_name},
+        profile_history = #{profile_history},
+        profile_apply = #{profile_apply},
+        profile_character = #{profile_character},
+        profile_plan = #{profile_plan}
+    WHERE profile_key = #{profile_key}
+	
+	
+	</update>
+	
+	<update id="updateCareer" parameterType="crDTO">
+	
+	 UPDATE career SET
+        career_company = #{career_company},
+        career_start_date = #{career_start_date},
+        career_end_date = #{career_end_date},
+        career_cont = #{career_cont},
+        career_position = #{career_position},
+        career_bye = #{career_bye}
+    WHERE profile_key = #{profile_key}
+	
+	
+	</update>
+	
+	<update id="updateLicense" parameterType="lDTO">
+	
+	  UPDATE license SET
+        license_name = #{license_name},
+        license_barhang = #{license_barhang},
+        license_date = #{license_date}
+    WHERE profile_key = #{profile_key}
+	
+	</update>
   	
+  	<update id="updateProfileTemp" parameterType="pDTO">
+	 UPDATE profile_temp SET 
+        profile_name = #{profile_name},
+        profile_history = #{profile_history},
+        profile_apply = #{profile_apply},
+        profile_character = #{profile_character},
+        profile_plan = #{profile_plan}
+    WHERE profile_key = #{profile_key}
+	
+	
+	</update>
+	
+	<update id="updateCareerTemp" parameterType="crDTO">
+	
+	 UPDATE career_temp SET
+        career_company = #{career_company},
+        career_start_date = #{career_start_date},
+        career_end_date = #{career_end_date},
+        career_cont = #{career_cont},
+        career_position = #{career_position},
+        career_bye = #{career_bye}
+    WHERE profile_key = #{profile_key}
+	
+	
+	</update>
+	
+	<update id="updateLicenseTemp" parameterType="lDTO">
+	
+	  UPDATE license_temp SET
+        license_name = #{license_name},
+        license_barhang = #{license_barhang},
+        license_date = #{license_date}
+    WHERE profile_key = #{profile_key}
+	
+	</update>
   	
   	
   </mapper>

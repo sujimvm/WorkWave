@@ -1,8 +1,12 @@
 package com.Team2Project.WorkWave.controller;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.http.HttpResponse;
+import java.nio.charset.Charset;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -25,7 +30,7 @@ import com.Team2Project.WorkWave.model.ProfileMapper;
 import com.Team2Project.WorkWave.model.UserDTO;
 import com.Team2Project.WorkWave.service.UploadFileService;
 
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +44,39 @@ public class ProfileController {
 
 	@Autowired
 	private ProfileMapper mapper;
+	
+	private final String pptUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\ppt\\profile";
+
+    @GetMapping("/download/ppt/{fileName:.+}")
+    public void downloadPPT(@PathVariable("fileName") String fileName, HttpServletResponse response) throws Exception {
+        File file = new File(pptUploadDir + File.separator + fileName);
+
+        if (!file.exists()) {
+            String errorMessage = "죄송합니다. 요청하신 파일을 찾을 수 없습니다.";
+            ServletOutputStream outputStream = response.getOutputStream();
+            outputStream.write(errorMessage.getBytes(Charset.forName("UTF-8")));
+            outputStream.close();
+            return;
+        }
+
+        String mimeType = "application/vnd.ms-powerpoint";
+        response.setContentType(mimeType);
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+
+        response.setContentLength((int) file.length());
+
+        try (BufferedInputStream inStream = new BufferedInputStream(new FileInputStream(file));
+             ServletOutputStream outStream = response.getOutputStream()) {
+
+            byte[] buffer = new byte[1024];
+            int bytesRead = -1;
+
+            while ((bytesRead = inStream.read(buffer)) != -1) {
+                outStream.write(buffer, 0, bytesRead);
+            }
+        }
+    }
+
 
 	// 이력서 추가 메서드
 	@PostMapping("profile_insert")
@@ -47,13 +85,11 @@ public class ProfileController {
 			@RequestParam("profile_ppt_input") MultipartFile ppt_file,
 			@RequestParam("profile_image_input")MultipartFile image_file,EduDTO edu
 			) throws IOException {
-	//@RequestParam("edu_nonmun_input") MultipartFile edu_nonmun
 		
 		String imageUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\profile";
 		
 		String pptUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\ppt\\profile";
 		
-		String nonmunUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\ppt\\profile";
 
 		if (image_file.getOriginalFilename() != null) {
 			if (image_file != null && !image_file.isEmpty()) {
@@ -68,7 +104,7 @@ public class ProfileController {
 		
 		if (ppt_file.getOriginalFilename() != null) {
 			if (ppt_file != null && !ppt_file.isEmpty()) {
-				String pptName = uploadFileService.upload(ppt_file, pptUploadDir);
+				String pptName = uploadFileService.uploadOriName(ppt_file, pptUploadDir);
 				dto.setProfile_ppt(pptName);
 				dto.setProfile_ppt_name(ppt_file.getOriginalFilename());
 			}
@@ -96,70 +132,15 @@ public class ProfileController {
 		// 유저키의 프로필키(max) 
 		int nowInsertProfileKey = this.mapper.nowInsertProfileKey(dto.getUser_key());
 		
+		/*
+		 * //학력 데이터 저장 EduDTO eduDto = new EduDTO();
+		 * eduDto.setProfile_key(nowInsertProfileKey);
+		 * 
+		 * this.mapper.EduInsert(eduDto);
+		 */
+		 
 		
-		//학력 데이터 저장
-		EduDTO edtoArr = codelistDTO.getEDtoList().get(0);
-		for(int i=0; i < edtoArr.getEdu_kind().split(",").length; i++) {
-			
-			EduDTO edto = new EduDTO();
-
-			edto.setProfile_key(nowInsertProfileKey);
-			edto.setEdu_kind(edtoArr.getEdu_kind().split(",")[i]);
-			System.out.println(edtoArr.getEdu_kind()+"edtoArr.getEdu_kind().split(\",\")[i]");
-			
-			edto.setEdu_name(edtoArr.getEdu_name().split(",")[i]);
-			System.out.println(edtoArr.getEdu_name()+"edtoArr.getEdu_name().split(\",\")[i]");
-			
-			edto.setEdu_start_date(edtoArr.getEdu_start_date().split(",")[i]);
-			System.out.println(edtoArr.getEdu_start_date()+"edtoArr.getEdu_start_date().split(\",\")[i]");
-			
-			edto.setEdu_end_date(edtoArr.getEdu_end_date().split(",")[i]);
-			System.out.println(edtoArr.getEdu_end_date()+"edtoArr.getEdu_end_date().split(\",\")[i]");
-			
-			edto.setEdu_major(edtoArr.getEdu_major().split(",")[i]);
-			System.out.println(edtoArr.getEdu_major()+"edtoArr.getEdu_major().split(\",\")[i]");
-			
-			edto.setEdu_degree(edtoArr.getEdu_degree().split(",")[i]);
-			System.out.println(edtoArr.getEdu_degree()+"edtoArr.getEdu_degree().split(\",\")[i]");
-			
-			edto.setEdu_hakjum(edtoArr.getEdu_hakjum().split(",")[i]);
-			System.out.println(edtoArr.getEdu_hakjum()+"edtoArr.getEdu_hakjum().split(\",\")[i]");
-			
-			edto.setEdu_status(edtoArr.getEdu_status().split(",")[i]);
-			System.out.println(edtoArr.getEdu_status()+"edtoArr.getEdu_status().split(\",\")[i]");
-			
-			//edto.setEdu_transfer(edtoArr.getEdu_transfer().split(",")[i]);
-			edto.setEdu_transfer("");
-			edto.setEdu_submajor(edtoArr.getEdu_submajor().split(",")[i]);
-			System.out.println(edtoArr.getEdu_submajor()+"edtoArr.getEdu_submajor().split(\",\")[i]");
-			//edto.setEdu_nonmun(edtoArr.getEdu_nonmun().split(",")[i]);
-			
-			edu.setEdu_nonmun_name("");
-			edu.setEdu_nonmun("");
-			
-			
-			/*
-			if (edu_nonmun.split(",")[i].getOriginalFilename() != null) {
-				if (edu_nonmun.split(",")[i] != null && !edu_nonmun.split(",")[i].isEmpty()) {
-					String nonmunName = uploadFileService.upload(edu_nonmun.split(",")[i], nonmunUploadDir);
-					edu.setEdu_nonmun(nonmunName);
-					edu.setEdu_nonmun_name(edu_nonmun.getOriginalFilename());
-				}
-			}
-			
-			edu_nonmun.split(",")[i];
-				*/	
-					
-			
-			
-			
-			
-			
-			
-			this.mapper.EduInsert(edto);
-			
-		}
-		
+	
 		  //경력 데이터 저장 
 		CareerDTO crdtoArr = codelistDTO.getCrDtoList().get(0); 
 		for(int i= 0; i < crdtoArr.getCareer_company().split(",").length; i++) {
@@ -437,20 +418,132 @@ public class ProfileController {
 	}
 
 	
-//	// 데이터 넘어오는 지 test
-//	@PostMapping("dateReqTest")
-//	public String dateReqTest(Model model,@ModelAttribute(value = "CodeListDTO") CodeListDTO li) {
-//		
-//
-//		 System.out.println(li+" li>>" );
-//		
-//		 for (int i = 0; i < li.getEDtoList().size(); i++) { 
-//			 EduDTO dto = new EduDTO();
-//			 dto.setEdu_key(li.getEDtoList().get(i).getEdu_key());
-//			 System.out.println(dto.getEdu_key()+" key>>" );
-//		 }
-//		 
-//		return "index";
-//	}
+	//이력서 삭제
+	@GetMapping("profile_delect")
+	public void profile_delect(@RequestParam("no") int pro_key,HttpServletResponse response) throws IOException {
+		
+		int check = this.mapper.profileDelect(pro_key);
+		
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+
+		if (check > 0) {
+			out.println("<script>");
+			out.println("alert('이력서를 삭제 하였습니다.')");
+			out.println("location.href='profile_list'");
+			out.println("</script>");
+		} else {
+			out.println("<script>");
+			out.println("alert('이력서 삭제를 실패 하였습니다.')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
+		
+	}
+	
+	//이력서 수정
+	@GetMapping("profile_modify")
+	public String profile_modify(@RequestParam("no") int no,Model model) {
+		
+		ProfileDTO content = this.mapper.profileinfo(no);
+		List<CareerDTO> carMody = this.mapper.careerList(no);
+		List<LicenseDTO> licenMody = this.mapper.licenseList(no);
+		
+		model.addAttribute("Modify", content);
+		model.addAttribute("carMody", carMody);
+		model.addAttribute("licenMody", licenMody);
+		
+		return "profile/profile_modify";
+	}
+	
+	//이력서 수정 업데이트
+	@PostMapping("profile_modify_ok")
+	public void profile_modify_ok(@RequestParam("profile_key") int pro_key, ProfileDTO profileDto, CareerDTO careerDto, LicenseDTO licenDto,
+	        HttpServletResponse response, HttpSession session) throws IOException {
+	    
+	    profileDto.setProfile_key(pro_key);
+	    careerDto.setProfile_key(pro_key);
+	    licenDto.setProfile_key(pro_key);
+	    
+	    int updateResult = 0;
+	    
+	    try {
+	        updateResult = this.mapper.updateProfile(profileDto);
+	        updateResult += this.mapper.updateCareer(careerDto);
+	        updateResult += this.mapper.updateLicense(licenDto);
+	        
+	        response.setContentType("text/html; charset=UTF-8");
+	        PrintWriter out = response.getWriter();
+	        
+	        if (updateResult > 0) {
+	            out.println("<script>");
+	            out.println("alert('이력서를 수정했습니다.')");
+	            out.println("location.href='profile_list'");
+	            out.println("</script>");
+	        } else {
+	            out.println("<script>");
+	            out.println("alert('이력서 수정을 실패했습니다.')");
+	            out.println("history.back()");
+	            out.println("</script>");
+	        }
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+	    }
+	}
+	
+	//중간 이력서 이어서 작성
+	@GetMapping("profileTemp_add")
+	public String profileTempAdd(@RequestParam("no") int no,Model model) {
+		
+		
+		ProfileDTO profileTemp = this.mapper.profileTempinfo(no);
+		List<CareerDTO> careerTemp = this.mapper.careerTempinfo(no);
+		List<LicenseDTO> licenseTemp = this.mapper.licenseTempinfo(no);
+	
+		
+		model.addAttribute("profileTemp", profileTemp);
+		model.addAttribute("careerTemp", careerTemp);
+		model.addAttribute("licenseTemp", licenseTemp);
+		
+		return "profile/profileTempAdd";
+	}
+
+	//중간 이력서 작성 저장
+	@PostMapping("profile_tempAdd_ok")
+	public void profileTempAddOk(@RequestParam("profile_key") int pro_key, ProfileDTO profileDto, CareerDTO careerDto, LicenseDTO licenDto,
+	        HttpServletResponse response, HttpSession session) throws IOException {
+		
+		    profileDto.setProfile_key(pro_key);
+		    careerDto.setProfile_key(pro_key);
+		    licenDto.setProfile_key(pro_key);
+		    
+		    int updateResult = 0;
+		    
+		    try {
+		        updateResult = this.mapper.updateProfileTemp(profileDto);
+		        updateResult += this.mapper.updateCareerTemp(careerDto);
+		        updateResult += this.mapper.updateLicenseTemp(licenDto);
+		        
+		        response.setContentType("text/html; charset=UTF-8");
+		        PrintWriter out = response.getWriter();
+		        
+		        if (updateResult > 0) {
+		            out.println("<script>");
+		            out.println("alert('이력서를 추가작성을 저장했습니다.')");
+		            out.println("location.href='profile_list'");
+		            out.println("</script>");
+		        } else {
+		            out.println("<script>");
+		            out.println("alert('이력서 추가 작성을 실패했습니다.')");
+		            out.println("history.back()");
+		            out.println("</script>");
+		        }
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		    }
+		
+	}
 	
 }
