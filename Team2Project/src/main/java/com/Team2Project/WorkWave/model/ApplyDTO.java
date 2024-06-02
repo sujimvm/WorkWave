@@ -4,10 +4,11 @@ import lombok.Data;
 
 @Data
 public class ApplyDTO {
-	private String apply_key;
-	private String user_key;
-	private String company_key;
+	private int apply_key;
+	private int profile_key;
+	private int com_board_key;
 	private String apply_date;
+	private String apply_profile_check;
 
 
     // 생성자, Getter 및 Setter 생략 (필요시 추가)

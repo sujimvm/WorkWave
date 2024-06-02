@@ -9,7 +9,8 @@ $(document).ready(function() {
 	getJobCodeGroup();
 	getLocationCodeGroup();
 	getComBoardList();
-
+	
+	
 
 	// 직업분류 0 이면 클릭 시 show , 1이면 클릭 시 hide
 	$(document).on('click', '#jobCodeOutputDiv', function() {
@@ -21,8 +22,22 @@ $(document).ready(function() {
 			$('#jobCodeTotalDiv').hide();
 		}
 	});
-		
-	// 직업분류 0 이면 클릭 시 show , 1이면 클릭 시 hide
+	$(document).on('click', '#jobCodeGroupUl input:checkbox', function() {
+	   if ($(this).is(':checked')){
+		   $('.jobCodeSubUl').hide();
+		   $('.jobCodeStepUl').hide();
+		   $('#jobCodeSubUl'+$(this).val()).show();
+	  }
+	});
+	$(document).on('click', '.jobCodeSubUl input:checkbox', function() {
+	   if ($(this).is(':checked')){
+		   $('.jobCodeStepUl').hide();
+		   $('#jobCodeStepUl'+$(this).val()).show();
+	  } 
+	});
+	
+	
+	// 지역 0 이면 클릭 시 show , 1이면 클릭 시 hide
 	$(document).on('click', '#locationCodeOutputDiv', function() {
 		if(locationCodeOutput == 0){
 			locationCodeOutput = 1;
@@ -32,29 +47,27 @@ $(document).ready(function() {
 			$('#locationCodeTotalDiv').hide();
 		}
 	});
-			
-	$(document).on('click', '#jobCodeGroupUl input:checkbox', function() {
-	   if ($(this).is(':checked')){
-		   $('.jobCodeSubUl').hide();
-		   $('.jobCodeStepUl').hide();
-		   $('#jobCodeSubUl'+$(this).val()).show();
-	  }
-	});
-	
-	$(document).on('click', '.jobCodeSubUl input:checkbox', function() {
-	   if ($(this).is(':checked')){
-		   $('.jobCodeStepUl').hide();
-		   $('#jobCodeStepUl'+$(this).val()).show();
-	  } 
-	});
-	
-		
 	$(document).on('click', '#locationCodeGroupUl input:checkbox', function() {
 	   if ($(this).is(':checked')){
 		   $('.locationCodeSubUl').hide();
 		   $('.locationCodeStepUl').hide();
 		   $('#locationCodeSubUl'+$(this).val()).show();
 	  }
+	});
+	
+	// 관심기업 추가/삭제
+	$(document).on('click', '.interest_check', function() {
+		if ($(this).is(':checked')) interestCheck(1,$(this).val());
+		else interestCheck(0,$(this).val());
+	});
+	
+	//공고 지원
+	$(document).on('click', '#all_apply', function() {
+		var checked = [];
+		$('input:checkbox[name=apply_check]:checked').each(function(){
+			checked = $(this).val();
+		});
+		addApply(checked);
 	});
 });
 
@@ -108,6 +121,8 @@ function getLocationCodeGroup() {
 			locationDataSub.forEach(function(sub) {
 				$('#locationCodeSubUl'+sub.code.substr(0,2)).append("<li><input type='checkbox' value='"+sub.code+"' id='l"+sub.code+"' name='locationCode'><label for='l"+sub.code+"'>" + sub.name + "</label></li>");
 			});
+			
+			
 		},
 		error: function(xhr, status, error) {
 			console.error(xhr);
@@ -121,23 +136,57 @@ function getComBoardList() {
 		url: '/comBoard/list',
 		type: 'post',
 		dataType: 'json',
-		success: function(list) {
+		success: function(map) {
 			$('#jobListTb').empty(); // Clear any existing rows
+			var list = map.list;
+			var interestList = map.interestList;
 			list.forEach(function(list) {
 				var row = "<tr>" +
-					"<td><input type='checkbox'></td>" + //선택한 공고 한번에 지원하기 체크박스
-					"<td><a href='#'>" + list.company_name + "</a></td>" +
+					"<td><input type='checkbox' name='apply_check' value='"+list.com_board_key+"'><a href='#'>" + list.company_name + "</a><input type='checkbox' class='interest_check' name='interest_check_"+list.company_key+"' value='"+list.company_key+"'></td>" + // 선택 지원 | 기업명 | 관심기업 체크박스
 					"<td><a href='#'>" + list.com_board_title + "<br>" + 
-					list.com_board_career + list.com_board_edu + list.company_addr + list.com_board_type  + "<br>" + 
+					list.com_board_career + list.com_board_edu + list.company_addr + list.com_board_jobtype  + "<br>" + 
 					list.com_board_group + list.com_board_sub + list.com_board_step + "</a></td>" +
-					"<td><input type='checkbox'></td>" + //관심기업 등록 체크박스
 					"<td><input type='button' value='지원하기'></td>" + // 해당기업 지원하기
 					"</tr>";
 				$('#jobListTb').append(row);
+				
 			}); 
+			interestList.forEach(function(interestList) {
+				$('input:checkbox[name="interest_check_'+interestList+'"]').attr("checked",true);
+			});
+		
 		},
 		error: function(xhr, status, error) {
 			console.error(xhr);
 		}
 	});
+}
+
+// 관심기업 체크 시 관심기업 등록 / 해제
+function interestCheck(check, company_key) {
+	$.ajax({
+		url: '/comBoard/interestCheck',
+		type: 'post',
+		dataType: 'json',
+		data:{"check":check,"company_key":company_key},
+		error: function(xhr, status, error) {
+			console.error(xhr);
+		}
+	});
+	
+	getComBoardList();
+}
+
+// 관심기업 체크 시 관심기업 등록 / 해제
+function addApply(checked) {
+	$.ajax({
+		url: '/comBoard/addApply',
+		type: 'post',
+		dataType: 'json',
+		data:{"checked":checked},
+		error: function(xhr, status, error) {
+			console.error(xhr);
+		}
+	});
+	getComBoardList();
 }
