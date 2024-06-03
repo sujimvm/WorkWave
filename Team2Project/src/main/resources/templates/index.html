@@ -7,7 +7,8 @@
 <link rel="stylesheet" th:href="@{/css/include.css}">
 </head>
 <body>
-	<div th:replace="~{include/header :: guestHeader}"></div> 
+	<div th:if="${session.user_login}" th:replace="include/header :: userHeader"></div>
+    <div th:if="${session.user_login == null}" th:replace="include/header :: guestHeader"></div>
 	<div layout:fragment="content" class="content">
 		<ul>
 			<li><a th:href="@{login.go}">통합로그인</a></li>
@@ -23,5 +24,7 @@
 		</ul>
 	</div>
 	<div th:replace="~{include/footer :: footer}"></div>
+	
+	
 </body>
 </html>
