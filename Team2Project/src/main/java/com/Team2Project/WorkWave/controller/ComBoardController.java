@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,8 @@ import com.Team2Project.WorkWave.model.ComBoardDTO;
 import com.Team2Project.WorkWave.model.ComBoardMapper;
 import com.Team2Project.WorkWave.model.CompanyDTO;
 import com.Team2Project.WorkWave.model.InterestDTO;
+import com.Team2Project.WorkWave.model.NoticeDTO;
+import com.Team2Project.WorkWave.model.Page;
 import com.Team2Project.WorkWave.model.UserDTO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,26 +38,49 @@ public class ComBoardController {
 
 	@Autowired
 	private ComBoardMapper mapper;
+
+	// 한 페이지당 보여질 게시물의 수
+	private final int rowsize = 5;
+	// DB 상의 전체 게시물의 수
+	private int totalRecord = 0;
 	
 	// (리스트) 페이지 이동
 	@GetMapping("")
 	public String goComBoardList() {
-		return "comBoard/list";
+		return "/comBoard/list";
 	}
 	
 	// (리스트) 리스트 조회
 	@PostMapping("/list")
 	@ResponseBody
-	public HashMap<String, Object> getComBoardList(HttpSession session) {
+	public HashMap<String, Object> getComBoardList(HttpSession session, HttpServletRequest request) {
 		
-		UserDTO udto = (UserDTO)session.getAttribute("user_login");
-		if(udto.getUser_key() == null) {
-			System.out.println("udto.getUser_key()");
+
+		int page;	// 현재 페이지 변수
+		
+		// 페이징 처리 작업
+		if(request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}else {
+			page = 1;
 		}
 		
+		totalRecord = this.mapper.countComBoard();
+		
+		Page pdto = new Page(page, rowsize, totalRecord);
+		
 		HashMap<String, Object> map = new HashMap<>();
-		map.put("list", this.mapper.getComBoardList());
-		map.put("interestList", this.mapper.getInterestCompanyKeyList(udto.getUser_key()));
+		map.put("list", this.mapper.getComBoardList(pdto));
+		map.put("paging", pdto);
+
+		if(session.getAttribute("user_login") == null) {
+			System.out.println("getComBoardList > loginX");
+		}else {
+			UserDTO udto = (UserDTO)session.getAttribute("user_login");
+			map.put("interestList", this.mapper.getInterestCompanyKeyList(udto.getUser_key()));
+			map.put("applyList", this.mapper.getApplyList(this.mapper.selectDefaultProfile(udto.getUser_key())));
+		}
+		
 		return map;
 	}
 	
@@ -86,32 +112,41 @@ public class ComBoardController {
 	// 기업정보 조회 전송 예정
 	// (등록) 페이지 이동
 	@GetMapping("/add")
-	public String goAddComBoard() {
-		return "comBoard/add";
+	public String goAddComBoard(HttpSession session) {
+		if(session.getAttribute("companyInfo") != null) {
+			return "/comBoard/add";
+		}else {
+			return "/mainLogin";
+		}
 	}
 
 	// (등록) 공고 등록
 	@PostMapping("/addOk")
 	public void addComBoard(ComBoardDTO dto,  HttpServletResponse response, HttpSession session) throws IOException {
 		int temp_key = 0;
-		// 세션 기업정보로 기업키 저장
-//		CompanyDTO cdto = (CompanyDTO)session.getAttribute("companyInfo");
-//		dto.setCompany_key(cdto.getCompany_key());
-		
-		// 컴퍼니 키 임시 저장
-		dto.setCompany_key(2);
-		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		if(this.mapper.addComBoard(dto) > 0) {
-			temp_key = dto.getTemp_key();
-			if(temp_key != 0) this.mapper.deleteComBoardTemp(temp_key);
-			out.println("<script> alert('공고등록 성공'); location.href='/comBoard'; </script>");
+		// 세션 기업정보로 기업키 저장
+		if(session.getAttribute("companyInfo") != null) {
+			
+			CompanyDTO cdto = (CompanyDTO)session.getAttribute("companyInfo");
+			dto.setCompany_key(cdto.getCompany_key());
+			
+			// 컴퍼니 키 임시 저장
+			dto.setCompany_key(2);
+			
+			if(this.mapper.addComBoard(dto) > 0) {
+				temp_key = dto.getTemp_key();
+				if(temp_key != 0) this.mapper.deleteComBoardTemp(temp_key);
+				out.println("<script> alert('공고등록 성공'); location.href='/comBoard'; </script>");
+			}else {
+				out.println("<script> alert('공고등록 실패'); history.back(); </script>");
+			}
+			out.flush();
 		}else {
-			out.println("<script> alert('공고등록 실패'); history.back(); </script>");
+			out.println("<script> alert('기업회원만 등록 가능합니다'); location.href='login.go'; </script>");
 		}
-		out.flush();
 	}
 	
 	// (등록) 공고 중간저장
@@ -168,6 +203,8 @@ public class ComBoardController {
 
 		UserDTO udto = (UserDTO)session.getAttribute("user_login");
 		int profile_key = this.mapper.selectDefaultProfile(udto.getUser_key());
+		
+		System.out.println(checked+"checked");
 		for (int i = 0; i < checked.split(",").length; i++) {
 			ApplyDTO aDTO = new ApplyDTO();
 			
@@ -177,6 +214,19 @@ public class ComBoardController {
 			if(this.mapper.addApply(aDTO) > 0) System.out.println("지원성공");
 			else System.out.println("지원실패");
 		}
+	}
+	
+	// (상세보기) 페이지 이동
+	@GetMapping("/content")
+	public String goComBoardContent(HttpServletRequest request, Model model) {
 		
+		int com_board_key = Integer.parseInt(request.getParameter("No"));
+		int page = Integer.parseInt(request.getParameter("page"));
+		
+		ComBoardDTO dto = this.mapper.getComBoard(com_board_key);
+		
+		model.addAttribute("dto",dto).addAttribute("page",page);
+		
+		return "/comBoard/content";
 	}
 }

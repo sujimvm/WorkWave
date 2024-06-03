@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
+<title>Work Wave 공고 상세보기</title>
+<link rel="stylesheet" th:href="@{/css/include.css}">
+<link rel="stylesheet" th:href="@{/css/comBoard.css}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{/js/comBoardList.js}"></script>
+</head>
+<body>
+	<div th:replace="~{include/header :: guestHeader}"></div> 
+		<div layout:fragment="content" class="content">
+			<div>
+				<div>
+					<div></div>
+				</div><!-- 채용정보 -->
+				<div></div><!-- content nav -->
+				<div></div><!-- 상세 -->
+				<div></div><!-- 접수기간 -->
+				<div></div><!-- 지원자 통계 -->
+				<div></div><!-- 기업정보 -->
+				<div></div><!-- 근무환경 -->
+			</div>
+			<div></div><!-- 포지션제안 -->
+		</div>
+	<div th:replace="~{include/footer :: footer}"></div>
+</body>
+</html>

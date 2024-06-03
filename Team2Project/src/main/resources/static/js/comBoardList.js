@@ -65,8 +65,9 @@ $(document).ready(function() {
 	$(document).on('click', '#all_apply', function() {
 		var checked = [];
 		$('input:checkbox[name=apply_check]:checked').each(function(){
-			checked = $(this).val();
+			checked.push($(this).val());
 		});
+		alert(checked);
 		addApply(checked);
 	});
 });
@@ -118,6 +119,7 @@ function getLocationCodeGroup() {
 				$('#locationCodeSubUl'+group.code).append("<li><input type='checkbox' value='"+group.code+"' id='l"+group.code+"' name='locationCode'><label for='i"+group.code+"'>전체</label></li>");
 				$('#locationCodeSubUl'+group.code).hide();
 			}); 
+				
 			locationDataSub.forEach(function(sub) {
 				$('#locationCodeSubUl'+sub.code.substr(0,2)).append("<li><input type='checkbox' value='"+sub.code+"' id='l"+sub.code+"' name='locationCode'><label for='l"+sub.code+"'>" + sub.name + "</label></li>");
 			});
@@ -131,29 +133,63 @@ function getLocationCodeGroup() {
 }
 	
 // 공고리스트 조회 및 출력
-function getComBoardList() {
+function getComBoardList(nowPg) {
+	if(nowPg == undefined) nowPg = 1;
 	$.ajax({
 		url: '/comBoard/list',
 		type: 'post',
 		dataType: 'json',
+		data:{"page":nowPg},
 		success: function(map) {
 			$('#jobListTb').empty(); // Clear any existing rows
+			$('#pagination').empty();
 			var list = map.list;
 			var interestList = map.interestList;
+			var applyList = map.applyList;
+			var paging = map.paging;
+			var paging_li = "";
+			
 			list.forEach(function(list) {
 				var row = "<tr>" +
-					"<td><input type='checkbox' name='apply_check' value='"+list.com_board_key+"'><a href='#'>" + list.company_name + "</a><input type='checkbox' class='interest_check' name='interest_check_"+list.company_key+"' value='"+list.company_key+"'></td>" + // 선택 지원 | 기업명 | 관심기업 체크박스
-					"<td><a href='#'>" + list.com_board_title + "<br>" + 
+					"<td><input type='checkbox' name='apply_check' id='apply_check_"+list.com_board_key+"' value='"+list.com_board_key+"'><a href='#'>" + list.company_name + "</a><input type='checkbox' class='interest_check' name='interest_check_"+list.company_key+"' value='"+list.company_key+"'></td>" + // 선택 지원 | 기업명 | 관심기업 체크박스
+					"<td><a href='/comBoard/content?page="+nowPg+"&No="+list.com_board_key+"'>" + list.com_board_title + "<br>" + 
 					list.com_board_career + list.com_board_edu + list.company_addr + list.com_board_jobtype  + "<br>" + 
 					list.com_board_group + list.com_board_sub + list.com_board_step + "</a></td>" +
-					"<td><input type='button' value='지원하기'></td>" + // 해당기업 지원하기
+					"<td><input type='button' id='addApplyBt_"+list.com_board_key+"' onclick='addApply("+list.com_board_key+")' value='지원하기'></td>" + // 해당기업 지원하기
 					"</tr>";
 				$('#jobListTb').append(row);
 				
 			}); 
-			interestList.forEach(function(interestList) {
-				$('input:checkbox[name="interest_check_'+interestList+'"]').attr("checked",true);
-			});
+			if(interestList != undefined){
+				interestList.forEach(function(interestList) {
+					$('input:checkbox[name="interest_check_'+interestList+'"]').attr("checked",true);
+				});
+			}
+			if(applyList != undefined){
+				applyList.forEach(function(applyList) {
+					$('#apply_check_'+applyList).attr("disabled", true);
+					$('#addApplyBt_'+applyList).attr("value", "지원완료");
+					$('#addApplyBt_'+applyList).attr("disabled", true);
+				});
+			}
+			
+			if(paging != undefined && paging.page > paging.block){
+				paging_li += "<li><a href='javascript:getComBoardList(1)'>맨처음</a></li>";
+			}
+			if(paging != undefined && paging.page > paging.block){ 
+				paging_li += "<li><a href='javascript:getComBoardList("+(paging.startBlock-1)+")'> ← </a></li>";
+			}
+			for(var i = paging.startBlock; i<= paging.endBlock; i++){ 
+				paging_li += "<li><a href='javascript:getComBoardList("+i+")'>"+i+"</a></li>";
+			}
+			if(paging != undefined && paging.endBlock < paging.allPage){ 
+				paging_li += "<li><a href='javascript:getComBoardList("+(paging.endBlock+1)+")'> → </a></li>";
+			}
+			if(paging != undefined && paging.endBlock < paging.allPage){ 
+				paging_li += "<li><a href='javascript:getComBoardList("+paging.allPage+")'>맨뒤</a></li>";
+			}
+		
+			$('#pagination').append(paging_li);
 		
 		},
 		error: function(xhr, status, error) {
@@ -173,11 +209,10 @@ function interestCheck(check, company_key) {
 			console.error(xhr);
 		}
 	});
-	
 	getComBoardList();
 }
 
-// 관심기업 체크 시 관심기업 등록 / 해제
+// 공고 지원 등록 / 해제
 function addApply(checked) {
 	$.ajax({
 		url: '/comBoard/addApply',

@@ -8,8 +8,11 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface ComBoardMapper {
-	List<ComBoardDTO> getComBoardList(); // 공고리스트
+	List<ComBoardDTO> getComBoardList(Page page); // 공고리스트
 	int[] getInterestCompanyKeyList(int user_key); // 관심기업리스트
+	int countComBoard(); // 공고리스트 카운트
+	int[] getApplyList(int profile_key); // 공고 지원 리스트
+	
 	List<CodeDTO> getJobCodeGroupList(); // 직업대분류리스트
 	List<CodeDTO> getJobCodeSubList(); // 직업중분류리스트
 	List<CodeDTO> getJobCodeStepList(); // 직업소분류리스트
@@ -26,4 +29,6 @@ public interface ComBoardMapper {
 
 	int selectDefaultProfile(int user_key); // 기본 프로필 키 조회
 	int addApply(ApplyDTO dto); // 공고 지원
+	
+	ComBoardDTO getComBoard(int com_board_key);
 }
