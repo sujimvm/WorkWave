@@ -19,29 +19,208 @@
 /* 큰화면 데스크탑 (가로 해상도가 1200px 보다 큰 화면에 적용)  */
 @media (min-width: 1200px) {}
 
-*{
-	font-family: Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, Noto Sans KR, Malgun Gothic, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, sans-serif !important;
-	
+
+* {
+	font-family: Pretendard, -apple-system, BlinkMacSystemFont, 
+				 system-ui, Roboto, Helvetica Neue, Segoe UI, Apple SD Gothic Neo, 
+				 Noto Sans KR, Malgun Gothic, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, sans-serif !important;
 }
 
-body{
+/* 헤더 스타일 */
+.header {
+    background-color: #fff; /* 헤더 배경색 흰색 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 헤더 아래쪽 그림자 효과 */
+    padding: 25px 0; /* 헤더 상하 여백 */
+}
+
+/* 컨테이너 스타일 */
+.container {
+	width: 80%;
+	max-width: 1200px; /* 최대 너비 고정 */
+	min-width: 800px; /* 최소 너비 고정 */
+	margin: 0 auto; /* 컨테이너 가운데 정렬 */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+/* 상단 섹션 스타일 */
+.top-section {
 	width: 100%;
-    min-width: 1320px;
+	display: flex;
+	justify-content: space-between; /* 좌우로 요소들을 배치 */
+	align-items: center; /* 세로축 가운데 정렬 */
+}
+
+/* 로고와 검색창 섹션 스타일 */
+.logo-search {
+	display: flex;
+	align-items: center;
+}
+
+.logo img {
+	height: 100px;
+	margin-right: 20px;
+}
+
+.search-btn {
+	display: flex;
+	flex: 1; /* 검색창이 가능한 넓게 차지하도록 함 */
+}
+
+.search-bar {
+	width: 350px;
+	max-width: 450px; /* 최대 너비 고정 */
+	height: 40px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 10px;
+	box-sizing: border-box; /* 패딩과 보더를 포함한 너비 계산 */
+}
+
+.search-btn input[type="submit"] {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	padding: 10px 15px;
+	cursor: pointer;
+	margin-left: 10px; /* 검색창과 버튼 간의 간격 */
+}
+
+/* 사용자 액션 스타일 */
+.user-actions {
+	display: flex;
+	align-items: center;
+}
+
+.user-actions a {
+	text-decoration: none; /* 링크 밑줄 제거 */
+	color: #333; /* 링크 색상 */
+	font-size: 16px;
+	font-weight: bold; /* 링크 글씨 굵게 */
+	margin-left: 20px; /* 버튼 간 간격 */
+}
+
+.user-actions a i {
+	margin-right: 5px; /* 아이콘과 텍스트 간 간격 */
+}
+
+/* 내비게이션 바 스타일 */
+nav {
+	width: 100%;
+	background-color: #f0f0f0; /* 메뉴 배경색 추가 */
+	padding: 10px 0;
+	margin-top: 10px;
+}
+
+nav ul {
+	list-style: none; /* 목록 스타일 제거 */
+	margin: 0; /* 목록 외부 여백 제거 */
+	padding: 0; /* 목록 내부 여백 제거 */
+	display: flex; /* 내부 요소들을 flexbox로 배치 */
+	justify-content: left; /* 메뉴 가운데 정렬 */
+	align-items: center;
+}
+
+nav li {
+	margin: 0 10px;
+}
+
+nav a {
+	text-decoration: none; /* 링크 밑줄 제거 */
+	color: #333; /* 링크 색상 */
+	font-size: 16px;
+	font-weight: bold; /* 링크 글씨 굵게 */
+}
+
+/* 전체 페이지 최소 너비 설정 */
+body {
+	min-width: 800px; /* 전체 페이지의 최소 너비 설정 */
+}
+
+
+/* footer css */
+.footer {
+    background-color: #f8f9fa;
+    color: #333;
+    width: 100%;
+    margin-top: 30px;
+}
+
+.footer .fcontainer {
+    width: 80%;
+    max-width: 1200px;
     margin: 0 auto;
-    overflow-x: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.content{
+.footer-top, .footer-middle, .footer-bottom {
+    width: 100%;
+    padding: 10px 0;
+    text-align: center;
 }
 
-.testCSS{
-	width: 100%;
-	height: 400px;
-	background-color: navy;
+.footer-top {
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
 }
 
-.testCSS_f{
-	width: 100%;
-	height: 200px;
-	background-color: gray;
+.footer-notice {
+    text-align: left;
+    margin-bottom: 10px;
 }
+
+.footer-notice h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.footer-notice p {
+    margin: 5px 0;
+    font-size: 12px;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.footer-links a {
+    margin: 0 15px;
+    font-size: 12px;
+    color: #007bff;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.footer-middle {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.footer-middle p {
+    margin: 10px 0;
+    font-size: 12px;
+}
+
+.footer-bottom {
+    background-color: #fff;
+}
+
+.footer-bottom p {
+    margin: 10px 0;
+    font-size: 12px;
+}
+
+
+
+

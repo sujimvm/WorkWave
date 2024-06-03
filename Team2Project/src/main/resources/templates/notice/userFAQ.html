@@ -19,7 +19,9 @@
 </script>
 </head>
 <body>
-  <div th:replace="~{include/header :: guestHeader}"></div> 
+  <!-- 로그인 상태에 따라 다른 헤더 표시 -->
+  <div th:if="${session.user_login}" th:replace="include/header :: userHeader"></div>
+  <div th:if="${session.user_login == null}" th:replace="include/header :: guestHeader"></div>
   <div layout:fragment="content" class="content">
 
     <div class="mainContainer">

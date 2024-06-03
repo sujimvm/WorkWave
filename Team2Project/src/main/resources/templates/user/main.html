@@ -8,7 +8,7 @@
 <link rel="stylesheet" th:href="@{/css/user.css}">
 </head>
 <body>
-	<div th:replace="~{include/header :: guestHeader}"></div> 
+	<div th:replace="~{include/header :: userHeader}"></div> 
         <div layout:fragment="content" class="content">
            <span th:text="${session.user_login.user_name}">사용자</span>님!
             <h2>로그인 성공</h2>

@@ -1,29 +1,130 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
-	<div th:fragment="guestHeader">
-		<div class="testCSS">
-			<a th:href="@{/}">HOME</a>
-			<h2>이곳은 guestHeader</h2>
+	
+	<div th:if="${session.user_login == null}" th:fragment="guestHeader">
+		<div class="header">
+			<div class="container">
+				<div class="top-section">
+					<div class="logo-search">
+						<div class="logo">
+							<a th:href="@{/}">
+								<img src="/image/logo/1bd29ec9ecb641b59706ea94029ca772.jpg" alt="Logo">
+							</a>
+						</div>
+						
+						<div class="search-btn">
+							<form>
+								<input class="search-bar" placeholder="기업/채용공고 검색">&nbsp;&nbsp;
+								<input type="submit" value="검색">
+							</form>
+						</div>
+					</div>
+					
+					<div class="user-actions">
+						<a th:href="@{login.go}">로그인</a>
+						<a th:href="@{user_insert.go}">회원가입</a>
+					</div>
+				</div>
+				
+				<!-- 네비게이션 바를 검색창 아래로 이동 -->
+				<nav>
+					<ul>
+						<li><a href="#">채용정보</a></li>
+						<li><a th:href="@{userFAQ.go}">고객센터</a></li>
+						<li><a th:href="@{/notice.go}">공지사항</a></li>
+						<li><a th:href="@{chat.go}">웨이브톡</a></li>
+					</ul>
+				</nav>
+				
+			</div>
 		</div>
 	</div>
-	<div th:fragment="userHeader">
-		<div class="testCSS">
-			<a th:href="@{/}">HOME</a>
-			<a th:href="@{logout}">LOGOUT</a>
-			<h2>이곳은 userHeader</h2>
+	
+	<div th:if=${session.user_login} th:fragment="userHeader">
+		<div class="header">
+			<div class="container">
+				<div class="top-section">
+					<div class="logo-search">
+						<div class="logo">
+							<a th:href="@{/}">
+								<img src="/image/logo/1bd29ec9ecb641b59706ea94029ca772.jpg" alt="Logo">
+							</a>
+						</div>
+						
+						<div class="search-btn">
+							<form>
+								<input class="search-bar" placeholder="기업/채용공고 검색">&nbsp;&nbsp;
+								<input type="submit" value="검색">
+							</form>
+						</div>
+					</div>
+					
+					<div class="user-actions">
+						<a th:text="${session.user_login.user_name}">
+						</a>
+						<a th:href="@{logout}">
+							LOGOUT
+						</a>
+					</div>
+				</div>
+				
+				<!-- 네비게이션 바를 검색창 아래로 이동 -->
+				<nav>
+					<ul>
+						<li><a href="#">채용정보</a></li>
+						<li><a th:href="@{userFAQ.go}">고객센터</a></li>
+						<li><a th:href="@{/notice.go}">공지사항</a></li>
+						<li><a th:href="@{chat.go}">웨이브톡</a></li>
+					</ul>
+				</nav>
+				
+			</div>
 		</div>
 	</div>
+	
 	<div th:fragment="companyHeader">
-		<div class="testCSS">
-			<a th:href="@{/}">HOME</a>
-			<a th:href="@{logout}">LOGOUT</a>
-			<h2>이곳은 companyHeader</h2>
+		<div class="header">
+			<div class="container">
+				<div class="top-section">
+					<div class="logo-search">
+						<div class="logo">
+							<a th:href="@{/}">
+								<img src="/image/logo/1bd29ec9ecb641b59706ea94029ca772.jpg" alt="Logo">
+							</a>
+						</div>
+						
+						<div class="search-btn">
+							<form>
+								<input class="search-bar" placeholder="기업/채용공고 검색">&nbsp;&nbsp;
+								<input type="submit" value="검색">
+							</form>
+						</div>
+					</div>
+					
+					<div class="user-actions">
+						<a th:text="${session.companyInfo.company_name}"></a>
+						<a th:href="@{logout}">LOGOUT</a>
+					</div>
+				</div>
+				
+				<!-- 네비게이션 바를 검색창 아래로 이동 -->
+				<nav>
+					<ul>
+						<li><a href="#">채용정보</a></li>
+						<li><a th:href="@{userFAQ.go}">고객센터</a></li>
+						<li><a th:href="@{/notice.go}">공지사항</a></li>
+						<li><a th:href="@{chat.go}">웨이브톡</a></li>
+					</ul>
+				</nav>
+				
+			</div>
 		</div>
 	</div>
+	
 </body>
 </html>

@@ -2,6 +2,14 @@
    // 체크 표시로 유효성 검사
    $(document).ready(function() {
    function validateForm() {
+	
+		// submit 클릭 시 주소와 상세주소의 필드 값을 결합
+   
+       // 상세주소 값을 주소 필드에 추가
+       var userAddr = document.getElementById('user_addr').value;
+       var userAddrDetail = document.getElementById('user_addr_detail').value;
+       document.getElementById('user_addr').value = userAddr + ' ' + userAddrDetail;
+
        // 아이디 중복 확인 체크 마크가 표시되어 있는지 확인
        var isIdValid = $('#checkmark').is(':visible');
        if (!isIdValid) {
@@ -29,10 +37,14 @@
             console.log("성별을 선택해주세요.");
             return false;
         }
+        
+        
 
        // 모든 필드가 유효한 경우
        return true;
    }
+   
+   
   
     $('#signupForm').submit(function(event) {
         if (!validateForm()) {
@@ -163,13 +175,6 @@
             }).open();
         }
    
-   // submit 클릭 시 주소와 상세주소의 필드 값을 결합
-   function combineAddress() {
-       // 상세주소 값을 주소 필드에 추가
-       var userAddr = document.getElementById('user_addr').value;
-       var userAddrDetail = document.getElementById('user_addr_detail').value;
-       document.getElementById('user_addr').value = userAddr + ' ' + userAddrDetail;
-       return true; // 폼 제출을 계속 진행
-}
+   
 
 
