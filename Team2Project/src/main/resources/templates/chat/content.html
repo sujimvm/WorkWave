@@ -1,89 +1,76 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>게시물 상세 내역 페이지</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 부트스트랩 CSS 추가 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-	
-	<div align="center">
-		<hr width="30%" color="red">
-			<h3>[[${user.user_id}]] 님 게시물 상세 내역 페이지</h3>
-		<hr width="30%" color="red">
-		<br> <br>
-		
-		<table border="1" width="400">
-			<div th:if="${not #strings.isEmpty(cont)}">
-				<tr>
-					<th>게시글 번호</th>
-					<td th:text="${cont.chat_key}"></td>
-				</tr>
-				
-				<tr>
-					<th>게시글 작성자</th>
-					<td th:text="${user.user_id}"></td>
-				</tr>
-				
-				<tr>
-					<th>게시글 제목</th>
-					<td th:text="${cont.chat_title}"></td>
-				</tr>
-				
-				<tr>
-					<th>게시글 내용</th>
-					<td>
-						<textarea rows="7" cols="25" readonly>[[${cont.chat_cont}]]</textarea>
-					</td>
-				</tr>
-				
-				<!-- <tr>
-					<th>게시글 비밀번호</th>
-					<td th:if="${not #strings.isEmpty(cont.board_pwd)}">
-						<span th:each="i : ${#numbers.sequence(1, cont.board_pwd.length())}">
-							*
-						</span>
-					</td>
-				</tr> -->
-				
-				<tr>
-					<th>게시글 조회수</th>
-					<td th:text="${cont.chat_hit}"> </td>
-				</tr>
-				
-				<tr>
-					<div th:if="${#strings.isEmpty(cont.chat_update)}">
-						<th>게시글 작성일자</th>
-						<td th:text="${cont.chat_date}"></td>
-					</div>
-					
-					<div th:if="${not #strings.isEmpty(cont.chat_update)}">
-						<th>게시글 수정일자</th>
-						<td th:text="${cont.chat_update}"></td>
-					</div>
-				</tr>
-			
-			</div>
-			
-			<div th:if="${#strings.isEmpty(cont)}">
-				<tr>
-					<td colspan="2" align="center">
-						<h3>게시물에 대한 상세 정보가 없습니다.</h3>
-					</td>
-				</tr>	
-			</div>
-		</table>
-		<br> <br>
-		
-		<!-- <input type="button" value="글수정" th:onclick="|location.href='@{board_modify(no=${cont.board_no})}'|">
-		
-		
-		
-		<input type="button" value="글삭제" th:onclick="|if(confirm('정말로 게시글을 삭제하시겠습니까?')){
-		location.href='@{board_delete(no=${cont.board_no})}'
-		}else{return;}|">
-		
-		<input type="button" value="전체목록" th:onclick="|location.href='@{board_list}'|"> -->
-		
-	</div>
+    <div class="container">
+        <div class="text-center mt-5">
+            <hr class="w-25 border-danger">
+            <h3 th:text="${cont.user_id} + ' 님 게시물 상세 내역 페이지'"></h3>
+            <hr class="w-25 border-danger">
+            <br><br>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div th:if="${not #strings.isEmpty(cont)}">
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th>게시글 번호</th>
+                                    <td th:text="${cont.chat_key}"></td>
+                                </tr>
+                                <tr>
+                                    <th>게시글 작성자</th>
+                                    <td th:text="${cont.user_id}"></td>
+                                </tr>
+                                <tr>
+                                    <th>게시글 제목</th>
+                                    <td th:text="${cont.chat_title}"></td>
+                                </tr>
+                                <tr>
+                                    <th>게시글 내용</th>
+                                    <td>
+                                        <textarea class="form-control" rows="7" readonly>[[${cont.chat_cont}]]</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>게시글 조회수</th>
+                                    <td th:text="${cont.chat_hit}"></td>
+                                </tr>
+                                <tr>
+                                    <th>게시글 작성일자</th>
+                                    <td th:if="${#strings.isEmpty(cont.chat_update)}" th:text="${cont.chat_date}"></td>
+                                 </tr>
+                                 <tr>
+                                    <th>게시글 수정일자</th>
+                                    <td th:if="${not #strings.isEmpty(cont.chat_update)}" th:text="${cont.chat_update}"></td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div th:if="${#strings.isEmpty(cont)}" class="text-center">
+                            <h3>게시물에 대한 상세 정보가 없습니다.</h3>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <button type="button" class="btn btn-primary" th:onclick="|location.href='@{chat_modify(no=${cont.chat_key})}'|">글수정</button>
+                            <button type="button" class="btn btn-danger" th:onclick="|if(confirm('정말로 게시글을 삭제하시겠습니까?')){ location.href='@{chat_delete(no=${cont.chat_key})}' }else{return;}|">글삭제</button>
+                            <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{chat.go}'|">전체목록</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 부트스트랩 JS 및 jQuery 추가 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

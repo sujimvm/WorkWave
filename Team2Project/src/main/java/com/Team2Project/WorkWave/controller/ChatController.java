@@ -1,5 +1,7 @@
 package com.Team2Project.WorkWave.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Team2Project.WorkWave.model.ChatDTO;
 import com.Team2Project.WorkWave.model.ChatMapper;
-import com.Team2Project.WorkWave.model.UserDTO;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 
@@ -34,30 +36,83 @@ public class ChatController {
 	}
 	
 	@GetMapping("chat_cont")
-	public String cont(@RequestParam("no") int no, HttpSession session, Model model) {
+	public String cont(@RequestParam("no") int no, Model model) {
 			
 		ChatDTO content = this.mapper.getContent(no);
-		ChatDTO user = (ChatDTO)session.getAttribute("member_type");
-		
-		  // user 객체가 null인지 확인하여 출력
-	    if (user == null) {
-	        System.out.println("user 객체는 null입니다.");
-	    } else {
-	        System.out.println("user 객체는 null이 아닙니다.");
-	    }
+		/*
+		 * System.out.println("ChatDTO content: " + content); if (content == null) {
+		 * model.addAttribute("errorMessage", "해당 게시글을 찾을 수 없습니다."); } else {
+		 * model.addAttribute("cont", content); }
+		 */		
 		
 		model.addAttribute("cont", content);
-		session.setAttribute("user", user);
 		
 		return "chat/content"; 
 	}
-	
-	
-	
 	
 	@GetMapping("chat_write")
 	public String write() {
 		
 		return "chat/write";
+	}
+	
+	@GetMapping("chat_write_ok.go")
+	public void writeok(ChatDTO dto, HttpServletResponse response) throws IOException {
+		
+		response.setContentType("text/html; charset=UTF-8");
+		
+		PrintWriter out = response.getWriter();
+		
+		int result = this.mapper.add(dto);
+		
+		if(result > 0) {
+			out.println("<script>");
+			out.println("alert('게시글 추가 성공!!!')");
+			out.println("location.href='chat.go'");
+			out.println("</script>");
+		}else {
+			out.println("<script>");
+			out.println("alert('게시글 추가 실패')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
+
+	}
+	
+	@GetMapping("chat_delete")
+	public void delete(@RequestParam("no")int chat_key, HttpServletResponse response) throws IOException {
+		
+		response.setContentType("text/html; charset=UTF-8");
+		
+		PrintWriter out = response.getWriter();
+		
+		int result = this.mapper.del(chat_key);
+		
+		if(result > 0) {
+			
+			this.mapper.seq(chat_key);
+			
+			out.println("<script>");
+			out.println("alert('게시글 삭제 성공')");
+			out.println("location.href='chat.go'");
+			out.println("</script>");
+		}else {
+			out.println("<script>");
+			out.println("alert('게시글 삭제 실패')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
+	
+	}
+	
+	@GetMapping("chat_modify")
+	public String modify(@RequestParam("no")int no, Model model) {
+		
+		ChatDTO content = this.mapper.getContent(no);
+		
+		model.addAttribute("modify", content);
+		
+		return "user/modify";
+		
 	}
 }

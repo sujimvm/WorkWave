@@ -9,5 +9,15 @@ public interface ChatMapper {
 
 	public List<ChatDTO> list();
 	
-	public ChatDTO getContent(int no);
+	public ChatDTO getContent(int chat_key);
+	
+	public int add(ChatDTO dto);
+	
+	public int del(int no);
+	
+	public void seq(int no);
+	
+	public void readcount(int no);
+	
+	
 }

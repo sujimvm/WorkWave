@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div align="center">
+		<hr width="30%" color="gray">
+			<h3 th:text="${modify.user_id} + ' 님 게시물 상세 내역 페이지'"></h3>
+		<hr width="30%" color="gray">
+		<br> <br>
+		
+		<form method="post" action="chat_modify_ok">
+			
+			<!-- <input type="hidden" name="board_no" th:value="${modify.board_no}">
+			<input type="hidden" name="db_pwd" th:value="${modify.board_pwd}"> -->
+		
+			<table border="1" width="350">
+				
+				<tr>
+					<th>작성자</th>
+					<td>
+						<input name="user_id" readonly th:value="${modify.user_id}">
+					</td>
+				</tr>
+				
+				<tr>
+					<th>글제목</th>
+					<td>
+						<input name="chat_title" th:value="${modify.chat_title}">
+					</td>
+				</tr>
+				
+				<tr>
+					<th>글내용</th>
+					<td>
+						<textarea rows="7" cols="25" name="chat_cont">[[${modify.chat_cont}]]</textarea>
+					</td>
+				</tr>
+				
+				
+				<tr>
+					<td colspan="2" align="center">
+						<input type="submit" value="글수정">&nbsp;&nbsp;&nbsp;
+						<input type="reset" value="다시작성">
+					</td>
+				</tr>
+			
+			</table>
+		
+		
+		</form>
+	
+	</div>
+</body>
+</html>

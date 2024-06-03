@@ -1,53 +1,119 @@
-
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<link rel="icon" href="image/icon/logo_icon.png"/> 
-<title>Work Wave 커뮤니티</title>
-<link rel="stylesheet" th:href="@{/css/include.css}">
+    <meta charset="UTF-8">
+    <link rel="icon" href="image/icon/logo_icon.png"/>
+    <title>Work Wave 커뮤니티</title>
+    <!-- 부트스트랩 CSS 추가 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/include.css}">
+    <style>
+   
+		/* 총 게시물 수 */
+		td[colspan="4"] {
+		    text-align: right;
+		}
+		
+		/* 테이블 */
+		table {
+		    width: 100%;
+		    border-collapse: collapse;
+		}
+		
+		th, td {
+		    padding: 8px;
+		    text-align: left;
+		}
+		
+		th {
+		    border-bottom: 1px solid black; /* 테이블 헤더의 하단 선 추가 */
+		}
+		
+		td {
+		    border-bottom: 1px solid #ddd; /* 테이블 데이터의 하단 선 추가 */
+		}
+		
+		tr:first-child th,
+		tr:not(:first-child) td {
+		    border-top: none; /* 테이블 헤더와 데이터 사이의 상단 선 제거 */
+		}
+		
+		/* 버튼 */
+		input[type="button"] {
+		    padding: 10px 20px;
+		    background-color: #007BFF;
+		    color: white;
+		    border: none;
+		    border-radius: 5px;
+		    cursor: pointer;
+		}
+		
+		input[type="button"]:hover {
+		    background-color: #0056b3;
+		}
+		
+		/* 가운데 정렬 */
+		.center {
+		    text-align: center;
+		}
+    
+    
+    </style>
 </head>
 <body>
-	
-<div th:replace="~{include/header :: guestHeader}"></div> 
-	<div layout:fragment="content" class="content">
-		<hr width="30%" color="red">
-	    	<h3>게시물 전체 리스트</h3>
-	    <hr width="30%" color="red">
-	    <br> <br>
-	    
-	    <table border="1" width="400">
-	        <tr>
-	            <td colspan="4" align="right">
-	                총 게시물 : <span th:text="${#lists.size(List)}"></span> 개
-	            </td>
-	        </tr>
-	        
-	        <tr>
-	            <th>글 No.</th> <th>글제목</th>
-	            <th>조회수</th> <th>작성일자</th>
-	        </tr>
-	        
-	        <tr th:if="${not #lists.isEmpty(List)}" th:each="dto : ${List}">
-	            <td th:text="${dto.chat_key}"></td>
-	            <td>
-	                <a th:href="@{chat_cont(no=${dto.chat_key})}" th:text="${dto.chat_title}"></a>
-	            </td>
-	            <td th:text="${dto.chat_hit}"></td>
-	            <td th:text="${dto.chat_date.substring(0,10)}"></td>		     
-	        </tr>
-	        
-	        <tr th:if="${#lists.isEmpty(List)}">
-	            <td colspan="4" align="center">
-	                <h3>전체 게시물 목록이 없습니다...</h3>
-	            </td>
-	        </tr>
-	    </table>
-	    <br> <br>
-	    
-	    <input type="button" value="글쓰기" th:onclick="|location.href='@{chat_write}'|">
 
-	</div>
-	<div th:replace="~{include/footer :: footer}"></div>
+<div th:replace="~{include/header :: guestHeader}"></div>
+<div class="container">
+    <div layout:fragment="content" class="content">
+        
+        <br> <br>
+        
+        <h3 align="center">게시물 전체 리스트</h3>
+       
+        <br><br>
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td colspan="4" align="right">
+                        총 게시물 : <span th:text="${#lists.size(List)}"></span> 개
+                    </td>
+                </tr>
+                <tr>
+                    <th>글 No.</th>
+                    <th>글제목</th>
+                    <th>조회수</th>
+                    <th>작성일자</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${not #lists.isEmpty(List)}" th:each="dto : ${List}">
+                    <td th:text="${dto.chat_key}"></td>
+                    <td>
+                        <a th:href="@{chat_cont(no=${dto.chat_key})}" th:text="${dto.chat_title}"></a>
+                    </td>
+                    <td th:text="${dto.chat_hit}"></td>
+                    <td th:text="${dto.chat_date.substring(0,10)}"></td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(List)}">
+                    <td colspan="4" align="center">
+                        <h3>전체 게시물 목록이 없습니다...</h3>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="text-center">
+            <input type="button" value="글쓰기" th:onclick="|location.href='@{chat_write}'|">
+            <br> <br>
+        </div>
+    </div>
+</div>
+<div th:replace="~{include/footer :: footer}"></div>
+
+<!-- 부트스트랩 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 </body>
-</html> 
+</html>
