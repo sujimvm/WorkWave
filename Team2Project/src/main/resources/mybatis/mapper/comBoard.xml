@@ -79,7 +79,7 @@
 	  	<select id="selectDefaultProfile" resultType="int" parameterType="int">
 	  		select profile_key from profile where user_key = #{userKey} and profile_default = 'Y'
 	  	</select>
-	  	<insert id="insertInterestCheck" parameterType="aDTO">
+	  	<insert id="addApply" parameterType="aDTO">
 	  		insert into apply values(key_seq.nextval, #{profile_key}, #{com_board_key}, sysdate, default)
 	  	</insert>
   </mapper>
