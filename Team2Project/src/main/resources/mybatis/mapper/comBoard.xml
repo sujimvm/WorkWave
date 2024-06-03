@@ -5,12 +5,22 @@
   
   <mapper namespace="com.Team2Project.WorkWave.model.ComBoardMapper">
   		<!-- 공고리스트 -->
-    	<select id="getComBoardList" resultType="bDTO">
-	  		select * from com_board b join company c on c.company_key = b.company_key
+    	<select id="getComBoardList" parameterType="page" resultType="bDTO">
+    		<![CDATA[
+	  		select * from (select row_number() over(order by com_board_date desc) rnum, b.* from com_board b)Pb join company c on c.company_key = Pb.company_key
+	  		where rnum >= #{startNo} and rnum <= #{endNo}
+	  		]]>
 	  	</select>
 	  	<!-- 관심기업리스트 -->
     	<select id="getInterestCompanyKeyList" resultType="int">
 	  		select company_key from interest where user_key = #{user_key}
+	  	</select>
+	  	<select id="countComBoard" resultType="int">
+	        SELECT COUNT(*) FROM com_board
+	    </select>
+	  	<!-- 공고 지원리스트 -->
+    	<select id="getApplyList" resultType="int">
+	  		select com_board_key from apply where profile_key = #{profile_key}
 	  	</select>
 	  	
 	  	
@@ -77,9 +87,15 @@
 	  	
 	  	<!-- 기업지원 -->
 	  	<select id="selectDefaultProfile" resultType="int" parameterType="int">
-	  		select profile_key from profile where user_key = #{userKey} and profile_default = 'Y'
+	  		select profile_key from profile where user_key = #{user_key} and profile_default = 'Y'
 	  	</select>
 	  	<insert id="addApply" parameterType="aDTO">
 	  		insert into apply values(key_seq.nextval, #{profile_key}, #{com_board_key}, sysdate, default)
 	  	</insert>
+	  	
+	  	
+	  	<!-- 공고상세보기 -->
+	  	<select id="getComBoard" parameterType="int" resultType="bDTO">
+	  		select * from com_board b join company c on c.company_key = b.company_key where b.com_board_key = #{com_board_key}
+	  	</select>
   </mapper>
