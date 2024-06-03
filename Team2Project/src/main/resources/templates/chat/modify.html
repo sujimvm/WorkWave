@@ -8,7 +8,7 @@
 
 	<div align="center">
 		<hr width="30%" color="gray">
-			<h3 th:text="${modify.user_id} + ' 님 게시물 상세 내역 페이지'"></h3>
+			<h3 th:text="${session.user_login.user_id} + ' 님 게시물 상세 내역 페이지'"></h3>
 		<hr width="30%" color="gray">
 		<br> <br>
 		
@@ -22,7 +22,7 @@
 				<tr>
 					<th>작성자</th>
 					<td>
-						<input name="user_id" readonly th:value="${modify.user_id}">
+						<input name="user_id" readonly th:value="${session.user_login.user_id}">
 					</td>
 				</tr>
 				

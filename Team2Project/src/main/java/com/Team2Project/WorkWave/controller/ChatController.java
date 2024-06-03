@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Team2Project.WorkWave.model.ChatDTO;
 import com.Team2Project.WorkWave.model.ChatMapper;
+import com.Team2Project.WorkWave.model.UserDTO;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -106,11 +107,14 @@ public class ChatController {
 	}
 	
 	@GetMapping("chat_modify")
-	public String modify(@RequestParam("no")int no, Model model) {
+	public String modify(@RequestParam("no")int no, HttpSession session, Model model) {
 		
 		ChatDTO content = this.mapper.getContent(no);
 		
+		UserDTO modify = (UserDTO)session.getAttribute("user_login");
+		
 		model.addAttribute("modify", content);
+		session.setAttribute("user", modify);
 		
 		return "user/modify";
 		

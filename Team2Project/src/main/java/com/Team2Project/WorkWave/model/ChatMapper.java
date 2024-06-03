@@ -19,5 +19,7 @@ public interface ChatMapper {
 	
 	public void readcount(int no);
 	
+	public int modify(ChatDTO dto);
+	
 	
 }
