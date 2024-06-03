@@ -1,51 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>게시판 글쓰기 폼 페이지</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 부트스트랩 CSS 추가 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
 
-	<div align="center">
-		<hr width="30%" color="gray">
-			<h3>게시판 글쓰기 폼 페이지</h3>
-		<hr width="30%" color="gray">
-		<br> <br>
-		
-		<form method="post" action="chat_write_ok.go">
-		
-			<table border="1" width="350">
-				<tr>
-					<th>작성자</th>
-					<td> <input name="user_id"></td>
-				</tr>
-				
-				<tr>
-					<th>글제목</th>
-					<td> <input name="chat_title"></td>
-				</tr>
-				
-				<tr>
-					<th>글 내용</th>
-					<td>
-						<textarea rows="7" cols="25" name="chat_cont"></textarea>
-					</td>
-				</tr>
-				
-				<tr>
-					<th>비밀번호</th>
-					<td> <input type="password" name="user_pwd"></td>
-				</tr>
-				
-				<tr>
-					<td colspan="2" align="center">
-						<input type="submit" value="글쓰기">&nbsp;&nbsp;&nbsp;
-						<input type="reset" value="다시작성">
-					</td>
-				</tr>
-			</table>	
-		</form>
-	</div>
+<div class="container">
+    <div class="text-center mt-5">
+        <hr width="30%" color="gray">
+        <h3>게시판 글쓰기 폼 페이지</h3>
+        <hr width="30%" color="gray">
+        <br><br>
+    </div>
+    
+    <form method="post" action="chat_write_ok.go">
+        <div class="mb-3 row">
+            <label for="user_id" class="col-sm-2 col-form-label text-right">작성자</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="user_id" name="user_id">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="chat_title" class="col-sm-2 col-form-label text-right">글제목</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="chat_title" name="chat_title">
+            </div>
+        </div>
+        <div class="mb-3 row">
+            <label for="chat_cont" class="col-sm-2 col-form-label text-right">글 내용</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" id="chat_cont" rows="7" name="chat_cont"></textarea>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">글쓰기</button>
+            <button type="reset" class="btn btn-secondary">다시작성</button>
+        </div>
+    </form>
+</div>
+
+<!-- 부트스트랩 JS 및 jQuery 추가 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </body>
 </html>
