@@ -47,6 +47,7 @@ public class ComBoardDTO {
 	//기업정보
 	private String company_id;
 	private String company_name;
+	private String company_pwd;
 	private String company_addr;
 	private String company_phone;
 	private String company_homepage;
@@ -54,6 +55,7 @@ public class ComBoardDTO {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date company_regdate;
 	
+	private Date company_join_date;
 	private String company_ceo;
 	private int company_emp_count;
 	private int company_sal;
