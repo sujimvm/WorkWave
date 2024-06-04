@@ -10,7 +10,6 @@
 	</select>
 	
 	 <select id="getContent" parameterType="int" resultType="chatDTO">
-	 
 		select * from chat where chat_key = #{chat_key}
 	</select>
 	
@@ -18,7 +17,7 @@
 		<selectKey resultType="int" keyProperty="chat_key" order="BEFORE">
 			select max(chat_key) from chat
 		</selectKey>
-		insert into chat values(#{chat_key} + 1, #{user_id}, #{chat_title}, #{chat_cont}, default, sysdate)
+		insert into chat values(#{chat_key} + 1, #{user_id}, #{chat_title}, #{chat_cont}, default, sysdate, '')
 	</insert>
 	
 	<delete id="del" parameterType="int">
@@ -31,6 +30,10 @@
 	
 	<update id="readcount" parameterType="int">
 		update chat set chat_hit = chat_hit + 1 where chat_key = #{chat_key}
+	</update>
+	
+	<update id="modify" parameterType="chatDTO">
+		update chat set chat_title = #{chat_title}, chat_cont = #{chat_cont}, chat_update = sysdate where chat_key = #{chat_key}
 	</update>
 
   </mapper>
