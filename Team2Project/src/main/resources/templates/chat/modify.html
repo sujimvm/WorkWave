@@ -1,58 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+    <meta charset="UTF-8">
+    <title>게시물 수정 페이지</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- 부트스트랩 CSS 추가 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
+    <div class="container">
+        <div class="text-center mt-5">
+            <hr class="w-25 border-primary">
+            <h3 th:if="${modify != null}" th:text="${modify.user_id} + ' 님 게시물 수정 페이지'"></h3>
+            <h3 th:if="${modify == null}">게시물 정보를 불러오지 못했습니다.</h3>
+            <hr class="w-25 border-primary">
+            <br><br>
+        </div>
 
-	<div align="center">
-		<hr width="30%" color="gray">
-			<h3 th:text="${session.user_login.user_id} + ' 님 게시물 상세 내역 페이지'"></h3>
-		<hr width="30%" color="gray">
-		<br> <br>
-		
-		<form method="post" action="chat_modify_ok">
-			
-			<!-- <input type="hidden" name="board_no" th:value="${modify.board_no}">
-			<input type="hidden" name="db_pwd" th:value="${modify.board_pwd}"> -->
-		
-			<table border="1" width="350">
-				
-				<tr>
-					<th>작성자</th>
-					<td>
-						<input name="user_id" readonly th:value="${session.user_login.user_id}">
-					</td>
-				</tr>
-				
-				<tr>
-					<th>글제목</th>
-					<td>
-						<input name="chat_title" th:value="${modify.chat_title}">
-					</td>
-				</tr>
-				
-				<tr>
-					<th>글내용</th>
-					<td>
-						<textarea rows="7" cols="25" name="chat_cont">[[${modify.chat_cont}]]</textarea>
-					</td>
-				</tr>
-				
-				
-				<tr>
-					<td colspan="2" align="center">
-						<input type="submit" value="글수정">&nbsp;&nbsp;&nbsp;
-						<input type="reset" value="다시작성">
-					</td>
-				</tr>
-			
-			</table>
-		
-		
-		</form>
-	
-	</div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-body">
+                        <form th:if="${modify != null}" method="post" action="chat_modify_ok">
+                            <input type="hidden" name="chat_key" th:value="${modify.chat_key}">
+
+                            <div class="form-group">
+                                <label for="user_id">작성자</label>
+                                <input type="text" class="form-control" id="user_id" name="user_id" readonly th:value="${modify.user_id}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="chat_title">글제목</label>
+                                <input type="text" class="form-control" id="chat_title" name="chat_title" th:value="${modify.chat_title}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="chat_cont">글내용</label>
+                                <textarea class="form-control" id="chat_cont" rows="7" name="chat_cont" th:text="${modify.chat_cont}"></textarea>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">글수정</button>
+                                <button type="reset" class="btn btn-secondary">다시작성</button>
+                            </div>
+                        </form>
+
+                        <div th:if="${modify == null}" class="text-center">
+                            <h3>게시물 정보를 불러오지 못했습니다.</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 부트스트랩 JS 및 jQuery 추가 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>
