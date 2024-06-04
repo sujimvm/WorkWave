@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link rel="icon" href="image/icon/logo_icon.png"/> 
+<title>Work Wave 유저 마이페이지</title>
+<link rel="stylesheet" th:href="@{/css/include.css}">
+<link rel="stylesheet" th:href="@{/css/userCont.css}">
+</head>
+<body>
+	<div th:if="${session.user_login}" th:replace="include/header :: userHeader"></div>
+    <div th:if="${session.user_login == null}" th:replace="include/header :: guestHeader"></div>
+	<div layout:fragment="content" class="content">
+		
+		<div class="main-container">
+		<div class="sidebar active">
+	      	<h3>마이페이지</h3>
+	        <a th:href="@{/}">이력서 등록</a>
+	        <a th:href="@{/}">이력서 리스트</a>
+	        <a th:href="@{/}">입사지원 현황</a>
+	        <a th:href="@{/}">포지션 제안</a>
+	        <a th:href="@{/}">회원정보 수정</a>
+	        <a th:href="@{/}">비밀번호 변경</a>
+	        <a th:href="@{/}">회원탈퇴</a>
+	    </div>
+	    
+	    <div class="user">
+        <div class="user-header">
+        	<div class="logo">
+            	<img src="/image/logo/1bd29ec9ecb641b59706ea94029ca772.jpg" alt="Logo">
+            	<span th:text="${session.user_login.user_name}"></span>님
+            </div>
+        </div>
+        	<div class="user-info">
+                <span>성별 : </span><span th:text="${session.user_login.user_gender}"></span><br>
+                <span>휴대폰 번호 : </span><span th:text="${session.user_login.user_phone}"></span><br>
+                <span>주소 : </span><span th:text="${session.user_login.user_addr}"></span><br>
+            </div>
+            <div class="user-footer">
+                <ul>
+                	<li>지원완료 :</li>
+                	<li>이력서 열람 :</li>
+                	<li>포지션 제안 :</li>
+                	<li>관심 기업 : </li>
+                </ul>
+            </div>
+         </div>
+	</div>
+	</div>
+	<div th:replace="~{include/footer :: footer}"></div>
+	
+</body>
+</html>

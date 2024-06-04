@@ -93,12 +93,38 @@ public class UserController {
       
       return "index"; 
    }
+   
+   // 유저 상세정보를 보여주는 마이페이지로 이동
+   @GetMapping("/user_cont.go")
+   public String content(HttpSession session, Model model) {
+	   
+	   UserDTO userInfo = (UserDTO)session.getAttribute("user_login");
+	   
+	   int applyCnt = this.mapper.applyCnt(userInfo.getUser_key());
+	   int applyCheckCnt = this.mapper.applyCheckCnt(userInfo.getUser_key());
+	   int positionJean = this.mapper.positionJean(userInfo.getUser_key());
+	   int interest = this.mapper.interest(userInfo.getUser_key());
+	      
+       // 지원완료 갯수
+       model.addAttribute("applyCnt", applyCnt);
+       // 이력서 열람 갯수
+       model.addAttribute("applyCheckCnt", applyCheckCnt);
+       // 포지션 제안 갯수
+       model.addAttribute("positionJean", positionJean);
+       // 관심 기업 갯수
+       model.addAttribute("interest", interest);
+	   
+	   session.setAttribute("userInfo", userInfo);
+	   
+	   return "user/cont";
+   }
 
    // 유저 정보 수정받기 전 비밀번호 확인 페이지로 이동
    @GetMapping("/user_modify.go")
    public String modify(HttpSession session) {
       
       UserDTO userInfo = (UserDTO)session.getAttribute("user_login");
+      
       
       session.setAttribute("userInfo", userInfo);
       
