@@ -12,7 +12,7 @@
 <body>
 	<div th:replace="~{include/header :: companyHeader}"></div>
 	<div layout:fragment="content" class="content">
-		<h2><span th:text="${session.companyInfo.company_name}"></span>&nbsp;안녕하세요!</h2>
+		<h2>안녕하세요!</h2>
 	</div>
 	
 	<button type="button" th:onclick="|location.href='@{/company_modify.go}'|">회원수정</button>
