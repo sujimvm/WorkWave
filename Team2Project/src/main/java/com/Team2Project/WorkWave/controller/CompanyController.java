@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Team2Project.WorkWave.model.CompanyDTO;
 import com.Team2Project.WorkWave.model.CompanyMapper;
+import com.Team2Project.WorkWave.model.LoginDTO;
 import com.Team2Project.WorkWave.model.ProfileDTO;
 import com.Team2Project.WorkWave.model.UserDTO;
+import com.Team2Project.WorkWave.service.CompanyDetailService;
 import com.Team2Project.WorkWave.service.UploadFileService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,45 +40,9 @@ public class CompanyController {
 
 	@Autowired
 	UploadFileService uploadFileService;
-
-	// 기업회원 로그인
-	@PostMapping("/company_login.go")
-	public void login(@RequestParam("company_id") String company_id, @RequestParam("company_pwd") String company_pwd,
-			HttpSession session, HttpServletResponse response) throws IOException {
-
-		response.setContentType("text/html; charset=UTF-8");
-
-		PrintWriter out = response.getWriter();
-
-		CompanyDTO company_login = this.mapper.companyInfo(company_id);
-
-		// 로그인 실패 처리
-		if (company_login == null) {
-			// 아이디가 존재하지 않는 경우
-			out.println("<script>");
-			out.println("alert('아이디가 존재하지 않습니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-			out.flush();
-		} else if (!company_login.getCompany_pwd().equals(company_pwd)) {
-			// 비밀번호가 틀린 경우
-			out.println("<script>");
-			out.println("alert('비밀번호가 틀렸습니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-			out.flush();
-		} else {
-			// 로그인 성공 처리
-			session.setAttribute("companyInfo", company_login);
-			session.setAttribute("member_type", "company");
-			out.println("<script>");
-			out.println("alert('성공.')");
-			out.println("location.href='/main.go'");
-			out.println("</script>");
-
-		}
-
-	}
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	// 기업회원가입 페이지로 이동
 	@GetMapping("company_insert.go")
@@ -88,6 +57,11 @@ public class CompanyController {
 							  CompanyDTO dto, 
 							  HttpServletResponse response)
 			throws IOException {
+		
+		String encordedPwd = passwordEncoder.encode(dto.getCompany_pwd());
+		
+		dto.setCompany_pwd(encordedPwd);
+		dto.setRole("ROLE_COMPANY");
 		
 		String str1 = dto.getCompany_number().substring(0, 3);
 		String str2 = dto.getCompany_number().substring(3, 5);

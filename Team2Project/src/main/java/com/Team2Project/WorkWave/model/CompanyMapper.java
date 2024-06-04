@@ -22,4 +22,8 @@ public interface CompanyMapper {
 	int companyPwdUpdate(@Param("company_id") String company_id, @Param("company_pwd") String company_pwd);
 	
 	int companyDelete(int company_key);
+	
+	boolean companyIdCheck(String company_id);
+	
+	LoginDTO findCompanyIdbyId(String company_id);
 }

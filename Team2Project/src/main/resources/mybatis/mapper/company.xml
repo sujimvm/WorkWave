@@ -9,9 +9,9 @@
     	<selectKey keyProperty="company_key" resultType="int" order="BEFORE">
             SELECT key_seq.NEXTVAL FROM dual
         </selectKey>
-        INSERT INTO company (company_key, company_id, company_pwd, company_name, company_number, company_phone, company_addr, company_homepage, company_ceo, company_emp_count, company_sal, company_logo, company_regdate, company_mgr_name, company_mgr_phone, company_mgr_email, company_join_date, company_logo_name) 
+        INSERT INTO company (company_key, company_id, company_pwd, company_name, company_number, company_phone, company_addr, company_homepage, company_ceo, company_emp_count, company_sal, company_logo, company_regdate, company_mgr_name, company_mgr_phone, company_mgr_email, company_join_date, company_logo_name, enabled, role) 
 VALUES 
-(#{company_key}, #{company_id}, #{company_pwd}, #{company_name}, #{company_number}, #{company_phone}, #{company_addr}, #{company_homepage}, #{company_ceo}, #{company_emp_count}, #{company_sal}, #{company_logo}, #{company_regdate,jdbcType=DATE}, #{company_mgr_name}, #{company_mgr_phone}, #{company_mgr_email}, sysdate, #{company_logo_name})
+(#{company_key}, #{company_id}, #{company_pwd}, #{company_name}, #{company_number}, #{company_phone}, #{company_addr}, #{company_homepage}, #{company_ceo}, #{company_emp_count}, #{company_sal}, #{company_logo}, #{company_regdate,jdbcType=DATE}, #{company_mgr_name}, #{company_mgr_phone}, #{company_mgr_email}, sysdate, #{company_logo_name}, 1, #{role})
     </insert>
     
     <select id="companyInfo" parameterType="String" resultType="cDTO">
@@ -37,5 +37,9 @@ VALUES
     <delete id="companyDelete" parameterType="int">
     	delete from company where company_key = #{company_key}
     </delete>
+  
+  	<select id="findCompanyIdbyId" parameterType="String" resultType="loginDTO">
+  		select company_id, company_pwd, role from company where company_id = #{company_id}
+  	</select>  
   
   </mapper>

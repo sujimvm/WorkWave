@@ -9,7 +9,7 @@
 </head>
 <body>
 	
-	<div class="tab-container">
+		<div class="tab-container">
 	
 		<div class="top-links">
 	      <a th:href="@{/}">HOME</a>
@@ -33,7 +33,7 @@
     </div>
 
     <div id="companyLogin" class="form-container" style="display:none;">
-      <form th:action="@{company_login.go}" method="post">
+      <form action="/company_login.go" method="post">
         <input type="text" name="company_id" placeholder="기업회원 아이디" required>
         <input type="password" name="company_pwd" placeholder="비밀번호" required>
         <input type="submit" value="로그인">

@@ -3,7 +3,6 @@ package com.Team2Project.WorkWave.model;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 
@@ -34,6 +33,8 @@ public class CompanyDTO {
 	private String company_mgr_name;
 	private String company_mgr_phone;
 	private String company_mgr_email;
+	private String role;
+	private int enabled;
 
 
     // 생성자, Getter 및 Setter 생략 (필요시 추가)

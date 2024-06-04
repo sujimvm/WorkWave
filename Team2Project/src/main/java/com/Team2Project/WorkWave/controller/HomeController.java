@@ -15,7 +15,7 @@ public class HomeController {
 		return "index";
 	}
 	
-	@GetMapping("login.go")
+	@GetMapping("/login.go")
 	public String userLogin() {
 		return "mainLogin";
 	}
@@ -25,21 +25,17 @@ public class HomeController {
 		return "company/login";
 	}
 
-	@GetMapping("logout")
-	public String logout(HttpSession session) {
-		session.invalidate(); //세션의 모든 속성을 삭제
-		return "index";
-	}
+	/*
+	 * @GetMapping("main.go") public String goMain(HttpSession session) { String
+	 * member_type = ""; if (session.getAttribute("member_type") != null) {
+	 * member_type = (String)session.getAttribute("member_type") + "/"; }
+	 * 
+	 * System.out.println("메인 경로 >> "+member_type+"main"); return
+	 * member_type+"main"; }
+	 */
 	
-	@GetMapping("main.go")
-	public String goMain(HttpSession session) {
-		String member_type = "";
-		if (session.getAttribute("member_type") != null) {
-			member_type = (String)session.getAttribute("member_type") + "/";
-		}
-		
-		System.out.println("메인 경로 >> "+member_type+"main");
-		return member_type+"main";
+	@GetMapping("/main.go")
+	public String companyMain() {
+		return "company/main";
 	}
-	
 }
