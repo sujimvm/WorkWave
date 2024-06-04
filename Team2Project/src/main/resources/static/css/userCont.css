@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+header, footer {
+    height: 50px; /* 헤더와 푸터의 높이를 지정 */
+    background-color: #f1f1f1;
+    flex-shrink: 0; /* 헤더와 푸터의 높이가 고정되도록 설정 */
+}
+
+.main-container {
+	
+    display: flex;
+    flex-grow: 1;
+    min-height: 100px; /* main-container 최소 높이 설정 */
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #ffffff;
+    color: #333;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    flex-shrink: 0; /* 사이드바 너비 고정 */
+}
+
+.sidebar h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.sidebar a {
+    display: block;
+    color: #333;
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 18px;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #f5f5f5; 
+    color: #000;
+}
+
+.sidebar a.active {
+    background-color: #e0e0e0; 
+    color: #000;
+}
+
+.user {
+    flex-grow: 1; /* .user 영역이 남은 공간을 차지하도록 설정 */
+    padding: 20px;
+}
+
+.user-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.user-header img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.user-header span {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.user-info {
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.user-info span {
+    font-weight: bold;
+}
+
+.user-footer {
+    text-align: left;
+    margin-top: 20px; 
+    padding-top: 20px;
+    border-top: 1px solid #ddd; 
+}
+
+
+

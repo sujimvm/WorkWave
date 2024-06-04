@@ -23,13 +23,28 @@
 
    
    <select id="delete" resultType="uDTO" parameterType="String">
-    SELECT * FROM users WHERE user_id = #{user_id}
+   	   SELECT * FROM users WHERE user_id = #{user_id}
    </select>
    
    <delete id="deleteok" parameterType="int">
        DELETE FROM users WHERE user_key = #{user_key}
    </delete>
    
+   <select id="applyCnt" resultType="int">
+   	   select count(*) from apply where profile_key in (select profile_key from profile where user_key = #{user_key})
+   </select>
+   
+   <select id="applyCheckCnt" resultType="int">
+   	   select count(*) from apply where profile_key in (select profile_key from profile where user_key = #{user_key})
+	   and APPLY_PROFILE_CHECK = 'Y'
+   </select>
 
+  <select id="positionJean" resultType="int">
+  	   select count(*) from position where user_key = #{user_key}
+  </select>
+  
+  <select id="interest" resultType="int">
+  	   select count(*) from interest where user_key = #{user_key}
+  </select>
   
   </mapper>

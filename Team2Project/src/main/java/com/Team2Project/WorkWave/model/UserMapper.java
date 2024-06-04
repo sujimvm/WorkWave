@@ -31,7 +31,13 @@ public interface UserMapper {
 	
 	public int deleteok(int user_key);
 	
+	public int applyCnt(int user_key);
 
+	public int applyCheckCnt(int user_key);
+	
+	public int positionJean(int user_key);
+
+	public int interest(int user_key);
 }
 	
 	

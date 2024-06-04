@@ -26,8 +26,8 @@
 					</div>
 					
 					<div class="user-actions">
-						<a th:href="@{login.go}">로그인</a>
-						<a th:href="@{user_insert.go}">회원가입</a>
+						<a th:href="@{/login.go}">로그인</a>
+						<a th:href="@{/user_insert.go}">회원가입</a>
 					</div>
 				</div>
 				
@@ -35,9 +35,9 @@
 				<nav>
 					<ul>
 						<li><a href="#">채용정보</a></li>
-						<li><a th:href="@{userFAQ.go}">고객센터</a></li>
+						<li><a th:href="@{/userFAQ.go}">고객센터</a></li>
 						<li><a th:href="@{/notice.go}">공지사항</a></li>
-						<li><a th:href="@{chat.go}">웨이브톡</a></li>
+						<li><a th:href="@{/chat.go}">웨이브톡</a></li>
 					</ul>
 				</nav>
 				
@@ -65,7 +65,7 @@
 					</div>
 					
 					<div class="user-actions">
-						<a th:text="${session.user_login.user_name}">
+						<a th:href="@{/user_cont.go}" th:text="${session.user_login.user_name}">
 						</a>
 						<a th:href="@{logout}">
 							LOGOUT
@@ -77,9 +77,9 @@
 				<nav>
 					<ul>
 						<li><a href="#">채용정보</a></li>
-						<li><a th:href="@{userFAQ.go}">고객센터</a></li>
+						<li><a th:href="@{/userFAQ.go}">고객센터</a></li>
 						<li><a th:href="@{/notice.go}">공지사항</a></li>
-						<li><a th:href="@{chat.go}">웨이브톡</a></li>
+						<li><a th:href="@{/chat.go}">웨이브톡</a></li>
 					</ul>
 				</nav>
 				
@@ -116,9 +116,9 @@
 				<nav>
 					<ul>
 						<li><a href="#">채용정보</a></li>
-						<li><a th:href="@{userFAQ.go}">고객센터</a></li>
+						<li><a th:href="@{/userFAQ.go}">고객센터</a></li>
 						<li><a th:href="@{/notice.go}">공지사항</a></li>
-						<li><a th:href="@{chat.go}">웨이브톡</a></li>
+						<li><a th:href="@{/chat.go}">웨이브톡</a></li>
 					</ul>
 				</nav>
 				
