@@ -14,10 +14,66 @@
 		<div layout:fragment="content" class="content">
 			<div>
 				<div>
-					<div></div>
+					<div>
+						<div>
+							<h6 th:text="${dto.company_name}"></h6>
+							<h3 th:text="${dto.com_board_title}"></h3>
+						</div>
+						<div>
+							<div>
+								<p>지원자격</p>
+								<dl>
+									<dt>경력</dt>
+									<dd th:text="${dto.com_board_career}"></dd>
+									<dt>학력</dt>
+									<dd th:text="${dto.com_board_edu}"></dd>
+								</dl>
+								<p>근무조건</p>
+								<dl>
+									<dt>고용형태</dt>
+									<dd th:text="${dto.com_board_jobtype}"></dd>
+									<dt>급여</dt>
+									<dd th:text="${dto.com_board_sal}"></dd>
+									<dt>지역</dt>
+									<dd th:text="${dto.company_addr}"></dd>
+									<dt>시간</dt>
+									<dd th:text="${dto.com_board_week+dto.com_board_time}"></dd>
+								</dl>
+							</div>
+						</div>
+					</div>
+					<div class="top_r_cominfo_div">
+						<a>
+							<img th:if="${dto.company_logo != null}" th:src="@{'\\image\\logo\\'+${dto.company_logo}}" alt="${dto.company_logo_name}">
+							<img th:if="${dto.company_logo == null}" src="/image/icon/logo_icon.png" alt="로고미등록">
+						</a>
+						<dl>
+							<dt>업종</dt>
+							<dd th:text="${dto.com_board_step}"></dd>
+							<dt>사원 수</dt>
+							<dd th:text="${dto.company_emp_count}"></dd>
+							<dt>설립입</dt>
+							<dd th:text="${dto.company_regdate}"></dd>
+							<dt>홈페이지</dt>
+							<dd><a th:href="@{${dto.company_homepage}}" th:text="${dto.company_homepage}"></a></dd>
+						</dl>
+					</div>
 				</div><!-- 채용정보 -->
-				<div></div><!-- content nav -->
-				<div></div><!-- 상세 -->
+				
+				<div>
+					<ul>
+						<li><a th:href="">상세요강</a></li>
+						<li><a th:href="">접수기간</a></li>
+						<li><a th:href="">지원자현황</a></li>
+						<li><a th:href="">기업정보</a></li>
+					</ul>
+				</div><!-- content nav -->
+				<div>
+					<p>관심기업등록 </p>
+					<p>관심기업등록 </p>
+					<p>관심기업등록 </p>
+					<textarea rows="" cols="" th:text="${dto.com_board_cont}"></textarea>
+				</div><!-- 상세 -->
 				<div></div><!-- 접수기간 -->
 				<div></div><!-- 지원자 통계 -->
 				<div></div><!-- 기업정보 -->

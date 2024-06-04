@@ -38,4 +38,9 @@
 .pagination a:hover {
     background-color: #f1f1f1;
 }
-      
+
+
+.top_r_cominfo_div img{
+	width: 100px;
+	height: 40px;
+}
