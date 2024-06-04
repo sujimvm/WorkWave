@@ -44,6 +44,13 @@
                                     <th>게시글 조회수</th>
                                     <td th:text="${cont.chat_hit}"></td>
                                 </tr>
+                                
+                                <tr>
+                                    <th>태그</th>
+                                    <td th:text="${cont.chat_tag}"></td>
+                                </tr>
+                                
+                                
                                 <tr>
                                     <th>게시글 작성일자</th>
                                     <td th:if="${#strings.isEmpty(cont.chat_update)}" th:text="${cont.chat_date}"></td>

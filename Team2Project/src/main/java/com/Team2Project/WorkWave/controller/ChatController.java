@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Team2Project.WorkWave.model.ChatDTO;
@@ -37,14 +38,11 @@ public class ChatController {
 	}
 	
 	@GetMapping("chat_cont")
-	public String cont(@RequestParam("no") int no, Model model) {
+	public String cont(@RequestParam("no") int no, HttpSession session, Model model) {
 			
 		ChatDTO content = this.mapper.getContent(no);
-		/*
-		 * System.out.println("ChatDTO content: " + content); if (content == null) {
-		 * model.addAttribute("errorMessage", "해당 게시글을 찾을 수 없습니다."); } else {
-		 * model.addAttribute("cont", content); }
-		 */		
+		
+		this.mapper.readcount(no);
 		
 		model.addAttribute("cont", content);
 		
@@ -57,11 +55,11 @@ public class ChatController {
 		return "chat/write";
 	}
 	
-	@GetMapping("chat_write_ok.go")
+	@PostMapping("chat_write_ok.go")
 	public void writeok(ChatDTO dto, HttpServletResponse response) throws IOException {
 		
 		response.setContentType("text/html; charset=UTF-8");
-		
+		 
 		PrintWriter out = response.getWriter();
 		
 		int result = this.mapper.add(dto);
@@ -107,16 +105,34 @@ public class ChatController {
 	}
 	
 	@GetMapping("chat_modify")
-	public String modify(@RequestParam("no")int no, HttpSession session, Model model) {
+	public String modify(@RequestParam("no")int no, Model model) {
 		
 		ChatDTO content = this.mapper.getContent(no);
 		
-		UserDTO modify = (UserDTO)session.getAttribute("user_login");
-		
 		model.addAttribute("modify", content);
-		session.setAttribute("user", modify);
 		
-		return "user/modify";
+		return "chat/modify";
+	}
+	
+	@PostMapping("chat_modify_ok")
+	public void modifyok(@RequestParam("chat_key") int no, ChatDTO dto, HttpServletResponse response) throws IOException {
 		
+		response.setContentType("text/html; charset=UTF-8");
+		
+		PrintWriter out = response.getWriter();
+		
+		int result = this.mapper.modify(dto);
+		
+		if(result > 0) {
+			out.println("<script>");
+			out.println("alert('게시글 수정 성공')");
+			out.println("location.href='chat.go'");
+			out.println("</script>");
+		}else {
+			out.println("<script>");
+			out.println("alert('게시글 수정 실패')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
 	}
 }
