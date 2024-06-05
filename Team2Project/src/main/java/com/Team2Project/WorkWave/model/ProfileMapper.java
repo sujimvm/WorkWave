@@ -68,6 +68,11 @@ public interface ProfileMapper {
 		//이력서 삭제하는 메서드
 		public int profileDelect(int pro_key);
 		
+		public int deleteCareerByProfileKey(int pro_key);
+		public int deleteEduByProfileKey(int pro_key);
+		public int deleteLicenseByProfileKey(int pro_key);
+		
+		
 		//이력서 업데이트 메서드
 		public int updateProfile(ProfileDTO profileDto);
 		public int updateCareer(CareerDTO careerDto);

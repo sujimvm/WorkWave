@@ -140,23 +140,16 @@ public class ProfileController {
 		
 		//학력 데이터 저장
 		EduDTO edtoArr = codelistDTO.getEDtoList().get(0);
-		System.out.println("edtoArr"+edtoArr);
 		for(int i=0; i < edtoArr.getEdu_name().split(",").length; i++) {
 			EduDTO edto = new EduDTO();
-			System.out.println("===========");
 			
 			edto.setProfile_key(nowInsertProfileKey);
 			edto.setEdu_kind(edtoArr.getEdu_kind().split(",")[i]);
 			edto.setEdu_name(edtoArr.getEdu_name().split(",")[i]);
 			edto.setEdu_start_date(edtoArr.getEdu_start_date().split(",")[i]);
 			edto.setEdu_end_date(edtoArr.getEdu_end_date().split(",")[i]);
-			System.out.println(edtoArr.getEdu_kind());
-			System.out.println(edtoArr.getEdu_kind().split(",")[i]);
 			edto.setEdu_major(edtoArr.getEdu_major().split(",")[i]);
-			System.out.println(edtoArr.getEdu_kind());
-			System.out.println(edtoArr.getEdu_kind().split(",")[i]);
 			edto.setEdu_status(edtoArr.getEdu_status().split(",")[i]);
-			System.out.println("edto>>"+edto);
 			  this.mapper.EduInsert(edto); 
 			
 		}
@@ -190,7 +183,7 @@ public class ProfileController {
 			  
 			  ldto.setProfile_key(nowInsertProfileKey);
 			  ldto.setLicense_name(ldtoArr.getLicense_name().split(",")[i]);
-			  ldto.setLicense_barhang(ldtoArr.getLicense_barhang().split(",")[i]);
+			  ldto.setLicense_company(ldtoArr.getLicense_company().split(",")[i]);
 			  ldto.setLicense_date(ldtoArr.getLicense_date().split(",")[i]);
 			  
 			  this.mapper.LicenseInsert(ldto); 
@@ -356,6 +349,12 @@ public class ProfileController {
 	@GetMapping("profile_delect")
 	public void profile_delect(@RequestParam("no") int pro_key,HttpServletResponse response) throws IOException {
 		
+		 int checkCareer = this.mapper.deleteCareerByProfileKey(pro_key);
+		 int checkEdu = this.mapper.deleteEduByProfileKey(pro_key);
+		 int checkLicense = this.mapper.deleteLicenseByProfileKey(pro_key);
+
+		
+		
 		int check = this.mapper.profileDelect(pro_key);
 		
 		response.setContentType("text/html; charset=UTF-8");
@@ -414,7 +413,6 @@ public class ProfileController {
 				
 				
 				String imageName = uploadFileService.upload(profile_image, imageUploadDir);
-				System.out.println(imageName);
 				profileDto.setProfile_image_name(profile_image.getOriginalFilename());
 				profileDto.setProfile_image(imageName);
 			}
@@ -440,69 +438,56 @@ public class ProfileController {
 		try {
 				//경력 수정
 				int size= codelistDTO.getCrDtoList().size(); 
-			for(int i= 0; i < size; i++) {
-				CareerDTO careerDto = codelistDTO.getCrDtoList().get(i); 
-			  this.mapper.updateCareer(careerDto);
-			  System.out.println(i+"ffF>>>"+careerDto);
-			}
-			
-			// 학력 수정
-			EduDTO edtoArr = codelistDTO.getEDtoList().get(0);
-			for(int i=0; i < edtoArr.getEdu_name().split(",").length; i++) {
-				EduDTO edto = new EduDTO();
-				edto.setEdu_key(Integer.parseInt(edtoArr.getString_edu_key().split(",")[i]));
-				edto.setEdu_kind(edtoArr.getEdu_kind().split(",")[i]);
-				edto.setEdu_name(edtoArr.getEdu_name().split(",")[i]);
-				edto.setEdu_start_date(edtoArr.getEdu_start_date().split(",")[i]);
-				edto.setEdu_end_date(edtoArr.getEdu_end_date().split(",")[i]);
-				edto.setEdu_major(edtoArr.getEdu_major().split(",")[i]);
-				edto.setEdu_status(edtoArr.getEdu_status().split(",")[i]);
-				  System.out.println("edto>.>>"+edto);
-				this.mapper.updateEdu(edto); 
+				for(int i= 0; i < size; i++) {
+					CareerDTO careerDto = codelistDTO.getCrDtoList().get(i); 
+				  this.mapper.updateCareer(careerDto);
+				}
 				
+				//학력 수정
+				int esize = codelistDTO.getLDtoList().size();
+				for(int i=0; i < esize; i++) {
+					EduDTO eduDto = codelistDTO.getEDtoList().get(i);
+					this.mapper.updateEdu(eduDto);
+				}
+			
+		
+				// 자격증 수정
+				int lsize= codelistDTO.getLDtoList().size();
+				System.out.println("lsize>>"+lsize);
+				  for(int i=0; i < lsize; i++) {
+				  
+					  LicenseDTO ldto = codelistDTO.getLDtoList().get(i);
+					  
+					  
+					  this.mapper.updateLicense(ldto); 
+				  
+				  }
+				  
+				  profileDto.setProfile_key(pro_key);
+				  
+				  this.mapper.updateProfile(profileDto);
+				  
+				  
+				  response.setContentType("text/html; charset=UTF-8");
+			       PrintWriter out = response.getWriter();
+			        
+			           out.println("<script>");
+			           out.println("alert('이력서를 수정했습니다.')");
+			           out.println("location.href='profile_list'");
+			           out.println("</script>");
+			        
+				} catch (Exception e) {
+					e.printStackTrace();
+					response.setContentType("text/html; charset=UTF-8");
+					 PrintWriter out = response.getWriter();
+					out.println("<script>");
+		            out.println("alert('이력서 수정을 실패했습니다.')");
+		            out.println("history.back()");
+		            out.println("</script>");
+				
+				}
 			}
-		
-		// 자격증 수정
-		LicenseDTO ldtoArr =  codelistDTO.getLDtoList().get(0);
-		  
-		  for(int i=0; i < ldtoArr.getLicense_name().split(",").length; i++) {
-		  
-		  LicenseDTO ldto = new LicenseDTO();
-		  
-		  ldto.setProfile_key(pro_key);
-		  ldto.setLicense_name(ldtoArr.getLicense_name().split(",")[i]);
-		  ldto.setLicense_barhang(ldtoArr.getLicense_barhang().split(",")[i]);
-		  ldto.setLicense_date(ldtoArr.getLicense_date().split(",")[i]);
-		  
-		  this.mapper.updateLicense(ldto); 
-		  
-		  }
-		  
-		  profileDto.setProfile_key(pro_key);
-		  
-		  this.mapper.updateProfile(profileDto);
-		  
-		  
-		  response.setContentType("text/html; charset=UTF-8");
-	       PrintWriter out = response.getWriter();
-	        
-	           out.println("<script>");
-	           out.println("alert('이력서를 수정했습니다.')");
-	           out.println("location.href='profile_list'");
-	           out.println("</script>");
-	        
-		} catch (Exception e) {
-			e.printStackTrace();
-			response.setContentType("text/html; charset=UTF-8");
-			 PrintWriter out = response.getWriter();
-			out.println("<script>");
-            out.println("alert('이력서 수정을 실패했습니다.')");
-            out.println("history.back()");
-            out.println("</script>");
-		
 		}
-	}
-}
 
 	    
 

@@ -237,7 +237,6 @@ $(document).ready(function(){
     
 
     // 학교명 입력 폼에 입력할 때마다 학교명 검색
-    // 가끔 검색 안됨
 	$(document).on('input', '.edu_name', function(){
 		var schoolName = $(this).val();
 		var nowNum = $(this).parent("div").index();
@@ -354,7 +353,7 @@ $(document).ready(function(){
 		<ul>
 			<li>
 			<input name="lDtoList[0].license_name" class="license_name" placeholder="자격증명">
-			<input name="lDtoList[0].license_barhang" class="license_barhang" placeholder="발행처">
+			<input name="lDtoList[0].license_company" class="license_company" placeholder="발행처">
 			<input type="date" name="lDtoList[0].license_date" placeholder="취득년월">
 			</li>
 		</ul>
@@ -387,7 +386,7 @@ $(document).ready(function(){
 	        success: function(response) {
 	        	$("#search_license").empty();
 	        	$.each(response, function(index, step){
-	                var row = "<li><a href='#' data-index='" + nowNum + "' data-code='" + step.license_barhang + "'>" + step.license_name + "</a></li>";
+	                var row = "<li><a href='#' data-index='" + nowNum + "' data-code='" + step.license_company + "'>" + step.license_name + "</a></li>";
 	                $("#search_license").append(row);
 	            });
 	        },
@@ -401,9 +400,9 @@ $(document).ready(function(){
 	$(document).on('click', '#search_license a[data-code]', function(event){
 	    event.preventDefault();
 	    var license = $(this).text();
-	    var licensebarhang = $(this).data('code');
+	    var licensecompany = $(this).data('code');
 		$(".license_input_form").eq($(this).data("index")).find('.license_name').val(license);
-		$(".license_input_form").eq($(this).data("index")).find('.license_barhang').val(licensebarhang);
+		$(".license_input_form").eq($(this).data("index")).find('.license_company').val(licensecompany);
 		
 	});
 	
