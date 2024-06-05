@@ -19,7 +19,7 @@
 						
 						<div class="search-btn">
 							<form>
-								<input class="search-bar" placeholder="기업/채용공고 검색">&nbsp;&nbsp;
+								<input class="search-bar" placeholder="채용공고 검색">&nbsp;&nbsp;
 								<input type="submit" value="검색">
 							</form>
 						</div>
@@ -107,7 +107,7 @@
 					</div>
 					
 					<div class="user-actions">
-						<a th:text="${session.companyInfo.company_name}"></a>
+						<a th:href="@{/company_cont.go}">기업회원 마이페이지</a>
 						<a th:href="@{logout}">LOGOUT</a>
 					</div>
 				</div>
@@ -119,6 +119,7 @@
 						<li><a th:href="@{/userFAQ.go}">고객센터</a></li>
 						<li><a th:href="@{/notice.go}">공지사항</a></li>
 						<li><a th:href="@{/chat.go}">웨이브톡</a></li>
+						<li><a th:href="@{/}">공고등록</a></li>
 					</ul>
 				</nav>
 				

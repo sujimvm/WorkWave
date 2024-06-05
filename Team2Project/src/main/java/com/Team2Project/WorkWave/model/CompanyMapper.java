@@ -26,4 +26,10 @@ public interface CompanyMapper {
 	boolean companyIdCheck(String company_id);
 	
 	LoginDTO findCompanyIdbyId(String company_id);
+	
+	int activeBoard(int company_key);
+	
+	int applyNonCheckCnt(int company_key);
+	
+	int sendPosition(int company_key);
 }

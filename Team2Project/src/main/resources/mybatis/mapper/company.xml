@@ -7,11 +7,11 @@
     
     <insert id="insertCompany" parameterType="cDTO">
     	<selectKey keyProperty="company_key" resultType="int" order="BEFORE">
-            SELECT key_seq.NEXTVAL FROM dual
+            SELECT company_key_seq.NEXTVAL FROM dual
         </selectKey>
         INSERT INTO company (company_key, company_id, company_pwd, company_name, company_number, company_phone, company_addr, company_homepage, company_ceo, company_emp_count, company_sal, company_logo, company_regdate, company_mgr_name, company_mgr_phone, company_mgr_email, company_join_date, company_logo_name, enabled, role) 
-VALUES 
-(#{company_key}, #{company_id}, #{company_pwd}, #{company_name}, #{company_number}, #{company_phone}, #{company_addr}, #{company_homepage}, #{company_ceo}, #{company_emp_count}, #{company_sal}, #{company_logo}, #{company_regdate,jdbcType=DATE}, #{company_mgr_name}, #{company_mgr_phone}, #{company_mgr_email}, sysdate, #{company_logo_name}, 1, #{role})
+		VALUES 
+		(#{company_key}, #{company_id}, #{company_pwd}, #{company_name}, #{company_number}, #{company_phone}, #{company_addr}, #{company_homepage}, #{company_ceo}, #{company_emp_count}, #{company_sal}, #{company_logo}, #{company_regdate,jdbcType=DATE}, #{company_mgr_name}, #{company_mgr_phone}, #{company_mgr_email}, sysdate, #{company_logo_name}, 1, #{role})
     </insert>
     
     <select id="companyInfo" parameterType="String" resultType="cDTO">
@@ -40,6 +40,27 @@ VALUES
   
   	<select id="findCompanyIdbyId" parameterType="String" resultType="loginDTO">
   		select company_id, company_pwd, role from company where company_id = #{company_id}
-  	</select>  
+  	</select>
+ 
+  	<select id="activeBoard" resultType="int">
+  	<![CDATA[
+  		SELECT COUNT(*) FROM COM_BOARD
+		WHERE COMPANY_KEY = company_key
+		AND COM_BOARD_START_DATE < SYSDATE
+		AND COM_BOARD_END_DATE > SYSDATE]]>
+  	</select>
+  	
+  	<select id="applyNonCheckCnt" resultType="int">
+  		select count(*) from apply where com_board_key in (select com_board_key from com_board where company_key = #{company_key})
+	    and APPLY_PROFILE_CHECK = 'N'
+  	</select>
+  	
+  	<select id="sendPosition" resultType="int">
+  		select count(*) from position where company_key = #{company_key}
+  	</select>
+  	
+  	
+  	
+  	
   
   </mapper>
