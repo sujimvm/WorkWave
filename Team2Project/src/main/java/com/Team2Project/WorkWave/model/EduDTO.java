@@ -6,6 +6,7 @@ import lombok.Data;
 public class EduDTO {
 	private int edu_key;
 	private int profile_key;
+	private String string_edu_key;
 	private String edu_kind;
 	private String edu_name;
 	private String edu_start_date;

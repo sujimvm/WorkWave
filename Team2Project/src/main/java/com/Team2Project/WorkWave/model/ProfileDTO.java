@@ -6,9 +6,10 @@ import lombok.Data;
 
 @Data
 public class ProfileDTO {
-	
+	//저장 파일 이름
 	private String profile_ppt_name; 
 	private String profile_image_name;
+	
 	private int profile_key;
 	private int user_key;
 	private String profile_name;
