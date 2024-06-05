@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Team2Project.WorkWave.model.ChatDTO;
 import com.Team2Project.WorkWave.model.ChatMapper;
+import com.Team2Project.WorkWave.model.ChatReplyDTO;
+import com.Team2Project.WorkWave.model.ChatReplyMapper;
 import com.Team2Project.WorkWave.model.UserDTO;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -25,6 +27,9 @@ public class ChatController {
 
 	@Autowired
 	private ChatMapper mapper;
+	
+	@Autowired
+	private ChatReplyMapper replymapper;
 	
 	
 	@GetMapping("chat.go")
@@ -39,12 +44,16 @@ public class ChatController {
 	
 	@GetMapping("chat_cont")
 	public String cont(@RequestParam("no") int no, HttpSession session, Model model) {
-			
+		
+		// 게시물 상세정보
 		ChatDTO content = this.mapper.getContent(no);
-		
 		this.mapper.readcount(no);
-		
 		model.addAttribute("cont", content);
+		
+		// 댓글 리스트
+		List<ChatReplyDTO> replylist = this.replymapper.replylist();
+		model.addAttribute("list", replylist);
+		
 		
 		return "chat/content"; 
 	}
@@ -135,4 +144,6 @@ public class ChatController {
 			out.println("</script>");
 		}
 	}
+	
+	
 }
