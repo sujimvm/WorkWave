@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Team2Project.WorkWave.model.CompanyDTO;
 import com.Team2Project.WorkWave.model.CompanyMapper;
-import com.Team2Project.WorkWave.model.LoginDTO;
+import com.Team2Project.WorkWave.model.CompanyLoginDTO;
 import com.Team2Project.WorkWave.model.ProfileDTO;
 import com.Team2Project.WorkWave.model.UserDTO;
 import com.Team2Project.WorkWave.service.CompanyDetailService;
@@ -41,7 +42,7 @@ public class CompanyController {
 	@Autowired
 	UploadFileService uploadFileService;
 	
-	@Autowired
+	@Qualifier("bCryptPasswordEncoder")
 	private PasswordEncoder passwordEncoder;
 
 	// 기업회원가입 페이지로 이동
@@ -57,8 +58,6 @@ public class CompanyController {
 							  CompanyDTO dto, 
 							  HttpServletResponse response)
 			throws IOException {
-		
-		System.out.println(dto.getCompany_regdate());
 		
 		String encordedPwd = passwordEncoder.encode(dto.getCompany_pwd());
 		
@@ -152,28 +151,6 @@ public class CompanyController {
 			out.println("history.back()");
 			out.println("</script>");
 		}
-	}
-	
-	// 기업회원 마이페이지로 이동
-	@GetMapping("/company_cont.go")
-	public String companyCont(HttpSession session, Model model) {
-		
-		/*
-		 * CompanyDTO companyInfo = (CompanyDTO)session.getAttribute("companyInfo");
-		 * 
-		 * int activeBoard = this.mapper.activeBoard(companyInfo.getCompany_key()); int
-		 * applyNonCheckCnt =
-		 * this.mapper.applyNonCheckCnt(companyInfo.getCompany_key()); int sendPosition
-		 * = this.mapper.sendPosition(companyInfo.getCompany_key());
-		 * 
-		 * // 게재중 공고 model.addAttribute("activeBoard", activeBoard); // 미열람 지원자 수
-		 * model.addAttribute("applyNonCheckCnt", applyNonCheckCnt); // 포지션 제안을 보낸 지원자 수
-		 * model.addAttribute("sendPosition", sendPosition);
-		 */
-		
-		/* session.setAttribute("companyInfo", companyInfo); */
-		
-		return "company/cont";
 	}
 
 	// 기업회원 정보 수정하기전 비밀번호 확인 페이지 이동

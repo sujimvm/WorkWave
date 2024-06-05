@@ -20,5 +20,7 @@
   		<typeAlias type="com.Team2Project.WorkWave.model.ChatDTO" alias="chatDTO"/> <!-- 게시판 -->
   		<typeAlias type="com.Team2Project.WorkWave.model.LoginDTO" alias="loginDTO"/> <!-- 게시판 -->
   		<typeAlias type="com.Team2Project.WorkWave.model.ChatReplyDTO" alias="replyDTO"/> <!-- 게시판 -->
+  		<typeAlias type="com.Team2Project.WorkWave.model.CompanyLoginDTO" alias="CompanyloginDTO"/> <!-- 기업 로그인 DTO -->
+  		<typeAlias type="com.Team2Project.WorkWave.model.UserLoginDTO" alias="UserLoginDTO"/> <!-- 개인 로그인 DTO -->
   	</typeAliases>
   </configuration>

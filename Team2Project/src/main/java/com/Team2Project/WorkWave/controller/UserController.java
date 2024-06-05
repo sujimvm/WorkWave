@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,45 +31,9 @@ public class UserController {
 
    @Autowired
    private UserService userService;
-
-   // 유저 로그인
-   @PostMapping("/user_login.go")
-   public void login(@RequestParam("user_id") String user_id, @RequestParam("user_pwd") String user_pwd,
-         HttpSession session, HttpServletResponse response) throws IOException {
-
-      response.setContentType("text/html; charset=UTF-8");
-
-      PrintWriter out = response.getWriter();
-
-      UserDTO user_login = this.mapper.doLogin(user_id);
-
-      // 로그인 실패 처리
-      if (user_login == null) {
-         // 아이디가 존재하지 않는 경우
-         out.println("<script>");
-         out.println("alert('아이디가 존재하지 않습니다.')");
-         out.println("history.back()");
-         out.println("</script>");
-         out.flush();
-      } else if (!user_login.getUser_pwd().equals(user_pwd)) {
-         // 비밀번호가 틀린 경우
-         out.println("<script>");
-         out.println("alert('비밀번호가 틀렸습니다.')");
-         out.println("history.back()");
-         out.println("</script>");
-         out.flush();
-      } else {
-         // 로그인 성공 처리
-         session.setAttribute("user_login", user_login);
-         session.setAttribute("member_type", "user");
-         out.println("<script>");
-         out.println("alert('성공.')");
-         out.println("location.href='main.go'");
-         out.println("</script>");
-
-      }
-
-   }
+   
+   @Qualifier("userbCryptPasswordEncoder")
+   private PasswordEncoder passwordEncoder;
 
    // 유저 회원가입 페이지 이동
    @GetMapping("/user_insert.go")
@@ -79,12 +45,17 @@ public class UserController {
    // 유저 회원가입 성공
    @PostMapping("/user_insert_ok.go")
    public String insertUser(UserDTO user,
-		   					HttpServletResponse response) throws IOException {
+                        HttpServletResponse response) throws IOException {
 	   
-	  response.setContentType("text/html; charset=UTF-8");
+	   String encordedPwd = passwordEncoder.encode(user.getUser_pwd());
+		
+		user.setUser_pwd(encordedPwd);
+		user.setRole("ROLE_COMPANY");
+      
+     response.setContentType("text/html; charset=UTF-8");
 
-	  PrintWriter out = response.getWriter();
-	   
+     PrintWriter out = response.getWriter();
+      
       userService.insertUser(user);
       
       out.println("<script>");
@@ -97,14 +68,14 @@ public class UserController {
    // 유저 상세정보를 보여주는 마이페이지로 이동
    @GetMapping("/user_cont.go")
    public String content(HttpSession session, Model model) {
-	   
-	   UserDTO userInfo = (UserDTO)session.getAttribute("user_login");
-	   
-	   int applyCnt = this.mapper.applyCnt(userInfo.getUser_key());
-	   int applyCheckCnt = this.mapper.applyCheckCnt(userInfo.getUser_key());
-	   int positionJean = this.mapper.positionJean(userInfo.getUser_key());
-	   int interest = this.mapper.interest(userInfo.getUser_key());
-	      
+      
+      UserDTO userInfo = (UserDTO)session.getAttribute("user_login");
+      
+      int applyCnt = this.mapper.applyCnt(userInfo.getUser_key());
+      int applyCheckCnt = this.mapper.applyCheckCnt(userInfo.getUser_key());
+      int positionJean = this.mapper.positionJean(userInfo.getUser_key());
+      int interest = this.mapper.interest(userInfo.getUser_key());
+         
        // 지원완료 갯수
        model.addAttribute("applyCnt", applyCnt);
        // 이력서 열람 갯수
@@ -113,10 +84,10 @@ public class UserController {
        model.addAttribute("positionJean", positionJean);
        // 관심 기업 갯수
        model.addAttribute("interest", interest);
-	   
-	   session.setAttribute("userInfo", userInfo);
-	   
-	   return "user/cont";
+      
+      session.setAttribute("userInfo", userInfo);
+      
+      return "user/cont";
    }
 
    // 유저 정보 수정받기 전 비밀번호 확인 페이지로 이동
@@ -184,7 +155,7 @@ public class UserController {
    // 유저 정보 삭제 시 삭제 페이지 이동
    @GetMapping("/user_delete.go")
    public String delete(HttpSession session) {
-	   
+      
       UserDTO delete = (UserDTO)session.getAttribute("user_login");
       
       session.setAttribute("del", delete);
@@ -197,7 +168,7 @@ public class UserController {
    @PostMapping("/user_delete_ok.go")
    public void deleteok(@RequestParam("user_pwd") String userPwd, HttpSession session, HttpServletResponse response)
          throws IOException {
-	   
+      
       response.setContentType("text/html; charset=UTF-8");
       
       PrintWriter out = response.getWriter();
@@ -208,7 +179,7 @@ public class UserController {
       if (user != null) {
          // 입력된 비밀번호와 세션에 저장된 유저의 비밀번호가 일치하는지 확인
          if (userPwd.equals(user.getUser_pwd())) {
-        	 
+            
             int result = this.mapper.deleteok(user.getUser_key());
 
             if (result > 0) {

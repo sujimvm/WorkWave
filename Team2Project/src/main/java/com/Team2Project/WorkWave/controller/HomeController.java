@@ -15,12 +15,12 @@ public class HomeController {
 		return "index";
 	}
 	
-	@GetMapping("/login.go")
+	@GetMapping("/ulogin.go")
 	public String userLogin() {
 		return "mainLogin";
 	}
 	
-	@GetMapping("company.go")
+	@GetMapping("/clogin.go")
 	public String companyLogin() {
 		return "company/login";
 	}
@@ -37,5 +37,10 @@ public class HomeController {
 	@GetMapping("/main.go")
 	public String companyMain() {
 		return "company/main";
+	}
+	
+	@GetMapping("/user_main.go")
+	public String userMain() {
+		return "user/main";
 	}
 }

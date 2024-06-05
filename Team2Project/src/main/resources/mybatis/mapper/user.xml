@@ -13,8 +13,8 @@
         <selectKey keyProperty="user_key" resultType="int" order="BEFORE">
             SELECT user_key_seq.NEXTVAL FROM dual
         </selectKey>
-        INSERT INTO users (user_key, user_id, user_pwd, user_name, user_phone, user_email, user_addr, user_birth, user_gender, user_join_date, user_confirm)
-        VALUES (#{user_key}, #{user_id}, #{user_pwd}, #{user_name}, #{user_phone}, #{user_email}, #{user_addr}, #{user_birth,jdbcType=DATE}, #{user_gender,jdbcType=VARCHAR}, sysdate, #{user_confirm,jdbcType=VARCHAR})
+        INSERT INTO users (user_key, user_id, user_pwd, user_name, user_phone, user_email, user_addr, user_birth, user_gender, user_join_date, user_confirm, role, enabled)
+        VALUES (#{user_key}, #{user_id}, #{user_pwd}, #{user_name}, #{user_phone}, #{user_email}, #{user_addr}, #{user_birth,jdbcType=DATE}, #{user_gender,jdbcType=VARCHAR}, sysdate, #{user_confirm,jdbcType=VARCHAR}, #{role}, 1)
     </insert>
     
     <update id="updateok" parameterType="uDTO">
@@ -45,6 +45,10 @@
   
   <select id="interest" resultType="int">
   	   select count(*) from interest where user_key = #{user_key}
+  </select>
+  
+  <select id="findUserIdById" resultType="UserLoginDTO" parameterType="String">
+  	   select user_id, user_pwd, role from users where user_id = #{user_id}
   </select>
   
   </mapper>

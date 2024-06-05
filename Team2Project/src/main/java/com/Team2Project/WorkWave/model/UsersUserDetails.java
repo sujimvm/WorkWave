@@ -8,19 +8,24 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 
-public class CompanyUserDetails implements UserDetails {
-
+public class UsersUserDetails implements UserDetails{
+	
+	
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
-	private final String company_id;
-	private final String company_pwd;
-	private final Collection<? extends GrantedAuthority> authorities;
+	private String user_id;
+	private String user_pwd;
+	private Collection<? extends GrantedAuthority> authorities;
 	
-	public CompanyUserDetails(String company_id, String company_pwd, String role) {
-		this.company_id=company_id;
-		this.company_pwd=company_pwd;
-		this.authorities = Collections.singletonList(new SimpleGrantedAuthority(role));
+	public UsersUserDetails(String user_id, String user_pwd, String role) {
+		this.user_id=user_id;
+		this.user_pwd=user_pwd;
+		this.authorities=Collections.singletonList(new SimpleGrantedAuthority(role));
 	}
-	
+
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// TODO Auto-generated method stub
@@ -30,14 +35,14 @@ public class CompanyUserDetails implements UserDetails {
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return company_pwd;
+		return user_pwd;
 	}
 
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		System.out.println(company_id);
-		return company_id;
+		System.out.println(user_id);
+		return user_id;
 	}
 
 	@Override
@@ -63,6 +68,7 @@ public class CompanyUserDetails implements UserDetails {
 		// TODO Auto-generated method stub
 		return true;
 	}
-
 	
+	
+
 }

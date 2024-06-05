@@ -38,6 +38,8 @@ public interface UserMapper {
 	public int positionJean(int user_key);
 
 	public int interest(int user_key);
+	
+	UserLoginDTO findUserIdById(String user_id);
 }
 	
 	
