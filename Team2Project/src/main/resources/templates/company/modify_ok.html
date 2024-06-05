@@ -121,7 +121,7 @@ $(function(){
 	<div layout:fragment="content" class="content">
 		<hr width="30%" color="gray">
 		<h3>
-			<span th:text="${session.companyInfo.company_name} + '정보 수정 페이지'"></span>
+			<span>정보 수정 페이지</span>
 		</h3>
 		<hr width="30%" color="gray">
 
@@ -129,18 +129,16 @@ $(function(){
 			<table border="1" width="500">
 				<tr>
 					<th>사업자 등록 번호</th>
-					<td><input name="company_number" readonly
-						th:value="${session.companyInfo.company_number}"></td>
+					<td><input name="company_number" readonly></td>
 				</tr>
 				<tr>
 					<th>회원 아이디</th>
-					<td><input name="company_id" readonly
-						th:value="${session.companyInfo.company_id}"></td>
+					<td><input name="company_id" readonly></td>
 				</tr>
 				<tr>
 					<th>비밀번호</th>
 					<td><input name="company_pwd" type="password"
-						id="company_pwd" th:value="${session.companyInfo.company_pwd}" required> <span
+						id="company_pwd" required> <span
 						id="pwdCheckmark" class="checkmark">✔</span> <span id="pwdError"
 						style="display: none; color: red; font-size: 12px;">비밀번호는
 						8자 이상 20자 이하이며 특수문자 1자를 포함해야 합니다.</span></td>
@@ -157,27 +155,32 @@ $(function(){
 				<tr>
 					<th>기업 이름</th>
 					<td><input name="company_name" readonly
-						th:value="${session.companyInfo.company_name}"></td>
+						th:value="${session.companyInfo.company_name}">
+						</td>
 				</tr>
 				<tr>
 					<th>기업 대표 이름</th>
 					<td><input name="company_ceo" readonly
-						th:value="${session.companyInfo.company_ceo}"></td>
+						th:value="${session.companyInfo.company_ceo}">
+						</td>
 				</tr>
 				<tr>
 					<th>기업 주소</th>
 					<td><input name="company_addr"
-						th:value="${session.companyInfo.company_addr}"></td>
+						th:value="${session.companyInfo.company_addr}">
+						</td>
 				</tr>
 				<tr>
 					<th>기업 전화번호</th>
 					<td><input name="company_phone" id="company_phone"
-						th:value="${session.companyInfo.company_phone}"></td>
+						th:value="${session.companyInfo.company_phone}">
+						</td>
 				</tr>
 				<tr>
 					<th>기업 홈페이지</th>
 					<td><input name="company_homepage" id="company_homepage"
-						th:value="${session.companyInfo.company_homepage}"></td>
+						th:value="${session.companyInfo.company_homepage}">
+						</td>
 				</tr>
 				<tr>
 					<th>기업 로고</th>

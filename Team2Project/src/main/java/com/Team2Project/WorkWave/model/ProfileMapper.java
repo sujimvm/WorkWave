@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ProfileMapper {
 	
-	//카테고리를 대분류 가져오는 메서드
+		//카테고리를 대분류 가져오는 메서드
 		public List<CodeDTO> category(); 
 		
 		//카테고리를 중분류 가져오는 메서드
@@ -28,9 +28,6 @@ public interface ProfileMapper {
 		//사용자 이력서 리스트 가져오는 메서드
 		public List<ProfileDTO> profileList(int userKey);
 		
-		//사용자 미완성 리스트 가져오는 메서드
-		public List<ProfileDTO> profileTempList(int userKey);
-		
 		// 이력서 학력 가져오는 메서드
 		public List<EduDTO> eduList(int no);
 		
@@ -46,8 +43,6 @@ public interface ProfileMapper {
 		// 이력서 추가하는 메서드
 		public int profileInsert(ProfileDTO dto);
 		
-		// 이력서 임시저장 메서드
-		public int profileTempInsert(ProfileDTO dto);
 		
 		// 기본 이력서 있는지 확인하는 메서드
 		public int profileCkeck(int no);
@@ -61,9 +56,6 @@ public interface ProfileMapper {
 		//대표 이력서로 변경 메서드
 		public int nowInsertProfileKey(int no);
 		
-		//미완성 이력서 프로필 킬 가져오는 메서드
-		public int nowInsertTempProfileKey(int no);
-		
 		// 학력 추가하는 메서드
 		public void EduInsert(EduDTO edto);
 		
@@ -76,23 +68,17 @@ public interface ProfileMapper {
 		//이력서 삭제하는 메서드
 		public int profileDelect(int pro_key);
 		
+		public int deleteCareerByProfileKey(int pro_key);
+		public int deleteEduByProfileKey(int pro_key);
+		public int deleteLicenseByProfileKey(int pro_key);
+		
+		
 		//이력서 업데이트 메서드
 		public int updateProfile(ProfileDTO profileDto);
 		public int updateCareer(CareerDTO careerDto);
 		public int updateLicense(LicenseDTO licenDto);
-		
-		//이력서 중간저장 불러오는 메서드
-		public ProfileDTO profileTempinfo(int no);
-		public List<CareerDTO> careerTempinfo(int no);
-		public List<LicenseDTO> licenseTempinfo(int no);
-		
-		
-		//중간 이력서 중간 저장
-		public int updateProfileTemp(ProfileDTO profileDto);
-		public int updateCareerTemp(CareerDTO careerDto);
-		public int updateLicenseTemp(LicenseDTO licenDto);
+		public int updateEdu(EduDTO eduDto);
 		
 		
 		
-
 }

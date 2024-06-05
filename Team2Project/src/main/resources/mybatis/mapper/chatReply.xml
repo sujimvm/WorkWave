@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.Team2Project.WorkWave.model.ChatReplyMapper">
+  
+  
+  	<!-- list -->
+    <select id="replylist" resultType="replyDTO" parameterType="int">
+        SELECT * FROM Reply order by reply_key desc
+    </select>
+	  
+	 <!-- Insert -->
+    <insert id="insertReply" parameterType="replyDTO">
+    	<selectKey resultType="int" keyProperty="reply_key" order="BEFORE">
+	        select coalesce(max(reply_key), 0) + 1 from reply
+	    </selectKey>
+        INSERT INTO Reply (reply_key, chat_key, user_key, reply_depth, reply_step, user_name, reply_date, reply_content, reply_like)
+        VALUES (#{reply_key}, #{chat_key}, 37, 1, 2, '이XX', sysdate, #{reply_content}, 0)
+    </insert>
+
+    <!-- Select -->
+    <select id="getReplyById" resultType="replyDTO" parameterType="int">
+        SELECT * FROM Reply WHERE reply_key = #{reply_key}
+    </select>
+
+    <!-- Update -->
+    <update id="updateReply" parameterType="replyDTO">
+        UPDATE Reply
+        SET chat_key = #{chat_key}, user_key = #{user_key}, reply_depth = #{reply_depth}, reply_step = #{reply_step},
+            user_name = #{user_name}, reply_date = #{reply_date}, reply_content = #{reply_content}, reply_like = #{reply_like}
+        WHERE reply_key = #{reply_key}
+    </update>
+
+    <!-- Delete -->
+    <delete id="deleteReply" parameterType="int">
+        DELETE FROM Reply WHERE reply_key = #{reply_key}
+    </delete>
+    
+    <update id="replylike" parameterType="int">
+		update reply set reply_like = reply_like + 1 where reply_key = #{reply_key}
+	</update>
+  
+  </mapper>

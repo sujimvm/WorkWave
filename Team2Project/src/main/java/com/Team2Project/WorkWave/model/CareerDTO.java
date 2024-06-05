@@ -6,6 +6,7 @@ import lombok.Data;
 public class CareerDTO {
 	private int career_key;
 	private int profile_key;
+	private String string_career_key; // 여러 데이터의 pk를 저장할 수 있는 변수 (int는 , 잘림)
 	private String career_start_date;
 	private String career_end_date;
 	private String career_cont;

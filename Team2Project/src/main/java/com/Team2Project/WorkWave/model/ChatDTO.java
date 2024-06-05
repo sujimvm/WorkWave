@@ -14,8 +14,10 @@ public class ChatDTO {
 	private String chat_title;
 	private String chat_cont;
 	private int chat_hit;
-	private String chat_date;
-	private String chat_update;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date chat_date;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date chat_update;
 	private int chat_like;
 	private String chat_tag;
 	

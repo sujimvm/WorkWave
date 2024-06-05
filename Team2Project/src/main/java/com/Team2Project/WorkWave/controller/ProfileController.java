@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.Team2Project.WorkWave.model.CareerDTO;
 import com.Team2Project.WorkWave.model.CodeDTO;
 import com.Team2Project.WorkWave.model.CodeListDTO;
+import com.Team2Project.WorkWave.model.CompanyDTO;
 import com.Team2Project.WorkWave.model.EduDTO;
 import com.Team2Project.WorkWave.model.LicenseDTO;
 import com.Team2Project.WorkWave.model.ProfileDTO;
@@ -30,6 +32,7 @@ import com.Team2Project.WorkWave.model.ProfileMapper;
 import com.Team2Project.WorkWave.model.UserDTO;
 import com.Team2Project.WorkWave.service.UploadFileService;
 
+import jakarta.mail.Session;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -47,6 +50,7 @@ public class ProfileController {
 	
 	private final String pptUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\ppt\\profile";
 
+	//다운
     @GetMapping("/download/ppt/{fileName:.+}")
     public void downloadPPT(@PathVariable("fileName") String fileName, HttpServletResponse response) throws Exception {
         File file = new File(pptUploadDir + File.separator + fileName);
@@ -83,7 +87,7 @@ public class ProfileController {
 	public void profileInsert(ProfileDTO dto, HttpServletResponse response, HttpSession session, 
 			@ModelAttribute(value = "CodeListDTO") CodeListDTO codelistDTO,
 			@RequestParam("profile_ppt_input") MultipartFile ppt_file,
-			@RequestParam("profile_image_input")MultipartFile image_file,EduDTO edu
+			@RequestParam("profile_image_input")MultipartFile image_file
 			) throws IOException {
 		
 		String imageUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\profile";
@@ -110,15 +114,17 @@ public class ProfileController {
 			}
 		}
 		
+//		
+//		UserDTO userdto = (UserDTO) session.getAttribute("user_login");
+//
+//		if (userdto == null) {
+//			response.sendRedirect("/user.go"); 
+//			return; 
+//		}
+//		dto.setUser_key(userdto.getUser_key());
+
+		dto.setUser_key(9);
 		
-		UserDTO userdto = (UserDTO) session.getAttribute("user_login");
-
-		if (userdto == null) {
-			response.sendRedirect("/user.go"); 
-			return; 
-		}
-		dto.setUser_key(userdto.getUser_key());
-
 		// 넘어온 키 값의 이력서가 있는지 확인
 		if (this.mapper.profileCkeck(dto.getUser_key()) > 0) {
 			dto.setProfile_default("N");
@@ -132,20 +138,28 @@ public class ProfileController {
 		// 유저키의 프로필키(max) 
 		int nowInsertProfileKey = this.mapper.nowInsertProfileKey(dto.getUser_key());
 		
-		/*
-		 * //학력 데이터 저장 EduDTO eduDto = new EduDTO();
-		 * 
-		 * edu.setProfile_key(nowInsertProfileKey);
-		 * 
-		 * this.mapper.EduInsert(edu);
-		 */
+		//학력 데이터 저장
+		EduDTO edtoArr = codelistDTO.getEDtoList().get(0);
+		for(int i=0; i < edtoArr.getEdu_name().split(",").length; i++) {
+			EduDTO edto = new EduDTO();
+			
+			edto.setProfile_key(nowInsertProfileKey);
+			edto.setEdu_kind(edtoArr.getEdu_kind().split(",")[i]);
+			edto.setEdu_name(edtoArr.getEdu_name().split(",")[i]);
+			edto.setEdu_start_date(edtoArr.getEdu_start_date().split(",")[i]);
+			edto.setEdu_end_date(edtoArr.getEdu_end_date().split(",")[i]);
+			edto.setEdu_major(edtoArr.getEdu_major().split(",")[i]);
+			edto.setEdu_status(edtoArr.getEdu_status().split(",")[i]);
+			  this.mapper.EduInsert(edto); 
+			
+		}
+		
 		 
 		
 	
 		  //경력 데이터 저장 
 		CareerDTO crdtoArr = codelistDTO.getCrDtoList().get(0); 
 		for(int i= 0; i < crdtoArr.getCareer_company().split(",").length; i++) {
-		  
 		  CareerDTO crdto = new CareerDTO();
 		  
 		  crdto.setProfile_key(nowInsertProfileKey);
@@ -165,140 +179,51 @@ public class ProfileController {
 		  
 		  for(int i=0; i < ldtoArr.getLicense_name().split(",").length; i++) {
 		  
-		  LicenseDTO ldto = new LicenseDTO();
-		  
-		  ldto.setProfile_key(nowInsertProfileKey);
-		  ldto.setLicense_name(ldtoArr.getLicense_name().split(",")[i]);
-		  ldto.setLicense_barhang(ldtoArr.getLicense_barhang().split(",")[i]);
-		  ldto.setLicense_date(ldtoArr.getLicense_date().split(",")[i]);
-		  
-		  this.mapper.LicenseInsert(ldto); }
-		  
-		 
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-
-		if (check > 0) {
-			out.println("<script>");
-			out.println("alert('이력서 작성을 성공하였습니다.')");
-			out.println("location.href='profile_list'");
-			out.println("</script>");
-		} else {
-			out.println("<script>");
-			out.println("alert('이력서 작성을 실패하였습니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-		}
-	}
-	
-	// 이력서 임시저장
-	@PostMapping("profile_Temp")
-	public void profileTemp(ProfileDTO dto,HttpServletResponse response,HttpSession session,
-			@ModelAttribute(value = "CodeListDTO") CodeListDTO codelistDTO,
-			@RequestParam("profile_ppt_input") MultipartFile ppt_file,
-			@RequestParam("profile_image_input") MultipartFile image_file) throws IOException {
-		
-		String imageUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\profile";
-		
-		String pptUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\ppt\\profile";
-		
-		dto.setProfile_image("");
-		dto.setProfile_image_name("");
-		
-		if (image_file.getOriginalFilename() != null) {
-			if (image_file != null && !image_file.isEmpty()) {
-				String imageName = uploadFileService.upload(image_file, imageUploadDir);
-				dto.setProfile_image(imageName);
-				dto.setProfile_image_name(image_file.getOriginalFilename());
-			}
-		}
-
-		dto.setProfile_ppt("");
-		dto.setProfile_ppt_name("");
-		
-		if (ppt_file.getOriginalFilename() != null) {
-			if (ppt_file != null && !ppt_file.isEmpty()) {
-				String pptName = uploadFileService.upload(ppt_file, pptUploadDir);
-				dto.setProfile_ppt(pptName);
-				dto.setProfile_ppt_name(ppt_file.getOriginalFilename());
-			}
-		}
-
-		UserDTO userdto = (UserDTO) session.getAttribute("user_login");
-
-		dto.setUser_key(userdto.getUser_key());
-
-		// 넘어온 키 값의 이력서가 있는지 확인
-		if (this.mapper.profileCkeck(dto.getUser_key()) > 0) {
-			dto.setProfile_default("N");
-		} else {
-			dto.setProfile_default("Y");
-		}
-
-	
-		int check = this.mapper.profileTempInsert(dto);
-		
-		// 유저키의 프로필키(max) 
-		int nowInsertProfileKey = this.mapper.nowInsertTempProfileKey(dto.getUser_key());
-		
-		
-		  //경력 데이터 저장 
-		CareerDTO crdtoArr = codelistDTO.getCrDtoList().get(0); 
-		for(int i= 0; i < crdtoArr.getCareer_company().split(",").length; i++) {
-		  
-		  CareerDTO crdto = new CareerDTO();
-		  
-		  crdto.setProfile_key(nowInsertProfileKey);
-		  crdto.setCareer_company(crdtoArr.getCareer_company().split(",")[i]);
-		  crdto.setCareer_cont(crdtoArr.getCareer_cont().split(",")[i]);
-		  crdto.setCareer_position(crdtoArr.getCareer_position().split(",")[i]);
-		  crdto.setCareer_bye(crdtoArr.getCareer_bye().split(",")[i]);
-		  crdto.setCareer_start_date(crdtoArr.getCareer_start_date().split(",")[i]);
-		  crdto.setCareer_end_date(crdtoArr.getCareer_end_date().split(",")[i]);
-		  
-		  this.mapper.CareerInsert(crdto);
-		  
+			  LicenseDTO ldto = new LicenseDTO();
+			  
+			  ldto.setProfile_key(nowInsertProfileKey);
+			  ldto.setLicense_name(ldtoArr.getLicense_name().split(",")[i]);
+			  ldto.setLicense_company(ldtoArr.getLicense_company().split(",")[i]);
+			  ldto.setLicense_date(ldtoArr.getLicense_date().split(",")[i]);
+			  
+			  this.mapper.LicenseInsert(ldto); 
 		  }
-		  
-		  //자격증 데이터 저장 
-		LicenseDTO ldtoArr = codelistDTO.getLDtoList().get(0);
-		  
-		  for(int i=0; i < ldtoArr.getLicense_name().split(",").length; i++) {
-		  
-		  LicenseDTO ldto = new LicenseDTO();
-		  
-		  ldto.setProfile_key(nowInsertProfileKey);
-		  ldto.setLicense_name(ldtoArr.getLicense_name().split(",")[i]);
-		  ldto.setLicense_barhang(ldtoArr.getLicense_barhang().split(",")[i]);
-		  ldto.setLicense_date(ldtoArr.getLicense_date().split(",")[i]);
-		  
-		  this.mapper.LicenseInsert(ldto); }
-		  
-		 
-		response.setContentType("text/html; charset=UTF-8");
-		PrintWriter out = response.getWriter();
-
-		if (check > 0) {
-			out.println("<script>");
-			out.println("alert('이력서 임시저장을 완료하였습니다.')");
-			out.println("location.href='profile_list'");
-			out.println("</script>");
-		} else {
-			out.println("<script>");
-			out.println("alert('이력서 임시저장을 실패하였습니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-		}
-		
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			if (check > 0) {
+				out.println("<script>");
+				out.println("alert('이력서 작성을 성공하였습니다.')");
+				out.println("location.href='profile_list'");
+				out.println("</script>");
+			} else {
+				out.println("<script>");
+				out.println("alert('이력서 작성을 실패하였습니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+			}
 	}
+	
+
 
 	// 이력서 작성 폼
 	@GetMapping("/profile_writer")
-	public String categorygrouptest(Model model) {
+	public String categorygrouptest(Model model,HttpSession session) {
+		
+//		UserDTO user = (UserDTO) session.getAttribute("user_login");
+//		
+//		int userKey = user.getUser_key();
+		
+
+		int userKey =9;
+		
+		
+		ProfileDTO userDto = this.mapper.profileinfo(userKey);
 
 		List<CodeDTO> category = this.mapper.category();
 
 		model.addAttribute("categories", category);
+		
+		model.addAttribute("userDto", userDto);
 
 		return "profile/profile";
 	}
@@ -361,16 +286,17 @@ public class ProfileController {
 	@GetMapping("profile_list")
 	public String profileList(Model model, HttpSession session) {
 
-		UserDTO user = (UserDTO) session.getAttribute("user_login");
+//		UserDTO user = (UserDTO) session.getAttribute("user_login");
+//		
+//		int userKey = user.getUser_key();
+		
 
-		int userKey = user.getUser_key();
-
+		int userKey =9;
+		
 		List<ProfileDTO> profileList = this.mapper.profileList(userKey);
 		
-		List<ProfileDTO> profileTemList = this.mapper.profileTempList(userKey);
-
 		model.addAttribute("ProfileList", profileList);
-		model.addAttribute("ProfileTempList", profileTemList);
+		
 
 		return "profile/profile_List";
 	}
@@ -423,6 +349,12 @@ public class ProfileController {
 	@GetMapping("profile_delect")
 	public void profile_delect(@RequestParam("no") int pro_key,HttpServletResponse response) throws IOException {
 		
+		 int checkCareer = this.mapper.deleteCareerByProfileKey(pro_key);
+		 int checkEdu = this.mapper.deleteEduByProfileKey(pro_key);
+		 int checkLicense = this.mapper.deleteLicenseByProfileKey(pro_key);
+
+		
+		
 		int check = this.mapper.profileDelect(pro_key);
 		
 		response.setContentType("text/html; charset=UTF-8");
@@ -449,102 +381,113 @@ public class ProfileController {
 		ProfileDTO content = this.mapper.profileinfo(no);
 		List<CareerDTO> carMody = this.mapper.careerList(no);
 		List<LicenseDTO> licenMody = this.mapper.licenseList(no);
+		List<EduDTO> eduMody = this.mapper.eduList(no);
 		
 		model.addAttribute("Modify", content);
 		model.addAttribute("carMody", carMody);
 		model.addAttribute("licenMody", licenMody);
+		model.addAttribute("eduMody", eduMody);
 		
 		return "profile/profile_modify";
 	}
 	
 	//이력서 수정 업데이트
 	@PostMapping("profile_modify_ok")
-	public void profile_modify_ok(@RequestParam("profile_key") int pro_key, ProfileDTO profileDto, CareerDTO careerDto, LicenseDTO licenDto,
-	        HttpServletResponse response, HttpSession session) throws IOException {
+	public void profile_modify_ok(@RequestParam("profile_key") int pro_key,@ModelAttribute(value = "CodeListDTO") CodeListDTO codelistDTO,
+	        ProfileDTO profileDto,HttpServletResponse response, HttpSession session,
+	        @RequestParam("profile_image_add")MultipartFile profile_image,
+	        @RequestParam("profile_ppt_add")MultipartFile profile_ppt) throws IOException {
 	    
-	    profileDto.setProfile_key(pro_key);
-	    careerDto.setProfile_key(pro_key);
-	    licenDto.setProfile_key(pro_key);
-	    
-	    int updateResult = 0;
-	    
-	    try {
-	        updateResult = this.mapper.updateProfile(profileDto);
-	        updateResult += this.mapper.updateCareer(careerDto);
-	        updateResult += this.mapper.updateLicense(licenDto);
-	        
-	        response.setContentType("text/html; charset=UTF-8");
-	        PrintWriter out = response.getWriter();
-	        
-	        if (updateResult > 0) {
-	            out.println("<script>");
-	            out.println("alert('이력서를 수정했습니다.')");
-	            out.println("location.href='profile_list'");
-	            out.println("</script>");
-	        } else {
-	            out.println("<script>");
-	            out.println("alert('이력서 수정을 실패했습니다.')");
-	            out.println("history.back()");
-	            out.println("</script>");
-	        }
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-	    }
-	}
+		ProfileDTO original_profile_dto = this.mapper.profileinfo(pro_key);
+		
+		profileDto.setProfile_image_name(original_profile_dto.getProfile_image_name());
+		profileDto.setProfile_image(original_profile_dto.getProfile_image());
+		//새로운 파일
+		if(profile_image.getOriginalFilename() != null) {
+			
+			if(profile_image != null && !profile_image.isEmpty()) {
+				
+				String imageUploadDir ="C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\profile";
+				
+				uploadFileService.deleteFile(profileDto.getProfile_image(), imageUploadDir);
+				
+				
+				String imageName = uploadFileService.upload(profile_image, imageUploadDir);
+				profileDto.setProfile_image_name(profile_image.getOriginalFilename());
+				profileDto.setProfile_image(imageName);
+			}
+		}
+		
+		 // 프로필 PPT 파일 수정
+		
+		profileDto.setProfile_ppt_name(original_profile_dto.getProfile_ppt_name());
+		profileDto.setProfile_ppt(original_profile_dto.getProfile_ppt());
+		
+		if(profile_ppt.getOriginalFilename() != null) {	
+			if (profile_ppt != null && !profile_ppt.isEmpty()) {
+				
+		        String pptUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\ppt\\profile";
 	
-	//중간 이력서 이어서 작성
-	@GetMapping("profileTemp_add")
-	public String profileTempAdd(@RequestParam("no") int no,Model model) {
-		
-		
-		ProfileDTO profileTemp = this.mapper.profileTempinfo(no);
-		List<CareerDTO> careerTemp = this.mapper.careerTempinfo(no);
-		List<LicenseDTO> licenseTemp = this.mapper.licenseTempinfo(no);
+		        uploadFileService.deleteFile(original_profile_dto.getProfile_ppt(), pptUploadDir);
 	
+		        String pptName = uploadFileService.uploadOriName(profile_ppt, pptUploadDir);
+		        profileDto.setProfile_ppt_name(profile_ppt.getOriginalFilename());
+		        profileDto.setProfile_ppt(pptName);
+		    }
+		}
+		try {
+				//경력 수정
+				int size= codelistDTO.getCrDtoList().size(); 
+				for(int i= 0; i < size; i++) {
+					CareerDTO careerDto = codelistDTO.getCrDtoList().get(i); 
+				  this.mapper.updateCareer(careerDto);
+				}
+				
+				//학력 수정
+				int esize = codelistDTO.getLDtoList().size();
+				for(int i=0; i < esize; i++) {
+					EduDTO eduDto = codelistDTO.getEDtoList().get(i);
+					this.mapper.updateEdu(eduDto);
+				}
+			
 		
-		model.addAttribute("profileTemp", profileTemp);
-		model.addAttribute("careerTemp", careerTemp);
-		model.addAttribute("licenseTemp", licenseTemp);
-		
-		return "profile/profileTempAdd";
-	}
-
-	//중간 이력서 작성 저장
-	@PostMapping("profile_tempAdd_ok")
-	public void profileTempAddOk(@RequestParam("profile_key") int pro_key, ProfileDTO profileDto, CareerDTO careerDto, LicenseDTO licenDto,
-	        HttpServletResponse response, HttpSession session) throws IOException {
-		
-		    profileDto.setProfile_key(pro_key);
-		    careerDto.setProfile_key(pro_key);
-		    licenDto.setProfile_key(pro_key);
-		    
-		    int updateResult = 0;
-		    
-		    try {
-		        updateResult = this.mapper.updateProfileTemp(profileDto);
-		        updateResult += this.mapper.updateCareerTemp(careerDto);
-		        updateResult += this.mapper.updateLicenseTemp(licenDto);
-		        
-		        response.setContentType("text/html; charset=UTF-8");
-		        PrintWriter out = response.getWriter();
-		        
-		        if (updateResult > 0) {
-		            out.println("<script>");
-		            out.println("alert('이력서를 추가작성을 저장했습니다.')");
-		            out.println("location.href='profile_list'");
-		            out.println("</script>");
-		        } else {
-		            out.println("<script>");
-		            out.println("alert('이력서 추가 작성을 실패했습니다.')");
+				// 자격증 수정
+				int lsize= codelistDTO.getLDtoList().size();
+				System.out.println("lsize>>"+lsize);
+				  for(int i=0; i < lsize; i++) {
+				  
+					  LicenseDTO ldto = codelistDTO.getLDtoList().get(i);
+					  
+					  
+					  this.mapper.updateLicense(ldto); 
+				  
+				  }
+				  
+				  profileDto.setProfile_key(pro_key);
+				  
+				  this.mapper.updateProfile(profileDto);
+				  
+				  
+				  response.setContentType("text/html; charset=UTF-8");
+			       PrintWriter out = response.getWriter();
+			        
+			           out.println("<script>");
+			           out.println("alert('이력서를 수정했습니다.')");
+			           out.println("location.href='profile_list'");
+			           out.println("</script>");
+			        
+				} catch (Exception e) {
+					e.printStackTrace();
+					response.setContentType("text/html; charset=UTF-8");
+					 PrintWriter out = response.getWriter();
+					out.println("<script>");
+		            out.println("alert('이력서 수정을 실패했습니다.')");
 		            out.println("history.back()");
 		            out.println("</script>");
-		        }
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-		    }
-		
-	}
-	
-}
+				
+				}
+			}
+		}
+
+	    
+

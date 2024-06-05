@@ -6,100 +6,159 @@
 <title>Work Wave 이력서 수정</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/profile.css}">
-    <style>
-        #textareaSize {
-            width: 50%;
-            height: 200px;
-        }
-    </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:src="@{/js/profileModify.js}"></script>
+<link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 <body>
 		<div th:replace="~{include/header :: guestHeader}"></div> 
 		<div layout:fragment="content" class="content"></div>
-	
+	<div align="center"><br><br>
 	<form method="POST" action="profile_modify_ok" enctype="multipart/form-data">
 	<input type="hidden" name="profile_key" th:value="${Modify.profile_key}">
+	
 		<div> <!-- 이력서 수정 폼 -->
-		 <input name="profile_name" size="40"  th:value="${Modify.profile_name}">
+		 <input name="profile_name" size="120" class="custom-input" th:value="${Modify.profile_name}"><br><br>
 		   <h1>인적사항</h1>
-		 <table>
-	    <tr>
-	        <td><input type="text" th:value="${Modify.user_name}" name="user_name"></td>
-	        <td>
-	            <select name="user_gender">
-	                <option th:selected="${Modify.user_gender == 'Male'}" value="Male">Male</option>
-	                <option th:selected="${Modify.user_gender == 'Female'}" value="Female">Female</option>
-	            </select>
-	        </td>
-	        <td><input type="date" th:value="${#strings.substringBefore(Modify.user_birth, ' ')}" name="user_birth"></td>
-	        <td><input type="email" th:value="${Modify.user_email}" name="user_email"></td>
-	        <td rowspan="3"><img th:src="@{'/image/profile/' + ${Modify.profile_image}}" alt="Profile Image" width="170" height="200"></td>
-	    </tr>
-	    <tr>
-	        <td><input  th:value="${Modify.user_phone}" name="user_phone"></td>
-	        <td><input  th:value="${Modify.user_addr}" name="user_addr"></td>
-	    </tr>
-		 </table>
+		 <table border="1" width="800">
+					<tr>
+						<td rowspan="3"><img th:src="@{'/image/profile/'+${Modify.profile_image}}"
+						 id="original_profile" alt="Profile Image" width="190px" height="210px">
+						 <img id="preview_profile" width="190px" height="210px" style="display:none;">
+						<input type="file" name="profile_image_add" id="profile_image" accept=".jpeg, .jpg, .png" value=""></td>
+						<td th:text="${Modify.user_name}"></td>
+						<td th:text="${Modify.user_gender}"></td>
+						<td colspan="2" th:text="${#strings.substringBefore(Modify.user_birth, ' ')}"></td>
+					</tr>
+					<tr>
+						<td>휴대폰</td>
+						<td th:text="${Modify.user_phone}"></td>
+						<td>Email</td>
+						<td th:text="${Modify.user_email}"></td>
+					</tr>
+					<tr>
+						<td>주소</td>
+						<td colspan="3" th:text="${Modify.user_addr}"></td>
+					</tr>
+				</table>
 		</div>
 		
 		<div> <!-- 학력 -->
 		<h1>학력</h1>
+		<table border="1" width="700">
+			<tr>
+				<th>학교구분</th>
+				<th>학교명</th>
+				<th>입학년월</th>
+				<th>졸업년월</th>
+				<th>전공명</th>
+				<th>졸업상태</th>
+			</tr>
+			<tr th:each="education, i : ${eduMody}">
+    <input type="hidden" th:value="${education.edu_key}" th:name="|eDtoList[${i.count-1}].edu_key|">
+			    <td th:switch="${education.edu_kind}">
+			        <span th:case="0">고등학교</span>
+			        <span th:case="1">대학(2,3년)</span>
+			        <span th:case="2">대학교(4년)</span>
+			        <span th:case="3">대학원</span>
+			    </td>
+			    <td>
+			        <select th:name="|eDtoList[${i.index}].edu_kind|">
+			            <option value="0" th:selected="${education.edu_kind == '0'}">고등학교</option>
+			            <option value="1" th:selected="${education.edu_kind == '1'}">대학(2,3년)</option>
+			            <option value="2" th:selected="${education.edu_kind == '2'}">대학교(4년)</option>
+			            <option value="3" th:selected="${education.edu_kind == '3'}">대학원</option>
+			        </select>
+			    </td>
+			    <td><input type="text" th:value="${education.edu_name}" th:name="|eDtoList[${i.count-1}].edu_name|"></td>
+			    <td>
+			        <input type="date" th:value="${education.edu_start_date}" th:name="|eDtoList[${i.count-1}].edu_start_date|">
+			    </td>
+			    <td>
+			        <input type="date" th:value="${education.edu_end_date}" th:name="|eDtoList[${i.count-1}].edu_end_date|">
+			    </td>
+			    <td><input type="text" th:value="${education.edu_major}" th:name="|eDtoList[${i.count-1}].edu_major|"></td>
+			    <td><input type="text" th:value="${education.edu_status}" th:name="|eDtoList[${i.count-1}].edu_status|"></td>
+			</tr>
+		
+		</table>
+			
 			
 		</div>
 		
 		<div> <!-- 경력 -->
 		<h1>경력</h1>
 		<table border="1" width="700">
-				    <thead>
-				        <tr>
-				            <th>회사명</th>
-				            <th>기간</th>
-				            <th>내용</th>
-				            <th>직급</th>
-				            <th>퇴사사유</th>
-				        </tr>
-				    </thead>
-				    <tbody>
-				      <tr th:each="career : ${carMody}">
-			            <td><input type="text" th:value="${career.career_company}" name="career_company"></td>
-			            <td>
-			                <input type="date" th:value="${#strings.substringBefore(career.career_start_date, ' ')}" name="career_start_date">
-			                ~
-			                <input type="date" th:value="${#strings.substringBefore(career.career_end_date, ' ')}" name="career_end_date">
-			            </td>
-			            <td>
-			                <textarea name="career_cont" th:text="${career.career_cont}"></textarea>
-			            </td>
-			            <td><input type="text" th:value="${career.career_position}" name="career_position"></td>
-			            <td><input type="text" th:value="${career.career_bye}" name="career_bye"></td>
-	               </tr>
-				   </tbody>
+		    <thead>
+		        <tr>
+		            <th>회사명</th>
+		            <th>기간</th>
+		            <th>내용</th>
+		            <th>직급</th>
+		            <th>퇴사사유</th>
+		        </tr>
+		        
+		    </thead>
+		    <tbody>		
+		        <!-- 있는 경우 -->
+		        <tr th:each="career, i : ${carMody}">
+		    	<input type="hidden" th:value="${career.career_key}" th:name="|crDtoList[${i.count-1}].career_key|">
+		            <td><input type="text" th:value="${career.career_company}" th:name="|crDtoList[${i.count-1}].career_company|"></td>
+		            <td>
+		                <input type="date" th:value="${career.career_start_date}" th:name="|crDtoList[${i.count-1}].career_start_date|">
+		                ~
+		                <input type="date" th:value="${career.career_end_date}" th:name="|crDtoList[${i.count-1}].career_end_date|">
+		            </td>
+		            <td>
+		                <textarea th:name="|crDtoList[${i.count-1}].career_cont|" th:text="${career.career_cont}"></textarea>
+		            </td>
+		            <td><input type="text" th:value="${career.career_position}" th:name="|crDtoList[${i.count-1}].career_position|"></td>
+		            <td><input type="text" th:value="${career.career_bye}" th:name="|crDtoList[${i.count-1}].career_bye|"></td>
+		        </tr>
+		        
+		    </tbody>
 		</table>
 		</div>
 		
 		<div>	<!-- 자격증 -->
-		<h1>자격증</h1>
-			<ul>
-			     <li th:each="license : ${licenMody}">
-			        <input type="text" th:value="${license.license_name}" name="license_name">
-			        <input type="text" th:value="${license.license_barhang}" name="license_barhang">
-			        <input type="date" th:value="${license.license_date}" name="license_date">
-    			</li>
-			</ul>
-		</div>	
-			
+    	<h1>자격증</h1>
+    	<ul>
+			<li th:each="license,i : ${licenMody}">
+			<input type="hidden" th:value="${license.license_key}" th:name="|lDtoList[${i.count-1}].license_key|">
+			    <input type="text" th:value="${license.license_name}" th:name="|lDtoList[${i.count-1}].license_name|">
+			    <input type="text" th:value="${license.license_barhang}" th:name="|lDtoList[${i.count-1}].license_barhang|">
+			    <input type="date" th:value="${license.license_date}" th:name="|lDtoList[${i.count-1}].license_date|">
+			</li> 
+		</ul>
+		</div>
+		
+		<div>
+		<h1>포트폴리오</h1>
+	    <div id="portfolioContainer">
+		    <div class="portfolio-item">
+		        <a th:href="@{/download/ppt/{filename}(filename=${Modify.profile_ppt})}" th:text="${Modify.profile_ppt}"
+		           id="original_profile_ppt" alt="Profile ppt"></a>
+		        
+		        <input type="file" name="profile_ppt_add" id="profile_ppt" accept=".pptx" style="display: none;">
+		        
+		        <button type="button" class="changeFile">파일 변경</button>
+		        <button type="button" class="removeForm">삭제</button>
+		    </div>
+		</div>
+	  </div>
+	
 		<div> <!-- 자기소개 -->
 		<h2>성장과정</h2>
-        <textarea name="profile_history" id="textareaSize" style="white-space: pre-line" th:text="${Modify.profile_history}"></textarea>
+        <textarea name="profile_history" class="textareaSize" style="white-space: pre-line" th:text="${Modify.profile_history}"></textarea>
         
         <h2>지원동기</h2>
-        <textarea name="profile_apply" id="textareaSize" style="white-space: pre-line" th:text="${Modify.profile_apply}"></textarea>
+        <textarea name="profile_apply" class="textareaSize" style="white-space: pre-line" th:text="${Modify.profile_apply}"></textarea>
         
         <h2>성격 장단점</h2>
-        <textarea name="profile_character" id="textareaSize" style="white-space: pre-line" th:text="${Modify.profile_character}"></textarea>
+        <textarea name="profile_character" class="textareaSize" style="white-space: pre-line" th:text="${Modify.profile_character}"></textarea>
         
         <h2>입사 후 포부</h2>
-        <textarea name="profile_plan" id="textareaSize" style="white-space: pre-line" th:text="${Modify.profile_plan}"></textarea>
+        <textarea name="profile_plan" class="textareaSize" style="white-space: pre-line" th:text="${Modify.profile_plan}"></textarea>
 		
 		</div><br><br>
 		
@@ -107,7 +166,7 @@
 		<input type="submit" value="수정완료">
 		</div>
 	</form>	
-			
+</div>		
 		
 		
 		<div th:replace="~{include/footer :: footer}"></div>

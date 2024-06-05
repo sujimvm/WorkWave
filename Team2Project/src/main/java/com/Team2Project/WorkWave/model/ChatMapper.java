@@ -21,5 +21,7 @@ public interface ChatMapper {
 	
 	public int modify(ChatDTO dto);
 	
+	public int like(int chat_key);
+	
 	
 }
