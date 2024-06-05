@@ -12,7 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.Team2Project.WorkWave.service.CompanyDetailService;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 public class SecurityConfig {
 	
 	@Bean

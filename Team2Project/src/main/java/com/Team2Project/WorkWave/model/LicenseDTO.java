@@ -9,6 +9,7 @@ public class LicenseDTO {
 	private String license_name;
 	private String license_barhang;
 	private String license_date;
+	private String license_company;
 
     // 생성자, Getter 및 Setter 생략 (필요시 추가)
 }

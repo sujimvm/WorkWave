@@ -38,7 +38,7 @@
   	
   	<select id="license" parameterType="String" resultType="lDTO">
   	
-  	select * from license where license_name like '%' || #{license_name} || '%'
+  	select * from licensedata where license_name like '%' || #{license_name} || '%'
   	
   	</select>
   	
@@ -156,19 +156,30 @@
             SELECT user_key_seq.NEXTVAL FROM dual
         </selectKey>
    	
-  	insert into license VALUES (#{license_key},#{profile_key},#{license_name},#{license_barhang},#{license_date})
+  	insert into license VALUES (#{license_key},#{profile_key},#{license_name},#{license_company},#{license_date})
   	</insert>
   	
   	
 	
 	<delete id="profileDelect" parameterType="int">
 	
-	delete from child_table where profile_key = #{pro_key};
 	
 	delete from profile where PROFILE_KEY = #{pro_key}
 	
 	</delete>
 	
+	<delete id="deleteCareerByProfileKey" parameterType="int">
+    DELETE FROM career WHERE profile_key = #{pro_key}
+	</delete>
+
+	<delete id="deleteEduByProfileKey" parameterType="int">
+	    DELETE FROM edu WHERE profile_key = #{pro_key}
+	</delete>
+	
+	<delete id="deleteLicenseByProfileKey" parameterType="int">
+	    DELETE FROM license WHERE profile_key = #{pro_key}
+	</delete>
+
 
 	<update id="updateProfile" parameterType="pDTO">
 	 UPDATE profile SET 
@@ -221,7 +232,7 @@
         license_name = #{license_name},
         license_barhang = #{license_barhang},
         license_date = #{license_date}
-    WHERE profile_key = #{profile_key}
+    WHERE license_key = #{license_key}
 	
 	</update>
   	
