@@ -38,7 +38,7 @@ VALUES
     	delete from company where company_key = #{company_key}
     </delete>
   
-  	<select id="findCompanyIdbyId" parameterType="String" resultType="loginDTO">
+  	<select id="findCompanyIdbyId" parameterType="String" resultType="CompanyloginDTO">
   		select company_id, company_pwd, role from company where company_id = #{company_id}
   	</select>  
   

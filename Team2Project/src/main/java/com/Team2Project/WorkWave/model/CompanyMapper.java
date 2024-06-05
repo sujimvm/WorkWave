@@ -25,5 +25,5 @@ public interface CompanyMapper {
 	
 	boolean companyIdCheck(String company_id);
 	
-	LoginDTO findCompanyIdbyId(String company_id);
+	CompanyLoginDTO findCompanyIdbyId(String company_id);
 }

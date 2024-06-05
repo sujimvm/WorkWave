@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.Team2Project.WorkWave.model.CompanyMapper;
 import com.Team2Project.WorkWave.model.CompanyUserDetails;
-import com.Team2Project.WorkWave.model.LoginDTO;
+import com.Team2Project.WorkWave.model.CompanyLoginDTO;
 
 @Service
 public class CompanyDetailService implements UserDetailsService {
@@ -19,9 +19,9 @@ public class CompanyDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String company_id) throws UsernameNotFoundException {
 		
-		System.out.println("확인용");
+		System.out.println(company_id);
 		
-		LoginDTO login_dto = companyMapper.findCompanyIdbyId(company_id);
+		CompanyLoginDTO login_dto = this.companyMapper.findCompanyIdbyId(company_id);
 		
 		System.out.println(login_dto);
 		

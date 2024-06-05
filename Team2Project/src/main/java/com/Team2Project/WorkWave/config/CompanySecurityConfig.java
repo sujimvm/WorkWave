@@ -2,7 +2,8 @@ package com.Team2Project.WorkWave.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,13 +13,25 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.Team2Project.WorkWave.service.CompanyDetailService;
 
 @Configuration
-@EnableWebSecurity(debug = true)
-public class SecurityConfig {
+@EnableWebSecurity
+@Order(1)
+public class CompanySecurityConfig {
 	
 	@Bean
-	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+	public UserDetailsService companyDetailsService() {
+		return new CompanyDetailService();
+	}
+	
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	
+	@Bean
+	public SecurityFilterChain companySecurityFilterChain(HttpSecurity http) throws Exception {
 		
 		http
+		.authenticationProvider(companyDaoAuthenticationProvider())
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers("/", "/index","/company_insert.go","/idcheck.go",
             				 "/send_sms.go","/smsCodeCheck.go","/company_insert_ok.go", 
@@ -28,7 +41,7 @@ public class SecurityConfig {
             .anyRequest().permitAll()// 다른 요청은 인증 필요
         )
         .formLogin(form -> form
-            .loginPage("/login.go")
+            .loginPage("/ulogin.go")
             .usernameParameter("company_id")
             .passwordParameter("company_pwd")
             .loginProcessingUrl("/company_login.go")
@@ -50,8 +63,10 @@ public class SecurityConfig {
 	}
 	
 	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
+	DaoAuthenticationProvider companyDaoAuthenticationProvider() {
+		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+		daoAuthenticationProvider.setUserDetailsService(companyDetailsService());
+		daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
+		return daoAuthenticationProvider;
 	}
-	
 }

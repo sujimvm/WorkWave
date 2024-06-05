@@ -20,4 +20,6 @@ public class UserDTO {
     private String user_gender;
     private Date user_join_date;
     private String user_confirm;
+    private String role;
+    private int enabled;
 }

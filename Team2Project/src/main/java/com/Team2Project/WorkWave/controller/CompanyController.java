@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.Team2Project.WorkWave.model.CompanyDTO;
 import com.Team2Project.WorkWave.model.CompanyMapper;
-import com.Team2Project.WorkWave.model.LoginDTO;
+import com.Team2Project.WorkWave.model.CompanyLoginDTO;
 import com.Team2Project.WorkWave.model.ProfileDTO;
 import com.Team2Project.WorkWave.model.UserDTO;
 import com.Team2Project.WorkWave.service.CompanyDetailService;
@@ -41,7 +42,7 @@ public class CompanyController {
 	@Autowired
 	UploadFileService uploadFileService;
 	
-	@Autowired
+	@Qualifier("bCryptPasswordEncoder")
 	private PasswordEncoder passwordEncoder;
 
 	// 기업회원가입 페이지로 이동
