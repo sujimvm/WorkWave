@@ -11,7 +11,7 @@ public class UploadFileService {
 	
 	public String upload(MultipartFile file, String uploadDir) {
 	      
-	    String fileOriName = file.getOriginalFilename();
+	     String fileOriName = file.getOriginalFilename();
 	    
 	     String fileExtension = fileOriName.substring(fileOriName.lastIndexOf(".")); //확장자
 	     

@@ -10,10 +10,11 @@
 <body>
 <div th:replace="~{include/header :: guestHeader}"></div> 
 	<div layout:fragment="content" class="content">
+	<div align="center">
 		<div><!-- 이력서 출력 폼 -->
 			<h1 th:text="${Content.profile_name}"></h1>
 			<div>
-				<table border="1" width="650">
+				<table border="1" width="800">
 					<tr>
 						<td rowspan="3"><img th:src="@{'/image/profile/'+${Content.profile_image}}" alt="Profile Image" width="170" height="200"></td>
 						<td th:text="${Content.user_name}"></td>
@@ -35,14 +36,27 @@
 			
 			<div class="edu_div" >
 				<h2>학력</h2>
-				 <ul>
-                    <li th:each="edu : ${EduList}" th:text="${edu.edu_name}"></li>
-                </ul>
+			    <table border="1" width="800">
+			        <tr>
+			            <th>학교명</th>
+			            <th>입학년월</th>
+			            <th>졸업년월</th>
+			            <th>전공 및 문과 / 이과</th>
+			            <th>졸업상태</th>
+			        </tr>
+			        <tr th:each="edu : ${EduList}">
+			            <td th:text="${edu.edu_name}"></td>
+			            <td th:text="${edu.edu_start_date}"></td>
+			            <td th:text="${edu.edu_end_date}"></td>
+			            <td th:text="${edu.edu_major}"></td>
+			            <td th:text="${edu.edu_status}"></td>
+			        </tr>
+			    </table>
 			</div><!--학력  -->
 				
 			<div class="career_div">
 				<h2>경력</h2>
-			<table border="1" width="700">
+			<table border="1" width="800">
 			    <thead>
 			        <tr>
 			            <th>회사명</th>
@@ -68,11 +82,22 @@
 			</div> 
 			
 			<div class="license_div">
-				<h2>자격증</h2>
-				<ul>
-			        <li th:each="license : ${License}" th:text="${license.license_name}"></li>
-			    </ul>
-			</div>	<!-- 자격증 --> 
+			   <div class="license_div" align="center">
+			    <h2>자격증</h2>
+			    <table border="1" width="800">
+			            <tr>
+			                <th>자격증 이름</th>
+			                <th>자격증 발행처</th>
+			                <th>발행일</th>
+			            </tr>
+			            <tr th:each="license : ${License}">
+			                <td th:text="${license.license_name}"></td>
+			                <td th:text="${license.license_barhang}"></td>
+			                <td th:text="${license.license_date}"></td>
+			            </tr>
+			    </table>
+			</div>
+
 			
 			<div class="history_div">
 				<h2>성장과정</h2>
@@ -91,17 +116,44 @@
 
 			<div class="Portfolio_div">
 			    <h2>포트폴리오</h2>
-			    <a th:href="@{/download/ppt/{filename}(filename=${Content.profile_ppt})}" th:text="${Content.profile_ppt}"></a>
+			    <a th:href="@{/download/ppt/{filename}(filename=${Content.profile_ppt})}" download th:text="${Content.profile_ppt}"></a>
 			</div>
 			
 			
 			<div class="hopejob_div">
-				<h2>희망근무조건</h2>
-				<span>희망근무형태</span>&nbsp;<span th:text="${Content.profile_job}"></span><br>
-				<span>희망연봉</span>&nbsp;<span th:text="${Content.profile_pay}"></span>
-			</div> <!-- 희망근무조건 -->
-		</div> 
-	</div>
+		    <h2>희망근무조건</h2>
+		    <table border="1" width="650">
+		        <tr>
+		            <th>희망근무형태</th>
+		            <td th:text="${Content.profile_job}"></td>
+		        </tr>
+		        <tr>
+		            <th>희망연봉</th>
+		            <td th:text="${Content.profile_pay}"></td>
+		        </tr>
+		    </table>
+		    <h2>희망직무</h2>
+		    <table border="1" width="650">
+		        <tr>
+		        	<th>지원분야</th>
+		            <td th:text="${Content.profile_step1}"></td>
+		        </tr>
+		        <tr>
+		       		 <th>지원분야</th>
+		            <td th:text="${Content.profile_step2}"></td>
+		        </tr>
+		    </table>
+		  </div>
+	  </div> 
+  </div><br><br><br>
+  			<div align="center">
+  				<h2>위의 모든 기재사항은 사실과 다름없음을 확인합니다.</h2>
+  					<h4>작성자:<span th:text="${Content.user_name}"></span></h4>
+  			</div>
+			<div align="center">
+				<input type="button" value="이력서 목록" th:onclick="|location.href='@{profile_list}'|">
+			</div>
+</div>	
 	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>

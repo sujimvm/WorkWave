@@ -7,484 +7,47 @@
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/profile.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-
-$(document).ready(function(){
-	
-	// 카테고리
-	var category_num = '1';
-
-	$(document).on('click', '#category_add_button', function(event){  
-		if($("#profile_group1").val() != "" && $("#profile_group2").val() != ""){ 
-			alert('더이상 추가 불가능');
-		}else{
-			category_num = '2';
-		}
-	});
-	//삭제
-	$(document).on('click', '#x1', function(event){  
-		category_num = '1';
-		xBtAction(1);
-	});
-	$(document).on('click', '#x2', function(event){
-		if($("#profile_group1").val() == ""){ 
-			category_num = '1';
-		}else{
-			category_num = '2';
-		}
-		xBtAction(2);
-	});
-	//값 다 비우기
-	function xBtAction(btNum) {
-		$("#subCategoriesTable").empty();
-       	$("#stepCategoriesTable").empty();
-		$("#profile_group"+btNum).val(""); 
-    	$("#profile_sub"+btNum).val("");
-       	$("#profile_step"+btNum).val("");
-       	$("#group"+btNum).empty();
-       	$("#sub"+btNum).empty();
-       	$("#step"+btNum).empty();
-       	$("#x"+btNum).empty();
-	}
-	
-	//대분류를 클릭하였을 때
-	$(document).on('click', '.category_link', function(event){  
-		event.preventDefault();  
-		var categoryCode = $(this).data("code"); 
-		var categoryName = $(this).text(); 
-		$("#profile_group"+category_num).attr("size",categoryName.length);
-		$("#profile_group"+category_num).val(categoryName); 
-		$("#group"+category_num).text(categoryName); 
-       	$("#x"+category_num).text("X"); 
-		loadSubCategories(categoryCode);  
-	});
-
-	// 카테고리 중분류 클릭하였을 때
-		$(document).on('click', '.subcategory_link', function(event){
-		event.preventDefault();
-		var subCategoryCode = $(this).data("code"); 
-		var subCategoryName = $(this).text(); 
-		$("#profile_sub"+category_num).attr("size",subCategoryName.length);
-		$("#profile_sub"+category_num).val(subCategoryName);
-		$("#sub"+category_num).text(">"+subCategoryName); 
-		loadSteps(subCategoryCode); 
-	});
-    
-	//카테고리 소분류 클릭하였을 때
-	$(document).on('click', '.step_link', function(event){
-		event.preventDefault();
-		var stepCode = $(this).data("code");
-		var stepName = $(this).text(); 
-		
-		var selectedStep = $("#profile_step"+1).val();
-		
-	    if(selectedStep != stepName) {
-	        $("#profile_step"+category_num).attr("size",stepName.length);
-	        $("#profile_step"+category_num).val(stepName);
-	        $("#step"+category_num).text(">"+stepName); 
-	        
-	    } else {
-	        alert("이미 선택된 소분류입니다.");
-	        
-	        var selectedSubCategory = $("#profile_sub"+category_num).val();
-	        
-	        if(selectedSubCategory) {
-	            $("#sub"+category_num).text(">"+selectedSubCategory); 
-	        } else {
-	            $("#sub"+category_num).empty(); 
-	        }
-	        return;
-	      
-	    }
-	    
-		$("#profile_step"+category_num).attr("size",stepName.length);
-		$("#profile_step"+category_num).val(stepName);// 선택된 소분류 코드를 숨겨진 필드에 저장
-		$("#step"+category_num).text(">"+stepName); 
-	});
-
-	
-	//대분류에서 선택한 코드 서버로 보내기
-    function loadSubCategories(categoryCode) {  
-        $.ajax({  
-	        type: 'POST',
-            url: "/com_board_group", 
-            data: {"no": categoryCode}, //대분류 코드
-            dataType: "json",
-            success: function(response){
-            	$("#subCategoriesTable").empty();//중분류 id (중분류 초기화)
-            	$("#profile_sub"+category_num).val("");
-               	$("#profile_step"+category_num).val("");
-               	$("#sub"+category_num).empty();
-               	$("#step"+category_num).empty();
-                $.each(response, function(index, subCategory){ 
-                    var row = "<li><a href='#' class='subcategory_link' data-code='" + subCategory.code + "'>" + subCategory.name + "</a></li>";
-                    $("#subCategoriesTable").append(row); 
-                });
-                $("#stepCategoriesTable").empty(); 
-            },
-            error: function(xhr, status, error){
-                console.error("Error:", error);
-            }
-    	});
-    } //중분류 코드 보내서 소분류 데이터 가져오기
-    function loadSteps(subCategoryCode) {
-        $.ajax({
-	        type: 'POST',
-            url: "/com_board_sub",
-            data: {"no": subCategoryCode},
-            dataType: "json",
-            success: function(response){
-               	$("#stepCategoriesTable").empty();
-               	$("#profile_step"+category_num).val(""); 
-               	$("#step"+category_num).empty();
-                $.each(response, function(index, step){
-                    var row = "<li><a href='#' class='step_link' data-code='" + step.code + "'>" + step.name + "</a></li>";
-                    $("#stepCategoriesTable").append(row);
-                });
-            },
-            error: function(xhr, status, error){
-                console.error("Error:", error);
-            }
-        });
-    }
- 	// 카테고리
-             
-
- 
- 	
- 	/* 
-	//학교분류에 따라 학교폼 가져오기
-	var selectedOption = 0; //학교 구분 저장할 변수
-	var edu_input_form_text = `
-		<div class="edu_kind_view">
-    	<select class="edu_kind">
-        	<option value="" disabled selected>학교구분</option>
-			<option value="0">고등학교</option>
-			<option value="1">대학(2,3년)</option>
-			<option value="2">대학교(4년)</option>
-			<option value="3">대학원</option>
-		</select>
-		<input type="hidden" class="edu_kind_hidden" name="eDtoList[0].edu_kind">
-		
-			<input style='display: none;' value="0" name="eDtoList[0].edu_name" class="edu_name high graduate university junior all" placeholder="학교명">
-			<input style='display: none;' value="0" name="eDtoList[0].edu_major" class="edu_major graduate university junior all" placeholder="전공명">
-			<select style='display: none;' class="graduate all">
-		        <option value="" disabled selected>학위</option>
-		        <option value="석사">석사</option>
-		        <option value="박사">박사</option>
-		        <option value="석박사">석박사</option>
-		     </select>
-		     <input type="hidden" class="edu_degree_hidden" name="eDtoList[0].edu_degree" value="0">
-
-		     <input style='display: none;' value="0" name="eDtoList[0].edu_start_date" class="graduate university university junior all" placeholder="입학년월">
-			<input style='display: none;' value="0" name="eDtoList[0].edu_end_date" class="high graduate university junior all" placeholder="졸업년도">
-			<input style='display: none;' value="0" name="eDtoList[0].edu_status" class="high graduate university junior all" placeholder="졸업상태">
-			<input style='display: none;' value="0" name="eDtoList[0].edu_hakjum" class="graduate university junior all" placeholder="학점">
-			<input style='display: none;' value="0" type="button"  id="edu_nonmun_bt" class="graduate university junior all" value="논문추가">
-			<input style='display: none;' value="0" type="button"  id="edu_submajor_kind" class="graduate university junior all" value="부전공">
-			<input style='display: none;' value="0" name="eDtoList[0].edu_submajor" class="edu_submajor all">
-			<button class="removeForm">삭제</button>
-		</div>
-		`;
-		
-			//<input style='display: none;' type="file" name="eDtoList[0].edu_nonmun_input" class="edu_nonmun all">
-	
-	//학력 추가 버튼 클릭	
-	$(document).on('click', '#addEducation', function(event){  
-		$("#add_edu_input_form").append("<div class='edu_input_form'>"+edu_input_form_text+"</div>");
-		
-	});
-	
-	//부전공 클릭시
-	$(document).on('click', '#edu_submajor_kind', function(event){  
-		
-		$(this).closest(".edu_kind_view").find(".edu_submajor").show();
-       
-	});
-	
-	// 논문추가 클릭시
-	$(document).on('click', '#edu_nonmun_bt', function(event){  
-		$(this).closest(".edu_kind_view").find(".edu_nonmun").show();
-	});
-	
-    // 삭제 버튼 클릭 시 해당 폼 제거
-    $(document).on("click", ".removeForm", function () {
-        $(this).closest(".edu_input_form").remove();
-    });
-    
-    $(document).on('change', '.edu_degree', function(event){  
-    	$(this).closest(".edu_input_form").find(".edu_degree_hidden").val($(this).val());
-    });
-
-    	
-    //학교 구분 선택
-	$(document).on('change', '.edu_kind', function(event){  
-
-		selectedOption = $(this).val();
-	    
-	    $('#search_school').empty(); 
-	    $('#search_major').empty(); 
-
-    	$(this).closest(".edu_input_form").find(".edu_kind_hidden").val(selectedOption);
-    	
-	    if (selectedOption === "0") {
-	    	$(this).closest(".edu_input_form").find(".all").hide();
-	    	$(this).closest(".edu_input_form").find(".high").show();
-	    } else if (selectedOption === "1") {
-	    	$(this).closest(".edu_input_form").find(".all").hide();
-	    	$(this).closest(".edu_input_form").find(".university").show();
-	    } else if (selectedOption === "2") {   
-	    	$(this).closest(".edu_input_form").find(".all").hide();
-	    	$(this).closest(".edu_input_form").find(".junior").show();
-	    } else if (selectedOption === "3") {
-	    	$(this).closest(".edu_input_form").find(".all").hide();
-	    	$(this).closest(".edu_input_form").find(".graduate").show();
-	    }
-	    
-	});
-    
-
-    // 학교명 입력 폼에 입력할 때마다 학교명 검색
-	$(document).on('input', '.edu_name', function(){
-		selectedOption = $(this).closest(".edu_kind_view").find(".edu_kind").val();
-		var schoolName = $(this).val();
-		var nowNum = $(this).closest(".edu_input_form").index();
-		if(schoolName.length >= 2){ 
-			searchSchool(schoolName,selectedOption,nowNum);
-		}
-	}); 
-	   
-   function searchSchool(schoolName,selectedOption,nowNum){
-        $.ajax({
-            type: 'POST',
-            url: "/search_school_by_name",
-            data: { "name": schoolName,"code":selectedOption},
-            success: function(response){
-                $("#search_school").empty();
-                $.each(response, function(index, step){
-                    var row = "<li><a href='#' data-index='" + nowNum + "' data-code='" + step.code + "'>" + step.name + "</a></li>";
-                    $("#search_school").append(row);
-                });
-            },
-            error: function(xhr, status, error){
-                console.error("Error:", error);
-            }
-        });
-    } 
- 	// 학교명 저장
-	var selectedSchoolCode = ""; // 전역 변수로 학교 코드를 저장할 변수
-	
-	$(document).on('click', '#search_school a[data-code]', function(event){ 
-		event.preventDefault();
-		selectedSchoolCode = $(this).data("code");  
-		var schoolName = $(this).text();  
-		$(".edu_input_form").eq($(this).data("index")).find('.edu_name').val(schoolName);
-	}); 
-		
-		
-	// 학과
-	$(document).on('input', '.edu_major', function(){
-		 var majorName = $(this).val();
-		 var nowNum = $(this).closest(".edu_input_form").index();
-		 if(majorName.length >= 2 && selectedSchoolCode !== ""){ 
-		   loadDepartments(selectedSchoolCode, majorName,nowNum); 
-		 }
-	});  
-	
-	// 부전공
-	$(document).on('input', '.edu_submajor', function(){
-		 var submajorName = $(this).val();
-		 if(submajorName.length >= 2 && selectedSchoolCode !== ""){ 
-		   loadDepartments2(selectedSchoolCode, submajorName); 
-		 }
-	});  
-	
-	function loadDepartments2(selectedSchoolCode, submajorName) {
-	    $.ajax({
-	        type: 'POST',
-	        url: "/get_department",
-	        data: { "code": selectedSchoolCode, "name": submajorName },
-	        dataType: "json",
-	        success: function(response) {
-	            	$("#search_submajor").empty();
-	            $.each(response, function(index, step){
-                    var row = "<li><a href='#' data-code='" + step.code + "'>" + step.name + "</a></li>";
-                    $("#search_submajor").append(row);
-                });
-            },
-	        error: function(xhr, status, error){
-	            console.error("Error:", error);
-	        }
-	    });
-	}
-	
-	
-		
-		function loadDepartments(selectedSchoolCode, majorName,nowNum) {
-		    $.ajax({
-		        type: 'POST',
-		        url: "/get_department",
-		        data: { "code": selectedSchoolCode, "name": majorName },
-		        dataType: "json",
-		        success: function(response) {
-		            	$("#search_school").empty();
-		            	$("#search_major").empty();
-		            $.each(response, function(index, step){
-	                    var row = "<li><a href='#' data-index='" + nowNum + "'data-code='" + step.code + "'>" + step.name + "</a></li>";
-	                    $("#search_major").append(row);
-	                });
-	            },
-		        error: function(xhr, status, error){
-		            console.error("Error:", error);
-		        }
-		    });
-		}
-		
-		
-	
-	//학과 선택 시 텍스트에 학과 저장 
-	$(document).on('click', '#search_major a[data-code]', function(event){
-	    event.preventDefault();
-	    var department = $(this).text();
-		$(".edu_input_form").eq($(this).data("index")).find('.edu_major').val(department);
-		
-	});
-	
-	//부전공 저장
-	$(document).on('click', '#search_submajor a[data-code]', function(event){
-	    event.preventDefault();
-	    var subdepartment = $(this).text();
-	    $(".edu_submajor").val(subdepartment);
-	});
-	
-		 */
-	
-	
-	
-	
-	
-	
-	
-	// 경력
-	var career_input = `
-		<div class="career_input_form">
-		<ul>
-			<li>
-			<input name="crDtoList[0].career_company" placeholder="회사명">
-			<input name="crDtoList[0].career_start_date" placeholder="입사년월">
-			<input name="crDtoList[0].career_end_date" placeholder="퇴사년월">
-			</li>
-		</ul>
-		<ul>
-			<li>
-			<input name="crDtoList[0].career_position" placeholder="직책">
-			<input name="crDtoList[0].career_bye" placeholder="퇴사사유">
-			</li>
-		</ul>
-		<textarea rows="15" cols="80" placeholder="담당업무" name="crDtoList[0].career_cont"></textarea>
-		<button class="removeForm">삭제</button></div>
-	    `;
-	    
-		$(document).on('click', '#addCareer', function(event){  
-	        $("#add_career_input_form").append(career_input);
-		});
-	
-    // 삭제 버튼 클릭 시 해당 폼 제거
-    $(document).on("click", ".removeForm", function () {
-        $(this).closest(".career_input_form").remove();
-    });
-    
-	// 경력
-	
-		
-	 // 자격증 리스트 불러오기
-	var license_input = `
-		<div class="license_input_form">
-		<ul>
-			<li>
-			<input name="lDtoList[0].license_name" class="license_name" placeholder="자격증명">
-			<input name="lDtoList[0].license_barhang" class="license_barhang" placeholder="발행처">
-			<input name="lDtoList[0].license_date" placeholder="취득년월">
-			</li>
-		</ul>
-		<button class="removeForm">삭제</button></div>
-	    `;
-	 
-
-	$(document).on('click', '#addLicense', function(event){  
-        $("#add_license_input_form").append(license_input);
-	});
-
-	  // 삭제 버튼 클릭 시 해당 폼 제거
-    $(document).on("click", ".removeForm", function () {
-        $(this).closest(".license_input_form").remove();
-    });
-	
-    $(document).on('input', '.license_name', function(){
-	    var certificationName = $(this).val();
-		var nowNum = $(this).parent().parent().parent().index();
-		//세 번의 부모 요소를 거슬러 올라가면 자격증 입력 폼을 감싸는 div 요소에 위치
-	    if (certificationName.length >= 2) { 
-	        searchCertifications(certificationName,nowNum);
-	    }
-	});
-	function searchCertifications(certificationName,nowNum) {
-	    $.ajax({
-	        type: 'POST',
-	        url: '/search_certifications', 
-	        data: { "license_name": certificationName }, 
-	        success: function(response) {
-	        	$("#search_license").empty();
-	        	$.each(response, function(index, step){
-	                var row = "<li><a href='#' data-index='" + nowNum + "' data-code='" + step.license_barhang + "'>" + step.license_name + "</a></li>";
-	                $("#search_license").append(row);
-	            });
-	        },
-	        error: function(xhr, status, error){
-	            console.error("Error:", error);
-	        }
-	    });
-	} 
-	
-	//자격증 클릭하면 텍스트 창에 넣기
-	$(document).on('click', '#search_license a[data-code]', function(event){
-	    event.preventDefault();
-	    var license = $(this).text();
-	    var licensebarhang = $(this).data('code');
-		$(".license_input_form").eq($(this).data("index")).find('.license_name').val(license);
-		$(".license_input_form").eq($(this).data("index")).find('.license_barhang').val(licensebarhang);
-		
-	});
-	
-	
-	  $("input[name=profile_image_input").on("change", function(){
-		    let maxSize = 500 * 1024; 
-			let fileSize = this.files[0].size; 
-
-		    if(fileSize > maxSize){
-				alert("파일첨부 사이즈는 500 * 1024 이내로 가능합니다.");
-				$(this).val(''); 
-				return; 
-			}
-	  });
-	  
-	 
-});
-
-</script>
+<script th:src="@{/js/profileInsert.js}"></script>
+<link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 <body>
 
 	<div th:replace="~{include/header :: guestHeader}"></div> 
 	<div layout:fragment="content" class="content">
-		<div>
-		</div> <!-- 인적사항 (출력 / 수정) -->
-		
-		<div><!-- 이력서 입력 폼 -->
+	
+	<div align="center">
+		<div><br><br><!-- 이력서 입력 폼 -->
 			<form id="profileForm" method="POST" action="profile_insert" enctype="multipart/form-data">
-				<input name="profile_name" size="40" placeholder="이력서 제목을 작성해주세요">
+				<input name="profile_name" size="120" placeholder="이력서 제목을 작성해주세요" class="custom-input"><br><br>
+				<table border="1" width="800">
+				    <tr>
+				        <td rowspan="3" width="100px" height="250px">
+				            <img width="190px" height="210px" id="preview">
+				            <input type="file" id="imageFile" name="profile_image_input" accept=".jpeg, .jpg, .png">
+				        </td>
+				        <th>이름</th>
+				        <td th:text="${userDto.user_name}"></td>
+				        <th>성별</th>
+				        <td th:text="${userDto.user_gender}"></td>
+				        <th>생년월일</th>
+				        <td th:text="${#strings.substringBefore(userDto.user_birth, ' ')}"></td>
+				    </tr>
+				    <tr>
+				        <th>휴대폰</th>
+				        <td colspan="3" th:text="${userDto.user_phone}"></td>
+				        <th>Email</th>
+				        <td th:text="${userDto.user_email}"></td>
+				    </tr>
+				    <tr>
+				        <th>주소</th>
+				        <td colspan="5" th:text="${userDto.user_addr}"></td>
+				    </tr>
+			 </table>
+
+		
 				<hr>
-				<input type="file" name="profile_image_input" accept=".jpeg, .jpg, .png">
+				
+				
 				<div class="profile_job_div">
 				 	<!-- 선택된 카테고리 값을 저장할 숨겨진 필드들 -->
 					<h2>희망직무</h2>
@@ -521,40 +84,18 @@ $(document).ready(function(){
 				
 				<hr>
 				
-				<div class="edu_div"> <!-- 학력분야 -->
+				<div class="edu_div"> 
 					<h2>학력</h2>
-				<table border="1">
-					<tr>
-						<th>고등학교
-			               <input type="hidden" name="edu_kind" value="고등학교"></th>
-						<td><input name="edu_name" placeholder="학교명"></td>
-						<td><input name="edu_end_date" placeholder="졸업년도"></td>
-						<td><input  name="edu_status" placeholder="졸업상태"></td>
-					</tr>
-				<!-- 	<tr>
-						<td>
-						<select class="edu_kind" name="edu_kind">
-				        	<option value="" disabled selected>학교구분</option>
-							<option value="대학(2,3년)">대학(2,3년)</option>
-							<option value="대학교(4년)">대학교(4년)</option>
-						</select>
-						</td>
-						<td><input name="edu_name" placeholder="학교명"></td>
-						<td><input name="edu_major" placeholder="전공명"></td>
-						<td><input name="edu_start_date" placeholder="입학년도"></td>
-						<td><input name="edu_end_date" placeholder="졸업년도"></td>
-						<td><input  name="edu_status" placeholder="졸업상태"></td>
-					</tr>
-					<tr>
-						<th>대학원
-			               <input type="hidden" name="edu_kind" value="학교구분"></th>
-						<td><input name="edu_name" placeholder="학교명"></td>
-						<td><input name="edu_major" placeholder="전공명"></td>
-						<td><input name="edu_start_date" placeholder="입학년도"></td>
-						<td><input name="edu_end_date" placeholder="졸업년도"></td>
-						<td><input  name="edu_status" placeholder="졸업상태"></td>
-					</tr> -->
-				</table>
+					<div>
+		       			<div id="add_edu_input_form">
+		       			</div>
+					</div>
+					
+					<button type="button" id="addEducation">학력 추가</button>
+					<div>
+		       			<ul id="search_school"></ul>
+		       			<ul id="search_major"></ul>
+					</div>
 		       			
 				</div> <!-- 학력 -->
 				<hr>
@@ -657,23 +198,15 @@ $(document).ready(function(){
 					<div align="center">
 						<input type="submit" value="이력서저장">
 						<input type="button" value="이력서관리" th:onclick="|location.href='@{profile_list}'|">
-						 <input type="button" value="임시저장" onclick="submitForm('profile_Temp')">
 					</div>
 				</div><!-- 버튼 -->
 				
 			</form>
 		</div>
 	</div>
+</div>		
 	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 
-<script type="text/javascript">
-function submitForm(action) {
-    var form = document.getElementById('profileForm');
-    form.action = 'profile_Temp';
-    form.method = "POST";
-    form.submit();
-}
 
-</script>
 </html>

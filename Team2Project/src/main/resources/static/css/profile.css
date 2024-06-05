@@ -1,1 +1,10 @@
 @charset "UTF-8";
+
+    .custom-input {
+        height: 60px;
+    }
+    
+    .textareaSize {
+            width: 50%;
+            height: 200px;
+        }
