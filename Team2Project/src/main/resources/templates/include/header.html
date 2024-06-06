@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
    
-   <div th:if="${session.user_login == null}" th:fragment="guestHeader">
+   <div sec:auth="isAnonymous()" th:fragment="guestHeader">
       <div class="header">
          <div class="container">
             <div class="top-section">
@@ -45,7 +45,7 @@
       </div>
    </div>
    
-   <div th:if=${session.user_login} th:fragment="userHeader">
+   <div sec:authorize="isAuthenticated() and hasRole('USER')" th:fragment="userHeader">
       <div class="header">
          <div class="container">
             <div class="top-section">
@@ -65,7 +65,7 @@
                </div>
                
                <div class="user-actions">
-                  <a th:href="@{/user_cont.go}" th:text="${session.user_login.user_name}">
+                  <a th:href="@{/user_cont.go}" th:text="${session.user_session}">
                   </a>
                   <a th:href="@{logout}">
                      LOGOUT
@@ -87,7 +87,7 @@
       </div>
    </div>
    
-   <div th:fragment="companyHeader">
+   <div th:fragment="companyHeader" sec:authorize="isAuthenticated() and hasRole('COMPANY')">
       <div class="header">
          <div class="container">
             <div class="top-section">
@@ -107,7 +107,7 @@
                </div>
                
                <div class="user-actions">
-                  <a th:href="@{/company_cont.go}">기업회원 마이페이지</a>
+                  <a th:href="@{/company_cont.go}" th:text="${session.user_session}">기업회원 마이페이지</a>
                   <a th:href="@{logout}">LOGOUT</a>
                </div>
             </div>

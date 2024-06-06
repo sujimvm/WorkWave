@@ -1,21 +1,43 @@
 package com.Team2Project.WorkWave.controller;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import com.Team2Project.WorkWave.model.CompanyDTO;
+import com.Team2Project.WorkWave.model.CompanyMapper;
+import com.Team2Project.WorkWave.model.UserDTO;
+import com.Team2Project.WorkWave.model.UserMapper;
 
 import jakarta.servlet.http.HttpSession;
 
 
 @Controller
 public class HomeController {
+	
+	@Autowired
+	private CompanyMapper companyMapper;
+	
+	@Autowired
+	private UserMapper userMapper;
 
 	@GetMapping("/")
-	public String index() {
+	public String index(Model model, HttpSession session) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		String user = auth.getName();
+		
+		session.setAttribute("user_session", user);
+		
 		return "index";
 	}
 	
-	@GetMapping("/ulogin.go")
+	@GetMapping("/login.go")
 	public String userLogin() {
 		return "mainLogin";
 	}
@@ -25,22 +47,28 @@ public class HomeController {
 		return "company/login";
 	}
 
-	/*
-	 * @GetMapping("main.go") public String goMain(HttpSession session) { String
-	 * member_type = ""; if (session.getAttribute("member_type") != null) {
-	 * member_type = (String)session.getAttribute("member_type") + "/"; }
-	 * 
-	 * System.out.println("메인 경로 >> "+member_type+"main"); return
-	 * member_type+"main"; }
-	 */
 	
 	@GetMapping("/main.go")
-	public String companyMain() {
-		return "company/main";
-	}
+	public String goMain(HttpSession session) { 
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		System.out.println("안녕");
+		System.out.println(auth.toString());
+		
+		String user = auth.getName();
+		
+		CompanyDTO cdto = this.companyMapper.companyInfo(user);
+		
+		if(cdto == null) {
+			
+			session.setAttribute("User_session", user);
+			
+			return "user/main";
+		}
+		
+		session.setAttribute("Company_session", user);
 	
-	@GetMapping("/user_main.go")
-	public String userMain() {
-		return "user/main";
+		return "company/main"; 
 	}
+	 
 }
