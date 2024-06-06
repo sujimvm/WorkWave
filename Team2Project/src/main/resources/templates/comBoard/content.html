@@ -7,7 +7,7 @@
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script th:src="@{/js/comBoardList.js}"></script>
+<script th:src="@{/js/comBoardContent.js}"></script>
 </head>
 <body>
 	<div th:replace="~{include/header :: guestHeader}"></div> 
@@ -62,23 +62,69 @@
 				
 				<div>
 					<ul>
-						<li><a th:href="">상세요강</a></li>
-						<li><a th:href="">접수기간</a></li>
-						<li><a th:href="">지원자현황</a></li>
-						<li><a th:href="">기업정보</a></li>
+						<li><a th:href="@{/}">상세요강</a></li>
+						<li><a th:href="@{/}">접수기간</a></li>
+						<li><a th:href="@{/}">지원자현황</a></li>
+						<li><a th:href="@{/}">기업정보</a></li>
 					</ul>
 				</div><!-- content nav -->
 				<div>
-					<p>관심기업등록 </p>
-					<p>관심기업등록 </p>
-					<p>관심기업등록 </p>
 					<textarea rows="" cols="" th:text="${dto.com_board_cont}"></textarea>
 				</div><!-- 상세 -->
-				<div></div><!-- 접수기간 -->
-				<div></div><!-- 지원자 통계 -->
-				<div></div><!-- 기업정보 -->
-				<div></div><!-- 근무환경 -->
+				
+				<div>
+					<dl>
+						<dt>시작일</dt>
+						<dd th:text="${dto.com_board_start_date}"></dd>
+						<dt>마감일</dt>
+						<dd th:text="${dto.com_board_end_date}"></dd>
+					</dl>
+				</div><!-- 접수기간 -->
+				
+				<div>
+					<div>
+						<p>지원자 수</p>
+						<p></p>
+					</div>
+					<div>
+						<p>모집인원</p>
+						<p></p>
+					</div>
+					<div>
+						<p>연령</p>
+						<p></p>
+					</div>
+					<div>
+						<p>성별</p>
+						<p></p>
+					</div>
+					<div>
+						<p>학력</p>
+						<p></p>
+					</div>
+				</div><!-- 지원자 통계 -->
+				
+				<div>
+					<a>
+						<img th:if="${dto.company_logo != null}" th:src="@{'\\image\\logo\\'+${dto.company_logo}}" alt="${dto.company_logo_name}">
+						<img th:if="${dto.company_logo == null}" src="/image/icon/logo_icon.png" alt="로고미등록">
+					</a>
+					<dl>
+						<dt>업종</dt>
+						<dd th:text="${dto.com_board_step}"></dd>
+						<dt>사원 수</dt>
+						<dd th:text="${dto.company_emp_count}"></dd>
+						<dt>설립입</dt>
+						<dd th:text="${dto.company_regdate}"></dd>
+						<dt>매출액</dt>
+						<dd th:text="${dto.company_sal}"></dd>
+						<dt>복리후생</dt>
+						<dd th:text="${dto.com_board_benefits}"></dd>
+					</dl>
+				</div><!-- 기업정보 -->
 			</div>
+			
+			
 			<div></div><!-- 포지션제안 -->
 		</div>
 	<div th:replace="~{include/footer :: footer}"></div>
