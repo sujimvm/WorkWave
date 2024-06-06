@@ -10,7 +10,7 @@
 <script th:src="@{/js/comBoardContent.js}"></script>
 </head>
 <body>
-	<div th:replace="~{include/header :: guestHeader}"></div> 
+	<div th:replace="~{include/header}"></div>
 		<div layout:fragment="content" class="content">
 			<div>
 				<div>
@@ -69,7 +69,7 @@
 					</ul>
 				</div><!-- content nav -->
 				<div>
-					<textarea rows="" cols="" th:text="${dto.com_board_cont}"></textarea>
+					<div th:utext="${dto.com_board_cont}"></div>
 				</div><!-- 상세 -->
 				
 				<div>
@@ -125,7 +125,9 @@
 			</div>
 			
 			
-			<div></div><!-- 포지션제안 -->
+			<div>
+			
+			</div><!-- 포지션제안 -->
 		</div>
 	<div th:replace="~{include/footer :: footer}"></div>
 </body>

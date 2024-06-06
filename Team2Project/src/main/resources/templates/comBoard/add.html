@@ -6,11 +6,18 @@
 <title>Work Wave 공고작성</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script th:src="@{/js/comBoardAdd.js}"></script>
+<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        CKEDITOR.replace('com_board_cont');
+    });
+</script>
 </head>
 <body>
-	<div th:replace="~{include/header :: guestHeader}"></div> 
+	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
 		<form method="post" action="/comBoard/addOk" id="addForm">
 			<input type="hidden" name="temp_key" id="temp_key" value=0>
@@ -101,7 +108,7 @@
 					<div>
 						<table>
 							<tr>
-								<td colspan="2"><textarea rows="" cols="" name="com_board_cont"></textarea></td>
+								<td colspan="2"><textarea rows="" cols="" name="com_board_cont" id="com_board_cont"></textarea></td>
 							</tr>
 						</table>
 					</div>
