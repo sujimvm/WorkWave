@@ -28,12 +28,6 @@ public class HomeController {
 	@GetMapping("/")
 	public String index(Model model, HttpSession session) {
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		
-		String user = auth.getName();
-		
-		session.setAttribute("user_session", user);
-		
 		return "index";
 	}
 	
@@ -50,25 +44,28 @@ public class HomeController {
 	
 	@GetMapping("/main.go")
 	public String goMain(HttpSession session) { 
-		
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		System.out.println("안녕");
-		System.out.println(auth.toString());
 		
-		String user = auth.getName();
+		System.out.println(auth.getAuthorities()+"getAuthorities");
 		
-		CompanyDTO cdto = this.companyMapper.companyInfo(user);
-		
-		if(cdto == null) {
-			
-			session.setAttribute("User_session", user);
-			
-			return "user/main";
+		if(auth != null) {
+			String role = auth.getAuthorities().toString();
+			System.out.println(role);
+			String id = auth.getName();
+			System.out.println(role);
+			if(role.equals("ROLE_COMPANY")) {
+				session.setAttribute("role", role);
+				session.setAttribute("dto", companyMapper.companyInfo(id));
+			}else {
+				session.setAttribute("role", role);
+				session.setAttribute("dto", userMapper.getUserById(id));
+			}
+		}else {
+			session.setAttribute("role", "ROLE_GUEST");
 		}
 		
-		session.setAttribute("Company_session", user);
-	
-		return "company/main"; 
+		return "main"; 
 	}
 	 
 }

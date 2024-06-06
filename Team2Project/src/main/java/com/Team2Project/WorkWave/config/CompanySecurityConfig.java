@@ -34,11 +34,11 @@ public class CompanySecurityConfig {
 				/*
 				 * .authenticationProvider(companyDaoAuthenticationProvider())
 				 */        .authorizeHttpRequests(authorize -> authorize
-            .requestMatchers("/", "/index","/company_insert.go","/idcheck.go",
+            .requestMatchers("/main.go","/", "/index","/company_insert.go","/idcheck.go",
             				 "/send_sms.go","/smsCodeCheck.go","/company_insert_ok.go", 
             				 "/login.go").permitAll() // 홈 페이지는 누구나 접근 가능
             .requestMatchers("/resources/**", "/css/**", "/js/**", "/image/**").permitAll()
-            .requestMatchers("/main.go","/add").hasAnyRole("COMPANY","USER")
+            .requestMatchers("/add").hasAnyRole("COMPANY","USER")
             .anyRequest().authenticated()// 다른 요청은 인증 필요
         )
         .formLogin(form -> form

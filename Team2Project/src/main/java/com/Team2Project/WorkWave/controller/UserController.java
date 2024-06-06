@@ -32,7 +32,7 @@ public class UserController {
    @Autowired
    private UserService userService;
    
-   @Qualifier("userbCryptPasswordEncoder")
+   @Autowired
    private PasswordEncoder passwordEncoder;
 
    // 유저 회원가입 페이지 이동
@@ -50,7 +50,7 @@ public class UserController {
 	   String encordedPwd = passwordEncoder.encode(user.getUser_pwd());
 		
 		user.setUser_pwd(encordedPwd);
-		user.setRole("ROLE_COMPANY");
+		user.setRole("ROLE_USER");
       
      response.setContentType("text/html; charset=UTF-8");
 
