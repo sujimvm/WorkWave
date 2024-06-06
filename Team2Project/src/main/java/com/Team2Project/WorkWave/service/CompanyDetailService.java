@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.Team2Project.WorkWave.model.CompanyMapper;
 import com.Team2Project.WorkWave.model.CompanyUserDetails;
+import com.Team2Project.WorkWave.model.UserLoginDTO;
+import com.Team2Project.WorkWave.model.UserMapper;
+import com.Team2Project.WorkWave.model.UsersUserDetails;
 import com.Team2Project.WorkWave.model.CompanyLoginDTO;
 
 @Service
@@ -15,18 +18,31 @@ public class CompanyDetailService implements UserDetailsService {
 	
 	@Autowired
 	private CompanyMapper companyMapper;
+	
+	@Autowired
+	private UserMapper userMapper;
 
 	@Override
-	public UserDetails loadUserByUsername(String company_id) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		System.out.println(company_id);
+		System.out.println(username);
 		
-		CompanyLoginDTO login_dto = this.companyMapper.findCompanyIdbyId(company_id);
+		CompanyLoginDTO login_dto = this.companyMapper.findCompanyIdbyId(username);
 		
 		System.out.println(login_dto);
 		
 		if (login_dto == null) {
-            throw new UsernameNotFoundException("오류(유저 없음)");
+			
+			UserLoginDTO user_dto = this.userMapper.findUserIdById(username);
+			System.out.println(user_dto);
+			if(user_dto == null) {
+				throw new UsernameNotFoundException("아이디 없어유");
+			}
+			
+			return new UsersUserDetails(
+					user_dto.getUser_id(),
+					user_dto.getUser_pwd(),
+					user_dto.getRole());
 		}
 		
 		return new CompanyUserDetails(

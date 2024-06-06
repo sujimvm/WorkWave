@@ -17,10 +17,10 @@ import com.Team2Project.WorkWave.service.CompanyDetailService;
 @Order(1)
 public class CompanySecurityConfig {
 	
-	@Bean
-	public UserDetailsService companyDetailsService() {
-		return new CompanyDetailService();
-	}
+	/*
+	 * @Bean public UserDetailsService companyDetailsService() { return new
+	 * CompanyDetailService(); }
+	 */
 	
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -31,20 +31,19 @@ public class CompanySecurityConfig {
 	public SecurityFilterChain companySecurityFilterChain(HttpSecurity http) throws Exception {
 		
 		http
-		.authenticationProvider(companyDaoAuthenticationProvider())
-        .authorizeHttpRequests(authorize -> authorize
+				/*
+				 * .authenticationProvider(companyDaoAuthenticationProvider())
+				 */        .authorizeHttpRequests(authorize -> authorize
             .requestMatchers("/", "/index","/company_insert.go","/idcheck.go",
             				 "/send_sms.go","/smsCodeCheck.go","/company_insert_ok.go", 
             				 "/login.go").permitAll() // 홈 페이지는 누구나 접근 가능
             .requestMatchers("/resources/**", "/css/**", "/js/**", "/image/**").permitAll()
-            .requestMatchers("/main.go","/add").hasRole("COMPANY")
-            .anyRequest().permitAll()// 다른 요청은 인증 필요
+            .requestMatchers("/main.go","/add").hasAnyRole("COMPANY","USER")
+            .anyRequest().authenticated()// 다른 요청은 인증 필요
         )
         .formLogin(form -> form
-            .loginPage("/ulogin.go")
-            .usernameParameter("company_id")
-            .passwordParameter("company_pwd")
-            .loginProcessingUrl("/company_login.go")
+            .loginPage("/login.go")
+            .loginProcessingUrl("/login_ok.go")
             .defaultSuccessUrl("/main.go", true)
             .permitAll()
         )
@@ -62,11 +61,12 @@ public class CompanySecurityConfig {
 		
 	}
 	
-	@Bean
-	DaoAuthenticationProvider companyDaoAuthenticationProvider() {
-		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
-		daoAuthenticationProvider.setUserDetailsService(companyDetailsService());
-		daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
-		return daoAuthenticationProvider;
-	}
+	/*
+	 * @Bean DaoAuthenticationProvider companyDaoAuthenticationProvider() {
+	 * DaoAuthenticationProvider daoAuthenticationProvider = new
+	 * DaoAuthenticationProvider();
+	 * daoAuthenticationProvider.setUserDetailsService(companyDetailsService());
+	 * daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder()); return
+	 * daoAuthenticationProvider; }
+	 */
 }

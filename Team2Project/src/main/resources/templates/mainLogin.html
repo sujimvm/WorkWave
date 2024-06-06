@@ -24,18 +24,18 @@
     </div>
 
     <div id="userLogin" class="form-container">
-      <form action="/user_login.go" method="post">
-        <input type="text" name="user_id" placeholder="아이디" required>
-        <input type="password" name="user_pwd" placeholder="비밀번호" required>
+      <form action="/login_ok.go" method="post">
+        <input type="text" name="username" placeholder="아이디" required>
+        <input type="password" name="password" placeholder="비밀번호" required>
         <input type="submit" value="로그인">
       </form>
       <a th:href="@{/user_insert.go}">회원가입</a>
     </div>
 
     <div id="companyLogin" class="form-container" style="display:none;">
-      <form action="/company_login.go" method="post">
-        <input type="text" name="company_id" placeholder="기업회원 아이디" required>
-        <input type="password" name="company_pwd" placeholder="비밀번호" required>
+      <form action="/login_ok.go" method="post">
+        <input type="text" name="username" placeholder="기업회원 아이디" required>
+        <input type="password" name="password" placeholder="비밀번호" required>
         <input type="submit" value="로그인">
       </form>
       <a th:href="@{/company_insert.go}">회원가입</a>

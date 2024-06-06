@@ -11,8 +11,8 @@
     <div th:if="${session.user_login == null}" th:replace="include/header :: guestHeader"></div>
 	<div layout:fragment="content" class="content">
 		<ul>
-			<li><a th:href="@{/ulogin.go}">개인로그인</a></li>
-			<li><a th:href="@{/clogin.go}">기업로그인</a></li>
+			<li><a th:href="@{/login.go}">개인로그인</a></li>
+			<li><a th:href="@{/login.go}">기업로그인</a></li>
 			<li><a th:href="@{user_insert.go}">개인회원가입</a></li>
 			<li><a th:href="@{company_insert.go}">기업회원가입</a></li>
 			<li><a th:href="@{main.go}">비회원</a></li>
