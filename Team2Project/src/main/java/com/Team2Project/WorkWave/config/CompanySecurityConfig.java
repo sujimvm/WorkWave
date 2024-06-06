@@ -38,7 +38,7 @@ public class CompanySecurityConfig {
             				 "/send_sms.go","/smsCodeCheck.go","/company_insert_ok.go", 
             				 "/login.go").permitAll() // 홈 페이지는 누구나 접근 가능
             .requestMatchers("/resources/**", "/css/**", "/js/**", "/image/**").permitAll()
-            .requestMatchers("/add").hasAnyRole("COMPANY","USER")
+            .requestMatchers("/comBoard/add").hasAnyRole("COMPANY","USER")
             .anyRequest().authenticated()// 다른 요청은 인증 필요
         )
         .formLogin(form -> form

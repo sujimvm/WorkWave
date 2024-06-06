@@ -44,13 +44,6 @@ public class ComBoardController {
 	// DB 상의 전체 게시물의 수
 	private int totalRecord = 0;
 	
-	
-	@GetMapping("/test")
-	public String test() {
-		return "/comBoard/data";
-	}
-
-	
 	// (리스트) 페이지 이동
 	@GetMapping("")
 	public String goComBoardList() {
@@ -131,10 +124,8 @@ public class ComBoardController {
 		PrintWriter out = response.getWriter();
 
 		// 세션 기업정보로 기업키 저장
-		if(session.getAttribute("companyInfo") != null) {
-			
-			CompanyDTO cdto = (CompanyDTO)session.getAttribute("companyInfo");
-			dto.setCompany_key(cdto.getCompany_key());
+			CompanyDTO cDTO = (CompanyDTO)session.getAttribute("cDTO");
+			dto.setCompany_key(cDTO.getCompany_key());
 			
 			// 컴퍼니 키 임시 저장
 			dto.setCompany_key(2);
@@ -147,9 +138,6 @@ public class ComBoardController {
 				out.println("<script> alert('공고등록 실패'); history.back(); </script>");
 			}
 			out.flush();
-		}else {
-			out.println("<script> alert('기업회원만 등록 가능합니다'); location.href='login.go'; </script>");
-		}
 	}
 	
 	// (등록) 공고 중간저장
@@ -185,7 +173,7 @@ public class ComBoardController {
 		
 		InterestDTO iDTO = new InterestDTO();
 		// 세션 개인횡정보로 회원키 저장
-		UserDTO udto = (UserDTO)session.getAttribute("user_login");
+		UserDTO udto = (UserDTO)session.getAttribute("uDTO");
 		iDTO.setCompany_key(company_key);
 		iDTO.setUser_key(udto.getUser_key());
 		
@@ -204,7 +192,7 @@ public class ComBoardController {
 	@ResponseBody
 	public void addApply(@RequestParam("checked") String checked, HttpServletRequest request, HttpSession session) {
 
-		UserDTO udto = (UserDTO)session.getAttribute("user_login");
+		UserDTO udto = (UserDTO)session.getAttribute("uDTO");
 		int profile_key = this.mapper.selectDefaultProfile(udto.getUser_key());
 		
 		System.out.println(checked+"checked");
@@ -231,5 +219,18 @@ public class ComBoardController {
 		model.addAttribute("dto",dto).addAttribute("page",page);
 		
 		return "/comBoard/content";
+	}
+	
+	// (상세보기) 페이지 이동
+	@GetMapping("/update")
+	public String goComBoardUpdate(HttpServletRequest request, Model model) {
+		
+		int com_board_key = Integer.parseInt(request.getParameter("No"));
+		
+		ComBoardDTO dto = this.mapper.getComBoard(com_board_key);
+		
+		model.addAttribute("dto",dto);
+		
+		return "/comBoard/update";
 	}
 }
