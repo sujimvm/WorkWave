@@ -18,7 +18,6 @@
   		<typeAlias type="com.Team2Project.WorkWave.model.CodeDTO" alias="codeDTO"/> <!-- 코드 -->
   		<typeAlias type="com.Team2Project.WorkWave.model.Page" alias="page"/> <!-- 페이지 -->
   		<typeAlias type="com.Team2Project.WorkWave.model.ChatDTO" alias="chatDTO"/> <!-- 게시판 -->
-  		<typeAlias type="com.Team2Project.WorkWave.model.LoginDTO" alias="loginDTO"/> <!-- 게시판 -->
   		<typeAlias type="com.Team2Project.WorkWave.model.ChatReplyDTO" alias="replyDTO"/> <!-- 게시판 -->
   		<typeAlias type="com.Team2Project.WorkWave.model.CompanyLoginDTO" alias="CompanyloginDTO"/> <!-- 기업 로그인 DTO -->
   		<typeAlias type="com.Team2Project.WorkWave.model.UserLoginDTO" alias="UserLoginDTO"/> <!-- 개인 로그인 DTO -->
