@@ -25,16 +25,10 @@ public class CompanyDetailService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		System.out.println(username);
-		
 		CompanyLoginDTO login_dto = this.companyMapper.findCompanyIdbyId(username);
 		
-		System.out.println(login_dto);
-		
 		if (login_dto == null) {
-			
 			UserLoginDTO user_dto = this.userMapper.findUserIdById(username);
-			System.out.println(user_dto);
 			if(user_dto == null) {
 				throw new UsernameNotFoundException("아이디 없어유");
 			}
