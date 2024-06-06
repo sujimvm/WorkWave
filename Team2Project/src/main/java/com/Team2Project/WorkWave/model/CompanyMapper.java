@@ -9,7 +9,7 @@ public interface CompanyMapper {
 	
 	int insertCompany(CompanyDTO dto);
 	
-	CompanyDTO companyInfo(String comapny_id);
+	CompanyDTO companyInfo(String comapany_id);
 	
 	int companyUpdate(CompanyDTO dto);
 	
