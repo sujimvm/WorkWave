@@ -44,6 +44,13 @@ public class ComBoardController {
 	// DB 상의 전체 게시물의 수
 	private int totalRecord = 0;
 	
+	
+	@GetMapping("/test")
+	public String test() {
+		return "/comBoard/data";
+	}
+
+	
 	// (리스트) 페이지 이동
 	@GetMapping("")
 	public String goComBoardList() {
@@ -113,11 +120,7 @@ public class ComBoardController {
 	// (등록) 페이지 이동
 	@GetMapping("/add")
 	public String goAddComBoard(HttpSession session) {
-		if(session.getAttribute("companyInfo") != null) {
-			return "/comBoard/add";
-		}else {
-			return "/mainLogin";
-		}
+		return "/comBoard/add";
 	}
 
 	// (등록) 공고 등록

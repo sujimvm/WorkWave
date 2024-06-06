@@ -148,7 +148,7 @@ function getComBoardList(nowPg) {
 			var applyList = map.applyList;
 			var paging = map.paging;
 			var paging_li = "";
-			
+			th:href="@{/comBoard/add}"
 			list.forEach(function(list) {
 				var row = "<tr>" +
 					"<td><input type='checkbox' name='apply_check' id='apply_check_"+list.com_board_key+"' value='"+list.com_board_key+"'><a href='#'>" + list.company_name + "</a><input type='checkbox' class='interest_check' name='interest_check_"+list.company_key+"' value='"+list.company_key+"'></td>" + // 선택 지원 | 기업명 | 관심기업 체크박스
