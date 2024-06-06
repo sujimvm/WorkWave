@@ -56,13 +56,13 @@ public class HomeController {
 			System.out.println(role);
 			if(role.equals("ROLE_COMPANY")) {
 				session.setAttribute("role", role);
-				session.setAttribute("dto", companyMapper.companyInfo(id));
+				session.setAttribute("cDTO", companyMapper.companyInfo(id));
 			}else {
 				session.setAttribute("role", role);
-				session.setAttribute("dto", userMapper.getUserById(id));
+				session.setAttribute("uDTO", userMapper.getUserById(id));
 			}
 		}else {
-			session.setAttribute("role", "ROLE_GUEST");
+			session.setAttribute("role", "ROLE_ANONYMOUS");
 		}
 		
 		return "main"; 

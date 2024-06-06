@@ -6,7 +6,7 @@
 </head>
 <body>
    
-   <div sec:auth="isAnonymous()" th:fragment="guestHeader">
+   <div th:fragment="guestHeader" sec:authorize="!isAuthenticated()">
       <div class="header">
          <div class="container">
             <div class="top-section">
@@ -45,7 +45,7 @@
       </div>
    </div>
    
-   <div sec:authorize="isAuthenticated() and hasRole('USER')" th:fragment="userHeader">
+   <div th:fragment="userHeader" sec:authorize="isAuthenticated() and hasRole('USER')">
       <div class="header">
          <div class="container">
             <div class="top-section">
@@ -65,9 +65,9 @@
                </div>
                
                <div class="user-actions">
-                  <a th:href="@{/user_cont.go}" th:text="${session.user_session}">
+                  <a th:href="@{/user_cont.go}" th:text="${session.uDTO.user_name}">
                   </a>
-                  <a th:href="@{logout}">
+                  <a th:href="@{/logout}">
                      LOGOUT
                   </a>
                </div>
@@ -107,8 +107,8 @@
                </div>
                
                <div class="user-actions">
-                  <a th:href="@{/company_cont.go}" th:text="${session.user_session}">기업회원 마이페이지</a>
-                  <a th:href="@{logout}">LOGOUT</a>
+                  <a th:href="@{/company_cont.go}" th:text="${session.cDTO.company_name}">기업회원 마이페이지</a>
+                  <a th:href="@{/logout}">LOGOUT</a>
                </div>
             </div>
             
