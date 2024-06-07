@@ -8,8 +8,9 @@
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script th:src="@{/js/comBoardAdd.js}"></script>
 <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script th:src="@{/js/comBoard.js}"></script>
+<script th:src="@{/js/comBoardAdd.js}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         CKEDITOR.replace('com_board_cont');
@@ -35,9 +36,9 @@
 							<tr>
 								<th>업종</th>
 								<td>
-									<input name="com_board_group">
-									<input name="com_board_sub">
-									<input name="com_board_step">
+									<input class="jobCodeInput" id="com_board_group" name="com_board_group" readonly>
+									<input class="jobCodeInput" id="com_board_sub" name="com_board_sub" readonly>
+									<input class="jobCodeInput" id="com_board_step" name="com_board_step" readonly>
 								</td>
 							</tr>
 							<tr>
@@ -51,6 +52,14 @@
 						</table>
 					</div>
 				</div><!-- 모집내용 -->
+				
+				<div id="jobCodeTotalDiv" class="codeTotalDiv" style="display: none;">
+					<div id="jobCodeGroupDiv" class="codeDiv">
+						<ul id="jobCodeGroupUl"></ul>
+					</div>
+					<div id="jobCodeSubDiv" class="codeDiv"></div>
+					<div id="jobCodeStepDiv" class="codeDiv"></div>
+				</div>
 					
 				<div>
 					<div>
