@@ -36,7 +36,6 @@ public class CompanyUserDetails implements UserDetails {
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		System.out.println(company_id);
 		return company_id;
 	}
 

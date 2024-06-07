@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.Team2Project.WorkWave.model.CompanyDTO;
+import com.Team2Project.WorkWave.model.CompanyMapper;
 import com.Team2Project.WorkWave.model.UserDTO;
 import com.Team2Project.WorkWave.model.UserMapper;
 import com.Team2Project.WorkWave.service.UserService;
@@ -28,6 +30,9 @@ public class UserController {
 
    @Autowired
    private UserMapper mapper;
+   
+   @Autowired
+   private CompanyMapper companyMapper;
 
    @Autowired
    private UserService userService;
@@ -214,8 +219,9 @@ public class UserController {
    public Map<String, String> checkUserId(@RequestBody Map<String, String> request) {
       String userId = request.get("userId");
       boolean isAvailable = userService.isUserIdAvailable(userId);
+      CompanyDTO companyIdCheck = this.companyMapper.companyInfo(userId);
       Map<String, String> response = new HashMap<>();
-      if (isAvailable) {
+      if (isAvailable && companyIdCheck == null) {
          response.put("status", "available");
       } else {
          response.put("status", "unavailable");

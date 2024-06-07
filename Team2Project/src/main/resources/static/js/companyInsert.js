@@ -22,11 +22,29 @@ $(function() {
 						alert("비정상적인 사업자 등록번호입니다.");
 						debugger;
 					} else {
-						$('#company_number_checkmark').show();
-						alert("정상적인 사업자 등록번호입니다.");
-						debugger;
-					}
-				},
+						$.ajax({
+							url : "/comNoCheck.go",
+							data :{ company_no : data },
+							type: "post",
+							dataType : "text",
+							success : function(result) {
+								debugger;
+							if(result === "available"){
+								debugger;
+								$('#company_number_checkmark').show();
+		                    	alert("사용 가능한 사업자등록번호입니다.");
+							}else{
+								$('#company_number_checkmark').hide();
+		                    	alert("이미 사용 중인 사업자등록번호입니다.");
+							}
+						},
+						
+						error : function() {
+							alert("데이터 통신 오류입니다.~~~");
+						}
+								})
+							}
+						},
 				error : function(result) {
 					console.log(result.responseText); //responseText의 에러메세지 확인
 				}
@@ -207,7 +225,7 @@ $(function() {
 		}
 		
 		if (!isIdValid) {
-	        console.log("아이디가 유효하지 않습니다.");
+	        alert("아이디가 유효하지 않습니다.");
 	        return false;
 	    }
 		

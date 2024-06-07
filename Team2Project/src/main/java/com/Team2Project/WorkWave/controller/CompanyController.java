@@ -24,6 +24,7 @@ import com.Team2Project.WorkWave.model.CompanyMapper;
 import com.Team2Project.WorkWave.model.CompanyLoginDTO;
 import com.Team2Project.WorkWave.model.ProfileDTO;
 import com.Team2Project.WorkWave.model.UserDTO;
+import com.Team2Project.WorkWave.model.UserMapper;
 import com.Team2Project.WorkWave.service.CompanyDetailService;
 import com.Team2Project.WorkWave.service.UploadFileService;
 
@@ -38,11 +39,14 @@ public class CompanyController {
 
 	@Autowired
 	private CompanyMapper mapper;
+	
+	@Autowired
+	private UserMapper userMapper;
 
 	@Autowired
 	UploadFileService uploadFileService;
 	
-	@Qualifier("bCryptPasswordEncoder")
+	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	// 기업회원가입 페이지로 이동
@@ -301,6 +305,30 @@ public class CompanyController {
 		}
 
 	}
+	
+	@PostMapping("/comNoCheck.go")
+	@ResponseBody
+	public String companyNoCheck(@RequestParam("company_no") String company_no,HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		String res = "available";
+
+		response.setContentType("text/html; charset=UTF-8");
+		
+		String str1 = company_no.substring(0, 3);
+		String str2 = company_no.substring(3, 5);
+		String str3 = company_no.substring(5);
+		
+		String newCompanyNo = str1 + "-" + str2 + "-" + str3;
+
+		CompanyDTO idCheck = this.mapper.companyInfo(newCompanyNo);
+
+		if (idCheck != null) {
+			res = "unavailable";
+		}
+
+		return res;
+	}
 
 	// 아이디 중복검사
 	@PostMapping("/idcheck.go")
@@ -313,8 +341,10 @@ public class CompanyController {
 		response.setContentType("text/html; charset=UTF-8");
 
 		CompanyDTO idCheck = this.mapper.companyInfo(comId);
+		
+		UserDTO userIdCheck = this.userMapper.getUserById(comId);
 
-		if (idCheck != null) {
+		if (idCheck != null || userIdCheck != null) {
 			res = "unavailable";
 		}
 
