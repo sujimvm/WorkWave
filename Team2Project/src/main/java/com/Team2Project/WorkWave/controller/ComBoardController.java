@@ -46,7 +46,10 @@ public class ComBoardController {
 	
 	// (리스트) 페이지 이동
 	@GetMapping("")
-	public String goComBoardList() {
+	public String goComBoardList(HttpServletRequest request, Model model) {
+		if(request.getParameter("P") != null) {
+			model.addAttribute("P",Integer.parseInt(request.getParameter("P")));
+		}
 		return "/comBoard/list";
 	}
 	
@@ -212,11 +215,11 @@ public class ComBoardController {
 	public String goComBoardContent(HttpServletRequest request, Model model) {
 		
 		int com_board_key = Integer.parseInt(request.getParameter("No"));
-		int page = Integer.parseInt(request.getParameter("page"));
+		int page = Integer.parseInt(request.getParameter("P"));
 		
 		ComBoardDTO dto = this.mapper.getComBoard(com_board_key);
 		
-		model.addAttribute("dto",dto).addAttribute("page",page);
+		model.addAttribute("dto",dto).addAttribute("P",page);
 		
 		return "/comBoard/content";
 	}
@@ -232,5 +235,22 @@ public class ComBoardController {
 		model.addAttribute("dto",dto);
 		
 		return "/comBoard/update";
+	}
+	
+	// (등록) 공고 수정
+	@PostMapping("/updateOk")
+	public void updateComBoard(ComBoardDTO dto,  HttpServletResponse response, HttpSession session) throws IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		System.out.println("dto.getCom_board_key()sssssss");
+		System.out.println(dto.getCom_board_key()+"dto.getCom_board_key()");
+		
+		if(this.mapper.updateComBoard(dto) > 0) {
+			out.println("<script> alert('공고수정 성공'); location.href='/comBoard'; </script>"); // 마이페이지로 변경 예정
+		}else {
+			out.println("<script> alert('공고수정 실패'); history.back(); </script>");
+		}
+		out.flush();
 	}
 }

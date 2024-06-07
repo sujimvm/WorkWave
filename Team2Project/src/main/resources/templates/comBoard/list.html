@@ -7,15 +7,17 @@
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{/js/comBoard.js}"></script>
 <script th:src="@{/js/comBoardList.js}"></script>
 </head> 
 
 <body>
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
+		<input type="hidden" id="getPage" th:value="${P}">
 		<div>
 			<div id="jobCodeOutputDiv"><span>분류검색</span></div>
-			<div id="jobCodeTotalDiv" class="codeTotalDiv">
+			<div id="jobCodeTotalDiv" class="codeTotalDiv" style="display: none;">
 				<div id="jobCodeGroupDiv" class="codeDiv">
 					<ul id="jobCodeGroupUl"></ul>
 				</div>
@@ -24,7 +26,7 @@
 			</div>
 			
 			<div id="locationCodeOutputDiv">지역검색</div>
-			<div id="locationCodeTotalDiv" class="codeTotalDiv">
+			<div id="locationCodeTotalDiv" class="codeTotalDiv" style="display: none;">
 				<div id="locationCodeGroupDiv" class="codeDiv">
 					<ul id="locationCodeGroupUl"></ul>
 				</div>

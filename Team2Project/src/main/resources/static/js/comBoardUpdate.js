@@ -1,10 +1,6 @@
 // 화면 시작 
 $(document).ready(function() {
 	
-	$(document).on('click', '#addTempBt', function() {
-		addTemp();
-	});
-	
 	// 직업분류 0 이면 클릭 시 show , 1이면 클릭 시 hide (함수호출)
 	$(document).on('click', '.jobCodeInput', function() {
 		viewJobCodeOutput();
@@ -27,22 +23,3 @@ $(document).ready(function() {
 	});
 	
 });
-
-// 임시저장
-function addTemp() {
-	
-	var addForm = $("#addForm").serialize();
-	
-	$.ajax({
-		url: '/comBoard/addTemp',
-		type: 'post',
-		dataType: 'json',
-        data: addForm,
-		success: function(temp_key) {
-			$("#temp_key").val(temp_key);
-		},
-		error: function(xhr, status, error) {
-			console.error(xhr);
-		}
-	});
-}

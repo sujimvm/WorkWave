@@ -7,8 +7,9 @@
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script th:src="@{/js/comBoardAdd.js}"></script>
 <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script th:src="@{/js/comBoard.js}"></script>
+<script th:src="@{/js/comBoardUpdate.js}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         CKEDITOR.replace('com_board_cont');
@@ -18,8 +19,8 @@
 <body>
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
-		<form method="post" action="/comBoard/addOk" id="addForm">
-			<input type="hidden" name="temp_key" id="temp_key" value=0>
+		<form method="post" action="/comBoard/updateOk">
+			<input type="hidden" name="com_board_key" id="com_board_key" th:value="${dto.com_board_key}">
 			<div>	
 				<div>
 					<div>
@@ -34,9 +35,9 @@
 							<tr>
 								<th>업종</th>
 								<td>
-									<input name="com_board_group" th:value="${dto.com_board_group}">
-									<input name="com_board_sub" th:value="${dto.com_board_sub}">
-									<input name="com_board_step" th:value="${dto.com_board_step}">
+									<input class="jobCodeInput" id="com_board_group" name="com_board_group" th:value="${dto.com_board_group}" readonly>
+									<input class="jobCodeInput" id="com_board_sub" name="com_board_sub" th:value="${dto.com_board_sub}" readonly>
+									<input class="jobCodeInput" id="com_board_step" name="com_board_step" th:value="${dto.com_board_step}" readonly>
 								</td>
 							</tr>
 							<tr>
@@ -50,6 +51,14 @@
 						</table>
 					</div>
 				</div><!-- 모집내용 -->
+				
+				<div id="jobCodeTotalDiv" class="codeTotalDiv" style="display: none;">
+					<div id="jobCodeGroupDiv" class="codeDiv">
+						<ul id="jobCodeGroupUl"></ul>
+					</div>
+					<div id="jobCodeSubDiv" class="codeDiv"></div>
+					<div id="jobCodeStepDiv" class="codeDiv"></div>
+				</div>
 					
 				<div>
 					<div>
@@ -153,8 +162,7 @@
 					</div>
 				</div><!-- 담당자정보 -->	
 				<div>
-					<input type="button" value="중간 저장" id="addTempBt">
-					<input type="submit" value="공고 등록">
+					<input type="submit" value="공고 수정">
 				</div>
 			</div>
 		</form>

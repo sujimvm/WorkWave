@@ -31,4 +31,5 @@ public interface ComBoardMapper {
 	int addApply(ApplyDTO dto); // 공고 지원
 	
 	ComBoardDTO getComBoard(int com_board_key);
+	int updateComBoard(ComBoardDTO dto); // 공고수정
 }
