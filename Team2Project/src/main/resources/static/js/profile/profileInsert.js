@@ -97,7 +97,7 @@ $(document).ready(function(){
     function loadSubCategories(categoryCode) {  
         $.ajax({  
 	        type: 'POST',
-            url: "/com_board_group", 
+            url: "/ajax/jobCodeGroup", 
             data: {"no": categoryCode}, //대분류 코드
             dataType: "json",
             success: function(response){
@@ -120,7 +120,7 @@ $(document).ready(function(){
     function loadSteps(subCategoryCode) {
         $.ajax({
 	        type: 'POST',
-            url: "/com_board_sub",
+            url: "/ajax/jobCodesub",
             data: {"no": subCategoryCode},
             dataType: "json",
             success: function(response){
@@ -249,7 +249,7 @@ $(document).ready(function(){
    function searchSchool(schoolName,selectedOption,nowNum){
         $.ajax({
             type: 'POST',
-            url: "/search_school_by_name",
+            url: "/ajax/searchSchoolByName",
             data: { "name": schoolName,"code":selectedOption},
             success: function(response){
                 $("#search_school").empty();
@@ -286,7 +286,7 @@ $(document).ready(function(){
 		function loadDepartments(selectedSchoolCode, majorName) {
 		    $.ajax({
 		        type: 'POST',
-		        url: "/get_department",
+		        url: "/ajax/getDepartment",
 		        data: { "code": selectedSchoolCode, "name": majorName },
 		        dataType: "json",
 		        success: function(response) {
@@ -381,7 +381,7 @@ $(document).ready(function(){
 	function searchCertifications(certificationName,nowNum) {
 	    $.ajax({
 	        type: 'POST',
-	        url: '/search_certifications', 
+	        url: "/ajax/searchCertifications", 
 	        data: { "license_name": certificationName }, 
 	        success: function(response) {
 	        	$("#search_license").empty();

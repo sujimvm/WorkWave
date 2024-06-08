@@ -8,7 +8,7 @@
 <link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 <body>
-<div th:replace="~{include/header :: guestHeader}"></div> 
+<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
 	<div align="center">
 		<div><!-- 이력서 출력 폼 -->
@@ -116,7 +116,7 @@
 
 			<div class="Portfolio_div">
 			    <h2>포트폴리오</h2>
-			    <a th:href="@{/download/ppt/{filename}(filename=${Content.profile_ppt})}" download th:text="${Content.profile_ppt}"></a>
+			    <a th:href="@{/CU/profile/download/ppt/{filename}(filename=${Content.profile_ppt})}" download th:text="${Content.profile_ppt}"></a>
 			</div>
 			
 			
@@ -151,7 +151,7 @@
   					<h4>작성자:<span th:text="${Content.user_name}"></span></h4>
   			</div>
 			<div align="center">
-				<input type="button" value="이력서 목록" th:onclick="|location.href='@{profile_list}'|">
+				<input type="button" value="이력서 목록" th:onclick="|location.href='@{/U/profile}'|">
 			</div>
 </div>	
 	<div th:replace="~{include/footer :: footer}"></div>

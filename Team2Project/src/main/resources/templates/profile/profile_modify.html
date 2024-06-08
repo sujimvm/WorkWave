@@ -7,14 +7,14 @@
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/profile.css}">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script th:src="@{/js/profileModify.js}"></script>
+<script th:src="@{/js/profile/profileModify.js}"></script>
 <link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 <body>
-		<div th:replace="~{include/header :: guestHeader}"></div> 
+		<div th:replace="~{include/header}"></div>
 		<div layout:fragment="content" class="content"></div>
 	<div align="center"><br><br>
-	<form method="POST" action="profile_modify_ok" enctype="multipart/form-data">
+	<form method="POST" action="/U/profile/updateOk" enctype="multipart/form-data">
 	<input type="hidden" name="profile_key" th:value="${Modify.profile_key}">
 	
 		<div> <!-- 이력서 수정 폼 -->
@@ -136,7 +136,7 @@
 		<h1>포트폴리오</h1>
 	    <div id="portfolioContainer">
 		    <div class="portfolio-item">
-		        <a th:href="@{/download/ppt/{filename}(filename=${Modify.profile_ppt})}" th:text="${Modify.profile_ppt}"
+		        <a th:href="@{/CU/profile/download/ppt/{filename}(filename=${Modify.profile_ppt})}" th:text="${Modify.profile_ppt}"
 		           id="original_profile_ppt" alt="Profile ppt"></a>
 		        
 		        <input type="file" name="profile_ppt_add" id="profile_ppt" accept=".pptx" style="display: none;">

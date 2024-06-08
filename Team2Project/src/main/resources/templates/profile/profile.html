@@ -7,17 +7,17 @@
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/profile.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script th:src="@{/js/profileInsert.js}"></script>
+<script th:src="@{/js/profile/profileInsert.js}"></script>
 <link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 <body>
 
-	<div th:replace="~{include/header :: guestHeader}"></div> 
+	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
 	
 	<div align="center">
 		<div><br><br><!-- 이력서 입력 폼 -->
-			<form id="profileForm" method="POST" action="profile_insert" enctype="multipart/form-data">
+			<form id="profileForm" method="POST" action="/U/profile/insertOk" enctype="multipart/form-data">
 				<input name="profile_name" size="120" placeholder="이력서 제목을 작성해주세요" class="custom-input"><br><br>
 				<table border="1" width="800">
 				    <tr>
@@ -197,7 +197,7 @@
 				
 					<div align="center">
 						<input type="submit" value="이력서저장">
-						<input type="button" value="이력서관리" th:onclick="|location.href='@{profile_list}'|">
+						<input type="button" value="이력서관리" th:onclick="|location.href='@{/U/profile}'|">
 					</div>
 				</div><!-- 버튼 -->
 				
