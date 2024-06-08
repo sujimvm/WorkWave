@@ -41,12 +41,12 @@
 	<div layout:fragment="content" class="content">
 	
 	<div align="center">
-		<form method="post" action="#" th:action="@{/C/companyJoinOk}" th:object="${company}" enctype="multipart/form-data">
+		<form method="post" action="#" th:action="@{/G/companyJoinOk}" th:object="${company}" enctype="multipart/form-data">
 				<table>
 					<tr>
 						<td colspan="2">
 							<h2>기업회원 회원가입</h2>
-							<a th:href="@{user_insert.go}">개인회원이세요..?</a>
+							<a th:href="@{/G/userJoin}">개인회원이세요..?</a>
 						</td>
 					</tr>
 					<tr>

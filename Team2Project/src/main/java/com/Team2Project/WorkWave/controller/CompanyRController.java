@@ -183,42 +183,6 @@ public class CompanyRController {
 
 	}
 
-	// 비밀번호찾기에서 해당 유저가 존재할 시 새 비밀번호를 설정하여 업데이트
-	@PostMapping("/companyPwdUpdate")
-	public void companyPwdUpdate(@RequestParam("company_id") String company_id,
-			@RequestParam("company_pwd") String company_pwd, HttpServletResponse response) throws IOException {
-
-		String encordedPwd = passwordEncoder.encode(company_pwd);
-
-		response.setContentType("text/html; charset=UTF-8");
-
-		PrintWriter out = response.getWriter();
-
-		CompanyDTO dto = this.companyMapper.companyInfo(company_id);
-
-		if (encordedPwd.equals(dto.getCompany_pwd())) {
-			out.println("<script>");
-			out.println("alert('기존 비밀번호와 새로 입력하신 비밀번호가 같습니다.')");
-			out.println("history.back()");
-			out.println("</script>");
-		} else {
-			int result = this.companyMapper.companyPwdUpdate(company_id, encordedPwd);
-
-			if (result == 1) {
-				out.println("<script>");
-				out.println("alert('비밀번호 수정에 성공했습니다.')");
-				out.println("location.href='/G/login");
-				out.println("</script>");
-			} else {
-				out.println("<script>");
-				out.println("alert('오류발생!')");
-				out.println("history.back()");
-				out.println("</script>");
-			}
-		}
-
-	}
-
 	// 회원 삭제 페이지로 이동
 	@GetMapping("/delete/companyPwdCheck")
 	public String companyDelete(HttpSession session) {

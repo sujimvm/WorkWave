@@ -182,8 +182,8 @@ public class GeustController {
 	}
 	
 	// 기업 아이디 찾기 성공
-	@GetMapping("/companyFindId")
-	public void findCompanyId(@RequestParam("company_mgr_name") String company_mgr_name,
+	@GetMapping("/companyFindIdOk")
+	public String findCompanyId(@RequestParam("company_mgr_name") String company_mgr_name,
 								@RequestParam("company_number") String company_number, 
 								Model model, 
 								HttpServletResponse response)
@@ -206,13 +206,14 @@ public class GeustController {
 		if (company_id == null) {
 			out.println("<script>");
 			out.println("alert('입력하신 정보에 해당하는 회원정보가 없습니다.')");
-			out.println("location.href='/G/findId'");
 			out.println("</script>");
 	
+			return "user/find_id";
 		} else {
 
 			model.addAttribute("companyId", company_id);
 
+			return "company/find_id_result";
 		}
 
 	}
@@ -224,6 +225,45 @@ public class GeustController {
 		String user_id = userService.findUserId(userName, userEmail);
 		model.addAttribute("userId", user_id);
 		return "user/find_id_result";
+	}
+	
+	// 비밀번호찾기에서 해당 유저가 존재할 시 새 비밀번호를 설정하여 업데이트
+	@PostMapping("/companyPwdUpdate")
+	public String companyPwdUpdate(@RequestParam("company_id") String company_id,
+			@RequestParam("company_pwd") String company_pwd, HttpServletResponse response) throws IOException {
+
+		String encordedPwd = passwordEncoder.encode(company_pwd);
+
+		response.setContentType("text/html; charset=UTF-8");
+
+		PrintWriter out = response.getWriter();
+
+		CompanyDTO dto = this.companyMapper.companyInfo(company_id);
+
+		if (encordedPwd.equals(dto.getCompany_pwd())) {
+			out.println("<script>");
+			out.println("alert('기존 비밀번호와 새로 입력하신 비밀번호가 같습니다.')");
+			out.println("</script>");
+			
+			return "company/find_pwd_result";
+		} else {
+			int result = this.companyMapper.companyPwdUpdate(company_id, encordedPwd);
+
+			if (result == 1) {
+				out.println("<script>");
+				out.println("alert('비밀번호 수정에 성공했습니다.')");
+				out.println("</script>");
+				
+				return "mainLogin";
+			} else {
+				out.println("<script>");
+				out.println("alert('오류발생!')");
+				out.println("</script>");
+				
+				return "company/find_pwd_result";
+			}
+		}
+
 	}
 	
 	// 기업 비밀번호 찾기 성공	 
