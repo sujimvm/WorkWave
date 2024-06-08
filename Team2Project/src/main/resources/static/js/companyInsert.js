@@ -23,7 +23,7 @@ $(function() {
 						debugger;
 					} else {
 						$.ajax({
-							url : "/comNoCheck.go",
+							url : "/ajax/companyNumberCheck",
 							data :{ company_no : data },
 							type: "post",
 							dataType : "text",
@@ -58,7 +58,7 @@ $(function() {
 			debugger;
 			
 			$.ajax({
-				url : "/idcheck.go",
+				url : "/ajax/checkCompanyId",
 				data :{ id: comId },
 				type: "post",
 				dataType : "text",
@@ -86,7 +86,7 @@ $(function() {
 			debugger;
 			
 			$.ajax({
-				url : "/send_sms.go",
+				url : "/veri/sendSms",
 				type : "POST",
 				data : { mgrPhone : mgrPhone },
 				dataType : "JSON",
@@ -116,7 +116,7 @@ $(function() {
 			debugger;
 			
 			$.ajax({
-				url : "/re_send_sms.go",
+				url : "veri/reSendSms",
 				type : "POST",
 				data : { mgrPhone : mgrPhone },
 				dataType : "JSON",
@@ -143,7 +143,7 @@ $(function() {
 			debugger;
 			
 			$.ajax({
-				url : "/smsCodeCheck.go",
+				url : "/veri/smsCodeCheck",
 				type: "POST",
 				dataType: 'json',
 		        contentType: 'application/json',
