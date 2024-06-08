@@ -14,14 +14,14 @@
  
   	<select id="categorysub" parameterType="String" resultType="codeDTO">
   	
-	   select * from jobData where length(code) = 3 and code like #{no} || '%'
+	   select * from jobData where length(code) = 5 and code like #{no} || '%'
   	
   	</select>
   	
   	
   	<select id="categorystep" parameterType="String" resultType="codeDTO">
   	
-	   select * from jobData where length(code) = 4 and code like #{no} || '%'
+	   select * from jobData where length(code) = 7 and code like #{no} || '%'
   	
   	</select>
   	

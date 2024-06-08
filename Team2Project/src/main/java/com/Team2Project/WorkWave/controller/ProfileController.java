@@ -46,12 +46,12 @@ public class ProfileController {
 	UploadFileService uploadFileService;
 
 	@Autowired
-	private ProfileMapper mapper;
+	private ProfileMapper profileMapper;
 	
 	private final String pptUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\ppt\\profile";
 
 	//다운
-    @GetMapping("/download/ppt/{fileName:.+}")
+    @GetMapping("/profile/download/ppt/{fileName:.+}")
     public void downloadPPT(@PathVariable("fileName") String fileName, HttpServletResponse response) throws Exception {
         File file = new File(pptUploadDir + File.separator + fileName);
 
@@ -83,7 +83,7 @@ public class ProfileController {
 
 
 	// 이력서 추가 메서드
-	@PostMapping("profile_insert")
+	@PostMapping("/profile/insertOk")
 	public void profileInsert(ProfileDTO dto, HttpServletResponse response, HttpSession session, 
 			@ModelAttribute(value = "CodeListDTO") CodeListDTO codelistDTO,
 			@RequestParam("profile_ppt_input") MultipartFile ppt_file,
@@ -126,17 +126,17 @@ public class ProfileController {
 		dto.setUser_key(9);
 		
 		// 넘어온 키 값의 이력서가 있는지 확인
-		if (this.mapper.profileCkeck(dto.getUser_key()) > 0) {
+		if (this.profileMapper.profileCkeck(dto.getUser_key()) > 0) {
 			dto.setProfile_default("N");
 		} else {
 			dto.setProfile_default("Y");
 		}
 
 	
-		int check = this.mapper.profileInsert(dto);
+		int check = this.profileMapper.profileInsert(dto);
 		
 		// 유저키의 프로필키(max) 
-		int nowInsertProfileKey = this.mapper.nowInsertProfileKey(dto.getUser_key());
+		int nowInsertProfileKey = this.profileMapper.nowInsertProfileKey(dto.getUser_key());
 		
 		//학력 데이터 저장
 		EduDTO edtoArr = codelistDTO.getEDtoList().get(0);
@@ -150,7 +150,7 @@ public class ProfileController {
 			edto.setEdu_end_date(edtoArr.getEdu_end_date().split(",")[i]);
 			edto.setEdu_major(edtoArr.getEdu_major().split(",")[i]);
 			edto.setEdu_status(edtoArr.getEdu_status().split(",")[i]);
-			  this.mapper.EduInsert(edto); 
+			  this.profileMapper.EduInsert(edto); 
 			
 		}
 		
@@ -170,7 +170,7 @@ public class ProfileController {
 		  crdto.setCareer_start_date(crdtoArr.getCareer_start_date().split(",")[i]);
 		  crdto.setCareer_end_date(crdtoArr.getCareer_end_date().split(",")[i]);
 		  
-		  this.mapper.CareerInsert(crdto);
+		  this.profileMapper.CareerInsert(crdto);
 		  
 		  }
 		  
@@ -186,7 +186,7 @@ public class ProfileController {
 			  ldto.setLicense_company(ldtoArr.getLicense_company().split(",")[i]);
 			  ldto.setLicense_date(ldtoArr.getLicense_date().split(",")[i]);
 			  
-			  this.mapper.LicenseInsert(ldto); 
+			  this.profileMapper.LicenseInsert(ldto); 
 		  }
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -206,7 +206,7 @@ public class ProfileController {
 
 
 	// 이력서 작성 폼
-	@GetMapping("/profile_writer")
+	@GetMapping("/profile/insert")
 	public String categorygrouptest(Model model,HttpSession session) {
 		
 //		UserDTO user = (UserDTO) session.getAttribute("user_login");
@@ -217,9 +217,9 @@ public class ProfileController {
 		int userKey =9;
 		
 		
-		ProfileDTO userDto = this.mapper.profileinfo(userKey);
+		ProfileDTO userDto = this.profileMapper.profileinfo(userKey);
 
-		List<CodeDTO> category = this.mapper.category();
+		List<CodeDTO> category = this.profileMapper.category();
 
 		model.addAttribute("categories", category);
 		
@@ -229,61 +229,61 @@ public class ProfileController {
 	}
 
 	// 대분류 카테고리
-	@PostMapping("com_board_group")
+	@PostMapping("/jobCodeGroup")
 	@ResponseBody
 	public List<CodeDTO> categorysub(@RequestParam("no") String no) {
 
-		List<CodeDTO> categorysub = this.mapper.categorysub(no);
+		List<CodeDTO> categorysub = this.profileMapper.categorysub(no);
 
 		return categorysub;
 	}
 
 	// 중분류 카테고리
-	@PostMapping("com_board_sub")
+	@PostMapping("/jobCodesub")
 	@ResponseBody
 	public List<CodeDTO> categorystep(@RequestParam("no") String no) {
 
-		List<CodeDTO> categorystep = this.mapper.categorystep(no);
+		List<CodeDTO> categorystep = this.profileMapper.categorystep(no);
 
 		return categorystep;
 
 	}
 
 	// 학교구분과 학교 이름 검색 시 해당 학교 리스트 불러오기
-	@PostMapping("search_school_by_name")
+	@PostMapping("/searchSchoolByName")
 	@ResponseBody
 	public List<CodeDTO> schoolName(CodeDTO dto) {
 
-		List<CodeDTO> schoolName = this.mapper.schoolname(dto);
+		List<CodeDTO> schoolName = this.profileMapper.schoolname(dto);
 
 		return schoolName;
 
 	}
 
 	// 학교구분과 전공명 검색 시 해당 전공 데이터 불러오기
-	@PostMapping("get_department")
+	@PostMapping("/getDepartment")
 	@ResponseBody
 	public List<CodeDTO> departmentName(CodeDTO dto) {
 
-		List<CodeDTO> departmentName = this.mapper.department(dto);
+		List<CodeDTO> departmentName = this.profileMapper.department(dto);
 
 		return departmentName;
 
 	}
 
 	// 해당 자격증 리스트 불러오기
-	@PostMapping("search_certifications")
+	@PostMapping("/searchCertifications")
 	@ResponseBody
 	public List<LicenseDTO> searchlicense(@RequestParam("license_name") String license_name) {
 
-		List<LicenseDTO> licenseList = this.mapper.license(license_name);
+		List<LicenseDTO> licenseList = this.profileMapper.license(license_name);
 
 		return licenseList;
 
 	}
 
 	// 이력서 리스트로 이동
-	@GetMapping("profile_list")
+	@GetMapping("")
 	public String profileList(Model model, HttpSession session) {
 
 //		UserDTO user = (UserDTO) session.getAttribute("user_login");
@@ -293,7 +293,7 @@ public class ProfileController {
 
 		int userKey =9;
 		
-		List<ProfileDTO> profileList = this.mapper.profileList(userKey);
+		List<ProfileDTO> profileList = this.profileMapper.profileList(userKey);
 		
 		model.addAttribute("ProfileList", profileList);
 		
@@ -302,14 +302,14 @@ public class ProfileController {
 	}
 
 	// 해당 프로필 키 이력서 상세보기
-	@GetMapping("profile_content")
+	@GetMapping("/profile/content")
 	public String profileContent(@RequestParam("no") int no, Model model) {
 
-		ProfileDTO dto = this.mapper.profileinfo(no);
+		ProfileDTO dto = this.profileMapper.profileinfo(no);
 
-		List<EduDTO> eduList = this.mapper.eduList(no);
-		List<CareerDTO> careerList = this.mapper.careerList(no);
-		List<LicenseDTO> licenseList = this.mapper.licenseList(no);
+		List<EduDTO> eduList = this.profileMapper.eduList(no);
+		List<CareerDTO> careerList = this.profileMapper.careerList(no);
+		List<LicenseDTO> licenseList = this.profileMapper.licenseList(no);
 
 		model.addAttribute("Content", dto).addAttribute("EduList", eduList).addAttribute("CareerList", careerList)
 				.addAttribute("License", licenseList);
@@ -319,13 +319,13 @@ public class ProfileController {
 	}
 
 	// 기본 이력서로 변경
-	@GetMapping("profile_default")
+	@GetMapping("/profile/default")
 	public void profileDefault(@RequestParam("no") int defaultKey, HttpServletResponse response) throws IOException {
 
 		// 기본 이력서로 변경
-		this.mapper.defaultChangeN();
+		this.profileMapper.defaultChangeN();
 		// 대표 이력서로 변경
-		int check = this.mapper.defaultChangeY(defaultKey);
+		int check = this.profileMapper.defaultChangeY(defaultKey);
 
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -346,16 +346,16 @@ public class ProfileController {
 
 	
 	//이력서 삭제
-	@GetMapping("profile_delect")
+	@GetMapping("/profile/delect")
 	public void profile_delect(@RequestParam("no") int pro_key,HttpServletResponse response) throws IOException {
 		
-		 int checkCareer = this.mapper.deleteCareerByProfileKey(pro_key);
-		 int checkEdu = this.mapper.deleteEduByProfileKey(pro_key);
-		 int checkLicense = this.mapper.deleteLicenseByProfileKey(pro_key);
+		 int checkCareer = this.profileMapper.deleteCareerByProfileKey(pro_key);
+		 int checkEdu = this.profileMapper.deleteEduByProfileKey(pro_key);
+		 int checkLicense = this.profileMapper.deleteLicenseByProfileKey(pro_key);
 
 		
 		
-		int check = this.mapper.profileDelect(pro_key);
+		int check = this.profileMapper.profileDelect(pro_key);
 		
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -375,13 +375,13 @@ public class ProfileController {
 	}
 	
 	//이력서 수정
-	@GetMapping("profile_modify")
+	@GetMapping("/profile/update")
 	public String profile_modify(@RequestParam("no") int no,Model model) {
 		
-		ProfileDTO content = this.mapper.profileinfo(no);
-		List<CareerDTO> carMody = this.mapper.careerList(no);
-		List<LicenseDTO> licenMody = this.mapper.licenseList(no);
-		List<EduDTO> eduMody = this.mapper.eduList(no);
+		ProfileDTO content = this.profileMapper.profileinfo(no);
+		List<CareerDTO> carMody = this.profileMapper.careerList(no);
+		List<LicenseDTO> licenMody = this.profileMapper.licenseList(no);
+		List<EduDTO> eduMody = this.profileMapper.eduList(no);
 		
 		model.addAttribute("Modify", content);
 		model.addAttribute("carMody", carMody);
@@ -392,13 +392,13 @@ public class ProfileController {
 	}
 	
 	//이력서 수정 업데이트
-	@PostMapping("profile_modify_ok")
+	@PostMapping("/profile/updateOk")
 	public void profile_modify_ok(@RequestParam("profile_key") int pro_key,@ModelAttribute(value = "CodeListDTO") CodeListDTO codelistDTO,
 	        ProfileDTO profileDto,HttpServletResponse response, HttpSession session,
 	        @RequestParam("profile_image_add")MultipartFile profile_image,
 	        @RequestParam("profile_ppt_add")MultipartFile profile_ppt) throws IOException {
 	    
-		ProfileDTO original_profile_dto = this.mapper.profileinfo(pro_key);
+		ProfileDTO original_profile_dto = this.profileMapper.profileinfo(pro_key);
 		
 		profileDto.setProfile_image_name(original_profile_dto.getProfile_image_name());
 		profileDto.setProfile_image(original_profile_dto.getProfile_image());
@@ -440,14 +440,14 @@ public class ProfileController {
 				int size= codelistDTO.getCrDtoList().size(); 
 				for(int i= 0; i < size; i++) {
 					CareerDTO careerDto = codelistDTO.getCrDtoList().get(i); 
-				  this.mapper.updateCareer(careerDto);
+				  this.profileMapper.updateCareer(careerDto);
 				}
 				
 				//학력 수정
 				int esize = codelistDTO.getLDtoList().size();
 				for(int i=0; i < esize; i++) {
 					EduDTO eduDto = codelistDTO.getEDtoList().get(i);
-					this.mapper.updateEdu(eduDto);
+					this.profileMapper.updateEdu(eduDto);
 				}
 			
 		
@@ -459,13 +459,13 @@ public class ProfileController {
 					  LicenseDTO ldto = codelistDTO.getLDtoList().get(i);
 					  
 					  
-					  this.mapper.updateLicense(ldto); 
+					  this.profileMapper.updateLicense(ldto); 
 				  
 				  }
 				  
 				  profileDto.setProfile_key(pro_key);
 				  
-				  this.mapper.updateProfile(profileDto);
+				  this.profileMapper.updateProfile(profileDto);
 				  
 				  
 				  response.setContentType("text/html; charset=UTF-8");

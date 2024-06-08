@@ -8,11 +8,11 @@
 <link rel="stylesheet" th:href="@{/css/profile.css}">
 </head>
 <body>
-<div th:replace="~{include/header :: guestHeader}"></div> 
+<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
 		<div align="center"> <!--이력서 리스트 전체 -->
 		<h1>이력서 관리</h1>
-		<input type="button" value="이력서 등록" th:onclick ="|location.href='@{profile_writer}'|">
+		<input type="button" value="이력서 등록" th:onclick ="|location.href='@{/U/profile/insert}'|">
 		
 		
 		<div> <!--작성완료 이력서 목록 -->
@@ -35,11 +35,11 @@
 						<img th:src="@{'/image/profile/'+${dto.profile_image}}" alt="Profile Image" width="150" height="150">
 					</td>
 					<td>
-						<a th:href="@{profile_content(no=${dto.profile_key})}" th:text="${dto.profile_name}"></a>
+						<a th:href="@{/CU/profile/content(no=${dto.profile_key})}" th:text="${dto.profile_name}"></a>
 					</td>
 					<td>
-						<input type="button" value="수정" th:onclick="|location.href='@{profile_modify(no=${dto.profile_key})}'|">
-						<input type="button" value="삭제" th:onclick="|location.href='@{profile_delect(no=${dto.profile_key})}'|">
+						<input type="button" value="수정" th:onclick="|location.href='@{/U/profile/update(no=${dto.profile_key})}'|">
+						<input type="button" value="삭제" th:onclick="|location.href='@{/U/profile/delect(no=${dto.profile_key})}'|">
 					</td>
 				</tr>
 				<!-- 나머지 이력서 -->
@@ -48,12 +48,12 @@
 					<img th:src="@{'/image/profile/'+${dto.profile_image}}" alt="Profile Image" width="150" height="150">
 					</td>
 					<td>
-						<a th:href="@{profile_content(no=${dto.profile_key})}" th:text="${dto.profile_name}"></a>
+						<a th:href="@{/CU/profile/content(no=${dto.profile_key})}" th:text="${dto.profile_name}"></a>
 					</td>
 					<td>
-						<input type="button" value="수정" th:onclick="|location.href='@{profile_modify(no=${dto.profile_key})}'|">
-						<input type="button" value="삭제" th:onclick="|location.href='@{profile_delect(no=${dto.profile_key})}'|">
-						<input type="button" value="대표이력서등록" th:onclick="|location.href='@{profile_default(no=${dto.profile_key})}'|">
+						<input type="button" value="수정" th:onclick="|location.href='@{/U/profile/update(no=${dto.profile_key})}'|">
+						<input type="button" value="삭제" th:onclick="|location.href='@{/U/profile/delect(no=${dto.profile_key})}'|">
+						<input type="button" value="대표이력서등록" th:onclick="|location.href='@{/U/profile/default(no=${dto.profile_key})}'|">
 					</td>
 				</tr>
 			</tr>
