@@ -8,8 +8,8 @@
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
-<script th:src="@{/js/comBoard.js}"></script>
-<script th:src="@{/js/comBoardUpdate.js}"></script>
+<script th:src="@{/js/comBoard/main.js}"></script>
+<script th:src="@{/js/comBoard/insert.js}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         CKEDITOR.replace('com_board_cont');
@@ -19,7 +19,7 @@
 <body>
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
-		<form method="post" action="/comBoard/updateOk">
+		<form method="post" action="/C/comBoard/updateOk">
 			<input type="hidden" name="com_board_key" id="com_board_key" th:value="${dto.com_board_key}">
 			<div>	
 				<div>

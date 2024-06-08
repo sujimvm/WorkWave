@@ -61,7 +61,7 @@ $(document).ready(function() {
 // 직업 대분류 조회 
 function getJobCodeGroup() {
 	$.ajax({
-		url: '/comBoard/jobCode',
+		url: '/ajax/jobCode',
 		type: 'post',
 		dataType: 'json',
 		success: function(jobCodeList) {
@@ -92,7 +92,7 @@ function getJobCodeGroup() {
 // 지역 대분류 조회
 function getLocationCodeGroup() {
 	$.ajax({
-		url: '/comBoard/locationCode',
+		url: '/ajax/locationCode',
 		type: 'post',
 		dataType: 'json',
 		success: function(locationCodeList) {

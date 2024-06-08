@@ -34,7 +34,7 @@ function addTemp() {
 	var addForm = $("#addForm").serialize();
 	
 	$.ajax({
-		url: '/comBoard/addTemp',
+		url: '/ajax/comBoardTemp/insert',
 		type: 'post',
 		dataType: 'json',
         data: addForm,

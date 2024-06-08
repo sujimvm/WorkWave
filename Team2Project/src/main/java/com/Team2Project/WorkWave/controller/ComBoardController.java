@@ -37,7 +37,7 @@ import jakarta.servlet.http.HttpSession;
 public class ComBoardController {
 
 	@Autowired
-	private ComBoardMapper mapper;
+	private ComBoardMapper comBoardMapper;
 
 	// 한 페이지당 보여질 게시물의 수
 	private final int rowsize = 5;
@@ -45,7 +45,7 @@ public class ComBoardController {
 	private int totalRecord = 0;
 	
 	// (리스트) 페이지 이동
-	@GetMapping("")
+	@GetMapping("/comBoard")
 	public String goComBoardList(HttpServletRequest request, Model model) {
 		if(request.getParameter("P") != null) {
 			model.addAttribute("P",Integer.parseInt(request.getParameter("P")));
@@ -54,7 +54,7 @@ public class ComBoardController {
 	}
 	
 	// (리스트) 리스트 조회
-	@PostMapping("/list")
+	@PostMapping("/comBoardList")
 	@ResponseBody
 	public HashMap<String, Object> getComBoardList(HttpSession session, HttpServletRequest request) {
 		
@@ -68,20 +68,20 @@ public class ComBoardController {
 			page = 1;
 		}
 		
-		totalRecord = this.mapper.countComBoard();
+		totalRecord = this.comBoardMapper.countComBoard();
 		
 		Page pdto = new Page(page, rowsize, totalRecord);
 		
 		HashMap<String, Object> map = new HashMap<>();
-		map.put("list", this.mapper.getComBoardList(pdto));
+		map.put("list", this.comBoardMapper.getComBoardList(pdto));
 		map.put("paging", pdto);
 
 		if(session.getAttribute("user_login") == null) {
 			System.out.println("getComBoardList > loginX");
 		}else {
 			UserDTO udto = (UserDTO)session.getAttribute("user_login");
-			map.put("interestList", this.mapper.getInterestCompanyKeyList(udto.getUser_key()));
-			map.put("applyList", this.mapper.getApplyList(this.mapper.selectDefaultProfile(udto.getUser_key())));
+			map.put("interestList", this.comBoardMapper.getInterestCompanyKeyList(udto.getUser_key()));
+			map.put("applyList", this.comBoardMapper.getApplyList(this.comBoardMapper.selectDefaultProfile(udto.getUser_key())));
 		}
 		
 		return map;
@@ -93,9 +93,9 @@ public class ComBoardController {
 	public Map<String, List<CodeDTO>> getJobCodeList() {
 		
 		Map<String, List<CodeDTO>> map = new HashMap<>();
-		map.put("group", this.mapper.getJobCodeGroupList());
-		map.put("sub", this.mapper.getJobCodeSubList()); 
-		map.put("step", this.mapper.getJobCodeStepList());
+		map.put("group", this.comBoardMapper.getJobCodeGroupList());
+		map.put("sub", this.comBoardMapper.getJobCodeSubList()); 
+		map.put("step", this.comBoardMapper.getJobCodeStepList());
 		
 		return map;
 	}
@@ -106,21 +106,21 @@ public class ComBoardController {
 	public Map<String, List<CodeDTO>> getLocationCodeList() {
 		
 		Map<String, List<CodeDTO>> map = new HashMap<>();
-		map.put("group", this.mapper.getLocationCodeGroupList());
-		map.put("sub", this.mapper.getLocationCodeSubList());
+		map.put("group", this.comBoardMapper.getLocationCodeGroupList());
+		map.put("sub", this.comBoardMapper.getLocationCodeSubList());
 		
 		return map;
 	}
 	
 	// 기업정보 조회 전송 예정
 	// (등록) 페이지 이동
-	@GetMapping("/add")
+	@GetMapping("/comBoard/insert")
 	public String goAddComBoard(HttpSession session) {
 		return "/comBoard/add";
 	}
 
 	// (등록) 공고 등록
-	@PostMapping("/addOk")
+	@PostMapping("/comBoard/insertOk")
 	public void addComBoard(ComBoardDTO dto,  HttpServletResponse response, HttpSession session) throws IOException {
 		int temp_key = 0;
 		response.setContentType("text/html; charset=UTF-8");
@@ -133,9 +133,9 @@ public class ComBoardController {
 			// 컴퍼니 키 임시 저장
 			dto.setCompany_key(2);
 			
-			if(this.mapper.addComBoard(dto) > 0) {
+			if(this.comBoardMapper.addComBoard(dto) > 0) {
 				temp_key = dto.getTemp_key();
-				if(temp_key != 0) this.mapper.deleteComBoardTemp(temp_key);
+				if(temp_key != 0) this.comBoardMapper.deleteComBoardTemp(temp_key);
 				out.println("<script> alert('공고등록 성공'); location.href='/comBoard'; </script>");
 			}else {
 				out.println("<script> alert('공고등록 실패'); history.back(); </script>");
@@ -144,7 +144,7 @@ public class ComBoardController {
 	}
 	
 	// (등록) 공고 중간저장
-	@PostMapping("/addTemp")
+	@PostMapping("/comBoardTemp/insert")
 	@ResponseBody
 	public int addComBoardTemp(ComBoardDTO dto, HttpSession session, HttpServletRequest request) {
 		int temp_key = dto.getTemp_key();
@@ -160,9 +160,9 @@ public class ComBoardController {
 				System.out.println("공고 임시저장 수정 성공");
 			}
 		}else{
-			if(this.mapper.addComBoardTemp(dto) > 0) {
+			if(this.comBoardMapper.addComBoardTemp(dto) > 0) {
 				System.out.println("공고 임시저장 등록 성공");
-				temp_key = this.mapper.selectTempPk(dto.getCompany_key());
+				temp_key = this.comBoardMapper.selectTempPk(dto.getCompany_key());
 			}
 		}
 		
@@ -170,7 +170,7 @@ public class ComBoardController {
 	}
 	
 	// 관심기업 등록/해제
-	@PostMapping("/interestCheck")
+	@PostMapping("/interest/action")
 	@ResponseBody
 	public void interestCheck(@RequestParam("check") int check,@RequestParam("company_key") int company_key, HttpServletRequest request, HttpSession session) {
 		
@@ -182,21 +182,21 @@ public class ComBoardController {
 		
 		// 1 = check , 0 = uncheck
 		if(check == 1) {
-			this.mapper.insertInterestCheck(iDTO);
+			this.comBoardMapper.insertInterestCheck(iDTO);
 			System.out.println("insertInterestCheck");
 		}else{
-			this.mapper.deleteInterestCheck(iDTO);
+			this.comBoardMapper.deleteInterestCheck(iDTO);
 			System.out.println("deleteInterestCheck");
 		}
 	}
 	
 	// 공고 지원
-	@PostMapping("/addApply")
+	@PostMapping("/apply/insert")
 	@ResponseBody
 	public void addApply(@RequestParam("checked") String checked, HttpServletRequest request, HttpSession session) {
 
 		UserDTO udto = (UserDTO)session.getAttribute("uDTO");
-		int profile_key = this.mapper.selectDefaultProfile(udto.getUser_key());
+		int profile_key = this.comBoardMapper.selectDefaultProfile(udto.getUser_key());
 		
 		System.out.println(checked+"checked");
 		for (int i = 0; i < checked.split(",").length; i++) {
@@ -205,19 +205,19 @@ public class ComBoardController {
 			aDTO.setProfile_key(profile_key);
 			aDTO.setCom_board_key(Integer.parseInt(checked.split(",")[i]));
 			
-			if(this.mapper.addApply(aDTO) > 0) System.out.println("지원성공");
+			if(this.comBoardMapper.addApply(aDTO) > 0) System.out.println("지원성공");
 			else System.out.println("지원실패");
 		}
 	}
 	
 	// (상세보기) 페이지 이동
-	@GetMapping("/content")
+	@GetMapping("/comBoard/content")
 	public String goComBoardContent(HttpServletRequest request, Model model) {
 		
 		int com_board_key = Integer.parseInt(request.getParameter("No"));
 		int page = Integer.parseInt(request.getParameter("P"));
 		
-		ComBoardDTO dto = this.mapper.getComBoard(com_board_key);
+		ComBoardDTO dto = this.comBoardMapper.getComBoard(com_board_key);
 		
 		model.addAttribute("dto",dto).addAttribute("P",page);
 		
@@ -225,12 +225,12 @@ public class ComBoardController {
 	}
 	
 	// (상세보기) 페이지 이동
-	@GetMapping("/update")
+	@GetMapping("/comBoard/update")
 	public String goComBoardUpdate(HttpServletRequest request, Model model) {
 		
 		int com_board_key = Integer.parseInt(request.getParameter("No"));
 		
-		ComBoardDTO dto = this.mapper.getComBoard(com_board_key);
+		ComBoardDTO dto = this.comBoardMapper.getComBoard(com_board_key);
 		
 		model.addAttribute("dto",dto);
 		
@@ -238,7 +238,7 @@ public class ComBoardController {
 	}
 	
 	// (등록) 공고 수정
-	@PostMapping("/updateOk")
+	@PostMapping("/comBoard/updateOk")
 	public void updateComBoard(ComBoardDTO dto,  HttpServletResponse response, HttpSession session) throws IOException {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -246,7 +246,7 @@ public class ComBoardController {
 		System.out.println("dto.getCom_board_key()sssssss");
 		System.out.println(dto.getCom_board_key()+"dto.getCom_board_key()");
 		
-		if(this.mapper.updateComBoard(dto) > 0) {
+		if(this.comBoardMapper.updateComBoard(dto) > 0) {
 			out.println("<script> alert('공고수정 성공'); location.href='/comBoard'; </script>"); // 마이페이지로 변경 예정
 		}else {
 			out.println("<script> alert('공고수정 실패'); history.back(); </script>");
