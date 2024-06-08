@@ -38,7 +38,7 @@ import lombok.RequiredArgsConstructor;
 public class CompanyController {
 
 	@Autowired
-	private CompanyMapper companymapper;
+	private CompanyMapper companyMapper;
 	
 	@Autowired
 	private UserMapper userMapper;
@@ -138,7 +138,7 @@ public class CompanyController {
 
 		System.out.println(dto.getCompany_logo_name() + "t");
 
-		int res = companymapper.insertCompany(dto);
+		int res = companyMapper.insertCompany(dto);
 
 		response.setContentType("text/html; charset=UTF-8");
 
@@ -279,7 +279,7 @@ public class CompanyController {
 			dto.setCompany_homepage("http://" + dto.getCompany_homepage());
 		}
 
-		int result = this.companymapper.companyUpdate(dto);
+		int result = this.companyMapper.companyUpdate(dto);
 
 		response.setContentType("text/html; charset=UTF-8");
 
@@ -288,14 +288,14 @@ public class CompanyController {
 		if (result == 1) {
 			session.removeAttribute("companyInfo");
 
-			CompanyDTO updatedto = this.companymapper.companyInfo(dto.getCompany_id());
+			CompanyDTO updatedto = this.companyMapper.companyInfo(dto.getCompany_id());
 
 			session.setAttribute("companyInfo", updatedto);
 			session.setAttribute("member_type", "company");
 
 			out.println("<script>");
 			out.println("alert('회원정보수정 완료하였습니다.')");
-			out.println("location.href='/main.go'");
+			out.println("location.href='/C/info'");
 			out.println("</script>");
 		} else {
 			out.println("<script>");
@@ -321,7 +321,7 @@ public class CompanyController {
 		
 		String newCompanyNo = str1 + "-" + str2 + "-" + str3;
 
-		CompanyDTO idCheck = this.companymapper.companyInfo(newCompanyNo);
+		CompanyDTO idCheck = this.companyMapper.companyInfo(newCompanyNo);
 
 		if (idCheck != null) {
 			res = "unavailable";
@@ -340,7 +340,7 @@ public class CompanyController {
 
 		response.setContentType("text/html; charset=UTF-8");
 
-		CompanyDTO idCheck = this.companymapper.companyInfo(comId);
+		CompanyDTO idCheck = this.companyMapper.companyInfo(comId);
 		
 		UserDTO userIdCheck = this.userMapper.getUserById(comId);
 
@@ -368,7 +368,7 @@ public class CompanyController {
 
 		String companyNumber = str1 + "-" + str2 + "-" + str3;
 
-		String company_id = this.companymapper.findCompanyId(company_mgr_name, companyNumber);
+		String company_id = this.companyMapper.findCompanyId(company_mgr_name, companyNumber);
 		
 		System.out.println(company_id);
 
@@ -404,7 +404,7 @@ public class CompanyController {
 
 		String companyNumber = str1 + "-" + str2 + "-" + str3;
 		
-		String company_pwd = this.companymapper.findCompanyPwd(company_mgr_name, companyNumber, company_id);
+		String company_pwd = this.companyMapper.findCompanyPwd(company_mgr_name, companyNumber, company_id);
 		
 		System.out.println(company_pwd);
 
@@ -436,7 +436,7 @@ public class CompanyController {
 		
 		PrintWriter out = response.getWriter();
 		
-		CompanyDTO dto = this.companymapper.companyInfo(company_id);
+		CompanyDTO dto = this.companyMapper.companyInfo(company_id);
 		
 		if(encordedPwd.equals(dto.getCompany_pwd())) {
 			out.println("<script>");
@@ -444,7 +444,7 @@ public class CompanyController {
 			out.println("history.back()");
 			out.println("</script>");
 		}else {
-			int result = this.companymapper.companyPwdUpdate(company_id,encordedPwd);
+			int result = this.companyMapper.companyPwdUpdate(company_id,encordedPwd);
 			
 			if(result == 1) {
 				out.println("<script>");
@@ -498,7 +498,7 @@ public class CompanyController {
 
 			uploadFileService.deleteFile(company_dto.getCompany_logo(), logoUploadDir);
 	    	
-	    	int result = this.companymapper.companyDelete(company_dto.getCompany_key());
+	    	int result = this.companyMapper.companyDelete(company_dto.getCompany_key());
 	    	
 	    	System.out.println(result);
 	    	
@@ -507,7 +507,7 @@ public class CompanyController {
 	    		
 	    		out.println("<script>");
 				out.println("alert('회원삭제에 성공했습니다.')");
-				out.println("location.href='main'");
+				out.println("location.href='/main'");
 				out.println("</script>");
 	    	}else {
 	    		out.println("<script>");
