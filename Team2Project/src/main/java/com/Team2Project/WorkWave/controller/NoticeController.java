@@ -19,7 +19,7 @@ import jakarta.servlet.http.HttpServletRequest;
 public class NoticeController {
 
 	@Autowired
-	private NoticeMapper mapper;
+	private NoticeMapper noticeMapper;
 	
 	// 한 페이지당 보여질 게시물의 수
 	private final int rowsize = 10;
@@ -28,21 +28,21 @@ public class NoticeController {
 	private int totalRecord = 0;
 	
 	// 개인회원 FAQ로 이동
-	@GetMapping("userFAQ.go")
+	@GetMapping("/userFAQ")
 	public String userFAQ() {
 		
 		return "notice/userFAQ";
 	}
 	
 	// 기업회원 FAQ로 이동
-	@GetMapping("companyFAQ.go")
+	@GetMapping("/companyFAQ")
 	public String companyFAQ() {
 		
 		return "notice/companyFAQ";
 	}
 	
 	// 공지사항 리스트 페이지 이동 
-	@GetMapping("notice.go")
+	@GetMapping("/notice")
 	public String noticeList(HttpServletRequest request, Model model) {
 		
 		int page;	// 현재 페이지 변수
@@ -54,12 +54,12 @@ public class NoticeController {
 			page = 1;
 		}
 		
-		totalRecord = this.mapper.countNotices();
+		totalRecord = this.noticeMapper.countNotices();
 		
 		Page pdto = new Page(page, rowsize, totalRecord);
 		
 		// 현재 페이지에 해당하는 공지사항을 가져오는 메서드 호출.
-		List<NoticeDTO> notice_list = this.mapper.noticeList(pdto);
+		List<NoticeDTO> notice_list = this.noticeMapper.noticeList(pdto);
 		
 		model.addAttribute("nList", notice_list)
 			 .addAttribute("paging", pdto);
@@ -68,11 +68,11 @@ public class NoticeController {
 	}
 	
 	// 공지사항 상세정보 페이지 이동
-	@GetMapping("notice_cont")
+	@GetMapping("/noticeCont")
 	public String noticeCont(@RequestParam("no") int no, Model model) {
 		
 		// 공지사항 상세정보 호출
-		NoticeDTO notice_cont = this.mapper.noticeCont(no);
+		NoticeDTO notice_cont = this.noticeMapper.noticeCont(no);
 		
 		model.addAttribute("nCont", notice_cont);
 		

@@ -18,17 +18,17 @@
 </script>
 </head>
 <body>
-	<div th:replace="~{include/header :: guestHeader}"></div> 
+	<div th:replace="~{include/header}"></div>
     <div layout:fragment="content" class="content">
 
 	<div class="mainContainer">
       <div class="sidebar active">
       	<h3>고객센터</h3>
-        <a th:href="@{/userFAQ.go}">개인회원</a>
-        <a th:href="@{/companyFAQ.go}">기업회원</a>
-        <a th:href="@{/notice.go}">공지사항</a>
-        <a th:href="@{/find_id.go}">아이디 찾기</a>
-        <a th:href="@{/find_password.go}">비밀번호 찾기</a>
+        <a th:href="@{/userFAQ}">개인회원</a>
+        <a th:href="@{/companyFAQ}">기업회원</a>
+        <a th:href="@{/notice}">공지사항</a>
+        <a th:href="@{/findId}">아이디 찾기</a>
+        <a th:href="@{/findPwd}">비밀번호 찾기</a>
         <a th:href="@{/resign}">회원탈퇴</a>
       </div>
       

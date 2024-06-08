@@ -37,8 +37,6 @@
             console.log("성별을 선택해주세요.");
             return false;
         }
-        
-        
 
        // 모든 필드가 유효한 경우
        return true;
@@ -58,7 +56,7 @@
         var email = $('#user_email').val();
         console.log("Sending verification code to: " + email);
         $.ajax({
-            url: '/sendCode',
+            url: '/veri/sendCode',
             type: 'POST',
             dataType: 'json',
             contentType: 'application/json',
@@ -85,7 +83,7 @@
         var code = $('#veri_code').val();
         console.log("Verifying code for: " + email);
         $.ajax({
-            url: '/verifyCode',
+            url: '/veri/verifyCode',
             type: 'POST',
             dataType: 'json',
             contentType: 'application/json',
@@ -112,7 +110,7 @@
         var userId = $('#user_id').val();
         console.log("Checking ID for: " + userId);
         $.ajax({
-            url: '/checkUserId',
+            url: '/ajax/checkUserId',
             type: 'POST',
             dataType: 'json',
             contentType: 'application/json',
