@@ -84,9 +84,9 @@
                         </div>
 
                         <div class="text-center mt-4">
-                            <button type="button" class="btn btn-primary" th:onclick="|location.href='@{chat_modify(no=${cont.chat_key})}'|">글수정</button>
-                            <button type="button" class="btn btn-danger" th:onclick="|if(confirm('정말로 게시글을 삭제하시겠습니까?')){ location.href='@{chat_delete(no=${cont.chat_key})}' }else{return;}|">글삭제</button>
-                            <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{chat.go}'|">전체목록</button>
+                            <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/U/chat/update(no=${cont.chat_key})}'|">글수정</button>
+                            <button type="button" class="btn btn-danger" th:onclick="|if(confirm('정말로 게시글을 삭제하시겠습니까?')){ location.href='@{/U/chat/delete(no=${cont.chat_key})}' }else{return;}|">글삭제</button>
+                            <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/chat}'|">전체목록</button>
                         </div>
                         <div class="container mt-5">
 						  <h1>댓글</h1>
@@ -179,7 +179,7 @@
 				}else{
 					let formData = new FormData();
 					formData.append("chat_key",chat_key);
-					ajaxGo(formData, '/chats_like.go')
+					ajaxGo(formData, '/ajax/chatLike')
 					like_count = like_count + 1;
 				}
 			});
@@ -191,7 +191,7 @@
 				let formData = new FormData();
 				formData.append("reply_cont", reply_cont);
 				formData.append("chat_key",chat_key);
-				ajaxGo(formData, '/reply.go')	
+				ajaxGo(formData, '/ajax/reply')	
 				
 			});
 			
@@ -201,7 +201,7 @@
 				}else{
 					let formData = new FormData();
 					formData.append("reply_key",reply_key);
-					ajaxGo(formData, '/reply_like.go')
+					ajaxGo(formData, '/ajax/replyLike')
 					replylike_count = replylike_count + 1;
 				}
 			});

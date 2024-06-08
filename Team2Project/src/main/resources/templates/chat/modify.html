@@ -21,7 +21,7 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                        <form th:if="${modify != null}" method="post" action="chat_modify_ok">
+                        <form th:if="${modify != null}" method="post" action="/U/chat/updateOk">
                             <input type="hidden" name="chat_key" th:value="${modify.chat_key}">
 
                             <div class="form-group">
