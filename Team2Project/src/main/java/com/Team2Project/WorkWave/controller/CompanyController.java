@@ -38,7 +38,7 @@ import lombok.RequiredArgsConstructor;
 public class CompanyController {
 
 	@Autowired
-	private CompanyMapper mapper;
+	private CompanyMapper companymapper;
 	
 	@Autowired
 	private UserMapper userMapper;
@@ -50,14 +50,14 @@ public class CompanyController {
 	private PasswordEncoder passwordEncoder;
 
 	// 기업회원가입 페이지로 이동
-	@GetMapping("company_insert.go")
+	@GetMapping("/companyJoin")
 	public String signUpForm(Model model) {
 		model.addAttribute("company", new CompanyDTO());
 		return "company/insert";
 	}
 
 	// 회원가입 완료
-	@PostMapping("/company_insert_ok.go")
+	@PostMapping("/companyJoinOk")
 	public void companySignUp(@RequestParam("logo") MultipartFile file,
 							  CompanyDTO dto, 
 							  HttpServletResponse response)
@@ -138,7 +138,7 @@ public class CompanyController {
 
 		System.out.println(dto.getCompany_logo_name() + "t");
 
-		int res = mapper.insertCompany(dto);
+		int res = companymapper.insertCompany(dto);
 
 		response.setContentType("text/html; charset=UTF-8");
 
@@ -147,7 +147,7 @@ public class CompanyController {
 		if (res == 1) {
 			out.println("<script>");
 			out.println("alert('회원가입을 완료하였습니다.')");
-			out.println("location.href='login.go'");
+			out.println("location.href='login'");
 			out.println("</script>");
 		} else {
 			out.println("<script>");
@@ -158,7 +158,7 @@ public class CompanyController {
 	}
 
 	// 기업회원 정보 수정하기전 비밀번호 확인 페이지 이동
-	@GetMapping("/company_modify.go")
+	@GetMapping("/update/pwdCheck")
 	public String companyModify(HttpSession session, Model model) {
 
 		model.addAttribute("companyInfo", session.getAttribute("companyInfo"));
@@ -168,7 +168,7 @@ public class CompanyController {
 	}
 
 	// 비밀번호 입력후 기업회원 정보 수정 페이지로 이동
-	@PostMapping("/company_modify_ok.go")
+	@PostMapping("/update/pwdCheckOk")
 	public String companyModifyOk(@RequestParam("company_pwd") String pwd,
 			@RequestParam("company_number") String company_no, HttpSession session, HttpServletResponse response)
 			throws IOException {
@@ -208,7 +208,7 @@ public class CompanyController {
 	}
 
 	// 회원정보를 수정 확정하는 메서드
-	@PostMapping("/comapany_update.go")
+	@PostMapping("/update")
 	@ResponseBody
 	public void companyInfoUpdate(@RequestParam("logo") MultipartFile file, CompanyDTO dto,
 			HttpServletResponse response, HttpSession session) throws IOException {
@@ -279,7 +279,7 @@ public class CompanyController {
 			dto.setCompany_homepage("http://" + dto.getCompany_homepage());
 		}
 
-		int result = this.mapper.companyUpdate(dto);
+		int result = this.companymapper.companyUpdate(dto);
 
 		response.setContentType("text/html; charset=UTF-8");
 
@@ -288,7 +288,7 @@ public class CompanyController {
 		if (result == 1) {
 			session.removeAttribute("companyInfo");
 
-			CompanyDTO updatedto = this.mapper.companyInfo(dto.getCompany_id());
+			CompanyDTO updatedto = this.companymapper.companyInfo(dto.getCompany_id());
 
 			session.setAttribute("companyInfo", updatedto);
 			session.setAttribute("member_type", "company");
@@ -299,14 +299,14 @@ public class CompanyController {
 			out.println("</script>");
 		} else {
 			out.println("<script>");
-			out.println("alert('회원정보수정 완료하였습니다.')");
+			out.println("alert('회원정보수정 실패하였습니다.')");
 			out.println("history.back()");
 			out.println("</script>");
 		}
 
 	}
 	
-	@PostMapping("/comNoCheck.go")
+	@PostMapping("/companyNumberCheck")
 	@ResponseBody
 	public String companyNoCheck(@RequestParam("company_no") String company_no,HttpServletRequest request,
 			HttpServletResponse response) {
@@ -321,7 +321,7 @@ public class CompanyController {
 		
 		String newCompanyNo = str1 + "-" + str2 + "-" + str3;
 
-		CompanyDTO idCheck = this.mapper.companyInfo(newCompanyNo);
+		CompanyDTO idCheck = this.companymapper.companyInfo(newCompanyNo);
 
 		if (idCheck != null) {
 			res = "unavailable";
@@ -331,7 +331,7 @@ public class CompanyController {
 	}
 
 	// 아이디 중복검사
-	@PostMapping("/idcheck.go")
+	@PostMapping("/checkCompanyId")
 	@ResponseBody
 	public String companyIdCheck(@RequestParam("id") String comId, HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
@@ -340,7 +340,7 @@ public class CompanyController {
 
 		response.setContentType("text/html; charset=UTF-8");
 
-		CompanyDTO idCheck = this.mapper.companyInfo(comId);
+		CompanyDTO idCheck = this.companymapper.companyInfo(comId);
 		
 		UserDTO userIdCheck = this.userMapper.getUserById(comId);
 
@@ -353,8 +353,8 @@ public class CompanyController {
 	}
 
 	// 아이디 찾기 성공
-	@GetMapping("/comapny_find_id_ok.go")
-	public String findCompanyId(@RequestParam("company_mgr_name") String company_mgr_name,
+	@GetMapping("/companyFindId")
+	public void findCompanyId(@RequestParam("company_mgr_name") String company_mgr_name,
 								@RequestParam("company_number") String company_number, 
 								Model model, 
 								HttpServletResponse response)
@@ -368,7 +368,7 @@ public class CompanyController {
 
 		String companyNumber = str1 + "-" + str2 + "-" + str3;
 
-		String company_id = this.mapper.findCompanyId(company_mgr_name, companyNumber);
+		String company_id = this.companymapper.findCompanyId(company_mgr_name, companyNumber);
 		
 		System.out.println(company_id);
 
@@ -377,22 +377,20 @@ public class CompanyController {
 		if (company_id == null) {
 			out.println("<script>");
 			out.println("alert('입력하신 정보에 해당하는 회원정보가 없습니다.')");
-			out.println("location.href='/find_id.go'");
+			out.println("location.href='/G/userFindId'");
 			out.println("</script>");
-			
-			return "user/find_id";
+	
 		} else {
 
 			model.addAttribute("companyId", company_id);
 
-			return "company/find_id_result";
 		}
 
 	}
 
 	 // 비밀번호 찾기 성공	 
-	@GetMapping("/company_find_password_ok.go") 
-	public String findCompanyPwd(@RequestParam("company_mgr_name") String company_mgr_name,
+	@GetMapping("/companyFindPwdOk") 
+	public void findCompanyPwd(@RequestParam("company_mgr_name") String company_mgr_name,
 			 					 @RequestParam("company_number") String company_number,
 			 					 @RequestParam("company_id") String company_id, 
 			 					 Model model,
@@ -406,7 +404,7 @@ public class CompanyController {
 
 		String companyNumber = str1 + "-" + str2 + "-" + str3;
 		
-		String company_pwd = this.mapper.findCompanyPwd(company_mgr_name, companyNumber, company_id);
+		String company_pwd = this.companymapper.findCompanyPwd(company_mgr_name, companyNumber, company_id);
 		
 		System.out.println(company_pwd);
 
@@ -415,43 +413,43 @@ public class CompanyController {
 		if (company_pwd == null) {
 			out.println("<script>");
 			out.println("alert('입력하신 정보에 해당하는 회원정보가 없습니다.')");
-			out.println("location.href='/find_password.go'");
+			out.println("location.href='/G/userFindPwd'");
 			out.println("</script>");
 			
-			return "user/find_password";
 		} else {
 
 			model.addAttribute("companyId", company_id);
 
-			return "company/find_pwd_result";
 		}
 	
 	}
 	
 	// 비밀번호찾기에서 해당 유저가 존재할 시 새 비밀번호를 설정하여 업데이트
-	@PostMapping("/company_pwd_update")
+	@PostMapping("/companyPwdUpdate")
 	public void companyPwdUpdate(@RequestParam("company_id") String company_id ,
 								 @RequestParam("company_pwd") String company_pwd,
-								 HttpServletResponse response) throws IOException {		
+								 HttpServletResponse response) throws IOException {
+		
+		String encordedPwd = passwordEncoder.encode(company_pwd);
 		
 		response.setContentType("text/html; charset=UTF-8");
 		
 		PrintWriter out = response.getWriter();
 		
-		CompanyDTO dto = this.mapper.companyInfo(company_id);
+		CompanyDTO dto = this.companymapper.companyInfo(company_id);
 		
-		if(company_pwd.equals(dto.getCompany_pwd())) {
+		if(encordedPwd.equals(dto.getCompany_pwd())) {
 			out.println("<script>");
 			out.println("alert('기존 비밀번호와 새로 입력하신 비밀번호가 같습니다.')");
 			out.println("history.back()");
 			out.println("</script>");
 		}else {
-			int result = this.mapper.companyPwdUpdate(company_id,company_pwd);
+			int result = this.companymapper.companyPwdUpdate(company_id,encordedPwd);
 			
 			if(result == 1) {
 				out.println("<script>");
 				out.println("alert('비밀번호 수정에 성공했습니다.')");
-				out.println("location.href='/login.go'");
+				out.println("location.href='/G/login");
 				out.println("</script>");
 			}else {
 				out.println("<script>");
@@ -464,7 +462,7 @@ public class CompanyController {
 	}
 	
 	// 회원 삭제 페이지로 이동
-	@GetMapping("/company_delete.go")
+	@GetMapping("/delete/pwdCheck")
 	public String companyDelete(HttpSession session) {
 
 		session.setAttribute("companyInfo", session.getAttribute("companyInfo"));
@@ -473,7 +471,7 @@ public class CompanyController {
 
 	}
 	
-	@PostMapping("/company_delete_ok.go")
+	@PostMapping("/delete/pwdCheckOk")
 	public void companyDeleteOk(@RequestParam("company_pwd") String company_pwd,
 								@RequestParam("company_number") String company_number,
 								HttpSession session,
@@ -500,7 +498,7 @@ public class CompanyController {
 
 			uploadFileService.deleteFile(company_dto.getCompany_logo(), logoUploadDir);
 	    	
-	    	int result = this.mapper.companyDelete(company_dto.getCompany_key());
+	    	int result = this.companymapper.companyDelete(company_dto.getCompany_key());
 	    	
 	    	System.out.println(result);
 	    	
@@ -509,7 +507,7 @@ public class CompanyController {
 	    		
 	    		out.println("<script>");
 				out.println("alert('회원삭제에 성공했습니다.')");
-				out.println("location.href='/'");
+				out.println("location.href='main'");
 				out.println("</script>");
 	    	}else {
 	    		out.println("<script>");
