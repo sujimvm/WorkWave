@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +23,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 
-@Controller("/U")
+@Controller
+@RequestMapping("/U")
 public class UserRController {
 
    @Autowired private ChatMapper chatMapper;
@@ -57,7 +59,7 @@ public class UserRController {
    }
 
    // 유저 정보 수정받기 전 비밀번호 확인 페이지로 이동
-   @GetMapping("/update/pwdCheck")
+   @GetMapping("/update/userPwdCheck")
    public String modify(HttpSession session) {
       
       UserDTO userInfo = (UserDTO)session.getAttribute("user_login");
@@ -70,7 +72,7 @@ public class UserRController {
    }
 
    // 유저 수정 비밀번호 확인 성공 시 유저 수정 페이지로 이동
-   @PostMapping("/update/pwdCheckOk")
+   @PostMapping("/update/userPwdCheckOk")
    public String modifyOk(@RequestParam("user_pwd") String pwd,
                      HttpSession session,
                       HttpServletResponse response) throws IOException {
@@ -95,7 +97,7 @@ public class UserRController {
    }
    
    // 유저 정보 삭제 시 삭제 페이지 이동
-   @GetMapping("/delete/pwdCheck")
+   @GetMapping("/delete/userPwdCheck")
    public String delete(HttpSession session) {
       
       UserDTO delete = (UserDTO)session.getAttribute("user_login");
@@ -107,7 +109,7 @@ public class UserRController {
    }
    
    // 유저 정보 삭제 페이지에서 비밀번호 확인 후 유저 마이페이지로 이동
-   @PostMapping("/delete/pwdCheckOk")
+   @PostMapping("/delete/userPwdCheckOk")
    public void deleteok(@RequestParam("user_pwd") String userPwd, HttpSession session, HttpServletResponse response)
          throws IOException {
       
@@ -489,7 +491,7 @@ public class UserRController {
 			return "chat/write";
 		}
 		
-		@PostMapping("/profile/insertOk")
+		@PostMapping("/chat/insertOk")
 		public void writeok(ChatDTO dto, HttpServletResponse response) throws IOException {
 			
 			response.setContentType("text/html; charset=UTF-8");

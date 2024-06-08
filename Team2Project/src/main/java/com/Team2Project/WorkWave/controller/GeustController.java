@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -19,7 +20,8 @@ import com.Team2Project.WorkWave.service.*;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-@Controller("/G")
+@Controller
+@RequestMapping("/G")
 public class GeustController {
 
     @Autowired private CompanyMapper companyMapper;
@@ -28,7 +30,7 @@ public class GeustController {
 
     @Autowired private UploadFileService uploadFileService;
     @Autowired private UserService userService;
-   
+    
     // 기업회원가입 페이지로 이동
 	@GetMapping("/companyJoin")
 	public String signUpForm(Model model) {

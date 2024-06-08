@@ -36,7 +36,7 @@ public class CompanySecurityConfig {
 		http
 			.authorizeHttpRequests(authorize -> authorize
 			 // 여기 매핑은 누구나 접근 가능(ajax에 들어가는 매핑도 넣어야함.)
-            .requestMatchers("/A/**","/ajax/**").permitAll()
+            .requestMatchers("/A/**","/ajax/**","/veri/**","/login").permitAll()
             .requestMatchers("/resources/**", "/css/**", "/js/**", "/image/**").permitAll()
             // 여기는 기업이나 개인 롤을 가진 계정만 접근 가능
             .requestMatchers("/CU/**").hasAnyRole("COMPANY","USER") 
@@ -44,14 +44,14 @@ public class CompanySecurityConfig {
             .requestMatchers("/C/**").hasRole("COMPANY") 
             // 여기는 개인 롤을 가진 계정만 접근가능
             .requestMatchers("/U/**").hasRole("USER")
-            .requestMatchers("/G/**").anonymous()
+						/* .requestMatchers("/G/**").anonymous() */
             // 다른 요청은 인증 필요
             .anyRequest().authenticated()
         )
         .formLogin(form -> form
             .loginPage("/login")
             .loginProcessingUrl("/loginOk")
-            .defaultSuccessUrl("/main", true)
+            .defaultSuccessUrl("/A/main", true)
             .permitAll()
         )
         .logout(logout -> logout
