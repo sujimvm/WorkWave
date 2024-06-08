@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 </head>
 <body>
-
+<div th:replace="~{include/header}"></div>
 <div class="container">
     <div class="text-center mt-5">
         <hr width="30%" color="gray">
@@ -52,6 +52,7 @@
 
 <!-- 부트스트랩 JS 및 jQuery 추가 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<div th:replace="~{include/footer :: footer}"></div>
 
 </body>
 </html>

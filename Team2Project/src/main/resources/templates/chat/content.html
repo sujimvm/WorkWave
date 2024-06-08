@@ -17,6 +17,7 @@
     </style>
 </head>
 <body>
+<div th:replace="~{include/header}"></div>
     <div class="container">
         <div class="text-center mt-5">
             <hr class="w-25 border-danger">
@@ -86,7 +87,7 @@
                         <div class="text-center mt-4">
                             <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/U/chat/update(no=${cont.chat_key})}'|">글수정</button>
                             <button type="button" class="btn btn-danger" th:onclick="|if(confirm('정말로 게시글을 삭제하시겠습니까?')){ location.href='@{/U/chat/delete(no=${cont.chat_key})}' }else{return;}|">글삭제</button>
-                            <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/chat}'|">전체목록</button>
+                            <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/A/chat}'|">전체목록</button>
                         </div>
                         <div class="container mt-5">
 						  <h1>댓글</h1>
@@ -209,6 +210,6 @@
 		
 	</script>
 	
-
+	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>
