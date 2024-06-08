@@ -66,7 +66,7 @@ public class AjaxController {
 	}
 	
 	@PostMapping("/companyNumberCheck")
-	//@ResponseBody
+	@ResponseBody
 	public String companyNoCheck(@RequestParam("company_no") String company_no,HttpServletRequest request,
 		HttpServletResponse response) {
 		String res = "available";
@@ -75,7 +75,7 @@ public class AjaxController {
 		String str2 = company_no.substring(3, 5);
 		String str3 = company_no.substring(5);
 		String newCompanyNo = str1 + "-" + str2 + "-" + str3;
-		CompanyDTO idCheck = this.companyMapper.companyInfo(newCompanyNo);
+		CompanyDTO idCheck = this.companyMapper.companyInfoByNo(newCompanyNo);
 		if (idCheck != null) {
 			res = "unavailable";
 		}
