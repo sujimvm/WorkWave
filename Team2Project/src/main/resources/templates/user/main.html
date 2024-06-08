@@ -8,16 +8,16 @@
 <link rel="stylesheet" th:href="@{/css/user.css}">
 </head>
 <body>
-	<div th:replace="~{include/header :: userHeader}"></div> 
+	<div th:replace="~{include/header}"></div>
         <div layout:fragment="content" class="content">
            <span>사용자</span>님!
             <h2>로그인 성공</h2>
         </div>  
         
         
-        <button type="button" th:onclick="|location.href='@{/user_modify.go}'|">회원수정</button>
+        <button type="button" th:onclick="|location.href='@{/U/update/pwdCheck}'|">회원수정</button>
 
-        <button type="button" th:onclick="|location.href='@{/user_delete.go}'|">회원삭제</button>
+        <button type="button" th:onclick="|location.href='@{/U/delete/pwdCheckOk}'|">회원삭제</button>
    
 	<div th:replace="~{include/footer :: footer}"></div>
 </body>

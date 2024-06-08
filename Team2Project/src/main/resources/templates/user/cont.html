@@ -8,8 +8,7 @@
 <link rel="stylesheet" th:href="@{/css/userCont.css}">
 </head>
 <body>
-	<div th:if="${session.user_login}" th:replace="include/header :: userHeader"></div>
-    <div th:if="${session.user_login == null}" th:replace="include/header :: guestHeader"></div>
+	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
 		
 		<div class="main-container">

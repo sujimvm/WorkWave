@@ -8,7 +8,7 @@
 <link rel="stylesheet" th:href="@{/css/user.css}">
 </head>
 <body>
-	<div th:replace="~{include/header :: guestHeader}"></div> 
+	<div th:replace="~{include/header}"></div>
         <div layout:fragment="content" class="content">
       <hr width="30%" color="gray">
          <h3>
@@ -16,7 +16,7 @@
     	</h3>
       <hr width="30%" color="gray">
       
-      <form method="post" action="/user_update.go">
+      <form method="post" action="/U/info">
          <input type="hidden" name="user_key" th:value="${session.userInfo.user_key}">
          <table border="1" width="500">
             <tr>
