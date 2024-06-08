@@ -7,7 +7,6 @@
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script th:src="@{/js/comBoardContent.js}"></script>
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
@@ -130,7 +129,7 @@
 			</div><!-- 포지션제안 -->
 			
 			<div>
-				<input type="button" th:onclick="|location.href='@{/comBoard?P=2}'|" value="목록">
+				<input type="button" th:onclick="|location.href='@{/A/comBoard?P=2}'|" value="목록">
 			</div>
 		</div>
 	<div th:replace="~{include/footer :: footer}"></div>

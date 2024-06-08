@@ -24,7 +24,7 @@ function getComBoardList(nowPg) {
 	alert(nowPg);
 	if(nowPg == '') nowPg = 1;
 	$.ajax({
-		url: '/comBoard/list',
+		url: '/ajax/comBoardList',
 		type: 'post',
 		dataType: 'json',
 		data:{"page":nowPg},
@@ -40,7 +40,7 @@ function getComBoardList(nowPg) {
 			list.forEach(function(list) {
 				var row = "<tr>" +
 					"<td><input type='checkbox' name='apply_check' id='apply_check_"+list.com_board_key+"' value='"+list.com_board_key+"'><a href='#'>" + list.company_name + "</a><input type='checkbox' class='interest_check' name='interest_check_"+list.company_key+"' value='"+list.company_key+"'></td>" + // 선택 지원 | 기업명 | 관심기업 체크박스
-					"<td><a href='/comBoard/content?P="+nowPg+"&No="+list.com_board_key+"'>" + list.com_board_title + "<br>" + 
+					"<td><a href='/A/comBoard/content?P="+nowPg+"&No="+list.com_board_key+"'>" + list.com_board_title + "<br>" + 
 					list.com_board_career + list.com_board_edu + list.company_addr + list.com_board_jobtype  + "<br>" + 
 					list.com_board_group + list.com_board_sub + list.com_board_step + "</a></td>" +
 					"<td><input type='button' id='addApplyBt_"+list.com_board_key+"' onclick='addApply("+list.com_board_key+")' value='지원하기'></td>" + // 해당기업 지원하기
@@ -89,7 +89,7 @@ function getComBoardList(nowPg) {
 // 관심기업 체크 시 관심기업 등록 / 해제
 function interestCheck(check, company_key) {
 	$.ajax({
-		url: '/comBoard/interestCheck',
+		url: '/ajax/interest/action',
 		type: 'post',
 		dataType: 'json',
 		data:{"check":check,"company_key":company_key},
@@ -103,7 +103,7 @@ function interestCheck(check, company_key) {
 // 공고 지원 등록 / 해제
 function addApply(checked) {
 	$.ajax({
-		url: '/comBoard/addApply',
+		url: '/ajax/apply/insert',
 		type: 'post',
 		dataType: 'json',
 		data:{"checked":checked},

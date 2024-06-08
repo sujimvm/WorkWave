@@ -27,24 +27,18 @@ public class HomeController {
 	@Autowired
 	private UserMapper userMapper;
 
-	@GetMapping("/")
+	@GetMapping("/") // 삭제 
 	public String index(Model model, HttpSession session) {
 		
 		return "index";
 	}
 	
-	@GetMapping("/login.go")
+	@GetMapping("/login")
 	public String userLogin() {
 		return "mainLogin";
 	}
 	
-	@GetMapping("/clogin.go")
-	public String companyLogin() {
-		return "company/login";
-	}
-
-	
-	@GetMapping("/main.go")
+	@GetMapping("/main")
 	public String goMain(HttpSession session) { 
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
