@@ -13,11 +13,11 @@
 	<div class="mainContainer">
 	<div class="sidebar active">
       	<h3>고객센터</h3>
-        <a th:href="@{/userFAQ}">개인회원</a>
-        <a th:href="@{/companyFAQ}">기업회원</a>
-        <a th:href="@{/notice}">공지사항</a>
-        <a th:href="@{/findId}">아이디 찾기</a>
-        <a th:href="@{/findPwd}">비밀번호 찾기</a>
+        <a th:href="@{/A/userFAQ}">개인회원</a>
+        <a th:href="@{/A/companyFAQ}">기업회원</a>
+        <a th:href="@{/A/notice}">공지사항</a>
+        <a th:href="@{/G/findId}">아이디 찾기</a>
+        <a th:href="@{/G/findPwd}">비밀번호 찾기</a>
         <a th:href="@{/resign}">회원탈퇴</a>
       </div>
 		
@@ -35,21 +35,21 @@
             <!-- Page navigation -->
             <ul class="pagination">
                 <li th:if="${paging != null and paging.page > paging.block}">
-                    <a th:href="@{/notice(page=1)}">[⋘]</a>
+                    <a th:href="@{/A/notice(page=1)}">[⋘]</a>
                 </li>
                 <li th:if="${paging != null and paging.page > paging.block}">
-                    <a th:href="@{/notice(page=${paging.startBlock - 1})}">[☚]</a>
+                    <a th:href="@{/A/notice(page=${paging.startBlock - 1})}">[☚]</a>
                 </li>
 
                 <li th:each="i : ${#numbers.sequence(paging.startBlock, paging.endBlock)}">
-                    <a th:href="@{/notice(page=${i})}" th:text="'[' + ${i} + ']'"></a>
+                    <a th:href="@{/A/notice(page=${i})}" th:text="'[' + ${i} + ']'"></a>
                 </li>
 
                 <li th:if="${paging != null and paging.endBlock < paging.allPage}">
-                    <a th:href="@{/notice(page=${paging.endBlock + 1})}">[➤]</a>
+                    <a th:href="@{/A/notice(page=${paging.endBlock + 1})}">[➤]</a>
                 </li>
                 <li th:if="${paging != null and paging.endBlock < paging.allPage}">
-                    <a th:href="@{/notice(page=${paging.allPage})}">[⋙]</a>
+                    <a th:href="@{/A/notice(page=${paging.allPage})}">[⋙]</a>
                 </li>
             </ul>
         </div>

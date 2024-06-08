@@ -93,7 +93,7 @@ public class VeriController {
     }
     
     
-	@PostMapping("/send_sms.go")
+	@PostMapping("/sendSms")
     @ResponseBody
     public ResponseEntity<?> sendSms(@RequestParam("mgrPhone") String mgrPhone) {
         
@@ -111,7 +111,7 @@ public class VeriController {
         }
     }
 	
-	@PostMapping("/re_send_sms.go")
+	@PostMapping("/reSendSms")
     @ResponseBody
     public ResponseEntity<?> reSendSms(@RequestParam("mgrPhone") String mgrPhone) {
 		
@@ -131,7 +131,7 @@ public class VeriController {
         }
     }
 	
-	@PostMapping("/smsCodeCheck.go")
+	@PostMapping("/smsCodeCheck")
 	@ResponseBody
 	public Map<String, String> smsCodeCheck(@RequestBody Map<String, String> reqMap) {
 		

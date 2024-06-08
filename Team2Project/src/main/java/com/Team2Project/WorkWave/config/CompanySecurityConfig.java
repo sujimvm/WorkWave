@@ -44,7 +44,7 @@ public class CompanySecurityConfig {
             .requestMatchers("/C/**").hasRole("COMPANY") 
             // 여기는 개인 롤을 가진 계정만 접근가능
             .requestMatchers("/U/**").hasRole("USER")
-						/* .requestMatchers("/G/**").anonymous() */
+			.requestMatchers("/G/**").anonymous() 
             // 다른 요청은 인증 필요
             .anyRequest().authenticated()
         )
