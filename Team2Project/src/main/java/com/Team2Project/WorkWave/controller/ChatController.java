@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.Team2Project.WorkWave.model.ChatDTO;
 import com.Team2Project.WorkWave.model.ChatMapper;
 import com.Team2Project.WorkWave.model.ChatReplyDTO;
-import com.Team2Project.WorkWave.model.ChatReplyMapper;
 import com.Team2Project.WorkWave.model.UserDTO;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,57 +25,54 @@ import jakarta.servlet.http.HttpSession;
 public class ChatController {
 
 	@Autowired
-	private ChatMapper mapper;
+	private ChatMapper chatMapper;
 	
-	@Autowired
-	private ChatReplyMapper replymapper;
-	
-	
-	@GetMapping("chat.go")
+
+	@GetMapping("/chat")
 	public String list(Model model) {
 		
-		List<ChatDTO> list = this.mapper.list();
+		List<ChatDTO> list = this.chatMapper.list();
 			
 		model.addAttribute("List", list);
 		
 		return "chat/list";
 	}
 	
-	@GetMapping("chat_cont")
+	@GetMapping("/chat/content")
 	public String cont(@RequestParam("no") int no, HttpSession session, Model model) {
 		
 		// 게시물 상세정보
-		ChatDTO content = this.mapper.getContent(no);
-		this.mapper.readcount(no);
+		ChatDTO content = this.chatMapper.getContent(no);
+		this.chatMapper.readcount(no);
 		model.addAttribute("cont", content);
 		
 		// 댓글 리스트
-		List<ChatReplyDTO> replylist = this.replymapper.replylist();
+		List<ChatReplyDTO> replylist = this.chatMapper.replylist();
 		model.addAttribute("list", replylist);
 		
 		
 		return "chat/content"; 
 	}
 	
-	@GetMapping("chat_write")
+	@GetMapping("/chat/insert")
 	public String write() {
 		
 		return "chat/write";
 	}
 	
-	@PostMapping("chat_write_ok.go")
+	@PostMapping("/profile/insertOk")
 	public void writeok(ChatDTO dto, HttpServletResponse response) throws IOException {
 		
 		response.setContentType("text/html; charset=UTF-8");
 		 
 		PrintWriter out = response.getWriter();
 		
-		int result = this.mapper.add(dto);
+		int result = this.chatMapper.add(dto);
 		
 		if(result > 0) {
 			out.println("<script>");
 			out.println("alert('게시글 추가 성공!!!')");
-			out.println("location.href='chat.go'");
+			out.println("location.href='/chat'");
 			out.println("</script>");
 		}else {
 			out.println("<script>");
@@ -87,22 +83,22 @@ public class ChatController {
 
 	}
 	
-	@GetMapping("chat_delete")
+	@GetMapping("/chat/delete")
 	public void delete(@RequestParam("no")int chat_key, HttpServletResponse response) throws IOException {
 		
 		response.setContentType("text/html; charset=UTF-8");
 		
 		PrintWriter out = response.getWriter();
 		
-		int result = this.mapper.del(chat_key);
+		int result = this.chatMapper.del(chat_key);
 		
 		if(result > 0) {
 			
-			this.mapper.seq(chat_key);
+			this.chatMapper.seq(chat_key);
 			
 			out.println("<script>");
 			out.println("alert('게시글 삭제 성공')");
-			out.println("location.href='chat.go'");
+			out.println("location.href='/chat'");
 			out.println("</script>");
 		}else {
 			out.println("<script>");
@@ -113,29 +109,29 @@ public class ChatController {
 	
 	}
 	
-	@GetMapping("chat_modify")
+	@GetMapping("/chat/update")
 	public String modify(@RequestParam("no")int no, Model model) {
 		
-		ChatDTO content = this.mapper.getContent(no);
+		ChatDTO content = this.chatMapper.getContent(no);
 		
 		model.addAttribute("modify", content);
 		
 		return "chat/modify";
 	}
 	
-	@PostMapping("chat_modify_ok")
+	@PostMapping("/chat/updateOk")
 	public void modifyok(@RequestParam("chat_key") int no, ChatDTO dto, HttpServletResponse response) throws IOException {
 		
 		response.setContentType("text/html; charset=UTF-8");
 		
 		PrintWriter out = response.getWriter();
 		
-		int result = this.mapper.modify(dto);
+		int result = this.chatMapper.modify(dto);
 		
 		if(result > 0) {
 			out.println("<script>");
 			out.println("alert('게시글 수정 성공')");
-			out.println("location.href='chat.go'");
+			out.println("location.href='/chat'");
 			out.println("</script>");
 		}else {
 			out.println("<script>");
