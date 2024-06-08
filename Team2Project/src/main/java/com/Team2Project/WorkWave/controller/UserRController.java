@@ -263,7 +263,7 @@ public class UserRController {
 			if (check > 0) {
 				out.println("<script>");
 				out.println("alert('이력서 작성을 성공하였습니다.')");
-				out.println("location.href='profile_list'");
+				out.println("location.href='/U/profile'");
 				out.println("</script>");
 			} else {
 				out.println("<script>");
@@ -330,7 +330,7 @@ public class UserRController {
 			if (check > 0) {
 				out.println("<script>");
 				out.println("alert('대표 이력서로 변경하였습니다.')");
-				out.println("location.href='profile_list'");
+				out.println("location.href='/U/profile'");
 				out.println("</script>");
 			} else {
 				out.println("<script>");
@@ -360,7 +360,7 @@ public class UserRController {
 			if (check > 0) {
 				out.println("<script>");
 				out.println("alert('이력서를 삭제 하였습니다.')");
-				out.println("location.href='profile_list'");
+				out.println("location.href='/U/profile'");
 				out.println("</script>");
 			} else {
 				out.println("<script>");
@@ -470,7 +470,7 @@ public class UserRController {
 				        
 				           out.println("<script>");
 				           out.println("alert('이력서를 수정했습니다.')");
-				           out.println("location.href='profile_list'");
+				           out.println("location.href='/U/profile'");
 				           out.println("</script>");
 				        
 					} catch (Exception e) {
