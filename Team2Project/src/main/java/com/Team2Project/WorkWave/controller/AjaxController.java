@@ -24,7 +24,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 
-@RestController("/ajax")
+@RestController
+@RequestMapping("/ajax")
 public class AjaxController {
 
    @Autowired private ChatMapper chatMapper;

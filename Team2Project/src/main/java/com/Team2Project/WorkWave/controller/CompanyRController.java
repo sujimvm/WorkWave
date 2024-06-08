@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,7 +21,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@Controller("/C")
+@Controller
+@RequestMapping("/C")
 public class CompanyRController {
 
 	@Autowired
@@ -33,7 +35,7 @@ public class CompanyRController {
 	private UploadFileService uploadFileService;
 
 	// 기업회원 정보 수정하기전 비밀번호 확인 페이지 이동
-	@GetMapping("/update/pwdCheck")
+	@GetMapping("/update/companyPwdCheck")
 	public String companyModify(HttpSession session, Model model) {
 
 		model.addAttribute("companyInfo", session.getAttribute("companyInfo"));
@@ -43,7 +45,7 @@ public class CompanyRController {
 	}
 
 	// 비밀번호 입력후 기업회원 정보 수정 페이지로 이동
-	@PostMapping("/update/pwdCheckOk")
+	@PostMapping("/update/companyPwdCheckOk")
 	public String companyModifyOk(@RequestParam("company_pwd") String pwd,
 			@RequestParam("company_number") String company_no, HttpSession session, HttpServletResponse response)
 			throws IOException {
@@ -218,7 +220,7 @@ public class CompanyRController {
 	}
 
 	// 회원 삭제 페이지로 이동
-	@GetMapping("/delete/pwdCheck")
+	@GetMapping("/delete/companyPwdCheck")
 	public String companyDelete(HttpSession session) {
 
 		session.setAttribute("companyInfo", session.getAttribute("companyInfo"));
@@ -227,7 +229,7 @@ public class CompanyRController {
 
 	}
 
-	@PostMapping("/delete/pwdCheckOk")
+	@PostMapping("/delete/companyPwdCheckOk")
 	public void companyDeleteOk(@RequestParam("company_pwd") String company_pwd,
 			@RequestParam("company_number") String company_number, HttpSession session, HttpServletResponse response)
 			throws IOException {
@@ -303,32 +305,6 @@ public class CompanyRController {
 			out.println("<script> alert('공고등록 실패'); history.back(); </script>");
 		}
 		out.flush();
-	}
-
-	// (등록) 공고 중간저장
-	@PostMapping("/comBoardTemp/insert")
-	@ResponseBody
-	public int addComBoardTemp(ComBoardDTO dto, HttpSession session, HttpServletRequest request) {
-		int temp_key = dto.getTemp_key();
-		// 세션 기업정보로 기업키 저장
-//			CompanyDTO cdto = (CompanyDTO)session.getAttribute("companyInfo");
-//			dto.setCompany_key(cdto.getCompany_key());
-
-		// 컴퍼니 키 임시 저장
-		dto.setCompany_key(2);
-
-		if (temp_key != 0) {
-			if (1 > 0) {
-				System.out.println("공고 임시저장 수정 성공");
-			}
-		} else {
-			if (this.comBoardMapper.addComBoardTemp(dto) > 0) {
-				System.out.println("공고 임시저장 등록 성공");
-				temp_key = this.comBoardMapper.selectTempPk(dto.getCompany_key());
-			}
-		}
-
-		return temp_key;
 	}
 
 	// (상세보기) 페이지 이동
