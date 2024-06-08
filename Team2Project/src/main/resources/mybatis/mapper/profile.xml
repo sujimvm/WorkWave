@@ -5,201 +5,206 @@
   
   <mapper namespace="com.Team2Project.WorkWave.model.ProfileMapper">
   
-  	
-  	<select id="category" resultType="codeDTO">
-  	
-	select * from jobData where length(code)=2
-  	
-  	</select>
+     
+     <select id="category" resultType="codeDTO">
+     
+   select * from jobData where length(code)=2
+     
+     </select>
  
-  	<select id="categorysub" parameterType="String" resultType="codeDTO">
-  	
-	   select * from jobData where length(code) = 5 and code like #{no} || '%'
-  	
-  	</select>
-  	
-  	
-  	<select id="categorystep" parameterType="String" resultType="codeDTO">
-  	
-	   select * from jobData where length(code) = 7 and code like #{no} || '%'
-  	
-  	</select>
-  	
-  	
-  	<select id="schoolname" parameterType="codeDTO" resultType="codeDTO">
-   		SELECT * FROM schoolData WHERE code LIKE #{code}||'%' and name LIKE '%'|| #{name} ||'%'
-  	</select>
-  	
-  	<select id="department" parameterType="codeDTO" resultType="codeDTO">
-  	
-  	select * from schoolData where length(code) = 8 and code like #{code} || '%' and name like '%' || #{name} || '%'
-  		
-  	</select>
-  	
-  	<select id="license" parameterType="String" resultType="lDTO">
-  	
-  	select * from licensedata where license_name like '%' || #{license_name} || '%'
-  	
-  	</select>
-  	
-  	<select id="profileList" resultType="pDTO" parameterType="int">
-  	
-  	select * from profile where user_key = #{userKey}
-  	
-  	</select>
-  	
-  	<select id="profileinfo" parameterType="int" resultType="pDTO">
- 	
-	  	select 
-		    p.*,
-		    u.user_name,
-		    u.user_phone,
-		    u.user_email,
-		    u.user_addr,
-		    u.user_birth,
-		    u.user_gender
-		from 
-		    profile p
-		LEFT JOIN 
-		    users u ON p.user_key = u.user_key
-		WHERE 
-		    p.profile_key = #{no}
-			  	
-  	</select>
-  	
-  	
-  	
-  	<select id="profileCkeck" parameterType="int" resultType="int">
-  	
-  	select count(*) from profile where user_key = #{no}
-  	
-  	</select>
-  	
-  	
-  	
-  	<select id="eduList" parameterType="int" resultType="eDTO">
-  	
-  	SELECT * FROM edu WHERE profile_key = #{no}
-  	
-  	</select>
-  	
-	<select id="careerList" parameterType="int" resultType="crDTO">
-  	
-  	SELECT * FROM career WHERE profile_key = #{no}
-  	
-  	</select>
-  	
-  	
-  	
-  	<select id="licenseList" parameterType="int" resultType="lDTO">
-  	
-  	SELECT * FROM license WHERE profile_key = #{no}
-  	
-  	</select>
-  	
-  	
-  	
-  	<insert id="profileInsert" parameterType="pDTO">
-  		<selectKey keyProperty="profile_key" resultType="int" order="BEFORE">
+     <select id="categorysub" parameterType="String" resultType="codeDTO">
+     
+      select * from jobData where length(code) = 5 and code like #{no} || '%'
+     
+     </select>
+     
+     
+     <select id="categorystep" parameterType="String" resultType="codeDTO">
+     
+      select * from jobData where length(code) = 7 and code like #{no} || '%'
+     
+     </select>
+     
+     
+     <select id="schoolname" parameterType="codeDTO" resultType="codeDTO">
+         SELECT * FROM schoolData WHERE code LIKE #{code}||'%' and name LIKE '%'|| #{name} ||'%'
+     </select>
+     
+     <select id="department" parameterType="codeDTO" resultType="codeDTO">
+     
+     select * from schoolData where length(code) = 8 and code like #{code} || '%' and name like '%' || #{name} || '%'
+        
+     </select>
+     
+     <select id="license" parameterType="String" resultType="lDTO">
+     
+     select * from licensedata where license_name like '%' || #{license_name} || '%'
+     
+     </select>
+     
+     <select id="profileList" resultType="pDTO" parameterType="int">
+     
+     select * from profile where user_key = #{userKey}
+     
+     </select>
+     
+     <select id="profileinfo" parameterType="int" resultType="pDTO">
+    
+        select 
+          p.*,
+          u.user_name,
+          u.user_phone,
+          u.user_email,
+          u.user_addr,
+          u.user_birth,
+          u.user_gender
+      from 
+          profile p
+      LEFT JOIN 
+          users u ON p.user_key = u.user_key
+      WHERE 
+          p.profile_key = #{no}
+              
+     </select>
+     <select id="fromProfileUserInfo" parameterType="int" resultType="uDTO">
+    
+        select * from  users WHERE user_key = #{no}
+              
+     </select>
+     
+     
+     
+     <select id="profileCkeck" parameterType="int" resultType="int">
+     
+     select count(*) from profile where user_key = #{no}
+     
+     </select>
+     
+     
+     
+     <select id="eduList" parameterType="int" resultType="eDTO">
+     
+     SELECT * FROM edu WHERE profile_key = #{no}
+     
+     </select>
+     
+   <select id="careerList" parameterType="int" resultType="crDTO">
+     
+     SELECT * FROM career WHERE profile_key = #{no}
+     
+     </select>
+     
+     
+     
+     <select id="licenseList" parameterType="int" resultType="lDTO">
+     
+     SELECT * FROM license WHERE profile_key = #{no}
+     
+     </select>
+     
+     
+     
+     <insert id="profileInsert" parameterType="pDTO">
+        <selectKey keyProperty="profile_key" resultType="int" order="BEFORE">
             SELECT user_key_seq.NEXTVAL FROM dual
         </selectKey>
-   	
-  	insert into profile VALUES (#{profile_key},#{user_key},#{profile_name},#{profile_image},#{profile_job},
-  	 #{profile_group1},#{profile_sub1},#{profile_step1},#{profile_group2},#{profile_sub2}, #{profile_step2},
-  	  #{profile_default},#{profile_pay}, #{profile_history}, #{profile_apply}, #{profile_character},
-  	   #{profile_plan},#{profile_ppt},#{profile_image_name},#{profile_ppt_name})
-  	</insert>
-  	
-  	<update id="defaultChangeY" parameterType="int">
-  	
-  	update profile set profile_default = 'Y' where profile_key = #{defaultKey}
-  	
-  	</update>
-  	
-  	<update id="defaultChangeN">
-  	
-  	update profile set profile_default = 'N' where profile_default = 'Y'
-  	
-  	</update>
+      
+     insert into profile VALUES (#{profile_key},#{user_key},#{profile_name},#{profile_image},#{profile_job},
+      #{profile_group1},#{profile_sub1},#{profile_step1},#{profile_group2},#{profile_sub2}, #{profile_step2},
+       #{profile_default},#{profile_pay}, #{profile_history}, #{profile_apply}, #{profile_character},
+        #{profile_plan},#{profile_ppt},#{profile_image_name},#{profile_ppt_name})
+     </insert>
+     
+     <update id="defaultChangeY" parameterType="int">
+     
+     update profile set profile_default = 'Y' where profile_key = #{defaultKey}
+     
+     </update>
+     
+     <update id="defaultChangeN">
+     
+     update profile set profile_default = 'N' where profile_default = 'Y'
+     
+     </update>
 
 
-  	<select id="nowInsertProfileKey" parameterType="int" resultType="int">
-  	
-  	SELECT max(profile_key) FROM profile WHERE user_key = #{no}
-  	
-  	</select>
-  	
-  	
-  	
-  	<insert id="CareerInsert" parameterType="crDTO">
-  		<selectKey keyProperty="career_key" resultType="int" order="BEFORE">
+     <select id="nowInsertProfileKey" parameterType="int" resultType="int">
+     
+     SELECT max(profile_key) FROM profile WHERE user_key = #{no}
+     
+     </select>
+     
+     
+     
+     <insert id="CareerInsert" parameterType="crDTO">
+        <selectKey keyProperty="career_key" resultType="int" order="BEFORE">
             SELECT user_key_seq.NEXTVAL FROM dual
         </selectKey>
-   	
-  	insert into career VALUES (#{career_key},#{profile_key},#{career_company},#{career_cont},#{career_position},#{career_bye},
-  	 #{career_start_date},#{career_end_date})
-  	</insert>
-  	
-  	<insert id="EduInsert" parameterType="eDTO">
-  		<selectKey keyProperty="edu_key" resultType="int" order="BEFORE">
+      
+     insert into career VALUES (#{career_key},#{profile_key},#{career_company},#{career_cont},#{career_position},#{career_bye},
+      #{career_start_date},#{career_end_date})
+     </insert>
+     
+     <insert id="EduInsert" parameterType="eDTO">
+        <selectKey keyProperty="edu_key" resultType="int" order="BEFORE">
             SELECT user_key_seq.NEXTVAL FROM dual
         </selectKey>
-   	
-	  INSERT INTO edu (edu_key, profile_key,edu_kind,edu_name,edu_start_date,edu_end_date,edu_major,edu_status)
-	VALUES (#{edu_key}, #{profile_key},#{edu_kind}, #{edu_name}, #{edu_start_date},#{edu_end_date},#{edu_major},#{edu_status})
+      
+     INSERT INTO edu (edu_key, profile_key,edu_kind,edu_name,edu_start_date,edu_end_date,edu_major,edu_status)
+   VALUES (#{edu_key}, #{profile_key},#{edu_kind}, #{edu_name}, #{edu_start_date},#{edu_end_date},#{edu_major},#{edu_status})
 
-  	</insert>
-  	
-  	
-  	<insert id="LicenseInsert" parameterType="lDTO">
-  		<selectKey keyProperty="license_key" resultType="int" order="BEFORE">
+     </insert>
+     
+     
+     <insert id="LicenseInsert" parameterType="lDTO">
+        <selectKey keyProperty="license_key" resultType="int" order="BEFORE">
             SELECT user_key_seq.NEXTVAL FROM dual
         </selectKey>
-   	
-  	insert into license VALUES (#{license_key},#{profile_key},#{license_name},#{license_company},#{license_date})
-  	</insert>
-  	
-  	
-	
-	<delete id="profileDelect" parameterType="int">
-	
-	
-	delete from profile where PROFILE_KEY = #{pro_key}
-	
-	</delete>
-	
-	<delete id="deleteCareerByProfileKey" parameterType="int">
+      
+     insert into license VALUES (#{license_key},#{profile_key},#{license_name},#{license_company},#{license_date})
+     </insert>
+     
+     
+   
+   <delete id="profileDelect" parameterType="int">
+   
+   
+   delete from profile where PROFILE_KEY = #{pro_key}
+   
+   </delete>
+   
+   <delete id="deleteCareerByProfileKey" parameterType="int">
     DELETE FROM career WHERE profile_key = #{pro_key}
-	</delete>
+   </delete>
 
-	<delete id="deleteEduByProfileKey" parameterType="int">
-	    DELETE FROM edu WHERE profile_key = #{pro_key}
-	</delete>
-	
-	<delete id="deleteLicenseByProfileKey" parameterType="int">
-	    DELETE FROM license WHERE profile_key = #{pro_key}
-	</delete>
+   <delete id="deleteEduByProfileKey" parameterType="int">
+       DELETE FROM edu WHERE profile_key = #{pro_key}
+   </delete>
+   
+   <delete id="deleteLicenseByProfileKey" parameterType="int">
+       DELETE FROM license WHERE profile_key = #{pro_key}
+   </delete>
 
 
-	<update id="updateProfile" parameterType="pDTO">
-	 UPDATE profile SET 
-	 	profile_ppt = #{profile_ppt},
-	 	profile_ppt_name = #{profile_ppt_name},
-	 	profile_image = #{profile_image},
-	 	profile_image_name = #{profile_image_name},
+   <update id="updateProfile" parameterType="pDTO">
+    UPDATE profile SET 
+       profile_ppt = #{profile_ppt},
+       profile_ppt_name = #{profile_ppt_name},
+       profile_image = #{profile_image},
+       profile_image_name = #{profile_image_name},
         profile_name = #{profile_name},
         profile_history = #{profile_history},
         profile_apply = #{profile_apply},
         profile_character = #{profile_character},
         profile_plan = #{profile_plan}
     WHERE profile_key = #{profile_key}
-	
-	
-	</update>
-	
-	<update id="updateCareer" parameterType="crDTO">
-	
-	 UPDATE career SET
+   
+   
+   </update>
+   
+   <update id="updateCareer" parameterType="crDTO">
+   
+    UPDATE career SET
         career_company = #{career_company},
         career_start_date = #{career_start_date},
         career_end_date = #{career_end_date},
@@ -207,13 +212,13 @@
         career_position = #{career_position},
         career_bye = #{career_bye}
     WHERE career_key = #{career_key}
-	
-	
-	</update>
-	
-	<update id="updateEdu" parameterType="eDTO">
-	
-	UPDATE edu SET
+   
+   
+   </update>
+   
+   <update id="updateEdu" parameterType="eDTO">
+   
+   UPDATE edu SET
         edu_kind = #{edu_kind},
         edu_name = #{edu_name},
         edu_start_date = #{edu_start_date},
@@ -221,26 +226,26 @@
         edu_major = #{edu_major},
         edu_status = #{edu_status}
     WHERE edu_key = #{edu_key}
-	
-	
-	
-	</update>
-	
-	<update id="updateLicense" parameterType="lDTO">
-	
-	  UPDATE license SET
+   
+   
+   
+   </update>
+   
+   <update id="updateLicense" parameterType="lDTO">
+   
+     UPDATE license SET
         license_name = #{license_name},
         license_barhang = #{license_barhang},
         license_date = #{license_date}
     WHERE license_key = #{license_key}
-	
-	</update>
-  	
+   
+   </update>
+     
 
-  	<select id="findPro_key" parameterType="int">
-  	
-  	select count(*) from license where  PROFILE_KEY = #{pro_key}
-  	
-  	</select>
-  	
+     <select id="findPro_key" parameterType="int">
+     
+     select count(*) from license where  PROFILE_KEY = #{pro_key}
+     
+     </select>
+     
   </mapper>
