@@ -31,6 +31,7 @@ public class UserController {
    @Autowired private ProfileMapper profileMapper;
    @Autowired private UserMapper userMapper;
    @Autowired private UploadFileService uploadFileService;
+   @Autowired private PasswordEncoder passwordEncoder;
    
    
    // 유저 상세정보를 보여주는 마이페이지로 이동
@@ -79,9 +80,9 @@ public class UserController {
 
       PrintWriter out = response.getWriter();
       
-      UserDTO userInfo = (UserDTO)session.getAttribute("user_login");
+      UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
 
-      if (userInfo.getUser_pwd().equals(pwd)) {
+      if (passwordEncoder.matches(pwd, userInfo.getUser_pwd())) {
          out.println("<script>");
          out.println("alert('비밀번호가 일치합니다.')");
          out.println("</script>");
@@ -92,6 +93,28 @@ public class UserController {
          out.println("</script>");
          return "user/modify";
       }
+   }
+   
+   @PostMapping("/update")
+   public void userInfoUpdate(UserDTO dto, HttpServletResponse response) throws IOException {
+	   
+	   int result = this.userMapper.updateok(dto);
+
+	   response.setContentType("text/html; charset=UTF-8");
+
+	   PrintWriter out = response.getWriter();
+	   
+	   if(result == 1) {
+		   out.println("<script>");
+		   out.println("alert('회원정보수정 완료하였습니다.')");
+		   out.println("location.href='/U/info'");
+		   out.println("</script>");
+	   }else {
+		   out.println("<script>");
+		   out.println("alert('회원정보수정 실패하였습니다.')");
+		   out.println("history.back()");
+		   out.println("</script>");
+	   }
    }
    
    // 유저 정보 삭제 시 삭제 페이지 이동
