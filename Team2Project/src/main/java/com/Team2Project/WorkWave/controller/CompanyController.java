@@ -186,12 +186,59 @@ public class CompanyController {
 
 	}
 	
-	// 기업회원 정보 수정하기전 비밀번호 확인 페이지 이동
+	// 기업회원 비밀번호 수정하기전 비밀번호 확인 페이지 이동
 	@GetMapping("/update/pwd/companyPwdCheck")
 	public String companyPwdUpdate() {
 
 		return "company/pwdUpdate";
 
+	}
+	
+	@PostMapping("/update/pwd")
+	public void companyPwdUpdateCheck(@RequestParam("ori_company_pwd") String ori_company_pwd,
+									  @RequestParam("new_company_pwd") String new_company_pwd,
+									  HttpSession session,
+									  HttpServletResponse response) throws IOException {
+		
+		CompanyDTO companyDto = (CompanyDTO) session.getAttribute("cDTO");
+		
+		response.setContentType("text/html; charset=UTF-8");
+
+		PrintWriter out = response.getWriter();
+		
+		if(passwordEncoder.matches(ori_company_pwd, companyDto.getCompany_pwd())) {
+			//입력된 비밀번호와 기존 비밀번호가 같을때
+			if(passwordEncoder.matches(new_company_pwd, companyDto.getCompany_pwd())) {
+				// 기존 비밀번호와 새 비밀번호가 같다면 다시 비밀번호 변경 창으로
+				out.println("<script>");
+				out.println("alert('기존 비밀번호와 새 비밀번호가 같습니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+			}else {
+				// 기존 비밀번호와 새 비밀번호가 다르다면 새 비밀번호로 다시 저장
+				String new_company_pwd_encorded = this.passwordEncoder.encode(new_company_pwd);
+				
+				session.removeAttribute("cDTO");
+				
+				this.companyMapper.companyPwdUpdate(companyDto.getCompany_id(), new_company_pwd_encorded);
+				
+				CompanyDTO updatedto = this.companyMapper.companyInfo(companyDto.getCompany_id());
+				
+				session.setAttribute("cDTO", updatedto);
+				
+				out.println("<script>");
+				out.println("alert('비밀번호 수정에 성공했습니다.')");
+				out.println("location.href='/C/info'");
+				out.println("</script>");
+			}
+		}else {
+			//입력된 비밀번호와 기존 비밀번호가 다를때
+			out.println("<script>");
+			out.println("alert('입력하신 비밀번호와 기존 비밀번호가 다릅니다.')");
+			out.println("history.back()");
+			out.println("</script>");
+		}
+		
 	}
 
 	// 회원 삭제 페이지로 이동
@@ -214,9 +261,7 @@ public class CompanyController {
 		PrintWriter out = response.getWriter();
 
 		// 세션에 저장된 companyDTO 객체 불러오기
-		CompanyDTO company_dto = (CompanyDTO) session.getAttribute("companyInfo");
-
-		System.out.println(company_dto);
+		CompanyDTO company_dto = (CompanyDTO) session.getAttribute("cDTO");
 
 		String str1 = company_number.substring(0, 3);
 		String str2 = company_number.substring(3, 5);
@@ -224,7 +269,7 @@ public class CompanyController {
 
 		String companyNumber = str1 + "-" + str2 + "-" + str3;
 
-		if (company_dto.getCompany_pwd().equals(company_pwd) && company_dto.getCompany_number().equals(companyNumber)) {
+		if (passwordEncoder.matches(company_pwd, company_dto.getCompany_pwd()) && company_dto.getCompany_number().equals(companyNumber)) {
 
 			String userDir = System.getProperty("user.dir");
 		    String logoUploadDir = userDir+"\\src\\main\\resources\\static\\ppt\\profile";
@@ -240,7 +285,7 @@ public class CompanyController {
 
 				out.println("<script>");
 				out.println("alert('회원삭제에 성공했습니다.')");
-				out.println("location.href='/main'");
+				out.println("location.href='/A/main'");
 				out.println("</script>");
 			} else {
 				out.println("<script>");

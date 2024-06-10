@@ -34,7 +34,7 @@
     </update>
     
     <delete id="companyDelete" parameterType="int">
-    	delete from company where company_key = #{company_key}
+    	delete from company where company_key = #{company_key} 
     </delete>
   
   	<select id="findCompanyIdbyId" parameterType="String" resultType="CompanyloginDTO">
