@@ -6,8 +6,6 @@
 <title>Work Wave 회원 수정 페이지</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/user.css}">
-<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
-<script th:src="@{/js/userInsert.js}"></script>
 <style type="text/css">
 
 	#addr_detail {
@@ -17,10 +15,22 @@
 
 <script type="text/javascript">
 
-
+	//상세주소 값을 주소 필드에 추가하는 로직
+	function addDetailAddress() {
+	  var userAddr = $('#user_addr').val();
+	  var userAddrDetail = $('#user_addr_detail').val();
+	  $('#user_addr').val(userAddr + ' ' + userAddrDetail);
+	}
+	
+	$(document).ready(function() {
+	  // 상세주소 입력란에 포커스를 잃을 때 주소 필드에 값을 추가하는 이벤트
+	  $('#user_addr_detail').on('blur', function() {
+	    addDetailAddress();
+	  });
+	});
 	
 //다음 도로명 주소 검색창을 열어주는 로직
-function daumPostcode() {
+	function daumPostcode() {
          new daum.Postcode({
              oncomplete: function(data) {
                  // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
@@ -38,16 +48,21 @@ function daumPostcode() {
                      extraRoadAddr = ' (' + extraRoadAddr + ')';
                  }
 
-               // 우편번호와 주소 정보를 해당 필드에 넣는다.
-               document.getElementById('user_addr').value = roadAddr + extraRoadAddr;
-               // 상세주소 필드에 포커스
-               document.getElementById('user_addr_detail').focus();
+              // 우편번호와 주소 정보를 해당 필드에 넣는다.
+              $('#user_addr').val(roadAddr + extraRoadAddr);
+
+              // 상세주소 필드를 표시하고 포커스
+              $('#addr_detail').show();
+              $('#user_addr_detail').focus();
              }
          }).open();
      }
+     
 	
-
+	
 </script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
@@ -58,10 +73,10 @@ function daumPostcode() {
     	</h3>
       <hr width="30%" color="gray">
       
-      <form method="post" action="/U/info">
+      <form method="post" action="/U/update">
          <input type="hidden" name="user_key" th:value="${session.uDTO.user_key}">
          <input type="hidden" name="user_pwd" th:value="${session.uDTO.user_pwd}">
-         <table border="1" width="500">
+         <table border="1" width="700">
             <tr>
                <th>회원 아이디</th>
                <td>
