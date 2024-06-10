@@ -3,11 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
-  <mapper namespace="com.Team2Project.WorkWave.model.ChatReplyMapper">
+  <mapper namespace="com.Team2Project.WorkWave.model.ChatMapper">
   
   
   	<!-- list -->
-    <select id="replylist" resultType="replyDTO" parameterType="int">
+    <select id="replylist" resultType="replyDTO">
         SELECT * FROM Reply order by reply_key desc
     </select>
 	  

@@ -110,8 +110,10 @@
 						        <h5 class="card-title" th:text="${dto.user_name}"></h5>
 						        <h6 class="card-subtitle mb-2 text-muted" th:text="${dto.reply_date}"></h6>
 						        <p class="card-text" th:text="${dto.reply_content}"></p>
-						        <div class="d-flex justify-content-end">         
-				                  <h5 class="my-chat-style">🧡 <span th:id="'replylike' + ${dto.reply_key}" th:text="${dto.reply_like}"></span></h5>
+						        <div class="d-flex justify-content-between">  
+				                  <!-- <h5 class="my-chat-style">🧡 <span th:id="'replylike' + ${dto.reply_key}" th:text="${dto.reply_like}"></span></h5> -->
+				                  <button class="btn btn-warning btn-sm" th:attr="data-reply-key=${dto.reply_key}" onclick="editReply(this)">수정</button>
+				                  <button class="btn btn-danger btn-sm" th:attr="data-reply-key=${dto.reply_key}" onclick="deleteReply(this)">삭제</button>
 				                </div>
 						      </div>
 						    </div>
@@ -130,6 +132,51 @@
 		let like_count = 0;
 		let replylike_count = 0;
 		
+		
+		function deleteReply(button) {
+		    if (confirm('정말로 댓글을 삭제하시겠습니까?')) {  // 추가된 확인 대화 상자
+		        var replyKey = $(button).data('reply-key');
+		        var formData = new FormData();
+		        formData.append("reply_key", replyKey);
+		        
+		        $.ajax({
+		            type: 'post',
+		            url: '/ajax/deleteReply',
+		            processData: false,
+		            contentType: false,
+		            data: formData,
+		            success: function(response) {
+		                $(button).closest('.card').remove();
+		                alert("댓글이 삭제되었습니다.");
+		            },
+		            error: function() {
+		                alert('댓글 삭제 중 오류가 발생했습니다.');
+		            }
+		        });
+		    }
+		}
+		/* function deleteReply(button) {
+		    var replyKey = $(button).data('reply-key');
+		    var formData = new FormData();
+		    formData.append("reply_key", replyKey);
+		    
+		    $.ajax({
+		        type: 'post',
+		        url: '/ajax/deleteReply',
+		        processData: false,
+		        contentType: false,
+		        data: formData,
+		        success: function(response) {
+		            // 서버에서 응답을 받아 처리
+		            // 예: 삭제가 성공했을 때 화면에서 해당 댓글을 제거
+		            $(button).closest('.card').remove();
+		            alert("댓글이 삭제되었습니다.");
+		        },
+		        error: function() {
+		            alert('댓글 삭제 중 오류가 발생했습니다.');
+		        }
+		    });
+		} */
 		$(document).ready(function () {
 			let baseUrl = window.location.origin;
 			console.log(baseUrl);
@@ -196,7 +243,7 @@
 				
 			});
 			
-			$('#replylike').click(function () {
+			/* $('#replylike').click(function () {
 				if(replylike_count > 0){
 					alert("할당량 초과");
 				}else{
@@ -205,7 +252,7 @@
 					ajaxGo(formData, '/ajax/replyLike')
 					replylike_count = replylike_count + 1;
 				}
-			});
+			}); */
 		});
 		
 	</script>
