@@ -165,7 +165,7 @@
                         extraRoadAddr = ' (' + extraRoadAddr + ')';
                     }
 
-                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                  // 우편번호와 주소 정보를 해당 필드에 넣는다.
                   document.getElementById('user_addr').value = roadAddr + extraRoadAddr;
                   // 상세주소 필드에 포커스
                   document.getElementById('user_addr_detail').focus();

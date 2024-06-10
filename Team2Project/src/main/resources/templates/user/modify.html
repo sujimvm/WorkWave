@@ -13,11 +13,11 @@
          <h3>비밀번호 재확인</h3>
       <hr width="30%" color="gray">
 
-      <form method="post" action="/U/update/pwdCheckOk">
+      <form method="post" action="/U/update/userPwdCheckOk">
          <table border="1" width="400">
             <tr>
                <th>아이디</th>
-               <td th:text=${session.user_login.user_id}></td>
+               <td th:text=${session.uDTO.user_id}></td>
             </tr>
             <tr>
                <th>비밀번호</th>
