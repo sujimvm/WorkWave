@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="image/icon/logo_icon.png"/> 
+<link rel="icon" href="/image/icon/logo_icon.png"/> 
 <title>Work Wave 이력서 작성</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/profile.css}">
@@ -50,9 +50,9 @@
 				
 				
 				<div class="profile_job_div">
-					<h2>희망직무</h2>
+					<h2>희망직무</h2><br>
 					<div>
-						 <input type="button" id="category_add_button" value="분류추가">
+						 <input type="button" id="category_add_button" class="btn btn-outline-primary" value="분류추가"><br><br>
 				 <div class="categories-wrapper">
 				 
 				    <div class="categories-container">
@@ -126,7 +126,7 @@
 				<div class="history_div">
 					
 					<h2>성장과정</h2>
-					  <textarea rows="20" cols="80" name="profile_history"></textarea>
+					  <textarea rows="10" cols="20" name="profile_history"  class="form-control h-25" id="floatingTextarea"></textarea>
 				</div>
 				
 				<hr>
@@ -134,7 +134,7 @@
 				<div class="apply_div">
 					
 					<h2>지원동기</h2>
-					<textarea rows="20" cols="80" name="profile_apply"></textarea>
+					<textarea rows="10" cols="20" name="profile_apply"  class="form-control h-25" id="floatingTextarea"></textarea>
 				
 				</div>
 				
@@ -143,17 +143,15 @@
 				<div class="character_div">
 					
 					<h2>성격 장단점</h2>
-					<textarea rows="20" cols="80" name="profile_character"></textarea>
-				
+					<textarea rows="10" cols="20" name="profile_character"  class="form-control h-25" id="floatingTextarea"></textarea>
 				</div>
 				
 				<hr>
 				
-					<div class="plan_div">
+					<div class="form-floating">
 					
 					<h2>입사 후 포부</h2>
-					<textarea rows="20" cols="80" name="profile_plan"></textarea>
-				
+					<textarea rows="10" cols="20" name="profile_plan"  class="form-control h-25" id="floatingTextarea"></textarea>
 				</div>
 				
 				<hr>

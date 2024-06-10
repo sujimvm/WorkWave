@@ -26,6 +26,10 @@
 		padding: 0;
 	}
 	
+	
+      
+	
+	
 	.categories-wrapper li {
 		margin-bottom: 7px; /* 각 항목의 간격 설정 */
 	}
@@ -86,16 +90,18 @@ h2 {
 
 button {
     padding: 10px 20px;
-    background-color: #007bff; 
+    background-color: #0B57D0; 
     color: #fff;
     border: none;
     cursor: pointer;
     margin-bottom: 20px;
+    width: 120px; 
+    height: 40px;
 }
 
-button:hover {
+ button:hover {
     background-color: #0056b3;
-}
+} 
 
 .hopejob_div select,
 .hopejob_div input {
@@ -110,7 +116,7 @@ button:hover {
 .Completed_div input[type="submit"],
 .Completed_div input[type="button"] {
     padding: 15px 30px;
-    background-color: #007bff; 
+    background-color: #0B57D0; 
     color: #fff;
     border: none;
     cursor: pointer;
@@ -127,3 +133,32 @@ button:hover {
     list-style: none; 
     padding: 0; 
 }
+
+input[type=file]::file-selector-button {
+  width: 150px;
+  height: 30px;
+  background: #fff;
+  border: 1px solid rgb(77,77,77);
+  cursor: pointer;
+  &:hover {
+    background: rgb(77,77,77);
+    color: #0B57D0;
+  }
+}
+
+.removeForm{
+	padding: 10px 20px;
+    border: none;
+    margin-bottom: 20px;
+    color:black;
+    background: #fff;
+    width: 72px; 
+    height: 40px;
+}
+
+.removeForm:hover{
+	font-weight: bold;
+	background-color: #fff;
+}
+
+

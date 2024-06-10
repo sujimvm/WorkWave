@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/U")
-public class UserRController {
+public class UserController {
 
    @Autowired private ChatMapper chatMapper;
    @Autowired private ProfileMapper profileMapper;
@@ -158,10 +158,15 @@ public class UserRController {
 			@RequestParam("profile_image_input")MultipartFile image_file
 			) throws IOException {
 		
-		String imageUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\profile";
+		//String imageUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\profile";
 		
-		String pptUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\ppt\\profile";
+		String userDir = System.getProperty("user.dir");
+	      String imageUploadDir = userDir+"\\src\\main\\resources\\static\\image\\profile";
 		
+		//String pptUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\ppt\\profile";
+		
+		
+	      String pptUploadDir = userDir+"\\src\\main\\resources\\static\\ppt\\profile";
 
 		if (image_file.getOriginalFilename() != null) {
 			if (image_file != null && !image_file.isEmpty()) {
@@ -283,7 +288,7 @@ public class UserRController {
 			int userKey =9;
 			
 			
-			ProfileDTO userDto = this.profileMapper.profileinfo(userKey);
+			UserDTO userDto = this.profileMapper.fromProfileUserInfo(userKey);
 
 			List<CodeDTO> category = this.profileMapper.category();
 
@@ -401,8 +406,12 @@ public class UserRController {
 			if(profile_image.getOriginalFilename() != null) {
 				
 				if(profile_image != null && !profile_image.isEmpty()) {
-					
-					String imageUploadDir ="C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\profile";
+
+					String userDir = System.getProperty("user.dir");
+				      String imageUploadDir = userDir+"\\src\\main\\resources\\static\\image\\profile";
+				      System.out.println(imageUploadDir+"userDir");
+				      
+					//String imageUploadDir ="C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\profile";
 					
 					uploadFileService.deleteFile(profileDto.getProfile_image(), imageUploadDir);
 					
@@ -421,7 +430,13 @@ public class UserRController {
 			if(profile_ppt.getOriginalFilename() != null) {	
 				if (profile_ppt != null && !profile_ppt.isEmpty()) {
 					
-			        String pptUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\ppt\\profile";
+
+					String userDir = System.getProperty("user.dir");
+				      String pptUploadDir = userDir+"\\src\\main\\resources\\static\\ppt\\profile";
+				      System.out.println(pptUploadDir+"userDir");
+				      
+					
+			        //String pptUploadDir = "C:\\Users\\BSH\\git\\WorkWave\\Team2Project\\src\\main\\resources\\static\\ppt\\profile";
 		
 			        uploadFileService.deleteFile(original_profile_dto.getProfile_ppt(), pptUploadDir);
 		
@@ -468,7 +483,7 @@ public class UserRController {
 				        
 				           out.println("<script>");
 				           out.println("alert('이력서를 수정했습니다.')");
-				           out.println("location.href='/U/profile'");
+				           out.println("location.href='/CU/profile/content?no="+profileDto.getProfile_key()+"'");
 				           out.println("</script>");
 				        
 					} catch (Exception e) {
@@ -501,7 +516,7 @@ public class UserRController {
 			if(result > 0) {
 				out.println("<script>");
 				out.println("alert('게시글 추가 성공!!!')");
-				out.println("location.href='/chat'");
+				out.println("location.href='/A/chat'");
 				out.println("</script>");
 			}else {
 				out.println("<script>");
@@ -527,7 +542,7 @@ public class UserRController {
 				
 				out.println("<script>");
 				out.println("alert('게시글 삭제 성공')");
-				out.println("location.href='/chat'");
+				out.println("location.href='/A/chat'");
 				out.println("</script>");
 			}else {
 				out.println("<script>");
@@ -560,7 +575,7 @@ public class UserRController {
 			if(result > 0) {
 				out.println("<script>");
 				out.println("alert('게시글 수정 성공')");
-				out.println("location.href='/chat'");
+				out.println("location.href='/U/chat/content?no="+dto.getChat_key()+"'");
 				out.println("</script>");
 			}else {
 				out.println("<script>");
