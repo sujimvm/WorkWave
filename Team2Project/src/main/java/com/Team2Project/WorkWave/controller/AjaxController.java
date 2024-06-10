@@ -177,6 +177,38 @@ public class AjaxController {
 			this.chatMapper.replylike(reply_key);
 			return result;
 		}
+		
+		 @PostMapping("/deleteReply")
+		    public Map<String, String> deleteReply(@RequestParam Map<String, String> paramMap) {
+		        
+		        Map<String, String> result = new HashMap<>();
+		        result.put("message", "댓글이 삭제되었습니다.");
+		        
+		        
+		        int reply_key = (Integer.parseInt(paramMap.get("reply_key")));
+		        
+		        this.chatMapper.deleteReply(reply_key);
+	
+		        return result;
+		 }
+		 
+		 @PostMapping("/editReply")
+		 public Map<String, String> editReply(@RequestParam Map<String, String> paramMap) {
+		     Map<String, String> result = new HashMap<>();
+		     try {
+		         int replyKey = Integer.parseInt(paramMap.get("reply_key"));
+		         String editedContent = paramMap.get("edited_content");
+		         
+		         this.chatMapper.updateReply(replyKey, editedContent);
+		         
+		         result.put("message", "댓글이 성공적으로 수정되었습니다.");
+		     } catch (Exception e) {
+		         result.put("message", "댓글 수정 중 오류가 발생했습니다.");
+		     }
+		     return result;
+		 }
+		 
+		 
 
 		// (리스트) 리스트 조회
 		@PostMapping("/comBoardList")

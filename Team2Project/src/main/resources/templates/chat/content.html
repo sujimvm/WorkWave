@@ -5,134 +5,77 @@
     <title>게시물 상세 내역 페이지</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-	
-    <!-- 부트스트랩 CSS 추가 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <style>
-    	.my-chat-style{
-    		text-align: right;
-    		cursor: pointer;
-    		margin-right: 5px;
-    	}
-    </style>
+	<link rel="stylesheet" th:href="@{/css/include.css}">
+	<link rel="stylesheet" th:href="@{/css/userCont.css}">
 </head>
 <body>
 <div th:replace="~{include/header}"></div>
-    <div class="container">
-        <div class="text-center mt-5">
-            <hr class="w-25 border-danger">
-            <h3 th:text="${cont.user_id} + ' 님 게시물 상세 내역 페이지'"></h3>
-            <hr class="w-25 border-danger">
-            <br><br>
+    <div class="mainContainer">
+		<div class="sidebar active">
+      		<h3>게시판 리스트</h3>
+        	<a th:href="@{/}">글쓰기</a>
+        	<a th:text="${session.uDTO.user_name}"></a>
+      </div>
+		
+		<div class="user-info">
+        <div class="content">
+            <h3>유저 정보</h3>
+            <ul class="user-list">
+                <li th:inline="text">제목 : [[${cont.chat_title}]]</li>
+	            <li th:inline="text">내용 : [[${cont.chat_cont}]]</li>
+	            <li th:inline="text">작성자 : [[${cont.user_id}]]</li>
+	            <li th:inline="text">조회수 : [[${cont.chat_hit}]]</li>
+	            <li th:inline="text">추천 : [[${cont.chat_like}]]</li>
+            </ul>
         </div>
+	
 
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <div th:if="${not #strings.isEmpty(cont)}">
-                            <table class="table table-bordered">
-                           		<tr>
-                                    <th colspan="2"><h5 id="like-btn" class="my-chat-style">🧡</h5></th>
-                                </tr>
-                                <tr>
-                                    <th>게시글 번호</th>
-                                    <td th:text="${cont.chat_key}"></td>
-                                </tr>
-                                <tr>
-                                    <th>게시글 작성자</th>
-                                    <td th:text="${cont.user_id}"></td>
-                                </tr>
-                                <tr>
-                                    <th>게시글 제목</th>
-                                    <td th:text="${cont.chat_title}"></td>
-                                </tr>
-                                <tr>
-                                    <th>게시글 내용</th>
-                                    <td>
-                                        <textarea class="form-control" rows="7" readonly>[[${cont.chat_cont}]]</textarea>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>게시글 조회수</th>
-                                    <td th:text="${cont.chat_hit}"></td>
-                                </tr>
-                                
-                                <tr>
-                                    <th>태그</th>
-                                    <td th:text="${cont.chat_tag}"></td>
-                                </tr>
-                                
-                                 <tr>
-                                    <th>좋아요 수</th>
-                                    <td th:text="${cont.chat_like}" id="like"></td>
-                                </tr>
-                                
-                                
-                                <tr>
-                                    <th>게시글 작성일자</th>
-                                    <td th:if="${#strings.isEmpty(cont.chat_update)}" th:text="${cont.chat_date}"></td>
-                                 </tr>
-                                 <tr>
-                                    <th>게시글 수정일자</th>
-                                    <td th:if="${not #strings.isEmpty(cont.chat_update)}" th:text="${cont.chat_update}"></td>
-                                </tr>
-                            </table>
-                        </div>
-
-                        <div th:if="${#strings.isEmpty(cont)}" class="text-center">
-                            <h3>게시물에 대한 상세 정보가 없습니다.</h3>
-                        </div>
-
-                        <div class="text-center mt-4">
-                            <button type="button" class="btn btn-primary" th:onclick="|location.href='@{/U/chat/update(no=${cont.chat_key})}'|">글수정</button>
-                            <button type="button" class="btn btn-danger" th:onclick="|if(confirm('정말로 게시글을 삭제하시겠습니까?')){ location.href='@{/U/chat/delete(no=${cont.chat_key})}' }else{return;}|">글삭제</button>
-                            <button type="button" class="btn btn-secondary" th:onclick="|location.href='@{/A/chat}'|">전체목록</button>
-                        </div>
-                        <div class="container mt-5">
-						  <h1>댓글</h1>
-						  <hr>
-						  <!-- 댓글 입력 폼 -->
-						  <div>
-						    <div class="form-group">
-						      <label for="replycont">댓글 내용</label>
-						      <textarea class="form-control" id="replycont" rows="3" placeholder="댓글을 입력하세요"></textarea>
-						    </div>
-						    <button type="button" class="btn btn-primary" id="replybtn">댓글 남기기</button>
-						  </div>
-						  <hr>
-						  <!-- 댓글 목록 -->
-						  <div id="replyList">
-						    <!-- 여기에 댓글이 동적으로 추가될 예정 -->
-						    <!-- 예제 댓글 박스 -->
-						    <div class="card mb-3" id="reply-box">
-						      <div class="card-body" th:if="${not #lists.isEmpty(list)}" th:each="dto : ${list}">
-						        <h5 class="card-title" th:text="${dto.user_name}"></h5>
-						        <h6 class="card-subtitle mb-2 text-muted" th:text="${dto.reply_date}"></h6>
-						        <p class="card-text" th:text="${dto.reply_content}"></p>
-						        <div class="d-flex justify-content-between">  
-				                  <!-- <h5 class="my-chat-style">🧡 <span th:id="'replylike' + ${dto.reply_key}" th:text="${dto.reply_like}"></span></h5> -->
-				                  <button class="btn btn-warning btn-sm" th:attr="data-reply-key=${dto.reply_key}" onclick="editReply(this)">수정</button>
-				                  <button class="btn btn-danger btn-sm" th:attr="data-reply-key=${dto.reply_key}" onclick="deleteReply(this)">삭제</button>
-				                </div>
-						      </div>
-						    </div>
-						  </div>
-						</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 부트스트랩 JS 및 jQuery 추가 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script th:inline="javascript">
+	</div>
+	</div>
+	<div th:replace="~{include/footer :: footer}"></div>
+	 <script th:inline="javascript">
 		let chat_key = /*[[${cont.chat_key}]]*/ null;
 		let like_count = 0;
 		let replylike_count = 0;
 		
-		
+		function editReply(button) {
+	        var replyKey = $(button).data('reply-key');
+	        var editedContent = $('#edit-reply-' + replyKey).val();
+	        
+	        $('#edit-form-' + replyKey).removeClass('d-none');
+	        
+	        
+	        var formData = new FormData();
+	        formData.append("reply_key", replyKey);
+	        formData.append("edited_content", editedContent);
+	        
+	        $.ajax({
+	            type: 'post',
+	            url: '/ajax/editReply',
+	            processData: false,
+	            contentType: false,
+	            data: formData,
+	            success: function(response) {
+	                // 서버에서 응답을 받아 처리
+	                // 예: 성공적으로 수정되었을 때 화면에서 해당 댓글 업데이트
+	                alert("댓글이 성공적으로 수정되었습니다.");
+	                // 수정된 댓글 내용을 업데이트
+	                $(button).closest('.card-body').find('.card-text').text(editedContent);
+	                // 수정 폼 숨기기
+	                $('#edit-form-' + replyKey).addClass('d-none');
+	            },
+	            error: function() {
+	                alert('댓글 수정 중 오류가 발생했습니다.');
+	            }
+	        });
+	    }
+
+	    function cancelEdit(replyKey) {
+	        $('#edit-form-' + replyKey).addClass('d-none');
+	    }
+	    
+	    
+	    
 		function deleteReply(button) {
 		    if (confirm('정말로 댓글을 삭제하시겠습니까?')) {  // 추가된 확인 대화 상자
 		        var replyKey = $(button).data('reply-key');
@@ -256,7 +199,5 @@
 		});
 		
 	</script>
-	
-	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>
