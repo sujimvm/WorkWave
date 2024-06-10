@@ -1,6 +1,7 @@
 package com.Team2Project.WorkWave.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,11 +149,15 @@ public class AllController {
 	public String goComBoardContent(HttpServletRequest request, Model model) {
 
 		int com_board_key = Integer.parseInt(request.getParameter("No"));
-		int page = Integer.parseInt(request.getParameter("P"));
 
-		ComBoardDTO dto = this.comBoardMapper.getComBoard(com_board_key);
-
-		model.addAttribute("dto",dto).addAttribute("P",page);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("dto", this.comBoardMapper.getComBoard(com_board_key));
+		map.put("P", Integer.parseInt(request.getParameter("P")));
+		map.put("dto", "");
+		map.put("dto", "");
+		map.put("dto", "");
+		
+		model.addAttribute("map",map);
 
 		return "/comBoard/content";
 	}

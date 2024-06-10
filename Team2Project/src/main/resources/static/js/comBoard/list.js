@@ -21,7 +21,6 @@ $(document).ready(function() {
 
 // 공고리스트 조회 및 출력
 function getComBoardList(nowPg) {
-	alert(nowPg);
 	if(nowPg == '') nowPg = 1;
 	$.ajax({
 		url: '/ajax/comBoardList',

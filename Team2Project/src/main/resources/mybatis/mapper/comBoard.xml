@@ -5,10 +5,12 @@
   
   <mapper namespace="com.Team2Project.WorkWave.model.ComBoardMapper">
   		<!-- 공고리스트 -->
-    	<select id="getComBoardList" parameterType="page" resultType="bDTO">
+    	<select id="getComBoardList" parameterType="HashMap" resultType="bDTO">
     		<![CDATA[
 	  		select * from (select row_number() over(order by com_board_date desc) rnum, b.* from com_board b)Pb join company c on c.company_key = Pb.company_key
-	  		where rnum >= #{startNo} and rnum <= #{endNo}
+	  		where rnum >= #{pdto.startNo} and rnum <= #{pdto.endNo}
+	  		and com_board_start_date <= sysdate
+	  		and com_board_end_date >= sysdate
 	  		]]>
 	  	</select>
 	  	<!-- 관심기업리스트 -->

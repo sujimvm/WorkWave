@@ -46,7 +46,7 @@ public class AjaxController {
    @Autowired private UserService userService;
    
 	// 한 페이지당 보여질 게시물의 수
-	private final int rowsize = 5;
+	private final int rowsize = 10;
 	// DB 상의 전체 게시물의 수
 	private int totalRecord = 0;
 	
@@ -182,7 +182,8 @@ public class AjaxController {
 		@PostMapping("/comBoardList")
 		//@ResponseBody
 		public HashMap<String, Object> getComBoardList(HttpSession session, HttpServletRequest request) {
-			
+			HashMap<String, Object> viewMap = new HashMap<>(); //뷰페이지로 이동하는 맵 
+			HashMap<String, Object> reqMapperMap = new HashMap<>(); // 매퍼로 이동하는 맵
 
 			int page;	// 현재 페이지 변수
 			
@@ -197,19 +198,25 @@ public class AjaxController {
 			
 			Page pdto = new Page(page, rowsize, totalRecord);
 			
-			HashMap<String, Object> map = new HashMap<>();
-			map.put("list", this.comBoardMapper.getComBoardList(pdto));
-			map.put("paging", pdto);
+			reqMapperMap.put("pdto",pdto);
 
-			if(session.getAttribute("user_login") == null) {
-				System.out.println("getComBoardList > loginX");
+			List<ComBoardDTO> list = this.comBoardMapper.getComBoardList(reqMapperMap);
+			viewMap.put("list", list);
+			viewMap.put("paging", pdto);
+
+			if(session.getAttribute("uDTO") == null) {
+				System.out.println("비회원");
 			}else {
-				UserDTO udto = (UserDTO)session.getAttribute("user_login");
-				map.put("interestList", this.comBoardMapper.getInterestCompanyKeyList(udto.getUser_key()));
-				map.put("applyList", this.comBoardMapper.getApplyList(this.comBoardMapper.selectDefaultProfile(udto.getUser_key())));
+				UserDTO udto = (UserDTO)session.getAttribute("uDTO");
+				int userKey = udto.getUser_key();
+				int[] interestList = this.comBoardMapper.getInterestCompanyKeyList(userKey); // 관심기업 데이터
+				int profileKey = this.comBoardMapper.selectDefaultProfile(userKey); // 기본설정되어있는 프로필키
+				int[] applyList = this.comBoardMapper.getApplyList(profileKey); // 지원내역 데이터
+				viewMap.put("interestList", interestList);
+				viewMap.put("applyList", applyList);
 			}
 			
-			return map;
+			return viewMap;
 		}
 		
 		// (리스트) 업종분류 조회
