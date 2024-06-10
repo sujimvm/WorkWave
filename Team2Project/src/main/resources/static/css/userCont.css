@@ -15,87 +15,123 @@ header, footer {
     flex-shrink: 0; /* 헤더와 푸터의 높이가 고정되도록 설정 */
 }
 
-.main-container {
-	
+.mainContainer {
+	min-height: 100px; /* 최소 높이 고정 */
     display: flex;
     flex-grow: 1;
-    min-height: 100px; /* main-container 최소 높이 설정 */
+    position: relative;
+    top: 0;
+    justify-content: center; /* 컨테이너 내의 내용물을 가로로 가운데 정렬 */
 }
 
 .sidebar {
     width: 250px;
-    background-color: #ffffff;
-    color: #333;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-    flex-shrink: 0; /* 사이드바 너비 고정 */
+    height: 400px;
+    background-color: #ffffff; /* 배경색을 흰색으로 설정 */
+    color: #333; /* 글자 색상을 어두운 회색으로 설정 */
+    padding-top: 10px;
+    transition: width 0.3s;
+    border-right: 1px solid #ddd; /* 오른쪽에 얇은 경계선 추가 */
+    margin-right: 20px; /* 사이드바와 리스트 사이에 여백 추가 */
 }
 
 .sidebar h3 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     font-size: 24px;
     font-weight: 600;
 }
 
 .sidebar a {
     display: block;
-    color: #333;
-    padding: 10px 15px;
+    color: #333; /* 링크 색상 */
+    padding: 10px 20px;
     text-decoration: none;
     font-size: 18px;
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.3s, color 0.3s;
+    border-bottom: 1px solid #eee; /* 링크 사이에 얇은 경계선 추가 */
+    transition: background 0.3s, color 0.3s;
 }
 
 .sidebar a:hover {
-    background-color: #f5f5f5; 
-    color: #000;
+    background-color: #f1f1f1; /* 마우스 오버 시 배경색 변경 */
+    color: #000; /* 마우스 오버 시 글자 색상 변경 */
 }
 
 .sidebar a.active {
-    background-color: #e0e0e0; 
-    color: #000;
-}
-
-.user {
-    flex-grow: 1; /* .user 영역이 남은 공간을 차지하도록 설정 */
-    padding: 20px;
-}
-
-.user-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.user-header img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    margin-right: 20px;
-}
-
-.user-header span {
-    font-size: 24px;
-    font-weight: bold;
+    background-color: #e0e0e0; /* 활성화된 링크 배경색 */
+    color: #000; /* 활성화된 링크 글자 색상 */
 }
 
 .user-info {
-    margin-bottom: 20px;
-    line-height: 1.6;
+    flex-grow: 1;
+    padding: 20px;
+    overflow-y: auto; /* FAQ 리스트가 길어질 경우 스크롤 가능하도록 설정 */
+    max-width: 800px; /* 리스트의 최대 너비 설정 */
 }
 
-.user-info span {
+.user-info h3 {
+    margin-top: 0;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.user-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.user-info li {
+    font-size: 14px;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+.user-info .highlighted {
     font-weight: bold;
+    color: #007BFF;
 }
 
-.user-footer {
+.FAQCont {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
+}
+
+.user-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.user-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-list li span, .user-list li a {
+    flex: 1;
     text-align: left;
-    margin-top: 20px; 
-    padding-top: 20px;
-    border-top: 1px solid #ddd; 
 }
 
+.user-list li span {
+    width: 10%;
+}
 
+.user-list li a {
+    width: 80%;
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.user-list li a:hover {
+    text-decoration: underline;
+}
+
+.user-list li a:visited {
+    color: #551A8B;
+}
 
