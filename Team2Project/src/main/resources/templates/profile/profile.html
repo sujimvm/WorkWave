@@ -20,7 +20,8 @@
 		<div><br><br><!-- 이력서 입력 폼 -->
 			<form id="profileForm" method="POST" action="/U/profile/insertOk" enctype="multipart/form-data">
 				<input name="profile_name" style='width:100%;font-size:25pt' placeholder="이력서 제목을 작성해주세요" class="custom-input"><br><br>
-				<table border="1" width="800" class="table table-bordered">
+				<h2 class="fw-bolder">인적사항</h2><br>
+				<table border="1" class="table table-bordered">
 				    <tr>
 				        <td rowspan="3" width="100px" height="250px">
 				            <img width="190px" height="210px" id="preview">
@@ -50,7 +51,7 @@
 				
 				
 				<div class="profile_job_div">
-					<h2>희망직무</h2><br>
+					<h2 class="fw-bolder">희망직무</h2><br>
 					<div>
 						 <input type="button" id="category_add_button" class="btn btn-outline-primary" value="분류추가"><br><br>
 				 <div class="categories-wrapper">
@@ -95,7 +96,7 @@
 				<hr>
 				
 				<div class="edu_div"> 
-					<h2>학력</h2>
+					<h2 class="fw-bolder">학력</h2><br>
 					<div>
 		       			<div id="add_edu_input_form">
 		       			</div>
@@ -112,7 +113,7 @@
 		
 				<div class="career_div">
 				
-					<h2>경력</h2>
+					<h2 class="fw-bolder">경력</h2><br>
 					<div>
 						<div id="add_career_input_form"></div>
 					</div>
@@ -125,7 +126,7 @@
 				
 				<div class="history_div">
 					
-					<h2>성장과정</h2>
+					<h2 class="fw-bolder">성장과정</h2><br>
 					  <textarea rows="10" cols="20" name="profile_history"  class="form-control h-25" id="floatingTextarea"></textarea>
 				</div>
 				
@@ -133,7 +134,7 @@
 				
 				<div class="apply_div">
 					
-					<h2>지원동기</h2>
+					<h2 class="fw-bolder">지원동기</h2><br>
 					<textarea rows="10" cols="20" name="profile_apply"  class="form-control h-25" id="floatingTextarea"></textarea>
 				
 				</div>
@@ -142,7 +143,7 @@
 				
 				<div class="character_div">
 					
-					<h2>성격 장단점</h2>
+					<h2 class="fw-bolder">성격 장단점</h2><br>
 					<textarea rows="10" cols="20" name="profile_character"  class="form-control h-25" id="floatingTextarea"></textarea>
 				</div>
 				
@@ -150,7 +151,7 @@
 				
 					<div class="form-floating">
 					
-					<h2>입사 후 포부</h2>
+					<h2 class="fw-bolder">입사 후 포부</h2><br>
 					<textarea rows="10" cols="20" name="profile_plan"  class="form-control h-25" id="floatingTextarea"></textarea>
 				</div>
 				
@@ -158,7 +159,7 @@
 					
 				<div class="license_div">
 				
-					<h2>자격증</h2>
+					<h2 class="fw-bolder">자격증</h2><br>
 					<div>
 						<div id="add_license_input_form">
 						</div>	
@@ -173,7 +174,7 @@
 				
 				<div class="Portfolio_div">
 				
-					<h2>포트폴리오</h2>
+					<h2 class="fw-bolder">포트폴리오</h2><br>
 					<div>
 						<input type="file" name="profile_ppt_input">
 					</div>
@@ -184,7 +185,7 @@
 				
 				<div class="hopejob_div">
 				
-					<h2>희망근무조건</h2>
+					<h2 class="fw-bolder">희망근무조건</h2><br>
 					<div>
 						<select name="profile_job">
 						    <option value="정규직">정규직</option>
@@ -195,11 +196,10 @@
 						    <option value="파견대행">파견대행</option>
 						    <option value="인턴직">인턴직</option>
 						</select>
-						<input name="profile_pay" placeholder="희망연봉">
+						<input name="profile_pay" placeholder="희망연봉" class="form-control d-inline" style="width:180px; height: 27px;">
 					</div>
 				</div><!-- 희망근무조건 -->
 				
-				<hr>
 				
 				<div class="Completed_div">
 				

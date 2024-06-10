@@ -2,12 +2,6 @@
 	
 	.custom-input {
 		height: 85px;
-		
-	}
-	
-	.textareaSize {
-		width: 42%;
-		height: 200px;
 	}
 	
 	.profile_job_div {
@@ -16,19 +10,15 @@
 	
 	.categories-wrapper {
 		display: flex;
-		justify-content: flex-start; 
-		gap: 5px; 
-		margin-top: 5px; 
+		justify-content: flex-start;
+		gap: 5px;
+		margin-top: 5px;
 	}
 	
 	.categories-wrapper ul {
 		list-style: none;
 		padding: 0;
 	}
-	
-	
-      
-	
 	
 	.categories-wrapper li {
 		margin-bottom: 7px; /* 각 항목의 간격 설정 */
@@ -38,127 +28,127 @@
 		flex: 1;
 	}
 	
-	
 	.content {
-    width: 80%;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		width: 80%;
+		margin: 0 auto;
+		background-color: #fff;
+		padding: 20px;
+		border-radius: 10px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 	}
 	
 	.custom-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-h2 {
-    margin-top: 30px;
-}
-
-.categories-wrapper {
-    display: flex;
-    justify-content: space-between;
-}
-
-.categories-container,
-.subcategories-container,
-.stepcategories-container {
-    flex: 1;
-}
-
-.categories-container ul,
-.subcategories-container ul,
-.stepcategories-container ul {
-    list-style: none;
-    padding: 0;
-}
-
-
-
-#preview {
-    width: 190px;
-    height: 210px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #0B57D0; 
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 20px;
-    width: 120px; 
-    height: 40px;
-}
-
- button:hover {
-    background-color: #0056b3;
-} 
-
-.hopejob_div select,
-.hopejob_div input {
-    margin-bottom: 20px;
-}
-
-/* 이력서 저장 및 이력서 관리 버튼 */
-.Completed_div {
-    margin-top: 30px;
-}
-
-.Completed_div input[type="submit"],
-.Completed_div input[type="button"] {
-    padding: 15px 30px;
-    background-color: #0B57D0; 
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    margin-right: 10px;
-    
-}
-
-.Completed_div input[type="submit"]:hover,
-.Completed_div input[type="button"]:hover {
-   background-color: #0056b3;
-}
-
-#add_career_input_form ul {
-    list-style: none; 
-    padding: 0; 
-}
-
-input[type=file]::file-selector-button {
-  width: 150px;
-  height: 30px;
-  background: #fff;
-  border: 1px solid rgb(77,77,77);
-  cursor: pointer;
-  &:hover {
-    background: rgb(77,77,77);
-    color: #0B57D0;
-  }
-}
-
-.removeForm{
-	padding: 10px 20px;
-    border: none;
-    margin-bottom: 20px;
-    color:black;
+		width: 100%;
+		padding: 10px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		margin-bottom: 20px;
+	}
+	
+	.categories-wrapper {
+		display: flex;
+		justify-content: space-between;
+	}
+	
+	.categories-container, .subcategories-container,
+		.stepcategories-container {
+		flex: 1;
+	}
+	
+	.categories-container ul, .subcategories-container ul,
+		.stepcategories-container ul {
+		list-style: none;
+		padding: 0;
+	}
+	
+	#preview {
+		width: 190px;
+		height: 210px;
+		border: 1px solid #ccc;
+		border-radius: 5px;
+		margin-bottom: 20px;
+	}
+	
+	button {
+		padding: 10px 20px;
+		background-color: #0B57D0;
+		color: #fff;
+		border: none;
+		cursor: pointer;
+		margin-bottom: 20px;
+		width: 120px;
+		height: 40px;
+	}
+	
+	button:hover {
+		background-color: #0056b3;
+	}
+	
+	.hopejob_div select, .hopejob_div input {
+		margin-bottom: 20px;
+	}
+	
+	/* 이력서 저장 및 이력서 관리 버튼 */
+	.Completed_div {
+		margin-top: 30px;
+	}
+	
+	.Completed_div input[type="submit"], .Completed_div input[type="button"]
+		{
+		padding: 15px 30px;
+		background-color: #0B57D0;
+		color: #fff;
+		border: none;
+		cursor: pointer;
+		margin-right: 10px;
+	}
+	
+	ul {
+		list-style-type: none;
+		padding-left: 0;
+		margin: 0;
+	}
+	
+	.Completed_div input[type="submit"]:hover, .Completed_div input[type="button"]:hover
+		{
+		background-color: #0056b3;
+	}
+	
+	#add_career_input_form ul {
+		list-style: none;
+		padding: 0;
+	}
+	
+	.form-control.h-26 {
+		width: 600px;
+		height: 300px;
+	}
+	
+	input[type=file]::file-selector-button {
+    width: 150px;
+    height: 30px;
     background: #fff;
-    width: 72px; 
-    height: 40px;
+    border: 1px solid rgb(77, 77, 77);
+    cursor: pointer; 
 }
 
-.removeForm:hover{
-	font-weight: bold;
-	background-color: #fff;
+input[type=file]::file-selector-button:hover {
+    background: rgb(77, 77, 77);
+    color: #0B57D0;
 }
-
-
+	
+	
+	.removeForm {
+		padding: 10px 20px;
+		border: none;
+		margin-bottom: 20px;
+		color: black;
+		background: #fff;
+		width: 72px;
+		height: 40px;
+	}
+	
+	.removeForm:hover {
+		font-weight: bold;
+		background-color: #fff;
+	}
