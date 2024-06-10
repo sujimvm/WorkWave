@@ -16,7 +16,7 @@ public class Page {
 	private int startBlock;		// 해당 페이지에서 시작 블럭
 	private int endBlock;		// 해당 페이지에서 끝 블럭
 	private int allPage;		// 전체 페이지 수
-	private int block = 3;		// 아래에 보여질 최대 페이지 수
+	private int block = 5;		// 아래에 보여질 최대 페이지 수
 
 		
 		

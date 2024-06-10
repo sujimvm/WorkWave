@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="image/icon/logo_icon.png"/> 
+<link rel="icon" href="/image/icon/logo_icon.png"/> 
 <title>Work Wave 공고 상세보기</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
@@ -13,48 +13,50 @@
 		<div layout:fragment="content" class="content">
 			<div>
 				<div>
+					<h3>채용정보</h3>
 					<div>
 						<div>
-							<h6 th:text="${dto.company_name}"></h6>
-							<h3 th:text="${dto.com_board_title}"></h3>
+							<h6 th:text="${map.dto.company_name}"></h6>
+							<h3 th:text="${map.dto.com_board_title}"></h3>
 						</div>
 						<div>
 							<div>
 								<p>지원자격</p>
 								<dl>
 									<dt>경력</dt>
-									<dd th:text="${dto.com_board_career}"></dd>
+									<dd th:text="${map.dto.com_board_career}"></dd>
 									<dt>학력</dt>
-									<dd th:text="${dto.com_board_edu}"></dd>
+									<dd th:text="${map.dto.com_board_edu}"></dd>
 								</dl>
 								<p>근무조건</p>
 								<dl>
 									<dt>고용형태</dt>
-									<dd th:text="${dto.com_board_jobtype}"></dd>
+									<dd th:text="${map.dto.com_board_jobtype}"></dd>
 									<dt>급여</dt>
-									<dd th:text="${dto.com_board_sal}"></dd>
+									<dd th:text="${map.dto.com_board_sal}"></dd>
 									<dt>지역</dt>
-									<dd th:text="${dto.company_addr}"></dd>
+									<dd th:text="${map.dto.company_addr}"></dd>
 									<dt>시간</dt>
-									<dd th:text="${dto.com_board_week+dto.com_board_time}"></dd>
+									<dd th:text="${map.dto.com_board_week+dto.com_board_time}"></dd>
 								</dl>
 							</div>
 						</div>
 					</div>
+					
 					<div class="top_r_cominfo_div">
 						<a>
-							<img th:if="${dto.company_logo != null}" th:src="@{'\\image\\logo\\'+${dto.company_logo}}" alt="${dto.company_logo_name}">
-							<img th:if="${dto.company_logo == null}" src="/image/icon/logo_icon.png" alt="로고미등록">
+							<img th:if="${map.dto.company_logo != null}" th:src="@{'\\image\\logo\\'+${map.dto.company_logo}}" alt="${map.dto.company_logo_name}">
+							<img th:if="${map.dto.company_logo == null}" src="/image/icon/logo_icon.png" alt="로고미등록">
 						</a>
 						<dl>
 							<dt>업종</dt>
-							<dd th:text="${dto.com_board_step}"></dd>
+							<dd th:text="${map.dto.com_board_step}"></dd>
 							<dt>사원 수</dt>
-							<dd th:text="${dto.company_emp_count}"></dd>
+							<dd th:text="${map.dto.company_emp_count}"></dd>
 							<dt>설립입</dt>
-							<dd th:text="${dto.company_regdate}"></dd>
+							<dd th:text="${map.dto.company_regdate}"></dd>
 							<dt>홈페이지</dt>
-							<dd><a th:href="@{${dto.company_homepage}}" th:text="${dto.company_homepage}"></a></dd>
+							<dd><a th:href="@{${map.dto.company_homepage}}" th:text="${map.dto.company_homepage}"></a></dd>
 						</dl>
 					</div>
 				</div><!-- 채용정보 -->
@@ -63,38 +65,41 @@
 					<ul>
 						<li><a th:href="@{/}">상세요강</a></li>
 						<li><a th:href="@{/}">접수기간</a></li>
-						<li><a th:href="@{/}">지원자현황</a></li>
+						<li sec:authorize="isAuthenticated() and hasRole('USER')"><a th:href="@{/}">지원자현황</a></li>
 						<li><a th:href="@{/}">기업정보</a></li>
 					</ul>
 				</div><!-- content nav -->
+				
 				<div>
-					<div th:utext="${dto.com_board_cont}"></div>
+					<div th:utext="${map.dto.com_board_cont}"></div>
 				</div><!-- 상세 -->
 				
 				<div>
+					<h3>접수기간</h3>
 					<dl>
 						<dt>시작일</dt>
-						<dd th:text="${dto.com_board_start_date}"></dd>
+						<dd th:text="${map.dto.com_board_start_date}"></dd>
 						<dt>마감일</dt>
-						<dd th:text="${dto.com_board_end_date}"></dd>
+						<dd th:text="${map.dto.com_board_end_date}"></dd>
 					</dl>
 				</div><!-- 접수기간 -->
 				
-				<div>
+				<div sec:authorize="isAuthenticated() and hasRole('USER')">
+					<h3>지원자 통계</h3>
 					<div>
 						<p>지원자 수</p>
 						<p></p>
 					</div>
 					<div>
 						<p>모집인원</p>
+						<p th:text="${map.dto.com_board_mojib}"></p>
+					</div>
+					<div>
+						<p>평균 연령</p>
 						<p></p>
 					</div>
 					<div>
-						<p>연령</p>
-						<p></p>
-					</div>
-					<div>
-						<p>성별</p>
+						<p>평균 지원자 성별</p>
 						<p></p>
 					</div>
 					<div>
@@ -104,28 +109,29 @@
 				</div><!-- 지원자 통계 -->
 				
 				<div>
+					<h3>기업정보</h3>
 					<a>
-						<img th:if="${dto.company_logo != null}" th:src="@{'\\image\\logo\\'+${dto.company_logo}}" alt="${dto.company_logo_name}">
-						<img th:if="${dto.company_logo == null}" src="/image/icon/logo_icon.png" alt="로고미등록">
+						<img th:if="${map.dto.company_logo != null}" th:src="@{'\\image\\logo\\'+${map.dto.company_logo}}" alt="${map.dto.company_logo_name}">
+						<img th:if="${map.dto.company_logo == null}" src="/image/icon/logo_icon.png" alt="로고미등록">
 					</a>
 					<dl>
 						<dt>업종</dt>
-						<dd th:text="${dto.com_board_step}"></dd>
+						<dd th:text="${map.dto.com_board_step}"></dd>
 						<dt>사원 수</dt>
-						<dd th:text="${dto.company_emp_count}"></dd>
+						<dd th:text="${map.dto.company_emp_count}"></dd>
 						<dt>설립입</dt>
-						<dd th:text="${dto.company_regdate}"></dd>
+						<dd th:text="${map.dto.company_regdate}"></dd>
 						<dt>매출액</dt>
-						<dd th:text="${dto.company_sal}"></dd>
+						<dd th:text="${map.dto.company_sal}"></dd>
 						<dt>복리후생</dt>
-						<dd th:text="${dto.com_board_benefits}"></dd>
+						<dd th:text="${map.dto.com_board_benefits}"></dd>
 					</dl>
 				</div><!-- 기업정보 -->
 			</div>
 			
 			
-			<div>
-			
+			<div sec:authorize="isAuthenticated() and hasRole('COMPANY')">
+				
 			</div><!-- 포지션제안 -->
 			
 			<div>

@@ -2,16 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="image/icon/logo_icon.png"/> 
+<link rel="icon" href="/image/icon/logo_icon.png"/>  
 <title>Work Wave</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 </head>
 <body>
-<!-- 
-	<div th:if="${session.role.contains('ROLE_COMPANY')}" th:replace="~{include/header :: companyHeader}"></div>
-	<div th:if="${session.role.contains('ROLE_USER')}" th:replace="~{include/header :: userHeader}"></div>
-	<div th:if="${session.role.contains('ROLE_ANONYMOUS')}" th:replace="~{include/header :: guestHeader}"></div>
- -->	
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
 		<h2>guest Content</h2>
