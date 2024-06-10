@@ -11,39 +11,28 @@
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
 		
-		<div class="main-container">
+		<div class="mainContainer">
 		<div class="sidebar active">
-	      	<h3>마이페이지</h3>
-	        <a th:href="@{/}">이력서 등록</a>
+      		<h3>마이페이지</h3>
+        	<a th:href="@{/}">이력서 등록</a>
 	        <a th:href="@{/}">이력서 리스트</a>
 	        <a th:href="@{/}">입사지원 현황</a>
 	        <a th:href="@{/}">포지션 제안</a>
 	        <a th:href="@{/}">회원정보 수정</a>
 	        <a th:href="@{/}">비밀번호 변경</a>
 	        <a th:href="@{/}">회원탈퇴</a>
-	    </div>
-	    
-	    <div class="user">
-        <div class="user-header">
-        	<div class="logo">
-            	<img src="/image/logo/1bd29ec9ecb641b59706ea94029ca772.jpg" alt="Logo">
-            	<span th:text="${session.user_login.user_name}"></span>님
-            </div>
+      </div>
+		
+		<div class="user-info">
+        <div class="content">
+            <h3>유저 정보</h3>
+            <ul class="user-list">
+                <li th:inline="text">지원완료 : [[${applyCnt}]]</li>
+	            <li th:inline="text">이력서 열람 : [[${applyCheckCnt}]]</li>
+	            <li th:inline="text">포지션 제안 : [[${positionJean}]]</li>
+	            <li th:inline="text">관심 기업 : [[${interest}]]</li>
+            </ul>
         </div>
-        	<div class="user-info">
-                <span>성별 : </span><span th:text="${session.user_login.user_gender}"></span><br>
-                <span>휴대폰 번호 : </span><span th:text="${session.user_login.user_phone}"></span><br>
-                <span>주소 : </span><span th:text="${session.user_login.user_addr}"></span><br>
-            </div>
-            <div class="user-footer">
-                <ul>
-                	<li>지원완료 :</li>
-                	<li>이력서 열람 :</li>
-                	<li>포지션 제안 :</li>
-                	<li>관심 기업 : </li>
-                </ul>
-            </div>
-         </div>
 	</div>
 	</div>
 	<div th:replace="~{include/footer :: footer}"></div>

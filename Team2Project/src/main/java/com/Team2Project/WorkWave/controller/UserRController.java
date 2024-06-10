@@ -37,23 +37,21 @@ public class UserRController {
    @GetMapping("/info")
    public String content(HttpSession session, Model model) {
       
-      UserDTO userInfo = (UserDTO)session.getAttribute("user_login");
-      
+      UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
+	   
       int applyCnt = this.userMapper.applyCnt(userInfo.getUser_key());
       int applyCheckCnt = this.userMapper.applyCheckCnt(userInfo.getUser_key());
       int positionJean = this.userMapper.positionJean(userInfo.getUser_key());
       int interest = this.userMapper.interest(userInfo.getUser_key());
          
-       // 지원완료 갯수
-       model.addAttribute("applyCnt", applyCnt);
-       // 이력서 열람 갯수
-       model.addAttribute("applyCheckCnt", applyCheckCnt);
-       // 포지션 제안 갯수
-       model.addAttribute("positionJean", positionJean);
-       // 관심 기업 갯수
-       model.addAttribute("interest", interest);
-      
-      session.setAttribute("userInfo", userInfo);
+      // 지원완료 갯수
+      model.addAttribute("applyCnt", applyCnt);
+      // 이력서 열람 갯수
+      model.addAttribute("applyCheckCnt", applyCheckCnt);
+      // 포지션 제안 갯수
+      model.addAttribute("positionJean", positionJean);
+      // 관심 기업 갯수
+      model.addAttribute("interest", interest);
       
       return "user/cont";
    }
