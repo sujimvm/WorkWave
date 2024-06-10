@@ -14,3 +14,34 @@
 	            font-size: 16px;
 	            margin-left: 5px;
 	}
+	
+	.company-table {
+    width: 70%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.company-table th, .company-table td {
+    padding: 12px 15px;
+}
+
+.company-table th {
+    background-color: #f2f2f2;
+}
+
+.company-table tr {
+    border-bottom: 1px solid #ffffff;
+}
+
+.company-table tr:last-child {
+    border-bottom: 0;
+}
+
+.company-table tr:hover {
+    background-color: #f1f1f1;
+}

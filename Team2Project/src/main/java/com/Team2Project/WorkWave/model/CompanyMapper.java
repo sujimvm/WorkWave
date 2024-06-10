@@ -28,4 +28,10 @@ public interface CompanyMapper {
 	CompanyLoginDTO findCompanyIdbyId(String company_id);
 	
 	CompanyDTO companyInfoByNo(String company_number);
+
+	int companyBoardingCnt(int company_key);
+	
+	int applyNoneCheckCnt(int company_key);
+	
+	int positionCnt(int company_key);
 }

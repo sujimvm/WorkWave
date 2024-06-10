@@ -8,16 +8,20 @@
 <link rel="stylesheet" th:href="@{/css/user.css}">
 </head>
 <body>
+
+	<div th:replace="~{include/header}"></div>
+	<div layout:fragment="content" class="content">
+	
 	<div align="center">
 		<hr width="30%" color="gray">
 			<h3>비밀번호 재확인</h3>
 		<hr width="30%" color="gray">
 
-		<form method="post" action="/C/update/pwdCheckOk">
+		<form method="post" action="/C/update/companyPwdCheckOk">
 			<table border="1" width="400">
 				<tr>
 					<th>아이디</th>
-					<td></td>
+					<td th:text="${session.cDTO.company_id}"></td>
 				</tr>
 				<tr>
 					<th>비밀번호</th>
