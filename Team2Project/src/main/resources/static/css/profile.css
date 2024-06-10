@@ -1,10 +1,129 @@
-@charset "UTF-8";
+	@charset "UTF-8";
+	
+	.custom-input {
+		height: 85px;
+		
+	}
+	
+	.textareaSize {
+		width: 42%;
+		height: 200px;
+	}
+	
+	.profile_job_div {
+		width: 50%;
+	}
+	
+	.categories-wrapper {
+		display: flex;
+		justify-content: flex-start; 
+		gap: 5px; 
+		margin-top: 5px; 
+	}
+	
+	.categories-wrapper ul {
+		list-style: none;
+		padding: 0;
+	}
+	
+	.categories-wrapper li {
+		margin-bottom: 7px; /* 각 항목의 간격 설정 */
+	}
+	
+	.categories-wrapper div {
+		flex: 1;
+	}
+	
+	
+	.content {
+    width: 80%;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
+	
+	.custom-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
 
-    .custom-input {
-        height: 60px;
-    }
+h2 {
+    margin-top: 30px;
+}
+
+.categories-wrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.categories-container,
+.subcategories-container,
+.stepcategories-container {
+    flex: 1;
+}
+
+.categories-container ul,
+.subcategories-container ul,
+.stepcategories-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+
+
+#preview {
+    width: 190px;
+    height: 210px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff; 
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.hopejob_div select,
+.hopejob_div input {
+    margin-bottom: 20px;
+}
+
+/* 이력서 저장 및 이력서 관리 버튼 */
+.Completed_div {
+    margin-top: 30px;
+}
+
+.Completed_div input[type="submit"],
+.Completed_div input[type="button"] {
+    padding: 15px 30px;
+    background-color: #007bff; 
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
     
-    .textareaSize {
-            width: 42%;
-            height: 200px;
-        }
+}
+
+.Completed_div input[type="submit"]:hover,
+.Completed_div input[type="button"]:hover {
+   background-color: #0056b3;
+}
+
+#add_career_input_form ul {
+    list-style: none; 
+    padding: 0; 
+}
