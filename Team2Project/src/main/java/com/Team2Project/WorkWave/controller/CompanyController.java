@@ -23,7 +23,7 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/C")
-public class CompanyRController {
+public class CompanyController {
 
 	@Autowired
 	private ComBoardMapper comBoardMapper;
@@ -36,9 +36,7 @@ public class CompanyRController {
 
 	// 기업회원 정보 수정하기전 비밀번호 확인 페이지 이동
 	@GetMapping("/update/companyPwdCheck")
-	public String companyModify(HttpSession session, Model model) {
-
-		model.addAttribute("companyInfo", session.getAttribute("companyInfo"));
+	public String companyModify() {
 
 		return "company/modify";
 
@@ -50,7 +48,7 @@ public class CompanyRController {
 			@RequestParam("company_number") String company_no, HttpSession session, HttpServletResponse response)
 			throws IOException {
 
-		CompanyDTO companyDto = (CompanyDTO) session.getAttribute("companyInfo");
+		CompanyDTO companyDto = (CompanyDTO) session.getAttribute("cDTO");
 		System.out.println(companyDto);
 
 		String str1 = company_no.substring(0, 3);
@@ -65,9 +63,8 @@ public class CompanyRController {
 
 		PrintWriter out = response.getWriter();
 
-		if (companyDto.getCompany_pwd().equals(pwd)) {
+		if (passwordEncoder.matches(pwd, companyDto.getCompany_pwd())) {
 			if (companyDto.getCompany_number().equals(companyNumber)) {
-				session.setAttribute("companyInfo", companyDto);
 				return "company/modify_ok";
 			} else {
 				out.println("<script>");
@@ -90,15 +87,22 @@ public class CompanyRController {
 	public void companyInfoUpdate(@RequestParam("logo") MultipartFile file, CompanyDTO dto,
 			HttpServletResponse response, HttpSession session) throws IOException {
 
-		CompanyDTO original_company_dto = (CompanyDTO) session.getAttribute("companyInfo");
+		CompanyDTO original_company_dto = (CompanyDTO) session.getAttribute("cDTO");
 
 		dto.setCompany_logo_name(original_company_dto.getCompany_logo_name());
 		dto.setCompany_logo(original_company_dto.getCompany_logo());
 
 		if (file.getOriginalFilename() != null) {
 			if (file != null && !file.isEmpty()) {
-				String logoUploadDir = "C:\\Users\\clxkd\\OneDrive\\바탕 화면\\project1\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\logo";
-
+				/*
+				 * String logoUploadDir =
+				 * "C:\\Users\\clxkd\\OneDrive\\바탕 화면\\project1\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\logo"
+				 * ;
+				 */
+				
+				String userDir = System.getProperty("user.dir");
+			    String logoUploadDir = userDir+"\\src\\main\\resources\\static\\ppt\\profile";
+			    System.out.println(logoUploadDir+"userDir");
 				uploadFileService.deleteFile(dto.getCompany_logo(), logoUploadDir);
 
 				dto.setCompany_logo_name(file.getOriginalFilename());
@@ -163,16 +167,15 @@ public class CompanyRController {
 		PrintWriter out = response.getWriter();
 
 		if (result == 1) {
-			session.removeAttribute("companyInfo");
+			session.removeAttribute("cDTO");
 
 			CompanyDTO updatedto = this.companyMapper.companyInfo(dto.getCompany_id());
 
-			session.setAttribute("companyInfo", updatedto);
-			session.setAttribute("member_type", "company");
+			session.setAttribute("cDTO", updatedto);
 
 			out.println("<script>");
 			out.println("alert('회원정보수정 완료하였습니다.')");
-			out.println("location.href='/info'");
+			out.println("location.href='/C/info'");
 			out.println("</script>");
 		} else {
 			out.println("<script>");
@@ -180,6 +183,14 @@ public class CompanyRController {
 			out.println("history.back()");
 			out.println("</script>");
 		}
+
+	}
+	
+	// 기업회원 정보 수정하기전 비밀번호 확인 페이지 이동
+	@GetMapping("/update/pwd/companyPwdCheck")
+	public String companyPwdUpdate() {
+
+		return "company/pwdUpdate";
 
 	}
 
@@ -215,8 +226,9 @@ public class CompanyRController {
 
 		if (company_dto.getCompany_pwd().equals(company_pwd) && company_dto.getCompany_number().equals(companyNumber)) {
 
-			String logoUploadDir = "C:\\Users\\clxkd\\OneDrive\\바탕 화면\\project1\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\logo";
-
+			String userDir = System.getProperty("user.dir");
+		    String logoUploadDir = userDir+"\\src\\main\\resources\\static\\ppt\\profile";
+		    System.out.println(logoUploadDir+"userDir");
 			uploadFileService.deleteFile(company_dto.getCompany_logo(), logoUploadDir);
 
 			int result = this.companyMapper.companyDelete(company_dto.getCompany_key());
@@ -290,7 +302,7 @@ public class CompanyRController {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		System.out.println("dto.getCom_board_key()sssssss");
+		System.out.println("dto.getCom_board_key()");
 		System.out.println(dto.getCom_board_key() + "dto.getCom_board_key()");
 
 		if (this.comBoardMapper.updateComBoard(dto) > 0) {
@@ -299,6 +311,22 @@ public class CompanyRController {
 			out.println("<script> alert('공고수정 실패'); history.back(); </script>");
 		}
 		out.flush();
+	}
+	
+	@GetMapping("/info")
+	public String companyInfo(HttpSession session, Model model) {
+		
+		CompanyDTO companyInfo = (CompanyDTO) session.getAttribute("cDTO");
+		  
+		int comBoarding = this.companyMapper.companyBoardingCnt(companyInfo.getCompany_key());
+		int applyNoneCheckCnt = this.companyMapper.applyNoneCheckCnt(companyInfo.getCompany_key());
+		int positionCnt = this.companyMapper.positionCnt(companyInfo.getCompany_key());
+		
+		model.addAttribute("comBoarding", comBoarding); 
+		model.addAttribute("applyNoneCheckCnt", applyNoneCheckCnt); 
+		model.addAttribute("positionCnt", positionCnt); 
+		
+		return "company/cont";
 	}
 
 }

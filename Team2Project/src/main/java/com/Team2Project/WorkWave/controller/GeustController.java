@@ -240,7 +240,7 @@ public class GeustController {
 
 		CompanyDTO dto = this.companyMapper.companyInfo(company_id);
 
-		if (encordedPwd.equals(dto.getCompany_pwd())) {
+		if (passwordEncoder.matches(company_pwd, dto.getCompany_pwd())) {
 			out.println("<script>");
 			out.println("alert('기존 비밀번호와 새로 입력하신 비밀번호가 같습니다.')");
 			out.println("</script>");

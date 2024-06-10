@@ -6,30 +6,85 @@
 <title>Work Wave 기업 마이페이지</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/FAQ.css}">
+<link rel="stylesheet" th:href="@{/css/company.css}">
 </head>
 <body>
-	<div th:replace="include/header :: companyHeader"></div>
+	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
 	
 	<div class="mainContainer">
 		<div class="sidebar active">
       		<h3>마이페이지</h3>
-	        <a th:href="@{/}">공고 등록</a>
+	        <a th:href="@{/C/comBoard/insert}">공고 등록</a>
 	        <a th:href="@{/}">공고 리스트</a>
-	        <a th:href="@{/}">입사지원 현황</a>
-	        <a th:href="@{/C/update/pwdCheck}">기업정보 수정</a>
-	        <a th:href="@{/}">비밀번호 변경</a>
-	        <a th:href="@{/}">회원탈퇴</a>
+	        <a th:href="@{/}">지원자 현황</a>
+	        <a th:href="@{/C/update/companyPwdCheck}">기업정보 수정</a>
+	        <a th:href="@{/C/update/pwd/companyPwdCheck}">비밀번호 변경</a>
+	        <a th:href="@{/C/delete/companyPwdCheck}">회원탈퇴</a>
       </div>
 		
 		<div class="faq-list">
         <div class="content">
-            <h3>기업정보 -> 성환형 작업 끝나면 해야함, SecurityConfig 수정 필요</h3>
-            <ul class="notice-list">
-                <li>게재 중 공고</li>
-                <li>미열람 지원자</li>
-                <li>포지션 제안을 보낸 지원자 수</li>
-            </ul>
+            <h3>기업정보</h3>
+            <div class="row">	
+           		<table>
+           			<tr>
+           				<td rowspan="6">
+           					<img th:if="${session.cDTO.company_logo != null}" alt="로고입니다" th:src="'\\image\\logo\\'+${session.cDTO.company_logo}" height="200px">
+            				<img th:if="${session.cDTO.company_logo == null}" alt="저장된 기업 로고가 없습니다." th:src="'\\image\\logo\\'+${session.cDTO.company_logo}">
+           				</td>
+           			</tr>
+           			<tr>
+           				<td colspan="2">
+           					<h2 th:text="${session.cDTO.company_name}"></h2>
+           				</td>
+           			</tr>
+           			
+           			<tr>
+           				<td width="100px">
+           					회사 주소 :
+           				</td>
+           				<td th:text="${session.cDTO.company_addr}"></td>
+           			</tr>
+           			
+           			<tr>
+           				<td width="100px">
+           					인사 담당자 :
+           				</td>
+           				<td th:text="${session.cDTO.company_mgr_name}"></td>
+           			</tr>
+           			
+           			<tr>
+           				<td width="100px">
+           					연락처 :
+           				</td>
+           				<td th:text="${session.cDTO.company_mgr_phone}"></td>
+           			</tr>
+           			
+           			<tr>
+           				<td width="100px">
+           					이메일 :
+           				</td>
+           				<td th:text="${session.cDTO.company_mgr_email}"></td>
+           			</tr>
+           		</table>
+            </div>
+            
+            <br><br>
+            
+            <table class="company-table">
+            <tr>
+               <th>게재 중 공고</th>
+               <th>미열람 지원자</th>
+               <th>포지션 제안을 보낸 지원자 수</th>
+            </tr>
+            
+            <tr>
+               <th th:text="${comBoarding}">지원완료</th>
+               <th th:text="${applyNoneCheckCnt}">이력서 열람</th>
+               <th th:text="${positionCnt}">포지션 제안</th>
+            </tr>         
+            </table>
 
         </div>
 	</div>

@@ -10,60 +10,6 @@
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
 <script>
-$(function(){
-	$('#company_pwd').on('input', function() {
-        var pwd = $(this).val();
-        var pwdPattern = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,20}$/;
-        if (pwdPattern.test(pwd)) {
-            $('#pwdCheckmark').show();
-            $('#pwdError').hide();
-        } else {
-            $('#pwdCheckmark').hide();
-            $('#pwdError').show();
-        }
-	});
-});
-
-$(function(){
-	var pwd_check = false;
-	$("#company_pwd_check").focusout(function(){
-		pwdCheck($(this).val());
-	});
-	
-	function pwdCheck(pwd){
-		if(pwd==""){
-			$("#pwd_check").text("");
-            return;
-		}
-		
-		if($("#company_pwd_check").val() === $("#company_pwd").val()){
-			$("#pwd_check_ok").show();
-			$("#pwd_check_err").hide();
-		}else{
-			$("#pwd_check_ok").hide();
-			$("#pwd_check_err").show();
-		}
-	};
-});
-
-function insertCheck(){
-	var pwd = $('#company_pwd').val();
-	var pwdPattern = /^(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,20}$/;
-	
-	if(!pwdPattern.test(pwd)){
-		debugger;
-		alert('비밀번호를 확인하여주십시오.');
-		$("#company_pwd").focus();
-		return false;
-	}
-	
-	if($("#company_pwd").val()!=$("#company_pwd_check").val()){
-		debugger;
-		alert('비밀번호 확인을 확인하여주십시오.');
-		$("#company_pwd_check").focus();
-		return false;
-	}
-};
 
 document.addEventListener('DOMContentLoaded', function() {
     var companyPhoneInput = document.getElementById('company_phone');
@@ -117,7 +63,7 @@ $(function(){
 </script>
 </head>
 <body>
-	<div th:replace="~{include/header :: guestHeader}"></div>
+	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
 		<hr width="30%" color="gray">
 		<h3>
@@ -129,63 +75,46 @@ $(function(){
 			<table border="1" width="500">
 				<tr>
 					<th>사업자 등록 번호</th>
-					<td><input name="company_number" readonly></td>
+					<td><input name="company_number" th:value="${session.cDTO.company_number}" readonly></td>
 				</tr>
 				<tr>
 					<th>회원 아이디</th>
-					<td><input name="company_id" readonly></td>
-				</tr>
-				<tr>
-					<th>비밀번호</th>
-					<td><input name="company_pwd" type="password"
-						id="company_pwd" required> <span
-						id="pwdCheckmark" class="checkmark">✔</span> <span id="pwdError"
-						style="display: none; color: red; font-size: 12px;">비밀번호는
-						8자 이상 20자 이하이며 특수문자 1자를 포함해야 합니다.</span></td>
-				</tr>
-				<tr>
-					<th>비밀번호 확인</th>
-					<td><input name="company_pwd_check" type="password"
-						id="company_pwd_check" required> <span id="pwdCheckmark"
-						class="checkmark">✔</span> <span id="pwd_check_err"
-						style="display: none; color: red; font-size: 12px;">위의
-						비밀번호와 입력된 비밀번호가 다릅니다.</span> <span id="pwd_check_ok"
-						style="display: none; color: green; font-size: 12px;">✔</span></td>
+					<td><input name="company_id" th:value="${session.cDTO.company_id}" readonly></td>
 				</tr>
 				<tr>
 					<th>기업 이름</th>
 					<td><input name="company_name" readonly
-						th:value="${session.companyInfo.company_name}">
+						th:value="${session.cDTO.company_name}">
 						</td>
 				</tr>
 				<tr>
 					<th>기업 대표 이름</th>
 					<td><input name="company_ceo" readonly
-						th:value="${session.companyInfo.company_ceo}">
+						th:value="${session.cDTO.company_ceo}">
 						</td>
 				</tr>
 				<tr>
 					<th>기업 주소</th>
 					<td><input name="company_addr"
-						th:value="${session.companyInfo.company_addr}">
+						th:value="${session.cDTO.company_addr}">
 						</td>
 				</tr>
 				<tr>
 					<th>기업 전화번호</th>
 					<td><input name="company_phone" id="company_phone"
-						th:value="${session.companyInfo.company_phone}">
+						th:value="${session.cDTO.company_phone}">
 						</td>
 				</tr>
 				<tr>
 					<th>기업 홈페이지</th>
 					<td><input name="company_homepage" id="company_homepage"
-						th:value="${session.companyInfo.company_homepage}">
+						th:value="${session.cDTO.company_homepage}">
 						</td>
 				</tr>
 				<tr>
 					<th>기업 로고</th>
 					<td>
-						<img th:alt="${session.companyInfo.company_logo_name}" th:src="@{'\\image\\logo\\'+${session.companyInfo.company_logo}}"
+						<img th:alt="${session.cDTO.company_logo_name}" th:src="@{'\\image\\logo\\'+${session.cDTO.company_logo}}"
 						height="100px" width="100px" id="original_logo">
 						<img id="preview_logo" height="100px" width="100px" style="display:none;">
 						<input type="file" name="logo" id="logo" accept=".jpeg, .jpg, .png" value="">
@@ -194,27 +123,27 @@ $(function(){
 				<tr>
 					<th>기업 근무인원</th>
 					<td><input name="company_emp_count"
-						th:value="${session.companyInfo.company_emp_count}"></td>
+						th:value="${session.cDTO.company_emp_count}"></td>
 				</tr>
 				<tr>
 					<th>기업 총 수익</th>
 					<td><input name="company_sal"
-						th:value="${session.companyInfo.company_sal}">만원</td>
+						th:value="${session.cDTO.company_sal}">만원</td>
 				</tr>
 				<tr>
 					<th>인사담당자 이름</th>
 					<td><input name="company_mgr_name"
-						th:value="${session.companyInfo.company_mgr_name}"></td>
+						th:value="${session.cDTO.company_mgr_name}"></td>
 				</tr>
 				<tr>
 					<th>인사담당자 이메일</th>
 					<td><input name="company_mgr_email"
-						th:value="${session.companyInfo.company_mgr_email}"></td>
+						th:value="${session.cDTO.company_mgr_email}"></td>
 				</tr>
 				<tr>
 					<th>인사담당자 전화번호</th>
 					<td><input name="company_mgr_phone" id="company_mgr_phone"
-						th:value="${session.companyInfo.company_mgr_phone}"></td>
+						th:value="${session.cDTO.company_mgr_phone}"></td>
 				</tr>
 				<tr>
 					<td colspan="2" align="center"><input type="submit"
