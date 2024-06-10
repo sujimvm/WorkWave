@@ -50,13 +50,13 @@
 			insert into chat values(#{chat_key}, #{chat_title}, #{chat_cont}, 1, default, sysdate, 0, #{chat_tag})
 	</insert> -->
 	
-	<insert id="add" parameterType="chatDTO">
-	    <selectKey resultType="int" keyProperty="chat_key" order="BEFORE">
-	        select max(chat_key) + 1 from chat
-	    </selectKey>
-	    insert into chat (chat_key, user_key, chat_title, chat_cont, chat_hit, chat_date, chat_update, chat_like, chat_tag)
-	    values (#{chat_key}, 37, #{chat_title}, #{chat_cont}, 1, sysdate, sysdate, 0, #{chat_tag})
-	</insert>
+		<insert id="add" parameterType="chatDTO">
+		    <selectKey resultType="int" keyProperty="chat_key" order="BEFORE">
+		        select max(chat_key) + 1 from chat
+		    </selectKey>
+		    insert into chat (chat_key, user_key, chat_title, chat_cont, chat_hit, chat_date, chat_update, chat_like, chat_tag)
+		    values (#{chat_key}, #{user_key}, #{chat_title}, #{chat_cont}, 1, sysdate, sysdate, 0, #{chat_tag})
+		</insert>
 		
 	<delete id="del" parameterType="int">
 		delete from chat where chat_key = #{chat_key}

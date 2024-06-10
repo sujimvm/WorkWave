@@ -6,74 +6,27 @@
     <title>Work Wave 커뮤니티</title>
     <!-- 부트스트랩 CSS 추가 -->
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/css/include.css}">
-    <style>
-   
-		/* 총 게시물 수 */
-		td[colspan="4"] {
-		    text-align: right;
-		}
-		
-		/* 테이블 */
-		table {
-		    width: 100%;
-		    border-collapse: collapse;
-		}
-		
-		th, td {
-		    padding: 8px;
-		    text-align: left;
-		}
-		
-		th {
-		    border-bottom: 1px solid black; /* 테이블 헤더의 하단 선 추가 */
-		}
-		
-		td {
-		    border-bottom: 1px solid #ddd; /* 테이블 데이터의 하단 선 추가 */
-		}
-		
-		tr:first-child th,
-		tr:not(:first-child) td {
-		    border-top: none; /* 테이블 헤더와 데이터 사이의 상단 선 제거 */
-		}
-		
-		/* 버튼 */
-		input[type="button"] {
-		    padding: 10px 20px;
-		    background-color: #007BFF;
-		    color: white;
-		    border: none;
-		    border-radius: 5px;
-		    cursor: pointer;
-		}
-		
-		input[type="button"]:hover {
-		    background-color: #0056b3;
-		}
-		
-		/* 가운데 정렬 */
-		.center {
-		    text-align: center;
-		}
-    
-    
-    </style>
+    <link rel="stylesheet" th:href="@{/css/userCont.css}">
 </head>
 <body>
-
-<div th:replace="~{include/header :: guestHeader}"></div>
-<div class="container">
-    <div layout:fragment="content" class="content">
-        
-        <br> <br>
-        
-        <h3 align="center">게시물 전체 리스트</h3>
-       
-        <br><br>
-
-        <table class="table table-bordered">
+	<div th:replace="~{include/header}"></div>
+	    <div layout:fragment="content" class="content">
+	        <div class="mainContainer">
+		<div class="sidebar active">
+      		<h3>게시판 리스트</h3>
+        	<a th:href="@{/U/chat/insert}">글쓰기</a>
+        	<a th:if="${null != session.uDTO}" th:text="${session.uDTO.user_name}"></a>
+        	<th:block th:if="${null == session.uDTO}">
+        		<a>게스트</a>
+        	</th:block>
+        	
+      </div>
+		
+		<div class="user-info">
+        <div class="content">
+            <h3>게시판 리스트</h3>
+            <table class="table table-bordered">
             <thead>
                 <tr>
                     <td colspan="4" align="right">
@@ -104,18 +57,12 @@
                 </tr>
             </tbody>
         </table>
-
-        <div class="text-center">
-            <input type="button" value="글쓰기" th:onclick="|location.href='@{/U/chat/insert}'|">
-            <br> <br>
         </div>
-    </div>
-</div>
-<div th:replace="~{include/footer :: footer}"></div>
-
-<!-- 부트스트랩 -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-
+	        
+	
+	        
+		</div>
+		</div>
+	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>

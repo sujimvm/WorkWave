@@ -29,7 +29,7 @@ public interface ChatMapper {
 
     ChatReplyDTO getReplyById(int reply_key);
    
-    void updateReply(ChatReplyDTO reply);
+    void updateReply(int replyKey, String editedContent);
     
     void deleteReply(int reply_key);
     
