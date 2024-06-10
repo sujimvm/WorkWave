@@ -37,7 +37,7 @@
 									<dt>지역</dt>
 									<dd th:text="${map.dto.company_addr}"></dd>
 									<dt>시간</dt>
-									<dd th:text="${map.dto.com_board_week+dto.com_board_time}"></dd>
+									<dd th:text="${map.dto.com_board_week+map.dto.com_board_time}"></dd>
 								</dl>
 							</div>
 						</div>
@@ -131,6 +131,7 @@
 			
 			
 			<div sec:authorize="isAuthenticated() and hasRole('COMPANY')">
+				<h3>포지션제안</h3>
 				
 			</div><!-- 포지션제안 -->
 			

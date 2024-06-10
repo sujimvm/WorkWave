@@ -129,6 +129,8 @@ public class AllController {
 			}else {
 				session.setAttribute("role", role);
 				session.setAttribute("uDTO", userMapper.getUserById(id));
+				UserDTO udto = (UserDTO)session.getAttribute("uDTO");
+				int userKey = udto.getUser_key();
 			}
 		}
 
@@ -153,9 +155,6 @@ public class AllController {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("dto", this.comBoardMapper.getComBoard(com_board_key));
 		map.put("P", Integer.parseInt(request.getParameter("P")));
-		map.put("dto", "");
-		map.put("dto", "");
-		map.put("dto", "");
 		
 		model.addAttribute("map",map);
 
