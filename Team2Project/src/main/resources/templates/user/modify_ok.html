@@ -6,60 +6,105 @@
 <title>Work Wave 회원 수정 페이지</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/user.css}">
+<script src="https://ssl.daumcdn.net/dmaps/map_js_init/postcode.v2.js"></script>
+<script th:src="@{/js/userInsert.js}"></script>
+<style type="text/css">
+
+	#addr_detail {
+		display: none;
+	}
+</style>
+
+<script type="text/javascript">
+
+
+	
+//다음 도로명 주소 검색창을 열어주는 로직
+function daumPostcode() {
+         new daum.Postcode({
+             oncomplete: function(data) {
+                 // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                 var roadAddr = data.roadAddress; // 도로명 주소 변수
+                 var extraRoadAddr = ''; // 참고 항목 변수
+
+                 // 참고항목 문자열이 있을 경우 추가한다.
+                 if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                     extraRoadAddr += data.bname;
+                 }
+                 if(data.buildingName !== '' && data.apartment === 'Y'){
+                    extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                 }
+                 if(extraRoadAddr !== ''){
+                     extraRoadAddr = ' (' + extraRoadAddr + ')';
+                 }
+
+               // 우편번호와 주소 정보를 해당 필드에 넣는다.
+               document.getElementById('user_addr').value = roadAddr + extraRoadAddr;
+               // 상세주소 필드에 포커스
+               document.getElementById('user_addr_detail').focus();
+             }
+         }).open();
+     }
+	
+
+</script>
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
         <div layout:fragment="content" class="content">
       <hr width="30%" color="gray">
          <h3>
-        <span th:text="${session.user_login.user_name} + '님 수정 페이지'"></span>
+        <span th:text="${session.uDTO.user_name} + '님 수정 페이지'"></span>
     	</h3>
       <hr width="30%" color="gray">
       
       <form method="post" action="/U/info">
-         <input type="hidden" name="user_key" th:value="${session.userInfo.user_key}">
+         <input type="hidden" name="user_key" th:value="${session.uDTO.user_key}">
+         <input type="hidden" name="user_pwd" th:value="${session.uDTO.user_pwd}">
          <table border="1" width="500">
             <tr>
                <th>회원 아이디</th>
                <td>
-                  <input name="user_id" readonly th:value="${session.userInfo.user_id}">
+                  <input name="user_id" readonly th:value="${session.uDTO.user_id}">
                </td>
             </tr>
-            <tr>
-               <th>회원 비밀번호</th>
-               <td>
-                  <input type="password" name="user_pwd" th:value="${session.userInfo.user_pwd}">
-               </td>
-            </tr>
+                  
             <tr>
                <th>회원 이름</th>
                <td>
-                  <input name="user_name" th:value="${session.userInfo.user_name}" readonly>
+                  <input name="user_name" th:value="${session.uDTO.user_name}" readonly>
                </td>
             </tr>
             <tr>
                <th>회원 이메일</th>
                <td>
-                  <input name="user_email" th:value="${session.userInfo.user_email}">
+                  <input name="user_email" th:value="${session.uDTO.user_email}">
                </td>
             </tr>
             <tr>
             
                <th>회원 전화번호</th>
                <td>
-                  <input name="user_phone" th:value="${session.userInfo.user_phone}">
+                  <input name="user_phone" th:value="${session.uDTO.user_phone}">
                </td>
             </tr>
             <tr>
                <th>회원 주소</th>
                <td>
-                  <input name="user_addr" th:value="${session.userInfo.user_addr}">
+                  <input name="user_addr" id="user_addr" th:value="${session.uDTO.user_addr}" 
+                  onclick="daumPostcode()" readonly>
                </td>
+            </tr>
+            <tr id="addr_detail">
+            	<th>상세 주소</th>
+                <td>
+                   <input id="user_addr_detail">
+                </td>
             </tr>
             <tr>
                <th>회원 성별</th>
                <td>
-                  <input name="user_gender" readonly th:value="${session.userInfo.user_gender}">
+                  <input name="user_gender" readonly th:value="${session.uDTO.user_gender}">
                </td>
             </tr>
             <tr>

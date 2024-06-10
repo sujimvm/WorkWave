@@ -36,7 +36,7 @@ header, footer {
 }
 
 .sidebar h3 {
-    text-align: center;
+    text-align: left;
     margin-bottom: 30px;
     font-size: 24px;
     font-weight: 600;
@@ -47,7 +47,7 @@ header, footer {
     color: #333; /* 링크 색상 */
     padding: 10px 20px;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 15px;
     border-bottom: 1px solid #eee; /* 링크 사이에 얇은 경계선 추가 */
     transition: background 0.3s, color 0.3s;
 }
@@ -60,6 +60,11 @@ header, footer {
 .sidebar a.active {
     background-color: #e0e0e0; /* 활성화된 링크 배경색 */
     color: #000; /* 활성화된 링크 글자 색상 */
+}
+
+.sidebar a.select {
+    background-color: #0B57D0;
+    color: white;
 }
 
 .faq-list {
