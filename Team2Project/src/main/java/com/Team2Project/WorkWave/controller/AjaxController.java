@@ -236,16 +236,17 @@ public class AjaxController {
 			viewMap.put("list", list);
 			viewMap.put("paging", pdto);
 
+			System.out.println(session.getAttribute("uDTO") +"session.getAttribu ");
+			
 			if(session.getAttribute("uDTO") == null) {
 				System.out.println("비회원");
 			}else {
+				System.out.println("개인회원");
 				UserDTO udto = (UserDTO)session.getAttribute("uDTO");
 				int userKey = udto.getUser_key();
 				int[] interestList = this.comBoardMapper.getInterestCompanyKeyList(userKey); // 관심기업 데이터
-				int profileKey = this.comBoardMapper.selectDefaultProfile(userKey); // 기본설정되어있는 프로필키
-				int[] applyList = this.comBoardMapper.getApplyList(profileKey); // 지원내역 데이터
 				viewMap.put("interestList", interestList);
-				viewMap.put("applyList", applyList);
+				viewMap.put("applyList", this.comBoardMapper.getApplyList(userKey));
 			}
 			
 			return viewMap;
@@ -322,7 +323,7 @@ public class AjaxController {
 			}
 		}
 		
-		// 공고 지원
+		// 공고 지원 
 		@PostMapping("/apply/insert")
 		//@ResponseBody
 		public void addApply(@RequestParam("checked") String checked, HttpServletRequest request, HttpSession session) {

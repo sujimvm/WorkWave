@@ -7,22 +7,23 @@
   		<!-- 공고리스트 -->
     	<select id="getComBoardList" parameterType="HashMap" resultType="bDTO">
     		<![CDATA[
-	  		select * from (select row_number() over(order by com_board_date desc) rnum, b.* from com_board b)Pb join company c on c.company_key = Pb.company_key
+	  		select * 
+	  		from (select row_number() over(order by com_board_date desc) rnum, b.* 
+	  		from com_board b where com_board_start_date <= sysdate and com_board_end_date >= sysdate)Pb join company c on c.company_key = Pb.company_key
 	  		where rnum >= #{pdto.startNo} and rnum <= #{pdto.endNo}
-	  		and com_board_start_date <= sysdate
-	  		and com_board_end_date >= sysdate
 	  		]]>
 	  	</select>
 	  	<!-- 관심기업리스트 -->
-    	<select id="getInterestCompanyKeyList" resultType="int">
+    	<select id="getInterestCompanyKeyList" resultType="int" parameterType="int">
 	  		select company_key from interest where user_key = #{user_key}
 	  	</select>
 	  	<select id="countComBoard" resultType="int">
 	        SELECT COUNT(*) FROM com_board
 	    </select>
 	  	<!-- 공고 지원리스트 -->
-    	<select id="getApplyList" resultType="int">
-	  		select com_board_key from apply where profile_key = #{profile_key}
+    	<select id="getApplyList" resultType="int" parameterType="int">
+	  		select com_board_key from apply 
+	  		where profile_key in (select profile_key from profile where user_key = #{user_key} and profile_default = 'Y')
 	  	</select>
 	  	
 	  	
