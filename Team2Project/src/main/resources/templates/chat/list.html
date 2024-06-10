@@ -91,7 +91,7 @@
                 <tr th:if="${not #lists.isEmpty(List)}" th:each="dto : ${List}">
                     <td th:text="${dto.chat_key}"></td>
                     <td>
-                        <a th:href="@{chat_cont(no=${dto.chat_key})}" th:text="${dto.chat_title}"></a>
+                        <a th:href="@{/A/chat/content(no=${dto.chat_key})}" th:text="${dto.chat_title}"></a>
                     </td>
                     <td th:text="${dto.chat_hit}"></td>
                     <td th:text="${#dates.format(dto.chat_date, 'yyyy-MM-dd')}"></td>
