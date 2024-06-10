@@ -154,11 +154,11 @@ $(document).ready(function(){
 		</select>
     `;
     //공통 된 부분 변수에 저장해 놓기
-	var edu_name_text = `<input name="eDtoList[0].edu_name" class="edu_name" placeholder="학교명">`;
-	var edu_end_date_text = `<input type="date" name="eDtoList[0].edu_end_date" placeholder="졸업년도">`;
-	var edu_status_text = `<input name="eDtoList[0].edu_status" placeholder="졸업상태">`;
-	var edu_start_date_text = `<input type="date" name="eDtoList[0].edu_start_date" placeholder="입학년월">`;
-	var edu_major_text = `<input name="eDtoList[0].edu_major" class="edu_major" placeholder="전공 및 문과/이과">`;
+	var edu_name_text = `<input name="eDtoList[0].edu_name" class="edu_name form-control d-inline" style=width:220px; placeholder="학교명">`;
+	var edu_end_date_text = `<input type="date" name="eDtoList[0].edu_end_date" placeholder="졸업년도" class="form-control d-inline" style=width:150px; >`;
+	var edu_status_text = `<input name="eDtoList[0].edu_status" placeholder="졸업상태" class="form-control d-inline" style=width:100px;>`;
+	var edu_start_date_text = `<input type="date" name="eDtoList[0].edu_start_date" placeholder="입학년월" class="form-control d-inline" style=width:150px;>`;
+	var edu_major_text = `<input name="eDtoList[0].edu_major"  class="edu_major form-control d-inline" style=width:170px; placeholder="전공 및 문과/이과">`;
 	
 	var edu_remove_bt = `<button class="removeForm">삭제</button>`;
 	//학력 추가 버튼 클릭	
@@ -193,7 +193,7 @@ $(document).ready(function(){
 				</select>
 		    `;
 	    	
-	    	row += edu_name_text + edu_end_date_text + edu_status_text+edu_remove_bt;
+	    	row += edu_name_text + edu_start_date_text + edu_end_date_text + edu_status_text + edu_major_text +edu_remove_bt;
 	    } else if (selectedOption === "1") {
 	        row = `
 	        	<select class="edu_kind" name="eDtoList[0].edu_kind">
@@ -320,18 +320,18 @@ $(document).ready(function(){
 		<div class="career_input_form">
 		<ul>
 			<li>
-			<input name="crDtoList[0].career_company" placeholder="회사명">
-			<input type="date"  name="crDtoList[0].career_start_date" placeholder="입사년월">
-			<input type="date" name="crDtoList[0].career_end_date" placeholder="퇴사년월">
+			<input name="crDtoList[0].career_company" placeholder="회사명" class="form-control" style=width:245px;><br>
+			<input type="date"  name="crDtoList[0].career_start_date" class="form-control d-inline" style=width:120px; placeholder="입사년월">
+			<input type="date" name="crDtoList[0].career_end_date" class="form-control d-inline" style=width:120px; placeholder="퇴사년월">
 			</li>
 		</ul>
 		<ul>
 			<li>
-			<input name="crDtoList[0].career_position" placeholder="직책">
-			<input name="crDtoList[0].career_bye" placeholder="퇴사사유">
+			<input name="crDtoList[0].career_position" placeholder="직책" class="form-control d-inline" style=width:120px;>
+			<input name="crDtoList[0].career_bye" placeholder="퇴사사유" class="form-control d-inline" style=width:120px;>
 			</li>
 		</ul>
-		<textarea rows="15" cols="80" placeholder="담당업무" name="crDtoList[0].career_cont"></textarea>
+		<textarea rows="15" cols="10" placeholder="담당업무" name="crDtoList[0].career_cont" class="form-control h-26" id="floatingTextarea"></textarea>
 		<button class="removeForm">삭제</button></div>
 	    `;
 	    
@@ -352,12 +352,12 @@ $(document).ready(function(){
 		<div class="license_input_form">
 		<ul>
 			<li>
-			<input name="lDtoList[0].license_name" class="license_name" placeholder="자격증명">
-			<input name="lDtoList[0].license_company" class="license_company" placeholder="발행처">
-			<input type="date" name="lDtoList[0].license_date" placeholder="취득년월">
+			<input name="lDtoList[0].license_name" class="license_name form-control d-inline" style=width:180px; placeholder="자격증명">
+			<input name="lDtoList[0].license_company" class="license_company form-control d-inline" style=width:180px; placeholder="발행처">
+			<input type="date" name="lDtoList[0].license_date" class="form-control d-inline" style=width:120px; placeholder="취득년월">
+			<button class="removeForm">삭제</button></div>
 			</li>
 		</ul>
-		<button class="removeForm">삭제</button></div>
 	    `;
 	 
 
