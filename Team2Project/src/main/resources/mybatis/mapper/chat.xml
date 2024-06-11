@@ -52,7 +52,7 @@
 	
 		<insert id="add" parameterType="chatDTO">
 		    <selectKey resultType="int" keyProperty="chat_key" order="BEFORE">
-		        select max(chat_key) + 1 from chat
+		        select coalesce(max(chat_key), 0) + 1 from chat
 		    </selectKey>
 		    insert into chat (chat_key, user_key, chat_title, chat_cont, chat_hit, chat_date, chat_update, chat_like, chat_tag)
 		    values (#{chat_key}, #{user_key}, #{chat_title}, #{chat_cont}, 1, sysdate, sysdate, 0, #{chat_tag})
