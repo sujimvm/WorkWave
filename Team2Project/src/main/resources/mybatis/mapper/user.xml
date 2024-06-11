@@ -51,4 +51,8 @@
   	   select user_id, user_pwd, role from users where user_id = #{user_id}
   </select>
   
+  <select id="profileName" resultType="String">
+  	   select profile_name from profile where user_key = #{user_key}
+  </select>
+  
   </mapper>

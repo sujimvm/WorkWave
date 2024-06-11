@@ -44,6 +44,7 @@ public class UserController {
       int applyCheckCnt = this.userMapper.applyCheckCnt(userInfo.getUser_key());
       int positionJean = this.userMapper.positionJean(userInfo.getUser_key());
       int interest = this.userMapper.interest(userInfo.getUser_key());
+      String profileName = this.userMapper.profileName(userInfo.getUser_key());
          
       // 지원완료 갯수
       model.addAttribute("applyCnt", applyCnt);
@@ -53,6 +54,8 @@ public class UserController {
       model.addAttribute("positionJean", positionJean);
       // 관심 기업 갯수
       model.addAttribute("interest", interest);
+      // 이력서 제목
+      model.addAttribute("profileName", profileName);
       
       return "user/cont";
    }

@@ -25,10 +25,12 @@
 		
 		<div class="user-info">
         <div class="content">
-        		<!-- /profile -->
-            	<h3 th:inline="text">[[${session.uDTO.user_name}]] 님 안녕하세요.</h3>
-            	<!-- <h3 th:if="${empty profileName}" th:text="${profileName}"></h3> -->
-            	
+        		<div th:if="${profileName == null}">
+            		<h3 th:inline="text">[[${session.uDTO.user_name}]] 님 안녕하세요.</h3>
+            	</div>
+            	<div th:if="${profileName != null}">
+            		<h3 th:text="${profileName}"></h3>
+            	</div>
             <ul class="user-list">
             	<li th:inline="text">주소 : [[${session.uDTO.user_addr}]]</li>
             	<li th:inline="text">Phone : [[${session.uDTO.user_phone}]]</li>

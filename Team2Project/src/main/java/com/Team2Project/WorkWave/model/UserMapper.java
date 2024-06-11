@@ -40,6 +40,8 @@ public interface UserMapper {
 	public int interest(int user_key);
 	
 	UserLoginDTO findUserIdById(String user_id);
+	
+	public String profileName(int user_key);
 }
 	
 	
