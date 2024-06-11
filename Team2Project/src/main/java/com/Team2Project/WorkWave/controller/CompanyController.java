@@ -101,7 +101,7 @@ public class CompanyController {
 				 */
 				
 				String userDir = System.getProperty("user.dir");
-			    String logoUploadDir = userDir+"\\src\\main\\resources\\static\\ppt\\profile";
+			    String logoUploadDir = userDir+"\\src\\main\\resources\\static\\image\\logo";
 			    System.out.println(logoUploadDir+"userDir");
 				uploadFileService.deleteFile(dto.getCompany_logo(), logoUploadDir);
 
@@ -272,7 +272,7 @@ public class CompanyController {
 		if (passwordEncoder.matches(company_pwd, company_dto.getCompany_pwd()) && company_dto.getCompany_number().equals(companyNumber)) {
 
 			String userDir = System.getProperty("user.dir");
-		    String logoUploadDir = userDir+"\\src\\main\\resources\\static\\ppt\\profile";
+		    String logoUploadDir = userDir+"\\src\\main\\resources\\static\\image\\logo";
 		    System.out.println(logoUploadDir+"userDir");
 			uploadFileService.deleteFile(company_dto.getCompany_logo(), logoUploadDir);
 
