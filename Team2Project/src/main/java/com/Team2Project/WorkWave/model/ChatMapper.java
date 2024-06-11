@@ -35,5 +35,6 @@ public interface ChatMapper {
     
     public int replylike(int reply_key);
 	
+    public int chatCnt(int user_key);
 	
 }
