@@ -46,7 +46,7 @@
 
 		<form method="post" action="/C/update/companyPwdCheckOk">
 			<span style="font-size: 20px; font-weight: bold;">본인 확인</span>
-			<table class="company-table2" style="box-shadow: none; font-size: 15px;">
+			<table class="company-table2">
 				<tr>
 					<th>아이디</th>
 					<td th:text="${session.cDTO.company_id}" align="left"></td>
@@ -69,12 +69,10 @@
 						<small>타인에게 노출되지 않도록 주의하세요</small>
 					</td>
 				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<input type="submit" value="확인" onclick="return check()">
-					</td>
-				</tr>
 			</table>
+			<div class="submitBtnContainer">
+				<input type="submit" value="확인" onclick="return check()">
+			</div>
 		</form>
 	</div>
             
