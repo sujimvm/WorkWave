@@ -6,126 +6,97 @@
 </head>
 <body>
    
-   <div th:fragment="guestHeader" sec:authorize="!isAuthenticated()">
-      <div class="header">
-         <div class="container">
-            <div class="top-section">
-               <div class="logo-search">
-                  <div class="logo">
-                     <a th:href="@{/A/main}">
-                        <img src="/image/icon/main_logo.png" alt="Logo">
-                     </a>
-                  </div>
-                  
-                  <div class="search-btn">
-                     <form>
-                        <input class="search-bar" placeholder="채용공고 검색">&nbsp;&nbsp;
-                        <input type="submit" value="검색">
-                     </form>
-                  </div>
-               </div>
-               
-               <div class="user-actions">
-                  <a th:href="@{/login}">로그인</a>
-                  <a th:href="@{/G/userJoin}">회원가입</a>
-               </div>
-            </div>
-            
-            <!-- 네비게이션 바를 검색창 아래로 이동 -->
-            <nav>
-               <ul>
-                  <li><a th:href="@{/A/comBoard}">채용정보</a></li>
-                  <li><a th:href="@{/A/userFAQ}">고객센터</a></li>
-                  <li><a th:href="@{/A/notice}">공지사항</a></li>
-                  <li><a th:href="@{/A/chat}">웨이브톡</a></li>
-               </ul>
-            </nav>
-            
-         </div>
-      </div>
-   </div>
+	<div sec:authorize="!isAuthenticated()" class="header">
+		<div class="container">
+			<div class="top-section">
+				<div class="logo">
+					<a th:href="@{/A/main}"><img src="/image/icon/main_logo.png" alt="Logo"></a>
+				</div>
+				<div class="search-btn">
+					<form>
+						<input class="search-bar" placeholder="채용공고 검색">&nbsp;&nbsp;
+						<input type="submit" value="검색">
+					</form>
+				</div>
+				<div class="user-actions">
+					<a th:href="@{/login}">로그인</a>
+					<a th:href="@{/G/userJoin}">회원가입</a>
+				</div>
+			</div>
+		   
+		   <!-- 네비게이션 바를 검색창 아래로 이동 -->
+			<nav>
+				<ul>
+					<li><a th:href="@{/A/comBoard}">채용정보</a></li>
+					<li><a th:href="@{/A/chat}">웨이브톡</a></li>
+					<li><a th:href="@{/A/notice}">공지사항</a></li>
+					<li><a th:href="@{/A/userFAQ}">고객센터</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
    
-   <div th:fragment="userHeader" sec:authorize="isAuthenticated() and hasRole('USER')">
-      <div class="header">
-         <div class="container">
-            <div class="top-section">
-               <div class="logo-search">
-                  <div class="logo">
-                     <a th:href="@{/A/main}">
-                        <img src="/image/icon/main_logo.png" alt="Logo">
-                     </a>
-                  </div>
-                  
-                  <div class="search-btn">
-                     <form>
-                        <input class="search-bar" placeholder="기업/채용공고 검색">&nbsp;&nbsp;
-                        <input type="submit" value="검색">
-                     </form>
-                  </div>
-               </div>
-               
-               <div class="user-actions">
-                  <a th:href="@{/U/info}" th:text="${session.uDTO.user_name}">
-                  </a>
-                  <a th:href="@{/logout}">
-                     LOGOUT
-                  </a>
-               </div>
-            </div>
-            
-            <!-- 네비게이션 바를 검색창 아래로 이동 -->
-            <nav>
-               <ul>
-                  <li><a th:href="@{/A/comBoard}">채용정보</a></li>
-                  <li><a th:href="@{/A/userFAQ}">고객센터</a></li>
-                  <li><a th:href="@{/A/notice}">공지사항</a></li>
-                  <li><a th:href="@{/A/chat}">웨이브톡</a></li>
-               </ul>
-            </nav>
-            
-         </div>
-      </div>
-   </div>
-   
-   <div th:fragment="companyHeader" sec:authorize="isAuthenticated() and hasRole('COMPANY')">
-      <div class="header">
-         <div class="container">
-            <div class="top-section">
-               <div class="logo-search">
-                  <div class="logo">
-                     <a th:href="@{/A/main}">
-                        <img src="/image/icon/main_logo.png" alt="Logo">
-                     </a>
-                  </div>
-                  
-                  <div class="search-btn">
-                     <form>
-                        <input class="search-bar" placeholder="기업/채용공고 검색">&nbsp;&nbsp;
-                        <input type="submit" value="검색">
-                     </form>
-                  </div>
-               </div>
-               
-               <div class="user-actions">
-                  <a th:href="@{/C/info}" th:text="${session.cDTO.company_name}">기업회원 마이페이지</a>
-                  <a th:href="@{/logout}">LOGOUT</a>
-               </div>
-            </div>
-            
-            <!-- 네비게이션 바를 검색창 아래로 이동 -->
-            <nav>
-               <ul>
-                  <li><a th:href="@{/A/comBoard}">채용정보</a></li>
-                  <li><a th:href="@{/A/userFAQ}">고객센터</a></li>
-                  <li><a th:href="@{/A/notice}">공지사항</a></li>
-                  <li><a th:href="@{/A/chat}">웨이브톡</a></li>
-                  <li><a th:href="@{/C/comBoard/insert}">공고등록</a></li>
-               </ul>
-            </nav>
-            
-         </div>
-      </div>
-   </div>
-   
+   <div sec:authorize="isAuthenticated() and hasRole('USER')" class="header">
+		<div class="container">
+			<div class="top-section">
+				<div class="logo">
+					<a th:href="@{/A/main}"><img src="/image/icon/main_logo.png" alt="Logo"></a>
+				</div>
+				<div class="search-btn">
+					<form>
+						<input class="search-bar" placeholder="채용공고 검색">&nbsp;&nbsp;
+						<input type="submit" value="검색">
+					</form>
+				</div>
+				<div class="user-actions">
+					<a th:href="@{/U/info}" th:text="${session.uDTO.user_name}"></a>
+					<a th:href="@{/logout}">LOGOUT</a>
+				</div>
+			</div>
+		   
+		   <!-- 네비게이션 바를 검색창 아래로 이동 -->
+			<nav>
+				<ul>
+					<li><a th:href="@{/A/comBoard}">채용정보</a></li>
+					<li><a th:href="@{/A/chat}">웨이브톡</a></li>
+					<li><a th:href="@{/A/notice}">공지사항</a></li>
+					<li><a th:href="@{/A/userFAQ}">고객센터</a></li>
+					<li><a th:href="@{/U/profile/insert}">이력서등록</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+	
+   <div sec:authorize="isAuthenticated() and hasRole('COMPANY')" class="header">
+		<div class="container">
+			<div class="top-section">
+				<div class="logo">
+					<a th:href="@{/A/main}"><img src="/image/icon/main_logo.png" alt="Logo"></a>
+				</div>
+				<div class="search-btn">
+					<form>
+						<input class="search-bar" placeholder="채용공고 검색">&nbsp;&nbsp;
+						<input type="submit" value="검색">
+					</form>
+				</div>
+				<div class="user-actions">
+					<a th:href="@{/C/info}" th:text="${session.cDTO.company_name}"></a>
+					<a th:href="@{/logout}">LOGOUT</a>
+				</div>
+			</div>
+		   
+		   <!-- 네비게이션 바를 검색창 아래로 이동 -->
+			<nav>
+				<ul>
+					<li><a th:href="@{/A/comBoard}">채용정보</a></li>
+					<li><a th:href="@{/A/chat}">웨이브톡</a></li>
+					<li><a th:href="@{/A/notice}">공지사항</a></li>
+					<li><a th:href="@{/A/userFAQ}">고객센터</a></li>
+					<li><a th:href="@{/C/comBoard/insert}">공고등록</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+
 </body>
 </html>

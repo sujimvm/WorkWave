@@ -11,56 +11,47 @@
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
-	    <div layout:fragment="content" class="content">
-	    
-	    <div class="mainContainer">
+	<div layout:fragment="content" class="content">
 		<div class="sidebar active">
-      		<h3><a th:href="@{/U/chat/insert}">질문 · 글쓰기</a></h3>
-      		<br>
-      		<table class="chat-user">
-      		<tr>
-      			<th>내 정보</th>
-      		</tr>
-      		<tr>
-      			<th class="chat-table">
-	        	<th:block th:if="${null != session.uDTO}">
-	        		<span th:text="${session.uDTO.user_name}"></span> <br>
-	        		<span th:text="${session.uDTO.user_id}"></span> <br>
-	        		<span th:inline="text">질문 [[${chatCnt}]]개</span>
-	        	</th:block>
-	        	<th:block th:if="${null == session.uDTO}">
-	        		<span>게스트</span>
-	        	</th:block>
-	        	<th>
-        	</tr>
-        	</table>
-        </div>
-		
-		<div class="chat-info">
-        <div class="content">
-            <h3>웨이브톡</h3>
-            <div class="chat-list">
-            	<th:block th:if="${not #lists.isEmpty(List)}" th:each="dto : ${List}">
-	            	<ul>
-	            		<li th:inline="text" style="font-size: 1.2em; font-weight: bold; height: 50px;">
-	            			<a th:href="@{/A/chat/content(no=${dto.chat_key})}"><span th:text="${dto.chat_title}"></span></a>
-	            			👀 [[${dto.chat_hit}]]
-	            			🧡 [[${dto.chat_like}]]
-	            		</li>
-	            	</ul>
-            	</th:block>
-            	<th:block th:if="${#lists.isEmpty(List)}">
-	            	<h3>게시글이 없습니다.</h3>
-            	</th:block>
-            </div>
-            
-            
-        </div>
-	        
-	
-	        
+			<h3><a th:href="@{/U/chat/insert}">질문 · 글쓰기</a></h3>
+   			<br>
+   			<table class="chat-user">
+   				<tr>
+   					<th>내 정보</th>
+   				</tr>
+   				<tr>
+					<th class="chat-table">
+						<th:block th:if="${null != session.uDTO}">
+							<span th:text="${session.uDTO.user_name}"></span> <br>
+							<span th:text="${session.uDTO.user_id}"></span> <br>
+							<span th:inline="text">질문 [[${chatCnt}]]개</span>
+    					  	</th:block>
+   				  	 	<th:block th:if="${null == session.uDTO}">
+      							<span>게스트</span>
+     					 	</th:block>
+					</th>
+				</tr>
+			</table>
 		</div>
+
+		<div class="chat-info sidebar_r">
+			<h3>웨이브톡</h3>
+			<div class="chat-list">
+				<th:block th:if="${not #lists.isEmpty(List)}" th:each="dto : ${List}">
+					<ul>
+						<li th:inline="text" style="font-size: 1.2em; font-weight: bold; height: 50px;">
+							<a th:href="@{/A/chat/content(no=${dto.chat_key})}"><span th:text="${dto.chat_title}"></span></a>
+							👀 [[${dto.chat_hit}]]
+							🧡 [[${dto.chat_like}]]
+						</li>
+					</ul>
+				</th:block>
+				<th:block th:if="${#lists.isEmpty(List)}">
+					<h3>게시글이 없습니다.</h3>
+				</th:block>
+			</div>
 		</div>
+	</div>
 	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>
