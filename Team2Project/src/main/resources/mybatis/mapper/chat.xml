@@ -55,7 +55,7 @@
 		        select coalesce(max(chat_key), 0) + 1 from chat
 		    </selectKey>
 		    insert into chat (chat_key, user_key, chat_title, chat_cont, chat_hit, chat_date, chat_update, chat_like, chat_tag)
-		    values (#{chat_key}, #{user_key}, #{chat_title}, #{chat_cont}, 1, sysdate, sysdate, 0, #{chat_tag})
+		    values (#{chat_key}, #{user_key}, #{chat_title}, #{chat_cont}, 0, sysdate, sysdate, 0, #{chat_tag})
 		</insert>
 		
 	<delete id="del" parameterType="int">
@@ -78,5 +78,8 @@
 		update chat set chat_like = chat_like + 1 where chat_key = #{chat_key}
 	</update>
 	
+	<select id="chatCnt" resultType="int">
+		select count(*) from chat where user_key = #{user_key};
+	</select>
 
   </mapper>
