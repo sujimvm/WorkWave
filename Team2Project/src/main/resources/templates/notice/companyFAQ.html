@@ -21,7 +21,6 @@
 	<div th:replace="~{include/header}"></div>
     <div layout:fragment="content" class="content">
 
-	<div class="mainContainer">
       <div class="sidebar active">
       	<h3>고객센터</h3>
         <a th:href="@{/A/userFAQ}">개인회원</a>
@@ -32,7 +31,7 @@
         <a th:href="@{/resign}">회원탈퇴</a>
       </div>
       
-      <div class="faq-list">
+      <div class="faq-list sidebar_r">
 			<h3>기업회원 FAQ</h3>
 			<ul>
 				<li onclick="toggleDetail(event)"><span class="highlighted">[보안 서비스]</span> 계정에서 발생한 지원자 개인정보
@@ -165,7 +164,6 @@
 			</ul>
 		</div>
       </div>
-    </div>
     <div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>

@@ -22,8 +22,6 @@
   <!-- 로그인 상태에 따라 다른 헤더 표시 -->
   <div th:replace="~{include/header}"></div>
   <div layout:fragment="content" class="content">
-
-    <div class="mainContainer">
       <div class="sidebar active">
       	<h3>고객센터</h3>
         <a th:href="@{/A/userFAQ}" class="select">개인회원</a>
@@ -33,7 +31,7 @@
         <a th:href="@{/G/findPwd}">비밀번호 찾기</a>
         <a th:href="@{/resign}">회원탈퇴</a>
       </div>
-      	<div class="faq-list">
+      	<div class="faq-list sidebar_r">
       	<h3>개인회원 FAQ</h3>
 			<ul>
 				<li onclick="toggleDetail(event)"><span class="highlighted">[회원가입·로그인]</span>
@@ -153,14 +151,10 @@
 					웹사이트에서도 아이핀 서비스 이용이 가능한가요?
 					<div class="FAQCont">발급하신 아이핀으로 WorkWave뿐만 아니라 타 사이트에서도
 						동일하게 인증 수단으로 사용하실 수 있습니다.</div>
-
 				</li>
 			</ul>
-			
 		</div>
-      
     </div>
-  </div>
   <div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>

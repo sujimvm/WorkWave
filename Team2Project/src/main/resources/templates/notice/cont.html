@@ -11,6 +11,18 @@
 <body>
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
+		<div class="sidebar active">
+			<h3>공지사항</h3>
+			<a th:href="@{/A/userFAQ}">개인회원</a>
+			<a th:href="@{/A/companyFAQ}">기업회원</a>
+			<a th:href="@{/A/notice}" class="select">공지사항</a>
+			<a th:href="@{/G/findId}">아이디 찾기</a>
+			<a th:href="@{/G/findPwd}">비밀번호 찾기</a>
+			<a th:href="@{/resign}">회원탈퇴</a>
+		</div>
+	
+	
+		<div class="faq-list sidebar_r">
 	<h2>공지사항 상세 페이지</h2>
 	
 		<table border="1">
@@ -46,6 +58,7 @@
 			</tfoot>
 			
 		</table>
+		</div>
 	</div>
 	<div th:replace="~{include/footer :: footer}"></div>
 </body>

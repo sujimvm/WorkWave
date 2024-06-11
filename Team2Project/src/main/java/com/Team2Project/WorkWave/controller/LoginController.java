@@ -11,8 +11,11 @@ public class LoginController {
        return "mainLogin";
     }
 	
-	/*
-	 * @GetMapping("/") public String main() { return "main"; }
-	 */
+	
+	@GetMapping("/") 
+	public String main() { 
+		return "main"; 
+	}
+	
 	
 }

@@ -1,20 +1,5 @@
 @charset "UTF-8";
 
-body {
-    font-family: malgun gothic;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-}
-
-header, footer {
-    height: 50px; /* 헤더와 푸터의 높이를 지정 */
-    background-color: #f1f1f1;
-    flex-shrink: 0; /* 헤더와 푸터의 높이가 고정되도록 설정 */
-}
-
 .mainContainer {
 	min-height: 100px; /* 최소 높이 고정 */
     display: flex;
