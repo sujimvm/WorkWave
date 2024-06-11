@@ -118,47 +118,55 @@ function insertCheck(){
         <div class="content">
             <form method="post" action="/C/update" enctype="multipart/form-data">
             <span style="font-size: 20px; font-weight: bold;">회원 정보 수정</span>
-			<table class="company-table2" style="font-size: 12px; box-shadow: none;">
+			<table class="company-table2">
 				<tr>
-					<th width="150">사업자 등록 번호</th>
-					<td><input type="text" name="company_number" th:value="${session.cDTO.company_number}" readonly></td>
+					<th class="infoTh">사업자 등록 번호</th>
+					<td>
+						<input type="hidden" name="company_number" th:value="${session.cDTO.company_number}">
+						<span th:inline="text">[[${session.cDTO.company_number}]]</span>
+					</td>
 				</tr>
 				<tr>
-					<th>회원 아이디</th>
-					<td><input type="text" name="company_id" th:value="${session.cDTO.company_id}" readonly></td>
+					<th class="infoTh">회원 아이디</th>
+					<td>
+						<input type="hidden" name="company_id" th:value="${session.cDTO.company_id}">
+						<span th:inline="text">[[${session.cDTO.company_id}]]</span>
+					</td>
 				</tr>
 				<tr>
-					<th>기업 이름</th>
-					<td><input type="text" name="company_name" readonly
-						th:value="${session.cDTO.company_name}">
-						</td>
+					<th class="infoTh">기업 이름</th>
+					<td>
+						<input type="hidden" name="company_name" th:value="${session.cDTO.company_name}">
+						<span th:inline="text">[[${session.cDTO.company_name}]]</span>
+					</td>
 				</tr>
 				<tr>
-					<th>기업 대표 이름</th>
-					<td><input type="text" name="company_ceo" readonly
-						th:value="${session.cDTO.company_ceo}">
-						</td>
+					<th class="infoTh">기업 대표 이름</th>
+					<td>
+						<input type="hidden" name="company_ceo" th:value="${session.cDTO.company_ceo}">
+						<span th:inline="text">[[${session.cDTO.company_ceo}]]</span>
+					</td>
 				</tr>
 				<tr>
-					<th>기업 주소</th>
+					<th class="infoTh">기업 주소</th>
 					<td><input type="text" name="company_addr" id="company_addr" onclick="daumPostcode()" th:value="${session.cDTO.company_addr}">
 						<input type="text" name="company_addr_detail" id="company_addr_detail" placeholder="상세주소" style="display : none;">
 						</td>
 				</tr>
 				<tr>
-					<th>기업 전화번호</th>
+					<th class="infoTh">기업 전화번호</th>
 					<td><input type="text" name="company_phone" id="company_phone"
-						th:value="${session.cDTO.company_phone}">
+						th:value="${session.cDTO.company_phone}" style="width: 25%;">
 						</td>
 				</tr>
 				<tr>
-					<th>기업 홈페이지</th>
+					<th class="infoTh">기업 홈페이지</th>
 					<td><input type="text" name="company_homepage" id="company_homepage"
 						th:value="${session.cDTO.company_homepage}">
 						</td>
 				</tr>
 				<tr>
-					<th>기업 로고</th>
+					<th class="infoTh">기업 로고</th>
 					<td>
 						<img th:alt="${session.cDTO.company_logo_name}" th:src="@{'\\image\\logo\\'+${session.cDTO.company_logo}}"
 						height="100px" width="100px" id="original_logo">
@@ -167,38 +175,36 @@ function insertCheck(){
 					</td>
 				</tr>
 				<tr>
-					<th>기업 근무인원</th>
+					<th class="infoTh">기업 근무인원</th>
 					<td><input type="text" name="company_emp_count"
-						th:value="${session.cDTO.company_emp_count}"></td>
+						th:value="${session.cDTO.company_emp_count}" style="width: 25%;"></td>
 				</tr>
 				<tr>
-					<th>기업 총 수익
-						<br>(단위 : 만원)
+					<th class="infoTh">기업 총 수익
 					</th>
 					<td><input type="text" name="company_sal"
-						th:value="${session.cDTO.company_sal}"></td>
+						th:value="${session.cDTO.company_sal}" style="width: 25%;">만원</td>
 				</tr>
 				<tr>
-					<th>인사담당자 이름</th>
+					<th class="infoTh">인사담당자 이름</th>
 					<td><input type="text" name="company_mgr_name"
-						th:value="${session.cDTO.company_mgr_name}"></td>
+						th:value="${session.cDTO.company_mgr_name}" style="width: 25%;"></td>
 				</tr>
 				<tr>
-					<th>인사담당자 이메일</th>
+					<th class="infoTh">인사담당자 이메일</th>
 					<td><input type="text" name="company_mgr_email"
-						th:value="${session.cDTO.company_mgr_email}"></td>
+						th:value="${session.cDTO.company_mgr_email}" style="width: 50%;"></td>
 				</tr>
 				<tr>
-					<th>인사담당자 전화번호</th>
+					<th class="infoTh">인사담당자 전화번호</th>
 					<td><input type="text" name="company_mgr_phone" id="company_mgr_phone"
-						th:value="${session.cDTO.company_mgr_phone}"></td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center"><input type="submit"
-						value="회원수정" onclick="return insertCheck()">&nbsp;&nbsp; <input type="reset" value="다시작성">
-					</td>
+						th:value="${session.cDTO.company_mgr_phone}" style="width: 25%;"></td>
 				</tr>
 			</table>
+			<div class="submitBtnContainer">
+				<input type="submit" value="회원수정" onclick="return insertCheck()">
+				<input type="reset" value="다시작성">
+			</div>
 		</form>
         </div>
 	</div>
