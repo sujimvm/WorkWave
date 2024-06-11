@@ -156,7 +156,7 @@ $(document).ready(function(){
     //공통 된 부분 변수에 저장해 놓기
 	var edu_name_text = `<input name="eDtoList[0].edu_name" class="edu_name form-control d-inline" style=width:220px; placeholder="학교명">`;
 	var edu_end_date_text = `<input type="date" name="eDtoList[0].edu_end_date" placeholder="졸업년도" class="form-control d-inline" style=width:150px; >`;
-	var edu_status_text = `<input name="eDtoList[0].edu_status" placeholder="졸업상태" class="form-control d-inline" style=width:100px;>`;
+	var edu_status_text = `<input name="eDtoList[0].edu_status" placeholder="졸업상태" class="form-control d-inline" style=width:150px;>`;
 	var edu_start_date_text = `<input type="date" name="eDtoList[0].edu_start_date" placeholder="입학년월" class="form-control d-inline" style=width:150px;>`;
 	var edu_major_text = `<input name="eDtoList[0].edu_major"  class="edu_major form-control d-inline" style=width:170px; placeholder="전공 및 문과/이과">`;
 	
@@ -321,8 +321,8 @@ $(document).ready(function(){
 		<ul>
 			<li>
 			<input name="crDtoList[0].career_company" placeholder="회사명" class="form-control" style=width:245px;><br>
-			<input type="date"  name="crDtoList[0].career_start_date" class="form-control d-inline" style=width:120px; placeholder="입사년월">
-			<input type="date" name="crDtoList[0].career_end_date" class="form-control d-inline" style=width:120px; placeholder="퇴사년월">
+			<input type="date"  name="crDtoList[0].career_start_date" class="form-control d-inline" style=width:150px; placeholder="입사년월">
+			<input type="date" name="crDtoList[0].career_end_date" class="form-control d-inline" style=width:150px; placeholder="퇴사년월">
 			</li>
 		</ul>
 		<ul>
@@ -354,7 +354,7 @@ $(document).ready(function(){
 			<li>
 			<input name="lDtoList[0].license_name" class="license_name form-control d-inline" style=width:180px; placeholder="자격증명">
 			<input name="lDtoList[0].license_company" class="license_company form-control d-inline" style=width:180px; placeholder="발행처">
-			<input type="date" name="lDtoList[0].license_date" class="form-control d-inline" style=width:120px; placeholder="취득년월">
+			<input type="date" name="lDtoList[0].license_date" class="form-control d-inline" style=width:150px; placeholder="취득년월">
 			<button class="removeForm">삭제</button></div>
 			</li>
 		</ul>
