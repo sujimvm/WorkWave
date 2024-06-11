@@ -79,15 +79,15 @@ function insertCheck(){
 	        <a th:href="@{/}">공고 리스트</a>
 	        <a th:href="@{/}">지원자 현황</a>
 	        <a th:href="@{/C/update/companyPwdCheck}">기업정보 수정</a>
-	        <a th:href="@{/C/update/pwd/companyPwdCheck}">비밀번호 변경</a>
+	        <a th:href="@{/C/update/pwd/companyPwdCheck}" class="select">비밀번호 변경</a>
 	        <a th:href="@{/C/delete/companyPwdCheck}">회원탈퇴</a>
       </div>
 		
 		<div class="faq-list">
         <div class="content">
-        	<h3>비밀번호 변경</h3>
         	<form action="/C/update/pwd" method="post">
-        	<table border="1" >
+        	<span style="font-size: 20px; font-weight: bold;">본인 확인</span>
+        	<table class="company-table2">
         		<tr>
         			<th>기존 비밀번호 확인</th>
         			<td>

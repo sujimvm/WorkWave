@@ -20,15 +20,15 @@
 	        <a th:href="@{/}">지원자 현황</a>
 	        <a th:href="@{/C/update/companyPwdCheck}">기업정보 수정</a>
 	        <a th:href="@{/C/update/pwd/companyPwdCheck}">비밀번호 변경</a>
-	        <a th:href="@{/C/delete/companyPwdCheck}">회원탈퇴</a>
+	        <a th:href="@{/C/delete/companyPwdCheck}" class="select">회원탈퇴</a>
       </div>
 		
 		<div class="faq-list">
         <div class="content">
-        	<h3>회원 탈퇴</h3>
         	
         	<form action="/C/delete/companyPwdCheckOk" method="post">
-        		<table border="1">
+        		<span style="font-size: 20px; font-weight: bold;">회원 탈퇴</span>
+        		<table class="company-table2">
         			<tr>
         				<th>사업자 등록 번호</th>
         				<td>

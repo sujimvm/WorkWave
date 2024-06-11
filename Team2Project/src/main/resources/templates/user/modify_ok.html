@@ -58,7 +58,11 @@
          }).open();
      }
      
-	
+	function modify(){
+		var userAddr = document.getElementById('user_addr').value;
+	    var userAddrDetail = document.getElementById('user_addr_detail').value;
+	    document.getElementById('user_addr').value = userAddr + ' ' + userAddrDetail;
+	}
 	
 </script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -124,7 +128,7 @@
             </tr>
             <tr>
                   <td colspan="2" align="center">
-                     <input type="submit" value="회원수정">&nbsp;&nbsp;
+                     <input type="submit" value="회원수정" onclick="return modify()">&nbsp;&nbsp;
                      <input type="reset" value="다시작성">
                   </td>
               </tr>

@@ -1,5 +1,22 @@
 @charset "UTF-8";
 
+.icon:hover + .hover-text {
+
+	display: block;
+
+}
+
+.hover-text {
+    padding: 10px 10px;
+    background-color: #444444;
+    border-radius: 5px;
+    color: #ffffff;
+    position: absolute;
+    display: none;
+    right: 41%;
+}
+
+
    body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -31,7 +48,7 @@
   .top-links {
     position: relative;
     margin-bottom: 20px;
-    left: -30%;
+    right: -45%;
   }
   .top-links a {
     margin-right: 10px;

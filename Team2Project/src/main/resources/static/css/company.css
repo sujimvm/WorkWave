@@ -1,29 +1,29 @@
 @charset "UTF-8";
 
-	table {
-		border-spacing: 0;
-	}
-	
-	#td_color{
-		background-color: lightgray;
-	}
-	
-	.checkmark {
-	            display: none;
-	            color: green;
-	            font-size: 16px;
-	            margin-left: 5px;
-	}
-	
-	.company-table {
-    width: 70%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 18px;
-    text-align: center;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+table {
+	border-spacing: 0;
+}
+
+#td_color{
+	background-color: lightgray;
+}
+
+.checkmark {
+    display: none;
+    color: green;
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+.company-table {
+   width: 70%;
+   border-collapse: collapse;
+   margin: 20px 0;
+   font-size: 18px;
+   text-align: center;
+   border-radius: 8px;
+   overflow: hidden;
+   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 .company-table th, .company-table td {
@@ -42,6 +42,72 @@
     border-bottom: 0;
 }
 
-.company-table tr:hover {
+.company-table2 {
+   width: 70%;
+   border-collapse: collapse;
+   margin: 20px 0;
+   font-size: 18px;
+   text-align: center;
+   border-radius: 8px;
+   overflow: hidden;
+   
+}
+
+.company-table2 th, .company-table2 td {
+    padding: 10px 15px;
+}
+
+.company-table2 th {
+    background-color: #f2f2f2;
+}
+
+.company-table2 tr {
+    border-bottom: 1px solid #bbbbbb;
+    
+}
+
+.company-table2 tr:last-child {
+    border-bottom: 0;
+}
+
+/* .company-table tr:hover {
     background-color: #f1f1f1;
+} */
+
+input[type="text"] {
+	width: 100%;
+	height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+input[type="password"] {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+	height: 30px;
+}
+input[type="submit"] {
+ 	background-color: #007BFF; /* 파란색 버튼 */
+    color: white;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.input[type="submit"]:hover {
+	 background-color: #0056b3; /* 어두운 파란색 */
+}
+
+input[type="reset"] {
+ 	background-color: lightgray; /* 파란색 버튼 */
+    color: white;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.input[type="reset"]:hover {
+	 background-color: #666666; /* 어두운 파란색 */
 }

@@ -5,34 +5,62 @@
 <link rel="icon" href="image/icon/logo_icon.png"/> 
 <title>Work Wave 비밀번호 재확인</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
-<link rel="stylesheet" th:href="@{/css/user.css}">
+<link rel="stylesheet" th:href="@{/css/FAQ.css}">
+<link rel="stylesheet" th:href="@{/css/company.css}">
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous">
+</script>
+<script type="text/javascript">
+	
+	function check() {
+		var pwd = $('#company_pwd').val();
+		var number = $('#company_number').val();
+		debugger;
+		
+		if(pwd == '' || number == ''){
+			debugger;
+			alert('입력되지 않은 정보가 있습니다.');
+			return false;
+		}	
+	}
+	
+</script>
 </head>
 <body>
 
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
-	
-	<div align="center">
-		<hr width="30%" color="gray">
-			<h3>비밀번호 재확인</h3>
-		<hr width="30%" color="gray">
+		<div class="mainContainer">
+		<div class="sidebar active">
+      		<h3>마이페이지</h3>
+	        <a th:href="@{/C/comBoard/insert}">공고 등록</a>
+	        <a th:href="@{/}">공고 리스트</a>
+	        <a th:href="@{/}">지원자 현황</a>
+	        <a th:href="@{/C/update/companyPwdCheck}" class="select">기업정보 수정</a>
+	        <a th:href="@{/C/update/pwd/companyPwdCheck}">비밀번호 변경</a>
+	        <a th:href="@{/C/delete/companyPwdCheck}">회원탈퇴</a>
+      </div>
+		
+		<div class="faq-list">
+        <div class="content">
+		
 
 		<form method="post" action="/C/update/companyPwdCheckOk">
-			<table border="1" width="400">
+			<span style="font-size: 20px; font-weight: bold;">본인 확인</span>
+			<table class="company-table2" style="box-shadow: none; font-size: 15px;">
 				<tr>
 					<th>아이디</th>
-					<td th:text="${session.cDTO.company_id}"></td>
+					<td th:text="${session.cDTO.company_id}" align="left"></td>
 				</tr>
 				<tr>
 					<th>비밀번호</th>
 					<td>
-						<input type="password" name="company_pwd" placeholder="비밀번호를 입력해주세요">
+						<input type="password" name="company_pwd" id="company_pwd">
 					</td>
 				</tr>
 				<tr>
 					<th>사업자 등록번호</th>
 					<td>
-						<input type="text" name="company_number" placeholder="사업자등록번호를 입력해주세요">
+						<input type="text" name="company_number" id="company_number">
 					</td>
 				</tr>
 				
@@ -43,11 +71,17 @@
 				</tr>
 				<tr>
 					<td colspan="2" align="center">
-						<input type="submit" value="확인">
+						<input type="submit" value="확인" onclick="return check()">
 					</td>
 				</tr>
 			</table>
 		</form>
 	</div>
+            
+
+        </div>
+	</div>
+	</div>
+	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>
