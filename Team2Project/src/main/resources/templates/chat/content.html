@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 	<link rel="stylesheet" th:href="@{/css/include.css}">
-	<link rel="stylesheet" th:href="@{/css/userCont.css}">
+	<link rel="stylesheet" th:href="@{/css/chat.css}">
 </head>
 <body>
 <div th:replace="~{include/header}"></div>
@@ -16,7 +16,7 @@
         	<a th:href="@{/}">글쓰기</a>
         	<a th:text="${session.uDTO.user_name}"></a>
       </div>
-		
+	 
 		<div class="user-info">
         <div class="content">
             <h3>유저 정보</h3>
@@ -28,176 +28,10 @@
 	            <li th:inline="text">추천 : [[${cont.chat_like}]]</li>
             </ul>
         </div>
-	
-
+				
 	</div>
 	</div>
 	<div th:replace="~{include/footer :: footer}"></div>
-	 <script th:inline="javascript">
-		let chat_key = /*[[${cont.chat_key}]]*/ null;
-		let like_count = 0;
-		let replylike_count = 0;
-		
-		function editReply(button) {
-	        var replyKey = $(button).data('reply-key');
-	        var editedContent = $('#edit-reply-' + replyKey).val();
-	        
-	        $('#edit-form-' + replyKey).removeClass('d-none');
-	        
-	        
-	        var formData = new FormData();
-	        formData.append("reply_key", replyKey);
-	        formData.append("edited_content", editedContent);
-	        
-	        $.ajax({
-	            type: 'post',
-	            url: '/ajax/editReply',
-	            processData: false,
-	            contentType: false,
-	            data: formData,
-	            success: function(response) {
-	                // 서버에서 응답을 받아 처리
-	                // 예: 성공적으로 수정되었을 때 화면에서 해당 댓글 업데이트
-	                alert("댓글이 성공적으로 수정되었습니다.");
-	                // 수정된 댓글 내용을 업데이트
-	                $(button).closest('.card-body').find('.card-text').text(editedContent);
-	                // 수정 폼 숨기기
-	                $('#edit-form-' + replyKey).addClass('d-none');
-	            },
-	            error: function() {
-	                alert('댓글 수정 중 오류가 발생했습니다.');
-	            }
-	        });
-	    }
-
-	    function cancelEdit(replyKey) {
-	        $('#edit-form-' + replyKey).addClass('d-none');
-	    }
-	    
-	    
-	    
-		function deleteReply(button) {
-		    if (confirm('정말로 댓글을 삭제하시겠습니까?')) {  // 추가된 확인 대화 상자
-		        var replyKey = $(button).data('reply-key');
-		        var formData = new FormData();
-		        formData.append("reply_key", replyKey);
-		        
-		        $.ajax({
-		            type: 'post',
-		            url: '/ajax/deleteReply',
-		            processData: false,
-		            contentType: false,
-		            data: formData,
-		            success: function(response) {
-		                $(button).closest('.card').remove();
-		                alert("댓글이 삭제되었습니다.");
-		            },
-		            error: function() {
-		                alert('댓글 삭제 중 오류가 발생했습니다.');
-		            }
-		        });
-		    }
-		}
-		/* function deleteReply(button) {
-		    var replyKey = $(button).data('reply-key');
-		    var formData = new FormData();
-		    formData.append("reply_key", replyKey);
-		    
-		    $.ajax({
-		        type: 'post',
-		        url: '/ajax/deleteReply',
-		        processData: false,
-		        contentType: false,
-		        data: formData,
-		        success: function(response) {
-		            // 서버에서 응답을 받아 처리
-		            // 예: 삭제가 성공했을 때 화면에서 해당 댓글을 제거
-		            $(button).closest('.card').remove();
-		            alert("댓글이 삭제되었습니다.");
-		        },
-		        error: function() {
-		            alert('댓글 삭제 중 오류가 발생했습니다.');
-		        }
-		    });
-		} */
-		$(document).ready(function () {
-			let baseUrl = window.location.origin;
-			console.log(baseUrl);
-			console.log(chat_key);
-			
-			function ajaxGo(formData, url_in) {
-				$.ajax({
-					type : 'post',
-					url : baseUrl + url_in,
-					processData: false, // FormData 객체를 사용하기 때문에 false로 설정
-		            contentType: false, // FormData 객체를 사용하기 때문에 false로 설정
-					data : formData,
-					success : function(map) {
-						alert(map.message);
-						if(map.type == 'like'){
-							/* location.reload(); */
-							$('#like').text(parseInt($('#like').text() ) + 1);	
-						}else if(map.type == 'reply'){
-							let reply_cont = map.reply_cont;
-							let reply_date = map.reply_date;
-							let user_name = map.user_name;
-							
-							let $reply_box = $('#reply-box');
-							
-							$reply_box.prepend(
-								`
-								<div class="card-body">
-							        <h5 class="card-title" >${user_name}</h5>
-							        <h6 class="card-subtitle mb-2 text-muted" >${reply_date}</h6>
-							        <p class="card-text">${reply_cont}</p>
-						      	</div>
-								`
-							);
-						}else if(map.type == 'replylike'){
-							$('#replylike').text(parseInt($('#replylike').text()) + 1);
-						}
-							
-					},
-					error : function() {
-						alert('데이터 통신 오류')
-					}
-				});
-			}
-			
-			$('#like-btn').click(function () {
-				if(like_count > 0){
-					alert("할당량 초과");
-				}else{
-					let formData = new FormData();
-					formData.append("chat_key",chat_key);
-					ajaxGo(formData, '/ajax/chatLike')
-					like_count = like_count + 1;
-				}
-			});
-			
-
-			$('#replybtn').click(function () {
-				let reply_cont = $('#replycont').val();	
-				alert(reply_cont);
-				let formData = new FormData();
-				formData.append("reply_cont", reply_cont);
-				formData.append("chat_key",chat_key);
-				ajaxGo(formData, '/ajax/reply')	
-				
-			});
-			
-			/* $('#replylike').click(function () {
-				if(replylike_count > 0){
-					alert("할당량 초과");
-				}else{
-					let formData = new FormData();
-					formData.append("reply_key",reply_key);
-					ajaxGo(formData, '/ajax/replyLike')
-					replylike_count = replylike_count + 1;
-				}
-			}); */
-		});
-		
-	</script>
+	 
 </body>
 </html>
