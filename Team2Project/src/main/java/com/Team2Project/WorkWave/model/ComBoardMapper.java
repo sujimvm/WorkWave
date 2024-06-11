@@ -3,6 +3,7 @@ package com.Team2Project.WorkWave.model;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -32,5 +33,9 @@ public interface ComBoardMapper {
 	int addApply(ApplyDTO dto); // 공고 지원
 	
 	ComBoardDTO getComBoard(int com_board_key);
+	int getApplyCount(int com_board_key); // 기본 프로필 키 조회
+	List<Map<String, Object>> getApplyAvgAge(int com_board_key);
+	List<Map<String, Object>> getApplyAvgGender(int com_board_key);
+	List<Map<String, Object>> getApplyAvgEdu(int com_board_key);
 	int updateComBoard(ComBoardDTO dto); // 공고수정
 }

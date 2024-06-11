@@ -101,6 +101,30 @@
 	  	<select id="getComBoard" parameterType="int" resultType="bDTO">
 	  		select * from com_board b join company c on c.company_key = b.company_key where b.com_board_key = #{com_board_key}
 	  	</select>
+	  	<select id="getApplyCount" parameterType="int" resultType="int">
+	  		select count(*) from apply where com_board_key = #{com_board_key}
+	  	</select>
+	  	<select id="getApplyAvgAge" parameterType="int" resultType="map">
+  		    select floor((months_between(sysdate, user_birth) / 12) / 5) * 5 as age, count(*) as count
+			from (select user_birth, row_number() over (partition by u.user_key order by p.profile_key) as rnum
+			from users u left join profile p on u.user_key = p.user_key
+			where p.profile_key in ( select profile_key from apply where apply.com_board_key = #{com_board_key}))
+			where rnum = 1 group by floor((months_between(sysdate, user_birth) / 12) / 5) * 5 order by age
+	  	</select>
+	  	<select id="getApplyAvgGender" parameterType="int" resultType="map">
+  		    select user_gender as gender, count(*) as count
+			from (select user_gender, row_number() over (partition by u.user_key order by p.profile_key) as rnum
+			from users u left join profile p on u.user_key = p.user_key
+			where p.profile_key in (select profile_key from apply where apply.com_board_key = #{com_board_key})) 
+			where rnum = 1 group by user_gender order by gender
+	  	</select>
+	  	<select id="getApplyAvgEdu" parameterType="int" resultType="map">
+		  	select edu_kind as edu, count(*) as count
+			from (select e.edu_kind, row_number() over (partition by p.user_key order by p.profile_key) as rnum
+			from edu e join profile p on e.profile_key = p.profile_key 
+			where p.profile_key in (select profile_key from apply where com_board_key = 25 ))
+			where rnum = 1 group by edu_kind order by edu_kind
+	  	</select>
 	  	
 	  	<!-- 공고 수정 -->
 	  	<update id="updateComBoard" parameterType="bDTO">
