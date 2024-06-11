@@ -120,19 +120,17 @@ public class AllController {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		if(auth != null) {
+		System.out.println(auth +"gd");
+		
 			String role = auth.getAuthorities().toString();
 			String id = auth.getName();
 			if(role.equals("[ROLE_COMPANY]")) {
 				session.setAttribute("role", role);
 				session.setAttribute("cDTO", companyMapper.companyInfo(id));
-			}else {
+			}else if(role.equals("[ROLE_USER]")){
 				session.setAttribute("role", role);
 				session.setAttribute("uDTO", userMapper.getUserById(id));
-				UserDTO udto = (UserDTO)session.getAttribute("uDTO");
-				int userKey = udto.getUser_key();
 			}
-		}
 
 		return "main"; 
 	}
