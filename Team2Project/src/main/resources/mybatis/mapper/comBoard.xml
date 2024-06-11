@@ -18,7 +18,11 @@
 	  		select company_key from interest where user_key = #{user_key}
 	  	</select>
 	  	<select id="countComBoard" resultType="int">
-	        SELECT COUNT(*) FROM com_board
+		  	<![CDATA[
+		  		select COUNT(*) 
+		  		from (select row_number() over(order by com_board_date desc) rnum, b.* 
+		  		from com_board b where com_board_start_date <= sysdate and com_board_end_date >= sysdate)Pb join company c on c.company_key = Pb.company_key
+	  		]]>
 	    </select>
 	  	<!-- 공고 지원리스트 -->
     	<select id="getApplyList" resultType="int" parameterType="int">

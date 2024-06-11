@@ -90,6 +90,7 @@ function getComBoardList(nowPg) {
 
 // 관심기업 체크 시 관심기업 등록 / 해제
 function interestCheck(check, company_key) {
+	
 	$.ajax({
 		url: '/ajax/interest/action',
 		type: 'post',
@@ -102,8 +103,11 @@ function interestCheck(check, company_key) {
 	getComBoardList($("#getPage").val());
 }
 
+
+
 // 공고 지원 등록 / 해제
 function addApply(checked) {
+	
 	$.ajax({
 		url: '/ajax/apply/insert',
 		type: 'post',

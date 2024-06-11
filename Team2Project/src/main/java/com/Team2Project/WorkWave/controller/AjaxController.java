@@ -282,8 +282,8 @@ public class AjaxController {
 		public int addComBoardTemp(ComBoardDTO dto, HttpSession session, HttpServletRequest request) {
 			int temp_key = dto.getTemp_key();
 			// 세션 기업정보로 기업키 저장
-//			CompanyDTO cdto = (CompanyDTO)session.getAttribute("companyInfo");
-//			dto.setCompany_key(cdto.getCompany_key());
+			CompanyDTO cdto = (CompanyDTO)session.getAttribute("cDTO");
+			dto.setCompany_key(cdto.getCompany_key());
 			
 			// 컴퍼니 키 임시 저장
 			dto.setCompany_key(2);
