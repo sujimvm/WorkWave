@@ -3,6 +3,7 @@ package com.Team2Project.WorkWave.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -153,6 +154,10 @@ public class AllController {
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("dto", this.comBoardMapper.getComBoard(com_board_key));
 		map.put("P", Integer.parseInt(request.getParameter("P")));
+		map.put("applyTotal", this.comBoardMapper.getApplyCount(com_board_key));
+		map.put("avgAge", this.comBoardMapper.getApplyAvgAge(com_board_key));
+		map.put("avgGender", this.comBoardMapper.getApplyAvgGender(com_board_key));
+		map.put("avgEdu", this.comBoardMapper.getApplyAvgEdu(com_board_key));
 		
 		model.addAttribute("map",map);
 

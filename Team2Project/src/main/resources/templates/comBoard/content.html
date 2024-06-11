@@ -85,21 +85,35 @@
 				</div><!-- 접수기간 -->
 				
 				<div sec:authorize="isAuthenticated() and hasRole('USER')">
-					<h3>지원자 통계</h3>
+					<h3>지원자 현황 통계</h3>
 					<div>
 						<p>지원자 수</p>
-						<p></p>
+						<p th:text="${map.applyTotal}"></p>
 					</div>
 					<div>
 						<p>모집인원</p>
 						<p th:text="${map.dto.com_board_mojib}"></p>
 					</div>
 					<div>
-						<p>평균 연령</p>
+						<p>연령</p>
+						<div>
+						
+						</div>
+						<dl th:unless="${#lists.isEmpty(ProfileList)}">
+							<dt></dt>
+						</dl>
+						<tr th:unless="${#lists.isEmpty(ProfileList)}">
+							<tr th:each="dto : ${ProfileList}" th:if="${dto.profile_default == 'Y'}">
+								<td>
+									<a th:href="@{/CU/profile/content(no=${dto.profile_key})}" th:text="${dto.profile_name}"></a>
+								</td>
+							</tr>
+						</tr>
+						
 						<p></p>
 					</div>
 					<div>
-						<p>평균 지원자 성별</p>
+						<p>성별</p>
 						<p></p>
 					</div>
 					<div>

@@ -4,8 +4,13 @@ $(document).ready(function() {
 	
 	// 관심기업 추가/삭제
 	$(document).on('click', '.interest_check', function() {
-		if ($(this).is(':checked')) interestCheck(1,$(this).val());
-		else interestCheck(0,$(this).val());
+		if ($(this).is(':checked')){
+			interestCheck(1,$(this).val());
+			alert("관심기업 등록이 완료되었습니다");
+		}else{
+			interestCheck(0,$(this).val());
+			alert("관심기업 해제가 완료되었습니다");
+		}
 	});
 	
 	//공고 지원
@@ -108,5 +113,6 @@ function addApply(checked) {
 			console.error(xhr);
 		}
 	});
+	alert("지원이 완료되었습니다");
 	getComBoardList($("#getPage").val());
 }
