@@ -142,4 +142,36 @@
 	  		com_board_mgr_phone = #{com_board_mgr_phone}, com_board_mgr_email = #{com_board_mgr_email}, com_board_cont = #{com_board_cont}
 	    	where com_board_key = #{com_board_key}
 	    </update>
+	    
+	    <!-- 메인에 출력할 공고 -->
+	    <select id="getMainNewComBoardList" resultType="bDTO">
+	    	<![CDATA[
+		  		select * 
+		  		from (select row_number() over(order by com_board_date desc) rnum, b.* 
+		  		from com_board b  where com_board_start_date <= sysdate and com_board_end_date >= sysdate)Pb 
+		  		join company c on c.company_key = Pb.company_key
+		  		where rnum >= 1 and rnum <= 10
+	            order by com_board_date desc
+	  		]]>
+	  	</select>
+	    <select id="getMainHotComBoardList" resultType="bDTO"> <!-- 쿼리수정 -->
+		    <![CDATA[
+		  		select * 
+		  		from (select row_number() over(order by com_board_date desc) rnum, b.* 
+		  		from com_board b  where com_board_start_date <= sysdate and com_board_end_date >= sysdate)Pb 
+		  		join company c on c.company_key = Pb.company_key
+		  		where rnum >= 1 and rnum <= 10
+	            order by com_board_date
+	  		]]>
+	  	</select>
+	    <select id="getMainTimeComBoardList" resultType="bDTO"> <!-- 쿼리수정 -->
+		    <![CDATA[
+		  		select * 
+		  		from (select row_number() over(order by com_board_date) rnum, b.* 
+		  		from com_board b  where com_board_start_date <= sysdate and com_board_end_date >= sysdate)Pb 
+		  		join company c on c.company_key = Pb.company_key
+		  		where rnum >= 1 and rnum <= 9
+	            order by com_board_date desc
+	  		]]>
+	  	</select>
   </mapper>

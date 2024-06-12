@@ -5,12 +5,46 @@
 <link rel="icon" href="/image/icon/logo_icon.png"/>  
 <title>Work Wave</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
+<link rel="stylesheet" th:href="@{/css/main.css}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{/js/main/list.js}"></script>
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
+		<div>
+			<div>비회원</div><!-- 테스트 -->
+			<div>개인회원</div><!-- 테스트 -->
+			<div>기업회원</div><!-- 테스트 -->
+<!-- 
+			<div sec:authorize="!isAuthenticated()" >로그인 배너</div>
+			<div sec:authorize="isAuthenticated() and hasRole('USER')">개인회원 로그인 정보 </div>
+			<div sec:authorize="isAuthenticated() and hasRole('COMPANY')">기업회원 로그인 정보 </div>
+ -->
+			
+			<div>광고</div>
+		</div>
 		
-		
+		<div>
+			<div>
+				<h3>마감 공고</h3>
+				<table id="mainJobTimeListTb" class="mainListTb"></table>
+			</div> <!-- 남은시간 별 공고리스트 -->
+			
+			<br>
+			
+			<div>
+				<h3>인기 공고</h3>
+				<table id="mainJobHotListTb" class="mainListTb"></table>
+			</div> <!-- 지원자가 많은 공고리스트 -->
+			
+			<br>
+			
+			<div>
+				<h3>최신 공고</h3>
+				<table id="mainJobNewListTb" class="mainListTb"></table>
+			</div> <!-- 최근에 올라온 공고리스트 -->
+		</div>
 		
 	</div>
 	<div th:replace="~{include/footer :: footer}"></div>
