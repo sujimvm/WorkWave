@@ -213,16 +213,12 @@ public class UserController {
 			}
 		}
 		
-//		
-//		UserDTO userdto = (UserDTO) session.getAttribute("user_login");
-//
-//		if (userdto == null) {
-//			response.sendRedirect("/user.go"); 
-//			return; 
-//		}
-//		dto.setUser_key(userdto.getUser_key());
+		
+		UserDTO userdto = (UserDTO) session.getAttribute("uDTO");
 
-		dto.setUser_key(9);
+	
+		dto.setUser_key(userdto.getUser_key());
+
 		
 		// 넘어온 키 값의 이력서가 있는지 확인
 		if (this.profileMapper.profileCkeck(dto.getUser_key()) > 0) {
@@ -263,11 +259,11 @@ public class UserController {
 		  
 		  crdto.setProfile_key(nowInsertProfileKey);
 		  crdto.setCareer_company(crdtoArr.getCareer_company().split(",")[i]);
+		  crdto.setCareer_start_date(crdtoArr.getCareer_start_date().split(",")[i]);
+		  crdto.setCareer_end_date(crdtoArr.getCareer_end_date().split(",")[i]);
 		  crdto.setCareer_cont(crdtoArr.getCareer_cont().split(",")[i]);
 		  crdto.setCareer_position(crdtoArr.getCareer_position().split(",")[i]);
 		  crdto.setCareer_bye(crdtoArr.getCareer_bye().split(",")[i]);
-		  crdto.setCareer_start_date(crdtoArr.getCareer_start_date().split(",")[i]);
-		  crdto.setCareer_end_date(crdtoArr.getCareer_end_date().split(",")[i]);
 		  
 		  this.profileMapper.CareerInsert(crdto);
 		  
@@ -306,12 +302,9 @@ public class UserController {
 		@GetMapping("/profile/insert")
 		public String categorygrouptest(Model model,HttpSession session) {
 			
-//			UserDTO user = (UserDTO) session.getAttribute("user_login");
-//			
-//			int userKey = user.getUser_key();
-			
-
-			int userKey =9;
+		UserDTO user = (UserDTO) session.getAttribute("uDTO");
+	
+		int userKey = user.getUser_key();
 			
 			
 			UserDTO userDto = this.profileMapper.fromProfileUserInfo(userKey);
@@ -329,12 +322,10 @@ public class UserController {
 		@GetMapping("/profile")
 		public String profileList(Model model, HttpSession session) {
 
-//			UserDTO user = (UserDTO) session.getAttribute("user_login");
-//			
-//			int userKey = user.getUser_key();
+			UserDTO user = (UserDTO) session.getAttribute("uDTO");
 			
-
-			int userKey =9;
+			int userKey = user.getUser_key();
+			
 			
 			List<ProfileDTO> profileList = this.profileMapper.profileList(userKey);
 			
@@ -480,7 +471,10 @@ public class UserController {
 					}
 					
 					//학력 수정
-					int esize = codelistDTO.getLDtoList().size();
+					int esize = codelistDTO.getEDtoList().size();
+					System.out.println("esize>>>"+codelistDTO.getEDtoList());
+					System.out.println("esize>>>"+esize);
+					
 					for(int i=0; i < esize; i++) {
 						EduDTO eduDto = codelistDTO.getEDtoList().get(i);
 						this.profileMapper.updateEdu(eduDto);
@@ -489,7 +483,6 @@ public class UserController {
 			
 					// 자격증 수정
 					int lsize= codelistDTO.getLDtoList().size();
-					System.out.println("lsize>>"+lsize);
 					  for(int i=0; i < lsize; i++) {
 					  
 						  LicenseDTO ldto = codelistDTO.getLDtoList().get(i);
