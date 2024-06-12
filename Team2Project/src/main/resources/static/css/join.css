@@ -76,7 +76,7 @@ select {
     box-sizing: border-box;	
 }
 .joinSubmit {
-	background-color: #007BFF; /* 파란색 버튼 */
+	background-color: #0B57D0; /* 파란색 버튼 */
     color: white;
     padding: 8px 10px;
     border: none;
@@ -89,7 +89,7 @@ select {
 }
 
 button {
-    background-color: #007BFF; /* 파란색 버튼 */
+    background-color: #0B57D0; /* 파란색 버튼 */
     color: white;
     padding: 8px 10px;
     border: none;

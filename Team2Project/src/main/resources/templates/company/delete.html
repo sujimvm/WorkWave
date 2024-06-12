@@ -7,12 +7,22 @@
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/FAQ.css}">
 <link rel="stylesheet" th:href="@{/css/company.css}">
+<script type="text/javascript">
+
+	function check(){
+		const agreementCheckbox = document.getElementById('chkLeaveAgree');
+        if (!agreementCheckbox.checked) {
+            alert('체크박스에 동의하지 않으셨습니다.');
+            return false;
+        }
+	}
+
+</script>
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
-	<div layout:fragment="content" class="content"></div>
+	<div layout:fragment="content" class="content">
 	
-	<div class="mainContainer">
 		<div class="sidebar active">
       		<h3>마이페이지</h3>
 	        <a th:href="@{/C/comBoard/insert}">공고 등록</a>
@@ -23,11 +33,18 @@
 	        <a th:href="@{/C/delete/companyPwdCheck}" class="select">회원탈퇴</a>
       </div>
 		
-		<div class="faq-list">
-        <div class="content">
+		<div class="faq-list sidebar_r">
         	
         	<form action="/C/delete/companyPwdCheckOk" method="post">
         		<span style="font-size: 20px; font-weight: bold;">회원 탈퇴</span>
+        		<br><br>
+        		<div class="helpNoticeBox">
+					<strong class="helpNoticeBoxTitle">지금까지 이용해주셔서 감사 드립니다. 탈퇴하기 전 아래 유의사항을 확인해주세요. </strong>
+					<ul class="helpNoticeBoxList">
+						<li>· 탈퇴하신 아이디는 <span class="clef3f3f">복구가 불가능</span>하며, 추후 동일한 아이디로 재가입이 되지 않습니다.</li>
+						<li>· 이력서 정보, 구직 활동내역, 공고, 포지션 제안 등 회원과 관련된 정보 모두 삭제되며, <br>&nbsp;<span class="clef3f3f">삭제된 데이터는 복구되지 않습니다.</span></li>
+					</ul>
+				</div>
         		<table class="company-table2">
         			<tr>
         				<th>사업자 등록 번호</th>
@@ -39,7 +56,8 @@
         			<tr>
         				<th>아이디</th>
         				<td>
-        					<input type="text" th:value="${session.cDTO.company_id}" readonly>
+        					<input type="hidden" name="company_id" th:value="${session.cDTO.company_id}">
+							<span th:inline="text">[[${session.cDTO.company_id}]]</span>
         				</td>
         			</tr>
         			
@@ -49,18 +67,20 @@
         					<input type="password" name="company_pwd">
         				</td>
         			</tr>
-        			
-        			<tr>
-        				<td colspan="2" align="center">
-        					<input type="submit" value="회원 탈퇴하기">
-        					<input type="reset" value="한번더 생각하기">
-        				</td>
-        			</tr>
         		</table>
+        		<div class="submitBtnContainer">
+        			<p class="agreeBox">
+						<span class="tplChkBx tplChkBx_1 devTplChkBx">
+							<input type="checkbox" id="chkLeaveAgree">
+							<label for="chkLeaveAgree">유의 사항을 모두 확인했으며, 이에 동의합니다.</label>
+						</span>
+					</p>
+        			<input type="submit" value="회원 탈퇴하기" onclick="return check()">
+        			<input type="reset" value="한번 더 생각하기">
+        		</div>
         	</form>
         </div>
-		</div>
-	</div>
+        </div>
 	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>
