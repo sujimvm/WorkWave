@@ -103,7 +103,6 @@ function insertCheck(){
 <body>
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
-		<div class="mainContainer">
 		<div class="sidebar active">
       		<h3>마이페이지</h3>
 	        <a th:href="@{/C/comBoard/insert}">공고 등록</a>
@@ -114,8 +113,7 @@ function insertCheck(){
 	        <a th:href="@{/C/delete/companyPwdCheck}">회원탈퇴</a>
       </div>
 		
-		<div class="faq-list">
-        <div class="content">
+		<div class="faq-list sidebar_r">
             <form method="post" action="/C/update" enctype="multipart/form-data">
             <span style="font-size: 20px; font-weight: bold;">회원 정보 수정</span>
 			<table class="company-table2">
@@ -207,7 +205,6 @@ function insertCheck(){
 			</div>
 		</form>
         </div>
-	</div>
 	</div>
 	<div th:replace="~{include/footer :: footer}"></div>
 </body>
