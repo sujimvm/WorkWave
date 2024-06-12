@@ -56,7 +56,7 @@ $(document).ready(function(){
 		var subCategoryName = $(this).text(); 
 		$("#profile_sub"+category_num).attr("size",subCategoryName.length);
 		$("#profile_sub"+category_num).val(subCategoryName);
-		$("#sub"+category_num).text(">"+subCategoryName); 
+		$("#sub"+category_num).text(subCategoryName); 
 		loadSteps(subCategoryCode); 
 	});
     
@@ -71,7 +71,7 @@ $(document).ready(function(){
 	    if(selectedStep != stepName) {
 	        $("#profile_step"+category_num).attr("size",stepName.length);
 	        $("#profile_step"+category_num).val(stepName);
-	        $("#step"+category_num).text(">"+stepName); 
+	        $("#step"+category_num).text(stepName); 
 	        
 	    } else {
 	        alert("이미 선택된 소분류입니다.");
@@ -79,7 +79,7 @@ $(document).ready(function(){
 	        var selectedSubCategory = $("#profile_sub"+category_num).val();
 	        
 	        if(selectedSubCategory) {
-	            $("#sub"+category_num).text(">"+selectedSubCategory); 
+	            $("#sub"+category_num).text(selectedSubCategory); 
 	        } else {
 	            $("#sub"+category_num).empty(); 
 	        }
@@ -89,7 +89,7 @@ $(document).ready(function(){
 	    
 		$("#profile_step"+category_num).attr("size",stepName.length);
 		$("#profile_step"+category_num).val(stepName);// 선택된 소분류 코드를 숨겨진 필드에 저장
-		$("#step"+category_num).text(">"+stepName); 
+		$("#step"+category_num).text(stepName); 
 	});
 
 	
