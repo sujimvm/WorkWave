@@ -52,7 +52,6 @@ public class AjaxController {
 	
 	// 아이디 중복검사
 	@PostMapping("/checkCompanyId")
-	//@ResponseBody
 	public String companyIdCheck(@RequestParam("id") String comId, HttpServletRequest request,
 		HttpServletResponse response) throws IOException {
 		String res = "available";
@@ -66,7 +65,6 @@ public class AjaxController {
 	}
 	
 	@PostMapping("/companyNumberCheck")
-	@ResponseBody
 	public String companyNoCheck(@RequestParam("company_no") String company_no,HttpServletRequest request,
 		HttpServletResponse response) {
 		String res = "available";
@@ -84,7 +82,6 @@ public class AjaxController {
 	
 	   // 아이디 유효성 검사
 	   @PostMapping("/checkUserId")
-	   //@ResponseBody
 	   public Map<String, String> checkUserId(@RequestBody Map<String, String> request) {
 	      String userId = request.get("userId");
 	      boolean isAvailable = userService.isUserIdAvailable(userId);
@@ -100,7 +97,6 @@ public class AjaxController {
 	   
 		// 중분류 카테고리
 		@PostMapping("/jobCodeGroup")
-		//@ResponseBody
 		public List<CodeDTO> categorysub(@RequestParam("no") String no) {
 			List<CodeDTO> categorysub = this.profileMapper.categorysub(no);
 			return categorysub;
@@ -108,7 +104,6 @@ public class AjaxController {
 
 		// 소분류 카테고리
 		@PostMapping("/jobCodesub")
-		//@ResponseBody
 		public List<CodeDTO> categorystep(@RequestParam("no") String no) {
 			List<CodeDTO> categorystep = this.profileMapper.categorystep(no);
 			return categorystep;
@@ -116,7 +111,6 @@ public class AjaxController {
 		}
 		// 학교구분과 학교 이름 검색 시 해당 학교 리스트 불러오기
 		@PostMapping("/searchSchoolByName")
-		//@ResponseBody
 		public List<CodeDTO> schoolName(CodeDTO dto) {
 			List<CodeDTO> schoolName = this.profileMapper.schoolname(dto);
 			return schoolName;
@@ -125,7 +119,6 @@ public class AjaxController {
 
 		// 학교구분과 전공명 검색 시 해당 전공 데이터 불러오기
 		@PostMapping("/getDepartment")
-		//@ResponseBody
 		public List<CodeDTO> departmentName(CodeDTO dto) {
 			List<CodeDTO> departmentName = this.profileMapper.department(dto);
 			return departmentName;
@@ -134,7 +127,6 @@ public class AjaxController {
 
 		// 해당 자격증 리스트 불러오기
 		@PostMapping("/searchCertifications")
-		//@ResponseBody
 		public List<LicenseDTO> searchlicense(@RequestParam("license_name") String license_name) {
 			List<LicenseDTO> licenseList = this.profileMapper.license(license_name);
 			return licenseList;
@@ -212,7 +204,6 @@ public class AjaxController {
 
 		// (리스트) 리스트 조회
 		@PostMapping("/comBoardList")
-		//@ResponseBody
 		public HashMap<String, Object> getComBoardList(HttpSession session, HttpServletRequest request) {
 			HashMap<String, Object> viewMap = new HashMap<>(); //뷰페이지로 이동하는 맵 
 			HashMap<String, Object> reqMapperMap = new HashMap<>(); // 매퍼로 이동하는 맵
@@ -254,7 +245,6 @@ public class AjaxController {
 		
 		// (리스트) 업종분류 조회
 		@PostMapping("/jobCode")
-		//@ResponseBody
 		public Map<String, List<CodeDTO>> getJobCodeList() {
 			
 			Map<String, List<CodeDTO>> map = new HashMap<>();
@@ -267,7 +257,6 @@ public class AjaxController {
 
 		// (리스트) 지역 조회
 		@PostMapping("/locationCode")
-		//@ResponseBody
 		public Map<String, List<CodeDTO>> getLocationCodeList() {
 			
 			Map<String, List<CodeDTO>> map = new HashMap<>();
@@ -278,7 +267,6 @@ public class AjaxController {
 		}
 		// (등록) 공고 중간저장
 		@PostMapping("/comBoardTemp/insert")
-		//@ResponseBody
 		public int addComBoardTemp(ComBoardDTO dto, HttpSession session, HttpServletRequest request) {
 			int temp_key = dto.getTemp_key();
 			// 세션 기업정보로 기업키 저장
@@ -304,7 +292,6 @@ public class AjaxController {
 		
 		// 관심기업 등록/해제
 		@PostMapping("/interest/action")
-		//@ResponseBody
 		public void interestCheck(@RequestParam("check") int check,@RequestParam("company_key") int company_key, HttpServletRequest request, HttpSession session) {
 			
 			InterestDTO iDTO = new InterestDTO();
@@ -325,7 +312,6 @@ public class AjaxController {
 		
 		// 공고 지원 
 		@PostMapping("/apply/insert")
-		//@ResponseBody
 		public void addApply(@RequestParam("checked") String checked, HttpServletRequest request, HttpSession session) {
 
 			UserDTO udto = (UserDTO)session.getAttribute("uDTO");
@@ -342,4 +328,16 @@ public class AjaxController {
 				else System.out.println("지원실패");
 			}
 		}
+		
+		//메인 공고리스트 / 최신 / 지원 많은공고 /남은기간
+		@PostMapping("/mainComBoardList")
+		public HashMap<String, Object> mainComBoardList() {
+			HashMap<String, Object> map = new HashMap<>(); //뷰페이지로 이동하는 맵 
+			map.put("new", this.comBoardMapper.getMainNewComBoardList());
+			map.put("hot", this.comBoardMapper.getMainHotComBoardList());
+			map.put("time", this.comBoardMapper.getMainTimeComBoardList());
+
+			return map;	
+		}
+		
 }
