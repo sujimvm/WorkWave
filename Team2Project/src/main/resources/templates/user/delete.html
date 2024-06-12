@@ -5,42 +5,73 @@
 <link rel="icon" href="image/icon/logo_icon.png"/> 
 <title>Work Wave 비밀번호 재확인</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
-<link rel="stylesheet" th:href="@{/css/user.css}">
+<link rel="stylesheet" th:href="@{/css/userCont.css}">
+<script type="text/javascript">
+
+	function check(){
+		const agreementCheckbox = document.getElementById('chkLeaveAgree');
+        if (!agreementCheckbox.checked) {
+            alert('체크박스에 동의하지 않으셨습니다.');
+            return false;
+        }
+	}
+
+</script>
 </head>
 <body>
-	<div align="center">
-		<hr width="30%" color="gray">
-			<h3>비밀번호 재확인</h3>
-		<hr width="30%" color="gray">
-
-		<form method="post" action="/U/delete/pwdCheckOk">
-
-		<input type="hidden" name="user_id" th:value="${session.user_login.user_id}">
-
-			<table border="1" width="400">
-				<tr>
-					<th>아이디</th>
-					<td th:text="${session.user_login.user_id}"></td>
-
-				</tr>
-				<tr>
-					<th>비밀번호</th>
-					<td>
-						<input type="password" name="user_pwd" placeholder="비밀번호를 입력해주세요">
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<small>타인에게 노출되지 않도록 주의하세요</small>
-					</td>
-				</tr>
-				<tr>
-					<td colspan="2" align="center">
-						<input type="submit" value="확인">
-					</td>
-				</tr>
-			</table>
-		</form>
+	<div th:replace="~{include/header}"></div>
+	<div layout:fragment="content" class="content">
+		
+		<div class="sidebar active">
+      		<h3>마이페이지</h3>
+        	<a th:href="@{/U/profile/insert}">이력서 등록</a>
+	        <a th:href="@{/U/profile}">이력서 리스트</a>
+	        <a th:href="@{/}">입사지원 현황</a>
+	        <a th:href="@{/}">포지션 제안</a>
+	        <a th:href="@{/U/update/userPwdCheck}">회원정보 수정</a>
+	        <a th:href="@{/}">비밀번호 변경</a>
+	        <a th:href="@{/U/delete/userPwdCheck}" class="select">회원탈퇴</a>
+        </div>
+		
+		<div class="sidebar_r">
+            <form action="/C/delete/companyPwdCheckOk" method="post">
+        		<span style="font-size: 20px; font-weight: bold;">회원 탈퇴</span>
+        		<br><br>
+        		<div class="helpNoticeBox">
+					<strong class="helpNoticeBoxTitle">지금까지 이용해주셔서 감사 드립니다. 탈퇴하기 전 아래 유의사항을 확인해주세요. </strong>
+					<ul class="helpNoticeBoxList">
+						<li>· 탈퇴하신 아이디는 <span class="clef3f3f">복구가 불가능</span>하며, 추후 동일한 아이디로 재가입이 되지 않습니다.</li>
+						<li>· 이력서 정보, 구직 활동내역, 공고, 포지션 제안 등 회원과 관련된 정보 모두 삭제되며, <br>&nbsp;<span class="clef3f3f">삭제된 데이터는 복구되지 않습니다.</span></li>
+					</ul>
+				</div>
+        		<table class="user-table2">
+        			<tr>
+        				<th>아이디</th>
+        				<td>
+        					<input type="hidden" name="user_id" th:value="${session.uDTO.user_id}">
+							<span th:inline="text">[[${session.uDTO.user_id}]]</span>
+        				</td>
+        			</tr>
+        			
+        			<tr>
+        				<th>비밀번호</th>
+        				<td>
+        					<input type="password" name="user_pwd">
+        				</td>
+        			</tr>
+        		</table>
+        		<div class="submitBtnContainer">
+        			<p class="agreeBox">
+						<span class="tplChkBx tplChkBx_1 devTplChkBx">
+							<input type="checkbox" id="chkLeaveAgree">
+							<label for="chkLeaveAgree">유의 사항을 모두 확인했으며, 이에 동의합니다.</label>
+						</span>
+					</p>
+        			<input type="submit" value="회원 탈퇴하기" onclick="return check()">
+        		</div>
+        	</form>
+        </div>
 	</div>
+	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>

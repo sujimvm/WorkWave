@@ -52,7 +52,8 @@
   </select>
   
   <select id="profileName" resultType="String">
-  	   select profile_name from profile where user_key = #{user_key}
+  	   select profile_name from profile where user_key in (select profile_key from profile where user_key = #{user_key}) 
+       and PROFILE_CHECK = 'N'
   </select>
   
   </mapper>

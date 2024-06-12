@@ -10,16 +10,17 @@
 .faq-list ul {
     list-style-type: none;
     padding: 0;
+    
 }
 
 .faq-list li {
-    font-size: 14px;
-    margin-bottom: 8px;
+    font-size: 13px;
     cursor: pointer;
+    padding: 15px;
+    border-bottom: 1px solid #e5e5ed;
 }
 
 .faq-list .highlighted {
-    font-weight: bold;
     color: #007BFF;
 }
 
@@ -66,3 +67,52 @@
 .notice-list li a:visited {
     color: #551A8B;
 }
+
+/* ////////////////////////////////////////////////////////////////// */
+
+.notice-cont {
+	width: 70%; /* 테이블 너비 */
+    border-collapse: collapse; /* 테이블 셀 간격 없앰 */
+    margin-bottom: 20px; /* 아래 여백 */
+    border-top: 1px solid #797979; /* 맨 위에 테두리 추가 */
+}
+
+.notice-cont th,
+.notice-cont td {
+  border: none; /* 기존 테두리 제거 */
+  border-bottom: 1px solid #c0c0c0;
+  padding: 10px; /* 셀 안쪽 여백 */
+  text-align: left; /* 텍스트 정렬 */
+}
+
+.notice-cont tfoot td {
+  text-align: center; /* 푸터 텍스트 가운데 정렬 */
+}
+
+.notice-btn button{
+	background-color: #fff;
+	color: #6a6a6a;
+	border: 0.5px solid;
+	border-radius: 5px;
+	padding: 8px 10px;
+	cursor: pointer;
+	font-size: 11px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
