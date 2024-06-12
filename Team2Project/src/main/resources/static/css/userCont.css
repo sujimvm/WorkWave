@@ -53,7 +53,7 @@
 
 .user-info .highlighted {
     font-weight: bold;
-    color: #007BFF;
+    color: #0B57D0;
 }
 
 .user-list {
@@ -80,7 +80,7 @@
 
 .user-list li a {
     width: 80%;
-    color: #007BFF;
+    color: #0B57D0;
     text-decoration: none;
 }
 
