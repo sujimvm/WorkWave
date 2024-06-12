@@ -100,7 +100,7 @@
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.log("Error: ", textStatus, errorThrown);
-                alert("인증번호 확인에 실패했습니다.");
+                alert("서버 오류: 인증번호 확인에 실패했습니다.");
             }
         });
     });

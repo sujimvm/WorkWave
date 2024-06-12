@@ -77,8 +77,10 @@ public class VeriController {
             if (storedCode != null && storedCode.equals(code)) {
                 tokenService.removeTokenByEmail(email);
                 response.put("status", "success");
+                response.put("message", "인증번호 확인 성공하였습니다.");
             } else {
                 response.put("status", "fail");
+                response.put("message", "인증번호 확인 실패하였습니다.");
             }
         } catch (IllegalArgumentException e) {
             logger.error("Validation error in verifyCode: ", e);

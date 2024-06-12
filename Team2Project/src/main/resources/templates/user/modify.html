@@ -10,20 +10,18 @@
 <body>
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
-		<div class="mainContainer">
 		<div class="sidebar active">
       		<h3>마이페이지</h3>
 	        <a th:href="@{/U/profile/insert}">이력서 등록</a>
 	        <a th:href="@{/U/profile}">이력서 리스트</a>
 	        <a th:href="@{/}">입사지원 현황</a>
 	        <a th:href="@{/}">포지션 제안</a>
-	        <a th:href="@{/U/update/userPwdCheck}">회원정보 수정</a>
+	        <a th:href="@{/U/update/userPwdCheck}" class="select">회원정보 수정</a>
 	        <a th:href="@{/}">비밀번호 변경</a>
 	        <a th:href="@{/U/delete/userPwdCheck}">회원탈퇴</a>
         </div>
         
-   		<div class="user-info">
-        <div class="content">
+   		<div class="user-info sidebar_r">
       	<form method="post" action="/U/update/userPwdCheckOk">
       		<span style="font-size: 20px; font-weight: bold;">본인 확인</span>
          	<table class="user-table2" style="box-shadow: none; font-size: 15px;">
@@ -50,7 +48,6 @@
          </table>
       </form>
       </div>
-   </div>
    </div>
    <div th:replace="~{include/footer :: footer}"></div>
 </body>
