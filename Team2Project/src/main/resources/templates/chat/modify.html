@@ -3,60 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <title>게시물 수정 페이지</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- 부트스트랩 CSS 추가 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/css/include.css}">
+    <link rel="stylesheet" th:href="@{/css/chat.css}">
 </head>
 <body>
-<div th:replace="~{include/header :: guestHeader}"></div>
-    <div class="container">
-        <div class="text-center mt-5">
-            <hr class="w-25 border-primary">
-            <h3 th:if="${modify != null}" th:text="${modify.user_id} + ' 님 게시물 수정 페이지'"></h3>
-            <h3 th:if="${modify == null}">게시물 정보를 불러오지 못했습니다.</h3>
-            <hr class="w-25 border-primary">
-            <br><br>
-        </div>
-
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-body">
-                        <form th:if="${modify != null}" method="post" action="/U/chat/updateOk">
-                            <input type="hidden" name="chat_key" th:value="${modify.chat_key}">
-
-                            <div class="form-group">
-                                <label for="user_id">작성자</label>
-                                <input type="text" class="form-control" id="user_id" name="user_id" readonly th:value="${modify.user_id}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="chat_title">글제목</label>
-                                <input type="text" class="form-control" id="chat_title" name="chat_title" th:value="${modify.chat_title}">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="chat_cont">글내용</label>
-                                <textarea class="form-control" id="chat_cont" rows="7" name="chat_cont" th:text="${modify.chat_cont}"></textarea>
-                            </div>
-
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">글수정</button>
-                                <button type="reset" class="btn btn-secondary">다시작성</button>
-                            </div>
-                        </form>
-
-                        <div th:if="${modify == null}" class="text-center">
-                            <h3>게시물 정보를 불러오지 못했습니다.</h3>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div th:replace="~{include/header}"></div>
+<div layout:fragment="content" class="content"> 
+    <div class="sidebar active"> 
+        <h3><a th:href="@{/U/chat/insert}">질문 · 글쓰기</a></h3>
+        <br>
+        <table class="chat-user"> 
+            <tr>
+                <th>내 정보</th>
+            </tr>
+            <tr>
+                <th class="chat-table">
+                    <th:block th:if="${null != session.uDTO}">
+                        <span th:text="${session.uDTO.user_name}"></span> <br>
+                        <span th:text="${session.uDTO.user_id}"></span> <br>
+                        <span th:inline="text">질문 [[${chatCnt}]]개</span>
+                    </th:block>
+                    <th:block th:if="${null == session.uDTO}">
+                        <span>게스트</span>
+                    </th:block>
+                </th>
+            </tr>
+        </table>
     </div>
+    
+    <div class="chat-info sidebar_r"> 
+        <div class="form-container"> 
+            <div class="text-center">
+                <h3 th:if="${modify != null}" th:text="${modify.user_id} + ' 님 게시물 수정 페이지'"></h3>
+                <h3 th:if="${modify == null}">게시물 정보를 불러오지 못했습니다.</h3>
+                <br><br>
+            </div>
 
-    <!-- 부트스트랩 JS 및 jQuery 추가 -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <div th:replace="~{include/footer :: footer}"></div>
+            <form th:if="${modify != null}" method="post" action="/U/chat/updateOk">
+                <input type="hidden" name="chat_key" th:value="${modify.chat_key}">
+
+                <div class="form-group">
+                    <label for="user_id">작성자</label>
+                    <input type="text"  id="user_id" name="user_id" readonly th:value="${modify.user_id}">
+                </div>
+
+                <div class="form-group">
+                    <label for="chat_title">글제목</label>
+                    <input type="text"  id="chat_title" name="chat_title" th:value="${modify.chat_title}">
+                </div>
+
+                <div class="form-group">
+                    <label for="chat_cont">글내용</label>
+                    <textarea id="chat_cont" rows="7" name="chat_cont" th:text="${modify.chat_cont}"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="chat_tag">태그</label>
+                    <input type="text"  id="chat_tag" name="chat_tag" th:value="${modify.chat_tag}">
+                </div>
+
+                <div class="text-center">
+                    <button type="submit">글수정</button>
+                    <button type="reset">다시작성</button>
+                </div>
+            </form>
+
+            <div th:if="${modify == null}" class="text-center">
+                <h3>게시물 정보를 불러오지 못했습니다.</h3>
+            </div>
+        </div> 
+    </div>
+</div>
+<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>

@@ -39,16 +39,29 @@
 			<ul class="chat-list">
 			    <li th:inline="text" style="padding-bottom: 40px;"> [[${cont.chat_cont}]]</li>
 			    <li th:inline="text"> 😀 [[${cont.user_id}]]</li>
+			    <li th:inline="text"> [[${cont.chat_tag}]]</li>
 			    <li th:inline="text" style="align-content: center">
 			        👀 [[${cont.chat_hit}]]
 			        <button id="like-btn" class="like-btn">🧡</button> <span id="like">[[${cont.chat_like}]]</span>
 			    </li>
+			    
 			    <br>
+			    
+			    <div>
+				    <a th:href="@{/U/chat/update(no=${cont.chat_key})}">
+    					<input type="button" value="글수정" class="btn-custom">
+					</a>
+					<a href="javascript:void(0);" th:onclick="|if(confirm('글삭제?')){
+								location.href='@{/U/chat/delete(no=${cont.chat_key})}'
+								}else{return;}|">
+   						 <input type="button" value="글삭제" class="btn-custom">
+					</a>
+				</div>
 			    <li>
 			        <th:block th:if="${null != session.uDTO}">
 			            <div class="reply-div" id="reply-box">
 			                <form id="replyForm" method="post">
-			                    <textarea id="replyCont" name="reply_cont" rows="3" cols="100" placeholder="솔직하고 따뜻한 댓글을 남겨주세요~"></textarea>
+			                    <textarea id="replyCont" name="reply_cont" rows="3" cols="120" placeholder="솔직하고 따뜻한 댓글을 남겨주세요~"></textarea>
 			                    <input id="replyBtn" class="reply-btn" type="submit" value="댓글 작성">
 			                </form>
 			            </div>
