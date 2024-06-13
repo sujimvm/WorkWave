@@ -25,6 +25,8 @@ import jakarta.servlet.http.HttpServletResponse;
 public class GeustController {
 
     @Autowired private CompanyMapper companyMapper;
+    
+    @Autowired private UserMapper userMapper;
 
     @Autowired private PasswordEncoder passwordEncoder;
 
@@ -221,16 +223,74 @@ public class GeustController {
 	// 개인 아이디 찾기 성공
 	@GetMapping("/userFindIdOk")
 	public String findUserId(@RequestParam("user_name") String userName, @RequestParam("user_email") String userEmail,
-			Model model) {
-		String user_id = userService.findUserId(userName, userEmail);
-		model.addAttribute("userId", user_id);
-		return "user/find_id_result";
+							 Model model, HttpServletResponse response) throws IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		
+		UserDTO user_id_date = userService.findUserId(userName, userEmail);
+		
+		int idCnt = userService.idCnt(user_id_date.getUser_id());
+		
+		PrintWriter out = response.getWriter();
+		
+		if (user_id_date.getUser_id() == null) {
+			out.println("<script>");
+			out.println("alert('입력하신 정보에 해당하는 회원정보가 없습니다.')");
+			out.println("</script>");
+	
+			return "user/find_id";
+		}else {
+			model.addAttribute("user_id_date", user_id_date);
+			model.addAttribute("idCnt", idCnt);
+			
+			return "user/find_id_result";
+		}
+		
+		
+	}
+	
+	// 기업 비밀번호 찾기 성공	 
+	@GetMapping("/companyFindPwdOk") 
+	public String findCompanyPwd(@RequestParam("company_mgr_name") String company_mgr_name,
+			 					 @RequestParam("company_number") String company_number,
+			 					 @RequestParam("company_id") String company_id, 
+			 					 Model model,
+			 					 HttpServletResponse response) throws IOException {
+		 
+		response.setContentType("text/html; charset=UTF-8");
+		 
+		String str1 = company_number.substring(0, 3);
+		String str2 = company_number.substring(3, 5);
+		String str3 = company_number.substring(5);
+
+		String companyNumber = str1 + "-" + str2 + "-" + str3;
+		
+		String company_pwd = this.companyMapper.findCompanyPwd(company_mgr_name, companyNumber, company_id);
+		
+		System.out.println(company_pwd);
+
+		PrintWriter out = response.getWriter();
+		
+		if (company_pwd == null) {
+			out.println("<script>");
+			out.println("alert('입력하신 정보에 해당하는 회원정보가 없습니다.')");
+			out.println("</script>");
+			
+			return "user/find_password";
+		} else {
+
+			model.addAttribute("companyId", company_id);
+			
+			return "company/find_pwd_result";
+
+		}
+	
 	}
 	
 	// 비밀번호찾기에서 해당 유저가 존재할 시 새 비밀번호를 설정하여 업데이트
 	@PostMapping("/companyPwdUpdate")
 	public String companyPwdUpdate(@RequestParam("company_id") String company_id,
-			@RequestParam("company_pwd") String company_pwd, HttpServletResponse response) throws IOException {
+								   @RequestParam("company_pwd") String company_pwd, 
+								   HttpServletResponse response) throws IOException {
 
 		String encordedPwd = passwordEncoder.encode(company_pwd);
 
@@ -266,53 +326,85 @@ public class GeustController {
 
 	}
 	
-	// 기업 비밀번호 찾기 성공	 
-	@GetMapping("/companyFindPwdOk") 
-	public String findCompanyPwd(@RequestParam("company_mgr_name") String company_mgr_name,
-			 					 @RequestParam("company_number") String company_number,
-			 					 @RequestParam("company_id") String company_id, 
-			 					 Model model,
-			 					 HttpServletResponse response) throws IOException {
-		 
-		response.setContentType("text/html; charset=UTF-8");
-		 
-		String str1 = company_number.substring(0, 3);
-		String str2 = company_number.substring(3, 5);
-		String str3 = company_number.substring(5);
+	// 개인 비밀번호 찾기 성공
+	@GetMapping("/userFindPwdOk")
+	public String findUserPassword(@RequestParam("user_name") String user_name, 
+								   @RequestParam("user_id") String user_id,
+								   @RequestParam("user_email") String user_email, 
+								   Model model,
+								   HttpServletResponse response) throws IOException {
+		
+		// 사용자의 비밀번호를 검색
+		UserDTO user_pwd = userService.findUserPassword(user_name, user_id, user_email);
 
-		String companyNumber = str1 + "-" + str2 + "-" + str3;
-		
-		String company_pwd = this.companyMapper.findCompanyPwd(company_mgr_name, companyNumber, company_id);
-		
-		System.out.println(company_pwd);
+		response.setContentType("text/html; charset=UTF-8");
 
 		PrintWriter out = response.getWriter();
 		
-		if (company_pwd == null) {
+		if (user_pwd == null) {
 			out.println("<script>");
 			out.println("alert('입력하신 정보에 해당하는 회원정보가 없습니다.')");
 			out.println("</script>");
-			return "user/find_pwd";
+			
+			return "user/find_password";
 		} else {
 
-			model.addAttribute("companyId", company_id);
-			return "company/find_pwd_result";
+			model.addAttribute("user_id", user_id);
+			
+			return "user/find_password_result";
 
 		}
-	
 	}
 	
-	// 개인 비밀번호 찾기 성공
-	@GetMapping("/userFindPwdOk")
-	public String findUserPassword(@RequestParam("user_name") String userName, @RequestParam("user_id") String userId,
-			@RequestParam("user_email") String userEmail, Model model) {
-		// 사용자의 비밀번호를 검색
-		UserDTO user_pwd = userService.findUserPassword(userName, userId, userEmail);
+	// 비밀번호찾기에서 해당 유저가 존재할 시 새 비밀번호를 설정하여 업데이트
+	@PostMapping("/userPwdUpdate")
+	public void userPwdUpdate(@RequestParam("user_id") String user_id,
+	                          @RequestParam("user_pwd") String user_pwd, 
+	                          HttpServletResponse response) throws IOException {
 
-		// 검색된 비밀번호 정보를 모델에 추가
-		model.addAttribute("user_pwd", user_pwd);
+	    response.setContentType("text/html; charset=UTF-8");
+	    PrintWriter out = response.getWriter();
+	    
+	    try {
+	        String encodedPwd = passwordEncoder.encode(user_pwd);
+	        
+	        UserDTO userInfo = this.userMapper.getUserById(user_id);
+	        
+	        if (userInfo == null) {
+	            out.println("<script>");
+	            out.println("alert('사용자 정보를 찾을 수 없습니다. 다시 시도해주세요.');");
+	            out.println("location.href='/login';");
+	            out.println("</script>");
+	            return;
+	        }
 
-		// 비밀번호 결과를 표시할 뷰 이름을 반환
-		return "user/find_password_result";
+	        System.out.println(userInfo.getUser_pwd());
+	        System.out.println("---------------------------------------------------------------");
+	        
+	        if (passwordEncoder.matches(user_pwd, userInfo.getUser_pwd())) {
+	            out.println("<script>");
+	            out.println("alert('기존 비밀번호와 동일합니다.');");
+	            out.println("location.href='/G/userFindPwdOk';");
+	            out.println("</script>");
+	        } else {
+	            int result = this.userMapper.userUpdatePwd(user_id, encodedPwd);
+	            
+	            if (result == 1) {
+	                out.println("<script>");
+	                out.println("alert('비밀번호 변경 성공하였습니다. 로그인 해주세요');");
+	                out.println("location.href='/login';");
+	                out.println("</script>");
+	            } else {
+	                out.println("<script>");
+	                out.println("alert('비밀번호 변경에 실패했습니다. 다시 시도해주세요.');");
+	                out.println("history.back();");
+	                out.println("</script>");
+	            }
+	        }
+	    } finally {
+	        out.close();
+	    }
 	}
+
+	
 }

@@ -26,15 +26,17 @@ public class UserService {
         return userMapper.getUserById(userId) == null;
     }
     
-    public String findUserId(String userName, String userEmail) {
+    public UserDTO findUserId(String userName, String userEmail) {
         return userMapper.findUserId(userName, userEmail);
     }
-    
+        
     public UserDTO findUserPassword(String userName, String userId, String userEmail) {
         return userMapper.findUserPassword(userName, userId, userEmail);
     }
     
-
+    public int idCnt(String userId) {
+    	return userMapper.idCnt(userId);
+    }
     
 }
 	

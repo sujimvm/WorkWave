@@ -15,11 +15,12 @@ public interface CompanyMapper {
 	
 	String findCompanyId(@Param("company_mgr_name") String company_mgr_name, @Param("companyNumber") String companyNumber);
 	
+	
 	String findCompanyPwd(@Param("company_mgr_name") String company_mgr_name, 
 						@Param("companyNumber") String companyNumber, 
 						@Param("company_id") String company_id);
 	
-	int companyPwdUpdate(@Param("company_id") String company_id, @Param("company_pwd") String company_pwd);
+	int companyPwdUpdate(String company_id, String company_pwd);
 	
 	int companyDelete(int company_key);
 	
