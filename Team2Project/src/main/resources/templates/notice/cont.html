@@ -5,7 +5,7 @@
 <link rel="icon" href="image/icon/logo_icon.png"/> 
     <title>Work Wave Notice Content</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
-<link rel="stylesheet" th:href="@{/css/notice.css}">
+<link rel="stylesheet" th:href="@{/css/FAQ.css}">
 
 </head>
 <body>
@@ -23,12 +23,12 @@
 	
 	
 		<div class="faq-list sidebar_r">
-	<h2>공지사항 상세 페이지</h2>
+		<h2>공지사항</h2>
 	
-		<table border="1">
+		<table class="notice-cont">
 			<thead>
 				<tr>
-					<th>제목</th>
+					<th style="color: #007BFF">공지</th>
 					<td th:text="${nCont.notice_title}">
 					</td>
 					<td th:text="${nCont.notice_date.substring(0, 10)}">
@@ -38,25 +38,22 @@
 			
 			<tbody align="center">
 				<tr>
-					<td th:text="${nCont.notice_cont}" colspan="3">
+					<td style="font-size: 14px" th:utext="${nCont.notice_cont}" colspan="3">
 					</td>
 				</tr>
 			</tbody>
 			
-			<tfoot>
+			<tfoot class="notice-btn">
 				<tr>
-			        <td style="text-align: left;">
-    					
+			        <td>
 					    <button onclick="window.history.back()">목록</button>
 					</td>
 					<td></td>
-					<td style="text-align: right;">
-					    
-					    <button onclick="window.scrollTo(0, 0)">맨 위로</button>
+					<td>
+					    <button onclick="window.scrollTo(0, 0)">TOP</button>
 					</td>
     			</tr>
 			</tfoot>
-			
 		</table>
 		</div>
 	</div>

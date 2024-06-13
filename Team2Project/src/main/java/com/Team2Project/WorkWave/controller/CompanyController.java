@@ -251,6 +251,7 @@ public class CompanyController {
 
 	}
 
+	// 비밀번호 확인 후 회원 삭제
 	@PostMapping("/delete/companyPwdCheckOk")
 	public void companyDeleteOk(@RequestParam("company_pwd") String company_pwd,
 			@RequestParam("company_number") String company_number, HttpSession session, HttpServletResponse response)

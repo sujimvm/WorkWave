@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6"><head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
@@ -28,7 +27,9 @@
         <a th:href="@{/A/notice}">공지사항</a>
         <a th:href="@{/G/findId}">아이디 찾기</a>
         <a th:href="@{/G/findPwd}">비밀번호 찾기</a>
-        <a th:href="@{/resign}">회원탈퇴</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">회원탈퇴</a>
+		<a sec:authorize="isAuthenticated() and hasRole('USER')" th:href="@{/U/delete/userPwdCheck}">회원탈퇴</a>
+		<a sec:authorize="isAuthenticated() and hasRole('COMPANY')" th:href="@{/C/delete/companyPwdCheck}">회원탈퇴</a>
       </div>
       
       <div class="faq-list sidebar_r">

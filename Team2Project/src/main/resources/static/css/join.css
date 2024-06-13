@@ -76,7 +76,7 @@ select {
     box-sizing: border-box;	
 }
 .joinSubmit {
-	background-color: #007BFF; /* 파란색 버튼 */
+	background-color: #0B57D0; /* 파란색 버튼 */
     color: white;
     padding: 8px 10px;
     border: none;
@@ -89,7 +89,7 @@ select {
 }
 
 button {
-    background-color: #007BFF; /* 파란색 버튼 */
+    background-color: #0B57D0; /* 파란색 버튼 */
     color: white;
     padding: 8px 10px;
     border: none;
@@ -110,4 +110,40 @@ button:hover {
     flex: 1;
     margin-right: 10px;
 }
+.agree_box {
+	font-size: 14px;
+}
 
+.agree_box ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+}
+
+.agree_box a {
+	text-align: right;
+}
+
+.agree_details {
+	display: none;
+	max-height: 100px; /* 최대 높이를 설정합니다. */
+    overflow-y: auto; /* 내용이 넘치면 스크롤을 생성합니다. */
+    border: 1px solid #ddd; /* 스크롤 영역을 구분하기 위한 테두리 */
+    padding: 10px; /* 내용과 테두리 사이의 여백 */
+    margin-top: 10px; /* 상단 여백 */
+    background-color: #f9f9f9; /* 배경 색상 */
+    font-size: 10px;
+}
+
+.agree_details th, .agree_details tr, .agree_details td{
+    font-size: 10px;
+    border: 1px solid;
+}
+
+.toggle-details {
+    text-align: right;
+    cursor: pointer;
+    color: blue;
+    font-size: 12px;
+    float: right;
+}

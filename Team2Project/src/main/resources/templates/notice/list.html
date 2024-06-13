@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -17,16 +17,23 @@
 		<a th:href="@{/A/notice}" class="select">공지사항</a>
 		<a th:href="@{/G/findId}">아이디 찾기</a>
 		<a th:href="@{/G/findPwd}">비밀번호 찾기</a>
-		<a th:href="@{/resign}">회원탈퇴</a>
+		<a sec:authorize="!isAuthenticated()" th:href="@{/login}">회원탈퇴</a>
+		<a sec:authorize="isAuthenticated() and hasRole('USER')" th:href="@{/U/delete/userPwdCheck}">회원탈퇴</a>
+		<a sec:authorize="isAuthenticated() and hasRole('COMPANY')" th:href="@{/C/delete/companyPwdCheck}">회원탈퇴</a>
 	</div>
 		
 		<div class="faq-list sidebar_r">
             <h3>공지사항</h3>
             <ul class="notice-list">
+            	<li>
+            		<span>전체</span>
+            		<span>제목</span>
+            		<span>날짜</span>
+            	</li>
                 <li th:each="notice : ${nList}">
-                    <span th:text="${notice.notice_key}"></span>
-                    <a th:href="@{/A/noticeCont(no=${notice.notice_key})}" th:text="${notice.notice_title}"></a>
-                    <span th:text="${notice.notice_date}"></span>
+                	<span style="color: #007BFF">공지</span>
+                    <a style="color: #000000" th:href="@{/A/noticeCont(no=${notice.notice_key})}" th:text="${notice.notice_title}"></a>
+                    <span th:text="${notice.notice_date.substring(0, 10)}"></span>
                 </li>
             </ul>
 

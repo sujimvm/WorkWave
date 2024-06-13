@@ -105,6 +105,15 @@
     cursor: pointer;
 }
 
+.btn-custom{
+	background-color: #007BFF; /* 파란색 버튼 */
+    color: white;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 .like-btn {
     background-color: transparent;
     border: none;
@@ -116,12 +125,50 @@
     outline: none;
 }
 
-.reply-div{
+/* 추가된 스타일 */
+.form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.form-container input[type="text"],
+.form-container textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+.form-container label {
+    font-weight: bold;
+    display: block;
+    margin: 10px 0 5px;
+}
+.form-container .text-center {
+    text-align: center;
+}
+.form-container button {
+    background-color: #007BFF;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px;
+}
+.form-container button:hover {
+    background-color: #0056b3;
+}
+
+.reply-div {
 	position: relative;
 }
 
-
-.replyok{
+.replyok {
 	background-color: #007BFF; /* 파란색 버튼 */
     color: white;
     padding: 8px 10px;
@@ -130,8 +177,7 @@
     cursor: pointer;
 }
 
-
-.reply-btn{
+.reply-btn {
 	background-color: #007BFF; /* 파란색 버튼 */
     color: white;
     padding: 21px 20px;
@@ -142,6 +188,3 @@
     top: 0%;
     margin-left: 10px;
 }
-
-
-

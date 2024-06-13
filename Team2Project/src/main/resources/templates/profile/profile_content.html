@@ -72,7 +72,7 @@
 			    <tbody>
 			        <tr th:each="career : ${CareerList}">
 			            <td th:text="${career.career_company}"></td>
-			            <td th:text="${career.career_start_date + ' ~ ' + career.career_end_date}"></td>
+			            <td th:text="${#strings.concat(career.career_start_date, ' ~ ', career.career_end_date)}"></td>
 			            <td th:text="${career.career_cont}" style="white-space: pre-line"></td>
 			            <td th:text="${career.career_position}"></td>
 			            <td th:text="${career.career_bye}"></td>

@@ -50,6 +50,27 @@
 					<h3>게시글이 없습니다.</h3>
 				</th:block>
 			</div>
+			
+			<!-- Page navigation -->
+           <!-- <ul class="pagination">
+                <li th:if="${paging != null and paging.page > paging.block}">
+                    <a th:href="@{/A/chat(page=1)}">[⋘]</a>
+                </li>
+                <li th:if="${paging != null and paging.page > paging.block}">
+                    <a th:href="@{/A/chat(page=${paging.startBlock - 1})}">[☚]</a>
+                </li>
+
+                <li th:each="i : ${#numbers.sequence(paging.startBlock, paging.endBlock)}">
+                    <a th:href="@{/A/chat(page=${i})}" th:text="'[' + ${i} + ']'"></a>
+                </li>
+
+                <li th:if="${paging != null and paging.endBlock < paging.allPage}">
+                    <a th:href="@{/A/chat(page=${paging.endBlock + 1})}">[➤]</a>
+                </li>
+                <li th:if="${paging != null and paging.endBlock < paging.allPage}">
+                    <a th:href="@{/A/chat(page=${paging.allPage})}">[⋙]</a>
+                </li>
+            </ul> -->
 		</div>
 	</div>
 	<div th:replace="~{include/footer :: footer}"></div>

@@ -38,4 +38,11 @@ public interface ComBoardMapper {
 	List<Map<String, Object>> getApplyAvgGender(int com_board_key);
 	List<Map<String, Object>> getApplyAvgEdu(int com_board_key);
 	int updateComBoard(ComBoardDTO dto); // 공고수정
+	
+	List<ComBoardDTO> getMainNewComBoardList(); // (메인) 공고리스트
+	List<ComBoardDTO> getMainHotComBoardList(); // (메인) 공고리스트
+	List<ComBoardDTO> getMainTimeComBoardList(); // (메인) 공고리스트
+	List<ComBoardDTO> getComBoardList(String type); // (메인) 공고리스트
+	
+	
 }

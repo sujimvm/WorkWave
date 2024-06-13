@@ -97,10 +97,15 @@
 					<div>
 						<h6>연령</h6>
 						<div th:if="${!map.avgAge.isEmpty()}">
-							<dl th:each="avgAge:${map.avgAge}">
-								<dt th:text="${avgAge.AGE+' 대'}"></dt>
-								<dd th:text="${avgAge.COUNT+'명'}"></dd>
-							</dl>
+							<table>
+								<tr th:each="avgAge:${map.avgAge}">
+									<th>
+										<div>
+											<div></div>
+										</div>
+									</th>
+								</tr>
+							</table>
 						</div>
 					</div>
 					<div>

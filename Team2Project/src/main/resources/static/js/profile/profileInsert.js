@@ -56,7 +56,7 @@ $(document).ready(function(){
 		var subCategoryName = $(this).text(); 
 		$("#profile_sub"+category_num).attr("size",subCategoryName.length);
 		$("#profile_sub"+category_num).val(subCategoryName);
-		$("#sub"+category_num).text(">"+subCategoryName); 
+		$("#sub"+category_num).text(subCategoryName); 
 		loadSteps(subCategoryCode); 
 	});
     
@@ -71,7 +71,7 @@ $(document).ready(function(){
 	    if(selectedStep != stepName) {
 	        $("#profile_step"+category_num).attr("size",stepName.length);
 	        $("#profile_step"+category_num).val(stepName);
-	        $("#step"+category_num).text(">"+stepName); 
+	        $("#step"+category_num).text(stepName); 
 	        
 	    } else {
 	        alert("이미 선택된 소분류입니다.");
@@ -79,7 +79,7 @@ $(document).ready(function(){
 	        var selectedSubCategory = $("#profile_sub"+category_num).val();
 	        
 	        if(selectedSubCategory) {
-	            $("#sub"+category_num).text(">"+selectedSubCategory); 
+	            $("#sub"+category_num).text(selectedSubCategory); 
 	        } else {
 	            $("#sub"+category_num).empty(); 
 	        }
@@ -89,7 +89,7 @@ $(document).ready(function(){
 	    
 		$("#profile_step"+category_num).attr("size",stepName.length);
 		$("#profile_step"+category_num).val(stepName);// 선택된 소분류 코드를 숨겨진 필드에 저장
-		$("#step"+category_num).text(">"+stepName); 
+		$("#step"+category_num).text(stepName); 
 	});
 
 	
@@ -154,11 +154,11 @@ $(document).ready(function(){
 		</select>
     `;
     //공통 된 부분 변수에 저장해 놓기
-	var edu_name_text = `<input name="eDtoList[0].edu_name" class="edu_name form-control d-inline" style=width:220px; placeholder="학교명">`;
-	var edu_end_date_text = `<input type="date" name="eDtoList[0].edu_end_date" placeholder="졸업년도" class="form-control d-inline" style=width:150px; >`;
-	var edu_status_text = `<input name="eDtoList[0].edu_status" placeholder="졸업상태" class="form-control d-inline" style=width:150px;>`;
-	var edu_start_date_text = `<input type="date" name="eDtoList[0].edu_start_date" placeholder="입학년월" class="form-control d-inline" style=width:150px;>`;
-	var edu_major_text = `<input name="eDtoList[0].edu_major"  class="edu_major form-control d-inline" style=width:170px; placeholder="전공 및 문과/이과">`;
+	var edu_name_text = `<input name="eDtoList[0].edu_name" class="edu_name form-control d-inline" style=width:200px; placeholder="학교명">`;
+	var edu_end_date_text = `<input type="date" name="eDtoList[0].edu_end_date" placeholder="졸업년도" class="form-control d-inline" style=width:140px; >`;
+	var edu_status_text = `<input name="eDtoList[0].edu_status" placeholder="졸업상태" class="form-control d-inline" style=width:90px;>`;
+	var edu_start_date_text = `<input type="date" name="eDtoList[0].edu_start_date" placeholder="입학년월" class="form-control d-inline" style=width:140px;>`;
+	var edu_major_text = `<input name="eDtoList[0].edu_major"  class="edu_major form-control d-inline" style=width:150px; placeholder="전공및 문/이과">`;
 	
 	var edu_remove_bt = `<button class="removeForm">삭제</button>`;
 	//학력 추가 버튼 클릭	
@@ -320,20 +320,20 @@ $(document).ready(function(){
 		<div class="career_input_form">
 		<ul>
 			<li>
-			<input name="crDtoList[0].career_company" placeholder="회사명" class="form-control" style=width:245px;><br>
-			<input type="date"  name="crDtoList[0].career_start_date" class="form-control d-inline" style=width:150px; placeholder="입사년월">
-			<input type="date" name="crDtoList[0].career_end_date" class="form-control d-inline" style=width:150px; placeholder="퇴사년월">
+			<input name="crDtoList[0].career_company" placeholder="회사명" class="form-control" style=width:200px;><br>
+			<input type="date"  name="crDtoList[0].career_start_date" class="form-control d-inline" style=width:140px; placeholder="입사년월">
+			<input type="date" name="crDtoList[0].career_end_date" class="form-control d-inline" style=width:140px; placeholder="퇴사년월">
 			</li>
 		</ul>
 		<ul>
 			<li>
-			<input name="crDtoList[0].career_position" placeholder="직책" class="form-control d-inline" style=width:120px;>
-			<input name="crDtoList[0].career_bye" placeholder="퇴사사유" class="form-control d-inline" style=width:120px;>
+			<input name="crDtoList[0].career_position" placeholder="직책" class="form-control d-inline" style=width:100px;>
+			<input name="crDtoList[0].career_bye" placeholder="퇴사사유" class="form-control d-inline" style=width:100px;>
 			</li>
 		</ul>
 		<textarea rows="15" cols="10" placeholder="담당업무" name="crDtoList[0].career_cont" class="form-control h-26" id="floatingTextarea"></textarea>
 		<button class="removeForm">삭제</button></div>
-	    `;
+	    `; 
 	    
 		$(document).on('click', '#addCareer', function(event){  
 	        $("#add_career_input_form").append(career_input);

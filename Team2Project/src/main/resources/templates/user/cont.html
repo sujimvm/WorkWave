@@ -11,7 +11,6 @@
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
 		
-		<div class="mainContainer">
 		<div class="sidebar active">
       		<h3>마이페이지</h3>
         	<a th:href="@{/U/profile/insert}">이력서 등록</a>
@@ -21,10 +20,9 @@
 	        <a th:href="@{/U/update/userPwdCheck}">회원정보 수정</a>
 	        <a th:href="@{/}">비밀번호 변경</a>
 	        <a th:href="@{/U/delete/userPwdCheck}">회원탈퇴</a>
-      </div>
+        </div>
 		
-		<div class="user-info">
-        <div class="content">
+		<div class="user-info sidebar_r">
         		<div th:if="${profileName == null}">
             		<h3 th:inline="text">[[${session.uDTO.user_name}]] 님 안녕하세요.</h3>
             	</div>
@@ -54,7 +52,6 @@
 				</tr>         
             </table>
         </div>
-	</div>
 	</div>
 	<div th:replace="~{include/footer :: footer}"></div>
 	

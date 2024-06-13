@@ -12,7 +12,18 @@
 <body>
 <div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
-		<div align="center"><br> <!--이력서 리스트 전체 -->
+		<div class="sidebar active">
+      		<h3>마이페이지</h3>
+        	<a th:href="@{/U/profile/insert}">이력서 등록</a>
+	        <a th:href="@{/U/profile}" class="select">이력서 리스트</a>
+	        <a th:href="@{/}">입사지원 현황</a>
+	        <a th:href="@{/}">포지션 제안</a>
+	        <a th:href="@{/U/update/userPwdCheck}">회원정보 수정</a>
+	        <a th:href="@{/}">비밀번호 변경</a>
+	        <a th:href="@{/U/delete/userPwdCheck}">회원탈퇴</a>
+        </div>
+        
+		<div align="center" class="sidebar_r"><br> <!--이력서 리스트 전체 -->
 		<h1 class="fontweight">이력서 관리</h1><br>
 		<input type="button" class="buttonloc" value="이력서 등록" th:onclick ="|location.href='@{/U/profile/insert}'|">
 		
