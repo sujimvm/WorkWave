@@ -41,8 +41,13 @@
 					<ul>
 						<li th:inline="text" style="font-size: 1.2em; font-weight: bold; height: 50px;">
 							<a th:href="@{/A/chat/content(no=${dto.chat_key})}"><span th:text="${dto.chat_title}"></span></a>
+							 <!-- <div th:text="${dto.chat_cont}" style="margin-top: 10px; font-size: 0.5em;"></div> -->
+							 <div th:utext="${#strings.abbreviate(dto.chat_cont, 50)}" style="margin-top: 10px; font-size: 0.9em;"></div>
+                    
+							
 							👀 [[${dto.chat_hit}]]
 							🧡 [[${dto.chat_like}]]
+							
 						</li>
 					</ul>
 				</th:block>
@@ -52,7 +57,7 @@
 			</div>
 			
 			<!-- Page navigation -->
-           <!-- <ul class="pagination">
+           <ul class="pagination">
                 <li th:if="${paging != null and paging.page > paging.block}">
                     <a th:href="@{/A/chat(page=1)}">[⋘]</a>
                 </li>
@@ -70,7 +75,7 @@
                 <li th:if="${paging != null and paging.endBlock < paging.allPage}">
                     <a th:href="@{/A/chat(page=${paging.allPage})}">[⋙]</a>
                 </li>
-            </ul> -->
+            </ul>
 		</div>
 	</div>
 	<div th:replace="~{include/footer :: footer}"></div>

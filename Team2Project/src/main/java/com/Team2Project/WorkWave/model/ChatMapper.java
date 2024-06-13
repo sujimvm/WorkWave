@@ -7,9 +7,11 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ChatMapper {
 
-	public List<ChatDTO> list();
+	public List<ChatDTO> list(Page pdto);
 	
 	public ChatDTO getContent(int chat_key);
+	
+	int countchat();
 	
 	public int add(ChatDTO dto);
 	
@@ -29,12 +31,14 @@ public interface ChatMapper {
 
     ChatReplyDTO getReplyById(int reply_key);
    
-    void updateReply(int replyKey, String editedContent);
+    void updateReply(ChatReplyDTO reply);
     
     void deleteReply(int reply_key);
     
     public int replylike(int reply_key);
 	
     public int chatCnt(int user_key);
+    
+    List<ChatReplyDTO> getRepliesByChatKey(int chat_key);
 	
 }
