@@ -4,17 +4,109 @@
 	display: -webkit-inline-box;
 }
 .codeDiv{
-	width:400px;;
-	height: 300px;
+	width:260px;
+	height: 200px;
 	overflow: scroll;
+	border: 1px solid ;
+}
+.codeDiv::-webkit-scrollbar {
+  width: 5px;
+}
+.codeDiv::-webkit-scrollbar-track {
+  background-color: white;
+}
+.codeDiv::-webkit-scrollbar-thumb {
+  background-color: black;
+}
+.codeDiv::-webkit-scrollbar-button {
+  display: none;
 }
 
+.tdNoPadding{
+	padding: 0;	
+}
+.jobCodeUl{
+	list-style: none;
+	padding-left: 10px;
+}
+
+.textGr{float: left; margin-right: 5px;}
+.textW10{width: 100%;}
+.textW9{width: 90%;}
+.textW8{width: 80%;}
+.textW7{width: 70%;}
+.textW6{width: 60%;}
+.textW5{width: 50%;}
+.textW4{width: 40%;}
+.textW3{width: 30%;}
+.textW2{width: 20%;}
+.textW1{width: 10%;}
+
+.textBspan{
+	float: left;  
+	margin-right: 5px;
+	height: 37px;
+	line-height: 37px;
+	color: #8c8c8c;
+	font-size: 14px;
+	font-weight: bold;
+	}
+
+.selectText{
+	color: #8c8c8c;
+	font-size: 14px;
+}
+
+/* number 버튼제거 */
+/* 
 .date_empty:before {
-        content: attr(data-placeholder);
-        width: calc(100% - 42px);
-      }
-      
+	content: attr(data-placeholder);
+	width: calc(100% - 42px);
+}
+ */
 .top_r_cominfo_div img{
 	width: 100px;
 	height: 40px;
+}
+
+
+/* add , update */
+
+.comBoardInputTotalDiv{
+	margin: 0 auto;
+	padding: 50px;
+	background-color: #fafafa;
+}
+.comBoardInputTitle{
+	font-size: 20px;
+    margin-bottom: 10px;
+    color: #0b57d0;
+    font-weight: bold;
+}
+
+.comBoardInputGroupDiv{
+	background-color: #fff;
+	border-radius: 20px;
+	padding: 20px;
+	margin: 0 auto;
+    margin-bottom: 100px;
+    width: 75%;
+}
+.comBoardInputTb{
+	width: 100%;
+	border-spacing: 0px;
+	padding: 20px;
+	border-top: 2px solid #5c5c5c;
+	font-size: 14px;
+}
+.comBoardInputTb th,td{
+	padding:20px;
+	border-bottom: 1px solid #e9e9e9;
+	
+}
+.comBoardInputTb th{
+	color: #5c5c5c;
+	width: 20%;
+}
+.comBoardInputTb td{
 }

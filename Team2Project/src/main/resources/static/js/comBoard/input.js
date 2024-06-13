@@ -23,6 +23,7 @@ $(document).ready(function() {
 			$("#com_board_group").val(group_name);
 			$("#com_board_sub").val(sub_name);
 			$("#com_board_step").val(step_name);
+			$("#jobCodeTotalDiv").hide();
 		} 
 	});
 	

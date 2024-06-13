@@ -150,7 +150,7 @@
 		  		from (select row_number() over(order by com_board_date desc) rnum, b.* 
 		  		from com_board b  where com_board_start_date <= sysdate and com_board_end_date >= sysdate)Pb 
 		  		join company c on c.company_key = Pb.company_key
-		  		where rnum >= 1 and rnum <= 10
+		  		where rnum >= 1 and rnum <= 8
 	            order by com_board_date desc
 	  		]]>
 	  	</select>
@@ -160,7 +160,7 @@
 		  		from (select row_number() over(order by com_board_date desc) rnum, b.* 
 		  		from com_board b  where com_board_start_date <= sysdate and com_board_end_date >= sysdate)Pb 
 		  		join company c on c.company_key = Pb.company_key
-		  		where rnum >= 1 and rnum <= 10
+		  		where rnum >= 1 and rnum <= 8
 	            order by com_board_date
 	  		]]>
 	  	</select>
@@ -170,7 +170,7 @@
 		  		from (select row_number() over(order by com_board_date) rnum, b.* 
 		  		from com_board b  where com_board_start_date <= sysdate and com_board_end_date >= sysdate)Pb 
 		  		join company c on c.company_key = Pb.company_key
-		  		where rnum >= 1 and rnum <= 9
+		  		where rnum >= 1 and rnum <= 8
 	            order by com_board_date desc
 	  		]]>
 	  	</select>
