@@ -14,11 +14,11 @@ public class ChatReplyDTO {
     private int reply_key;
     private int chat_key;
     private int user_key;
-    private int reply_depth;
-    private int reply_step;
-    private String user_name;
+    private String user_id;
     private Date reply_date;
     private String reply_content;
-    private int reply_like;
+   
+    
+    
 	
 }

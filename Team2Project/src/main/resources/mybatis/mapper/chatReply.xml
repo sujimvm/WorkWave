@@ -16,8 +16,8 @@
     	<selectKey resultType="int" keyProperty="reply_key" order="BEFORE">
 	        select coalesce(max(reply_key), 0) + 1 from reply
 	    </selectKey>
-        INSERT INTO Reply (reply_key, chat_key, user_key, user_name, reply_date, reply_content, reply_like)
-        VALUES (#{reply_key}, #{chat_key}, ${user_key}, #{user_name}, sysdate, #{reply_content}, 0)
+        INSERT INTO Reply (reply_key, chat_key, user_key, user_id, reply_date, reply_content)
+        VALUES (#{reply_key}, #{chat_key}, #{user_key}, #{user_id}, sysdate, #{reply_content})
     </insert>
 
     <!-- Select -->

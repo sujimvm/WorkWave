@@ -155,16 +155,23 @@ public class AjaxController {
 			Map<String, String> result = new HashMap<>();
 			result.put("message", "댓글 등록완료!");
 			result.put("type", "reply");
+			
 			int chat_key = (Integer.parseInt(paramMap.get("chat_key")));
 			String reply_cont = paramMap.get("reply_cont");
 			ChatReplyDTO reply = new ChatReplyDTO();
 			reply.setChat_key(chat_key);
 			reply.setReply_content(reply_cont);
+			reply.setUser_key(Integer.parseInt(paramMap.get("user_key")));
+			reply.setUser_id(paramMap.get("user_id"));
+		
 			this.chatMapper.insertReply(reply);
 			ChatReplyDTO replyOut = this.chatMapper.getReplyById(chat_key);
+			
 			result.put("reply_cont", reply_cont);
 			result.put("reply_date", replyOut.getReply_date().toString());
-			result.put("user_name", replyOut.getUser_name());
+			result.put("user_id", replyOut.getUser_id());
+		
+			
 			return result;
 		}
 		
