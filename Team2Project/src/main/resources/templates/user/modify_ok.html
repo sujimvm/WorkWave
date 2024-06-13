@@ -79,7 +79,7 @@
 	        <a th:href="@{/}">입사지원 현황</a>
 	        <a th:href="@{/}">포지션 제안</a>
 	        <a th:href="@{/U/update/userPwdCheck}" class="select">회원정보 수정</a>
-	        <a th:href="@{/}">비밀번호 변경</a>
+	        <a th:href="@{/U/update/pwd/companyPwdCheck}">비밀번호 변경</a>
 	        <a th:href="@{/U/delete/userPwdCheck}">회원탈퇴</a>
         </div>
 
@@ -89,59 +89,60 @@
          <input type="hidden" name="user_key" th:value="${session.uDTO.user_key}">
          <input type="hidden" name="user_pwd" th:value="${session.uDTO.user_pwd}">
          <span style="font-size: 20px; font-weight: bold;">회원 정보 수정</span>
-         <table class="user-table2" style="font-size: 12px; box-shadow: none;">
+         <table class="user-table2">
             <tr>
-               <th>회원 아이디</th>
+               <th class="infoTh">회원 아이디</th>
                <td>
-                  <input name="user_id" th:value="${session.uDTO.user_id}" readonly>
+                  <input type="hidden" name="user_id" th:value="${session.uDTO.user_id}">
+				  <span th:inline="text">[[${session.uDTO.user_id}]]</span>
                </td>
             </tr>
                   
             <tr>
-               <th>회원 이름</th>
+               <th class="infoTh">회원 이름</th>
                <td>
-                  <input name="user_name" th:value="${session.uDTO.user_name}" readonly>
+               	<input type="hidden" name="user_name" th:value="${session.uDTO.user_name}">
+				  <span th:inline="text">[[${session.uDTO.user_name}]]</span>
                </td>
             </tr>
             <tr>
-               <th>회원 이메일</th>
+               <th class="infoTh">회원 이메일</th>
                <td>
-                  <input name="user_email" th:value="${session.uDTO.user_email}">
+                  <input type="text" name="user_email" th:value="${session.uDTO.user_email}" style="width: 50%;">
                </td>
             </tr>
             <tr>
             
-               <th>회원 전화번호</th>
+               <th class="infoTh">회원 전화번호</th>
                <td>
-                  <input name="user_phone" th:value="${session.uDTO.user_phone}">
+                  <input type="text" name="user_phone" th:value="${session.uDTO.user_phone}" style="width: 25%;">
                </td>
             </tr>
             <tr>
-               <th>회원 주소</th>
+               <th class="infoTh">회원 주소</th>
                <td>
-                  <input name="user_addr" id="user_addr" th:value="${session.uDTO.user_addr}" 
+                  <input type="text" name="user_addr" id="user_addr" th:value="${session.uDTO.user_addr}" 
                   onclick="daumPostcode()" readonly>
                </td>
             </tr>
             <tr id="addr_detail">
-            	<th>상세 주소</th>
+            	<th class="infoTh">상세 주소</th>
                 <td>
-                   <input id="user_addr_detail">
+                   <input type="text" id="user_addr_detail">
                 </td>
             </tr>
             <tr>
-               <th>회원 성별</th>
+               <th class="infoTh">회원 성별</th>
                <td>
-                  <input name="user_gender" readonly th:value="${session.uDTO.user_gender}">
+                  <input type="hidden" name="user_gender" th:value="${session.uDTO.user_gender}">
+				  <span th:inline="text">[[${session.uDTO.user_gender}]]</span>
                </td>
             </tr>
-            <tr>
-                  <td colspan="2" align="center">
-                     <input type="submit" value="회원수정" onclick="return modify()">&nbsp;&nbsp;
-                     <input type="reset" value="다시작성">
-                  </td>
-              </tr>
          </table>
+         <div class="submitBtnContainer">
+	        <input type="submit" value="회원수정" onclick="return modify()">&nbsp;&nbsp;
+	        <input type="reset" value="다시작성">
+         </div>
       </form>
       </div>
    </div>

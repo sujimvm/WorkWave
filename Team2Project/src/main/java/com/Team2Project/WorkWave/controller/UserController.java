@@ -604,4 +604,59 @@ public class UserController {
 			}
 		}
 		
+		// 일반회원 비밀번호 변경 페이지로 이동하는 매핑
+		@GetMapping("/update/pwd/companyPwdCheck")
+		public String companyPwdUpdate() {
+
+			return "user/pwdUpdate";
+
+		}
+		
+		@PostMapping("/update/pwd")
+		public void companyPwdUpdateCheck(@RequestParam("ori_user_pwd") String ori_user_pwd,
+										  @RequestParam("new_user_pwd") String new_user_pwd,
+										  HttpSession session,
+										  HttpServletResponse response) throws IOException {
+			
+			UserDTO userDto = (UserDTO) session.getAttribute("uDTO");
+			
+			response.setContentType("text/html; charset=UTF-8");
+
+			PrintWriter out = response.getWriter();
+			
+			if(passwordEncoder.matches(ori_user_pwd, userDto.getUser_pwd())) {
+				//입력된 비밀번호와 기존 비밀번호가 같을때
+				if(passwordEncoder.matches(new_user_pwd, userDto.getUser_pwd())) {
+					// 기존 비밀번호와 새 비밀번호가 같다면 다시 비밀번호 변경 창으로
+					out.println("<script>");
+					out.println("alert('기존 비밀번호와 새 비밀번호가 같습니다.')");
+					out.println("history.back()");
+					out.println("</script>");
+				}else {
+					// 기존 비밀번호와 새 비밀번호가 다르다면 새 비밀번호로 다시 저장
+					String new_company_pwd_encorded = this.passwordEncoder.encode(new_user_pwd);
+					
+					session.removeAttribute("uDTO");
+					
+					this.userMapper.userUpdatePwd(userDto.getUser_id(), new_company_pwd_encorded);
+					
+					UserDTO updatedto = this.userMapper.getUserById(userDto.getUser_id());
+					
+					session.setAttribute("uDTO", updatedto);
+					
+					out.println("<script>");
+					out.println("alert('비밀번호 수정에 성공했습니다.')");
+					out.println("location.href='/U/info'");
+					out.println("</script>");
+				}
+			}else {
+				//입력된 비밀번호와 기존 비밀번호가 다를때
+				out.println("<script>");
+				out.println("alert('입력하신 비밀번호와 기존 비밀번호가 다릅니다.')");
+				out.println("history.back()");
+				out.println("</script>");
+			}
+			
+		}
+		
 }

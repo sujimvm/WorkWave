@@ -23,7 +23,7 @@ public interface UserMapper {
 	@Select("SELECT user_id, user_pwd FROM users WHERE user_name = #{userName} AND user_id = #{userId} AND user_email = #{userEmail}")
 	UserDTO findUserPassword(@Param("userName") String userName, @Param("userId") String userId, @Param("userEmail") String userEmail);
 	
-	public int userUpdatePwd(String user_id, String user_pwd);
+	public int userUpdatePwd(@Param("user_id") String user_id, @Param("encordedPwd") String encordedPwd);
 	
 	public int idCnt(String user_id);
 	

@@ -5,7 +5,16 @@
 <link rel="icon" href="image/icon/logo_icon.png"/> 
 <title>Work Wave 비밀번호 찾기 결과</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
-<link rel="stylesheet" th:href="@{/css/company.css}">
+<link rel="stylesheet" th:href="@{/css/login.css}">
+<style type="text/css">
+.checkmark {
+    display: none;
+    color: green;
+    font-size: 16px;
+    margin-left: 5px;
+}
+
+</style>
 <script src="https://code.jquery.com/jquery-3.7.1.js"
 	integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
 	crossorigin="anonymous"></script>
@@ -68,39 +77,46 @@ function pwdCheck(){
 </head>
 <body>
 
-	<div align="center">
+	<div class="tab-container">
+		<a th:href="@{/A/main}">
+	       <img src="/image/icon/login_logo.png" alt="Logo" height="80px">
+	    </a>
+	    
+	    <div class="info">
+		    <span style="font-size: 17px; font-weight: bold; text-align: left;">비밀번호 재설정</span> <br>
+		    <span style="font-size: 11px; text-align: left; color: red;">새로운 비밀번호를 입력해 주세요.</span>
+    	</div>
+	    
+	    <div class="form-container" style="text-align: left;">
 		<form th:action="@{/G/companyPwdUpdate}" method="post">
 			<input type="hidden" name="company_id" th:value="${companyId}">
-			<table border="1">
-				<tr>
-					<th>비밀번호 재설정</th>
-				</tr>
-				<tr>
-					<td>
-						<input name="company_pwd" type="password"
-							   id="company_pwd" placeholder="새 비밀번호를 입력해주세요" required> 
-						<span id="pwdCheckmark" class="checkmark">✔</span> 
-						<span id="pwdError" style="display: none; color: red; font-size: 12px;">
-								비밀번호는 8자 이상 20자 이하이며 특수문자 1자를 포함해야 합니다.</span>
-					</td>
-					</tr>
-				<tr>
-					<td>
-						<input name="company_pwd_check" type="password"
-							id="company_pwd_check" placeholder="새 비밀번호 확인" required>
-						<span id="pwdCheckmark" class="checkmark">✔</span> 
-						<span id="pwd_check_err" style="display: none; color: red; font-size: 12px;">
-								위의	비밀번호와 입력된 비밀번호가 다릅니다.</span> 
-						<span id="pwd_check_ok"	style="display: none; color: green; font-size: 12px;">✔</span></td>
-				</tr>
+			
+			<input name="company_pwd" type="password" id="company_pwd" placeholder="새 비밀번호를 입력해주세요" required> 
+			<span id="pwdCheckmark" class="checkmark">✔</span> 
+			<span id="pwdError" style="display: none; color: red; font-size: 12px;">
+					비밀번호는 8자 이상 20자 이하이며 특수문자 1자를 포함해야 합니다.
+			</span>
+			
+			<input name="company_pwd_check" type="password" id="company_pwd_check" placeholder="새 비밀번호 확인" required>
+			<span id="pwdCheckmark" class="checkmark">✔</span> 
+			<span id="pwd_check_err" style="display: none; color: red; font-size: 12px;">
+					위의	비밀번호와 입력된 비밀번호가 다릅니다.
+			</span> 
+			<span id="pwd_check_ok"	style="display: none; color: green; font-size: 12px;">✔</span>
+
+	
+	
+			<input type="submit" value="비밀번호 설정" onclick="return pwdCheck()">
 				
-				<tr>
-					<td align="center">
-						<input type="submit" value="비밀번호 설정" onclick="return pwdCheck()">
-					</td>
-				</tr>
-			</table>
 		</form>
+		</div>
+		
+		<br>
+    	
+	    <div class="link-container">
+	      <a th:href="@{/login}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LOGIN</a> |
+	      <a th:href="@{/G/findPwd}">비밀번호찾기</a>
+	    </div>
 	</div>
 
 </body>

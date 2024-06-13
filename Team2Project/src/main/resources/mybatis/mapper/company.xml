@@ -30,7 +30,7 @@
     </select>
     
     <update id="companyPwdUpdate" parameterType="String">
-    	update company set company_pwd = #{company_pwd} where company_id = #{company_id}
+    	update company set company_pwd = #{encordedPwd} where company_id = #{company_id}
     </update>
     
     <delete id="companyDelete" parameterType="int">
