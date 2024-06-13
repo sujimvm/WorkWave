@@ -20,7 +20,7 @@ public interface CompanyMapper {
 						@Param("companyNumber") String companyNumber, 
 						@Param("company_id") String company_id);
 	
-	int companyPwdUpdate(String company_id, String company_pwd);
+	int companyPwdUpdate(@Param("company_id") String company_id, @Param("encordedPwd") String encordedPwd);
 	
 	int companyDelete(int company_key);
 	

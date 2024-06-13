@@ -358,52 +358,41 @@ public class GeustController {
 	
 	// 비밀번호찾기에서 해당 유저가 존재할 시 새 비밀번호를 설정하여 업데이트
 	@PostMapping("/userPwdUpdate")
-	public void userPwdUpdate(@RequestParam("user_id") String user_id,
+	public String userPwdUpdate(@RequestParam("user_id") String user_id,
 	                          @RequestParam("user_pwd") String user_pwd, 
 	                          HttpServletResponse response) throws IOException {
 
-	    response.setContentType("text/html; charset=UTF-8");
-	    PrintWriter out = response.getWriter();
-	    
-	    try {
-	        String encodedPwd = passwordEncoder.encode(user_pwd);
-	        
-	        UserDTO userInfo = this.userMapper.getUserById(user_id);
-	        
-	        if (userInfo == null) {
-	            out.println("<script>");
-	            out.println("alert('사용자 정보를 찾을 수 없습니다. 다시 시도해주세요.');");
-	            out.println("location.href='/login';");
-	            out.println("</script>");
-	            return;
-	        }
+		String encordedPwd = passwordEncoder.encode(user_pwd);
 
-	        System.out.println(userInfo.getUser_pwd());
-	        System.out.println("---------------------------------------------------------------");
-	        
-	        if (passwordEncoder.matches(user_pwd, userInfo.getUser_pwd())) {
-	            out.println("<script>");
-	            out.println("alert('기존 비밀번호와 동일합니다.');");
-	            out.println("location.href='/G/userFindPwdOk';");
-	            out.println("</script>");
-	        } else {
-	            int result = this.userMapper.userUpdatePwd(user_id, encodedPwd);
-	            
-	            if (result == 1) {
-	                out.println("<script>");
-	                out.println("alert('비밀번호 변경 성공하였습니다. 로그인 해주세요');");
-	                out.println("location.href='/login';");
-	                out.println("</script>");
-	            } else {
-	                out.println("<script>");
-	                out.println("alert('비밀번호 변경에 실패했습니다. 다시 시도해주세요.');");
-	                out.println("history.back();");
-	                out.println("</script>");
-	            }
-	        }
-	    } finally {
-	        out.close();
-	    }
+		response.setContentType("text/html; charset=UTF-8");
+
+		PrintWriter out = response.getWriter();
+
+		UserDTO dto = this.userMapper.getUserById(user_id);
+
+		if (passwordEncoder.matches(user_pwd, dto.getUser_pwd())) {
+			out.println("<script>");
+			out.println("alert('기존 비밀번호와 새로 입력하신 비밀번호가 같습니다.')");
+			out.println("</script>");
+			
+			return "company/find_pwd_result";
+		} else {
+			int result = this.userMapper.userUpdatePwd(user_id, encordedPwd);
+
+			if (result == 1) {
+				out.println("<script>");
+				out.println("alert('비밀번호 수정에 성공했습니다.')");
+				out.println("</script>");
+				
+				return "mainLogin";
+			} else {
+				out.println("<script>");
+				out.println("alert('오류발생!')");
+				out.println("</script>");
+				
+				return "company/find_pwd_result";
+			}
+		}
 	}
 
 	
