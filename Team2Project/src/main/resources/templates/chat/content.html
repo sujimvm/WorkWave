@@ -23,7 +23,8 @@
                     <th class="chat-table">
                         <th:block th:if="${null != session.uDTO}">
                             <span th:text="${session.uDTO.user_name}"></span> <br>
-                            <span th:text="${session.uDTO.user_id}"></span> <br>
+                            <span class="user_id" th:text="${session.uDTO.user_id}"></span> <br>
+                            <span style="display: none;" class="user_key" th:text="${session.uDTO.user_key}"></span> <br>
                             <span th:inline="text">질문 [[${chatCnt}]]개</span>
                         </th:block>
                         <th:block th:if="${null == session.uDTO}">
@@ -152,6 +153,9 @@
 	            let formData = new FormData();
 	            formData.append("reply_cont", reply_cont);
 	            formData.append("chat_key", chat_key);
+	            // user_key
+	            formData.append("user_key", $(".user_key").text());
+	            formData.append("user_id", $(".user_id").text());
 	            ajaxGo(formData, '/ajax/reply');
 	        });
 	    });
