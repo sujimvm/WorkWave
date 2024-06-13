@@ -149,6 +149,7 @@ public class AjaxController {
 			result.put("type", "reply");
 			
 			int chat_key = (Integer.parseInt(paramMap.get("chat_key")));
+			
 			String reply_cont = paramMap.get("reply_cont");
 			ChatReplyDTO reply = new ChatReplyDTO();
 			reply.setChat_key(chat_key);
@@ -162,6 +163,11 @@ public class AjaxController {
 			result.put("reply_cont", reply_cont);
 			result.put("reply_date", replyOut.getReply_date().toString());
 			result.put("user_id", replyOut.getUser_id());
+			
+			/*
+			 * List<ChatReplyDTO> replies = this.chatMapper.getRepliesByChatKey(chat_key);
+			 * result.put("replies", replies);
+			 */
 		
 			
 			return result;
@@ -192,20 +198,25 @@ public class AjaxController {
 		 }
 		 
 		 @PostMapping("/editReply")
-		 public Map<String, String> editReply(@RequestParam Map<String, String> paramMap) {
-		     Map<String, String> result = new HashMap<>();
-		     try {
-		         int replyKey = Integer.parseInt(paramMap.get("reply_key"));
-		         String editedContent = paramMap.get("edited_content");
-		         
-		         this.chatMapper.updateReply(replyKey, editedContent);
-		         
-		         result.put("message", "댓글이 성공적으로 수정되었습니다.");
-		     } catch (Exception e) {
-		         result.put("message", "댓글 수정 중 오류가 발생했습니다.");
-		     }
-		     return result;
-		 }
+		    public Map<String, String> editReply(@RequestParam Map<String, String> paramMap) {
+		        Map<String, String> result = new HashMap<>();
+		        try {
+		            int reply_key = Integer.parseInt(paramMap.get("reply_key"));
+		            String reply_content = paramMap.get("reply_content");
+
+		            // 댓글 수정 로직 수행
+		            ChatReplyDTO reply = new ChatReplyDTO();
+		            reply.setReply_key(reply_key);
+		            reply.setReply_content(reply_content);
+		            chatMapper.updateReply(reply);
+
+		            result.put("message", "댓글 수정 완료!");
+		        } catch (Exception e) {
+		            result.put("message", "댓글 수정 중 오류 발생");
+		        }
+
+		        return result;
+		    }
 		 
 		 
 

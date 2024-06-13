@@ -38,7 +38,7 @@
         <div class="chat-info sidebar_r">
 			<h3 th:inline="text">🍳 [[${cont.chat_title}]]</h3>
 			<ul class="chat-list">
-			    <li th:inline="text" style="padding-bottom: 40px;"> [[${cont.chat_cont}]]</li>
+			    <li style="padding-bottom: 40px;"><div  th:utext="${cont.chat_cont}"></div></li>
 			    <li th:inline="text"> 😀 [[${cont.user_id}]]</li>
 			    <li th:inline="text"> [[${cont.chat_tag}]]</li>
 			    <li th:inline="text" style="align-content: center">
@@ -73,10 +73,31 @@
 			            </a>
 			        </th:block>
 			    </li>
-			</ul>
+			    
+			</ul>	
 			<br>
-			<div id="reply-box"></div>
-			<br>
+			<div id="reply_box">
+				<div class="reply_body" th:if="${not #lists.isEmpty(list)}" th:each="dto : ${list}">
+            	        <span class="user-id"  th:text="${dto.user_id}"></span>
+            	        <br>
+            	        <span class="reply-date" th:text="${#dates.format(dto.reply_date, 'yyyy/MM/dd')} + ' 작성'"></span>
+            	        <p class="reply-content" th:text="${dto.reply_content}"></p>
+            	  <button class=btn-edit th:attr="data-reply-key=${dto.reply_key}" onclick="editReply(this)">수정</button>
+	        	  <button class=btn-delete th:attr="data-reply-key=${dto.reply_key}" onclick="deleteReply(this)">삭제</button>
+	        	  <br> <br>
+	        	  <hr>
+	         
+	           
+	           	<div id="edit-form-${dto.reply_key}" class="d-none">
+				             <textarea rows="2" id="edit-reply-${dto.reply_key}"></textarea>
+				             <button th:attr="data-reply-key=${dto.reply_key}" onclick="saveReply(this)">저장</button>
+				             <button th:onclick="'cancelEdit(' + ${dto.reply_key} + ')'" >취소</button>
+				</div>
+	        </div>
+	        </div>
+	        
+	        
+		
 			<div align="right">
 			    <button class="goList" onclick="window.history.back()">목록 보기</button>
 		    </div>
@@ -86,11 +107,85 @@
 	
 	<script th:inline="javascript">
 	    let chat_key = /*[[${cont.chat_key}]]*/ null;
+	    console.log('chat_key:', chat_key); // chat_key 값 확인
 	    let like_count = 0;
-	    let replylike_count = 0;
+	  
+	    
+	    
+
+	    function cancelEdit(replyKey) {
+	        $('#edit-form-' + replyKey).addClass('d-none');
+	    }
+	    
+	    /* function editReply(button) {
+            var replyKey = $(button).data('reply-key');
+            $('#edit-form-' + replyKey).removeClass('d-none');
+        } */
+        
+        function editReply(button) {
+	        var replyKey = $(button).data('reply-key');
+	        $('#edit-form-' + replyKey).removeClass('d-none');
+	        // 기존 댓글 내용을 수정 폼에 넣기
+	        var currentContent = $('button[data-reply-key="' + replyKey + '"]').closest('.reply_body').find('.reply-content').text();
+	        $('#edit-reply-' + replyKey).val(currentContent);
+	    }
+        
+        function saveReply(button) {
+            var replyKey = $(button).data('reply-key');
+            var replyContent = $('#edit-reply-' + replyKey).val();
+            
+            var formData = new FormData();
+            formData.append("reply_key", replyKey);
+            formData.append("reply_content", replyContent);
+            
+            $.ajax({
+                type: 'post',
+                url: '/ajax/editReply',
+                processData: false,
+                contentType: false,
+                data: formData,
+                success: function(response) {
+                    alert(response.message);
+                    // 댓글 내용 업데이트
+                    $('button[data-reply-key="' + replyKey + '"]').closest('.reply_body').find('.reply-content').text(replyContent);
+                    cancelEdit(replyKey);
+                },
+                error: function() {
+                    alert('댓글 수정 중 오류가 발생했습니다.');
+                }
+            });
+        }
+	    
+	    
+	    
+	    function deleteReply(button) {
+		    if (confirm('정말로 댓글을 삭제하시겠습니까?')) {  // 추가된 확인 대화 상자
+		        var replyKey = $(button).data('reply-key');
+		        var formData = new FormData();
+		        formData.append("reply_key", replyKey);
+		        
+		        $.ajax({
+		            type: 'post',
+		            url: '/ajax/deleteReply',
+		            processData: false,
+		            contentType: false,
+		            data: formData,
+		            success: function(response) {
+		                $(button).closest('.reply_body').remove();
+		                alert("댓글이 삭제되었습니다.");
+		            },
+		            error: function() {
+		                alert('댓글 삭제 중 오류가 발생했습니다.');
+		            }
+		        });
+		    }
+		}
+	    
+	    
 	    
 	    $(document).ready(function () {
 	        let baseUrl = window.location.origin;
+	        console.log('chat_key:', chat_key); // chat_key 값 확인
 	        console.log(baseUrl);
 	        console.log(chat_key);
 	        
@@ -115,12 +210,10 @@
 	       
 	                        $reply_box.prepend(
 	                        	    `
-	                        	    <div class="reply-div">
-	                        	        <div class="reply-meta">
-	                        	            <span class="username">${user_name}</span>
-	                        	            <span class="reply-date">${reply_date}</span>
-	                        	        </div>
-	                        	        <p class="reply-content">${reply_cont}</p>
+	                        	    <div class="reply_body">
+                        	            <span class="user-id">${user_id}</span>
+                        	            <span class="reply-date">${reply_date}</span>
+                        	        	<p class="reply-content">${reply_cont}</p>
 	                        	    </div>
 	                        	    `
 	                        	);

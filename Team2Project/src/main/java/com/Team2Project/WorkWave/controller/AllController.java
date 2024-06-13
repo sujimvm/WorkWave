@@ -91,11 +91,24 @@ public class AllController {
 	}
 
 	@GetMapping("/chat")
-	public String list(Model model) {
+	public String list(Model model, HttpServletRequest request) {
+		
+		int page;	// 현재 페이지 변수
 
-		List<ChatDTO> list = this.chatMapper.list();
+		// 페이징 처리 작업
+		if(request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}else {
+			page = 1;
+		}
 
-		model.addAttribute("List", list);
+		totalRecord = this.chatMapper.countchat();
+
+		Page pdto = new Page(page, rowsize, totalRecord);
+
+		List<ChatDTO> list = this.chatMapper.list(pdto);
+
+		model.addAttribute("List", list).addAttribute("paging", pdto);
 
 		return "chat/list";
 	}

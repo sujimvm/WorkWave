@@ -25,13 +25,18 @@
         SELECT * FROM Reply WHERE reply_key = #{reply_key}
     </select>
 
-    <!-- Update -->
-    <update id="updateReply" parameterType="replyDTO">
+    
+   <!--  <update id="updateReply" parameterType="replyDTO">
         UPDATE Reply
-        SET chat_key = #{chat_key}, user_key = #{user_key}, reply_depth = #{reply_depth}, reply_step = #{reply_step},
-            user_name = #{user_name}, reply_date = #{reply_date}, reply_content = #{reply_content}, reply_like = #{reply_like}
+        SET chat_key = #{chat_key}, user_key = #{user_key}, user_name = #{user_name}, reply_date = sysdate. reply_content = #{reply_content}
         WHERE reply_key = #{reply_key}
-    </update>
+    </update>  -->
+    
+    <update id="updateReply" parameterType="replyDTO">
+    UPDATE Reply
+    SET reply_content = #{reply_content}
+    WHERE reply_key = #{reply_key}
+	</update>
 
     <!-- Delete -->
     <delete id="deleteReply" parameterType="int">
@@ -41,5 +46,10 @@
     <update id="replylike" parameterType="int">
 		update reply set reply_like = reply_like + 1 where reply_key = #{reply_key}
 	</update>
+	
+	<select id="getRepliesByChatKey" parameterType="int" resultType="replyDTO">
+    SELECT * FROM reply WHERE chat_key = #{chat_key} ORDER BY reply_date DESC
+	</select>
+	
   
   </mapper>

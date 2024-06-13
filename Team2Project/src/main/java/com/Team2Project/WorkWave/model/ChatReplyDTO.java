@@ -17,8 +17,5 @@ public class ChatReplyDTO {
     private String user_id;
     private Date reply_date;
     private String reply_content;
-   
-    
-    
 	
 }

@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>게시물 수정 페이지</title>
+    <script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
     <link rel="stylesheet" th:href="@{/css/include.css}">
     <link rel="stylesheet" th:href="@{/css/chat.css}">
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        CKEDITOR.replace('chat_cont');
+    });
+	</script>
 </head>
 <body>
 <div th:replace="~{include/header}"></div>
