@@ -6,14 +6,16 @@
 }
 /* 헤더 스타일 */
 .header {
+	width:100%;
+    min-width: 1200px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	margin-bottom: 5px
+    margin: 0 auto;
+	margin-bottom: 5px;
 	
 }
 .header .container{
-    padding-top: 25px;
     width: 1200px;
-    min-width: 800px;
+    padding-top: 25px;
     margin: 0 auto;
 }
 /* 상단 섹션 스타일 */
