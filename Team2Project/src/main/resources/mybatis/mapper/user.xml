@@ -19,8 +19,11 @@
     
     <update id="updateok" parameterType="uDTO">
         update users set user_pwd = #{user_pwd}, user_email = #{user_email}, user_phone = #{user_phone}, user_addr = #{user_addr} where user_key = #{user_key}
-     </update>
-
+    </update>
+	
+	<update id="userUpdatePwd" parameterType="String">
+		update users set user_pwd = #{user_pwd} where user_id = #{user_id}
+	</update>
    
    <select id="delete" resultType="uDTO" parameterType="String">
    	   SELECT * FROM users WHERE user_id = #{user_id}
@@ -53,7 +56,12 @@
   
   <select id="profileName" resultType="String">
   	   select profile_name from profile where user_key in (select profile_key from profile where user_key = #{user_key}) 
-       and PROFILE_CHECK = 'N'
+       and PROFILE_CHECK = 'Y'
   </select>
+  
+  <select id="idCnt" resultType="int" parameterType="String">
+  	   SELECT count(*) FROM users WHERE user_id = #{user_id}
+  </select>
+  
   
   </mapper>

@@ -53,7 +53,7 @@
     text-align: center;
   }
   
-  .shit{
+  .info{
   	text-align: left;
   	padding-top: 10px;
   	padding-bottom: 18px;
@@ -112,7 +112,7 @@
     color: #007BFF;
     text-decoration: none;
   }
-  .link-container a:hover {
+  /* .link-container a:hover {
     text-decoration: underline;
-  }
+  } */
   
