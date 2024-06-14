@@ -41,6 +41,17 @@
    	   select count(*) from apply where profile_key in (select profile_key from profile where user_key = #{user_key})
 	   and APPLY_PROFILE_CHECK = 'Y'
    </select>
+   
+   <select id="UapplyNonCheckCnt" resultType="int">
+       select count(*) from apply where profile_key in (select profile_key from profile where user_key = #{user_key})
+	   and APPLY_PROFILE_CHECK = 'N'
+   </select>
+   
+   <select id="applyCancel" resultType="int">
+	   select count(*) from apply where profile_key in (select profile_key from profile where user_key = #{user_key})
+	   and apply_check = 'Y'
+   </select>
+   
 
   <select id="positionJean" resultType="int">
   	   select count(*) from position where user_key = #{user_key}

@@ -15,7 +15,7 @@ public class EmailService {
     private JavaMailSender mailSender;
 
     public void sendVeriEmail(String to, String verificationCode) throws MessagingException {
-        String subject = "Email Verification";
+        String subject = "WORKWAVE 회원가입 인증코드";
         String htmlContent = "<p>인증번호: " + verificationCode + "</p>";
 
         sendEmail(to, subject, htmlContent);
