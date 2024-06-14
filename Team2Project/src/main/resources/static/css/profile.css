@@ -28,14 +28,6 @@
 		flex: 1;
 	}
 	
-	.content {
-		width: 60%;
-		margin: 0 auto;
-		background-color: #fff;
-		padding: 20px;
-		border-radius: 10px;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-	}
 	
 	.custom-input {
 		width: 100%;
@@ -241,4 +233,22 @@
     background-color: #0B57D0 !important; 
 }
 
+
+.navbar {
+  overflow: hidden;
+  background-color: #000;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 60px;
+  text-decoration: none;
+}
+
+.navbar .right {
+  margin-left: auto;
+}
 
