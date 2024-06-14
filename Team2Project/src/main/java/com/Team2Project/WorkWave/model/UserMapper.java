@@ -1,5 +1,6 @@
 package com.Team2Project.WorkWave.model;
 
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -34,14 +35,20 @@ public interface UserMapper {
 	UserDTO delete(String user_id);
 	
 	public int deleteok(int user_key);
-	
+	// 이력서 지원 갯수
 	public int applyCnt(int user_key);
-
+	// 이력서 열람 갯수
 	public int applyCheckCnt(int user_key);
-	
+	// 이력서 미열람 갯수
+	public int UapplyNonCheckCnt(int user_key);
+	// 포지션 제안 갯수
 	public int positionJean(int user_key);
-
+	// 관심 기업 갯수
 	public int interest(int user_key);
+	// 지원 취소 갯수
+	public int applyCancel(int user_key);
+	// 지원 정보
+	public List<ApplyDTO> applyInfo(int user_key);
 	
 	UserLoginDTO findUserIdById(String user_id);
 	
