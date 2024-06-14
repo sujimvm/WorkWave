@@ -36,21 +36,34 @@
 
 		<div class="chat-info sidebar_r">
 			<h3>웨이브톡</h3>
-			<div class="chat-list">
+			<div class="chat-table2">
 				<th:block th:if="${not #lists.isEmpty(List)}" th:each="dto : ${List}">
-					<ul>
-						<li th:inline="text" style="font-size: 1.2em; font-weight: bold; height: 50px;">
-							<a th:href="@{/A/chat/content(no=${dto.chat_key})}"><span th:text="${dto.chat_title}"></span></a>
-							 <!-- <div th:text="${dto.chat_cont}" style="margin-top: 10px; font-size: 0.5em;"></div> -->
-							 <div th:utext="${#strings.abbreviate(dto.chat_cont, 50)}" style="margin-top: 10px; font-size: 0.9em;"></div>
-                    
-							
-							👀 [[${dto.chat_hit}]]
-							🧡 [[${dto.chat_like}]]
-							
-						</li>
-					</ul>
+					<table>
+						 <tr>
+							<th>
+								<a th:href="@{/A/chat/content(no=${dto.chat_key})}">
+									<span th:text="${dto.chat_title}"></span>
+								</a>
+							</th>
+						</tr>
+						<tr>
+							<th>
+								<div th:utext="${#strings.abbreviate(dto.chat_cont, 18)}" style=" font-size: 0.9em;"></div>
+							</th>
+						</tr>
+						<tr>
+							<th th:inline="text">
+								👀 [[${dto.chat_hit}]]
+								🧡 [[${dto.chat_like}]]
+							</th>
+						</tr>
+						  <tr class="separator-row">
+                    <td colspan="2"></td> <!-- 각 세트 사이의 구분을 위한 구분선 추가 -->
+                </tr>
+					</table>
+					
 				</th:block>
+				
 				<th:block th:if="${#lists.isEmpty(List)}">
 					<h3>게시글이 없습니다.</h3>
 				</th:block>
