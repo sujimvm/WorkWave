@@ -7,13 +7,13 @@
 <body>
    
 	<div sec:authorize="!isAuthenticated()" class="header">
-		<div class="container">
+		<div class="header_container">
 			<div class="top-section">
 				<div class="logo">
 					<a th:href="@{/A/main}"><img src="/image/icon/main_logo.png" alt="Logo"></a>
 				</div>
 				<div class="search-btn">
-					<form>
+					<form action="">
 						<input class="search-bar" placeholder="채용공고 검색">&nbsp;&nbsp;
 						<input type="submit" value="검색">
 					</form>
@@ -37,7 +37,7 @@
 	</div>
    
    <div sec:authorize="isAuthenticated() and hasRole('USER')" class="header">
-		<div class="container">
+		<div class="header_container">
 			<div class="top-section">
 				<div class="logo">
 					<a th:href="@{/A/main}"><img src="/image/icon/main_logo.png" alt="Logo"></a>
@@ -68,7 +68,7 @@
 	</div>
 	
    <div sec:authorize="isAuthenticated() and hasRole('COMPANY')" class="header">
-		<div class="container">
+		<div class="header_container">
 			<div class="top-section">
 				<div class="logo">
 					<a th:href="@{/A/main}"><img src="/image/icon/main_logo.png" alt="Logo"></a>

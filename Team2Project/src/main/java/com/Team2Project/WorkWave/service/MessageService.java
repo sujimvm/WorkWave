@@ -47,16 +47,13 @@ public class MessageService {
         );
     }
     
-    private String createRandomNumber() {
-        Random rand = new Random();
-        String randomNum = "";
-        for (int i = 0; i < 4; i++) {
-            String random = Integer.toString(rand.nextInt(10));
-            randomNum += random;
-        }
-
-        return randomNum;
-    }
+	/*
+	 * private String createRandomNumber() { Random rand = new Random(); String
+	 * randomNum = ""; for (int i = 0; i < 4; i++) { String random =
+	 * Integer.toString(rand.nextInt(10)); randomNum += random; }
+	 * 
+	 * return randomNum; }
+	 */
     
     public SingleMessageSentResponse sendOne(String to, String verificationCode) {
         Message message = new Message();
