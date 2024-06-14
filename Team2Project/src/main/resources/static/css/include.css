@@ -189,11 +189,11 @@ body {
 }
 
 .sidebar_r{
-    width: 75%;
+    width: 70%;
     float: right;
     border-left: 1px solid #ddd; /* 오른쪽에 얇은 경계선 추가 */
 	min-height: 500px;
-	padding: 20px
+	padding: 50px
 	
 }
 
