@@ -49,6 +49,8 @@ public interface UserMapper {
 	public int applyCancel(int user_key);
 	// 지원 정보
 	public List<ApplyDTO> applyInfo(int user_key);
+	// 지원한 공고
+	
 	
 	UserLoginDTO findUserIdById(String user_id);
 	

@@ -65,17 +65,17 @@ public class UserController {
 	   
 	  UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
 	  
-	  // applyInfo -> 지원일, 지원한 공고이름
+	  // applyInfo -> 지원일
 	  List<ApplyDTO> applyInfo = this.userMapper.applyInfo(userInfo.getUser_key());
 	  // 기업의 열람 여부
-	  
-	  
 	  
 	  int applyCnt = this.userMapper.applyCnt(userInfo.getUser_key()); 
 	  int applyCheckCnt = this.userMapper.applyCheckCnt(userInfo.getUser_key());
 	  int UapplyNonCheckCnt = this.userMapper.UapplyNonCheckCnt(userInfo.getUser_key());
 	  int applyCancel = this.userMapper.applyCancel(userInfo.getUser_key());
 		  
+	  // 지원일
+	  model.addAttribute("applyInfo", applyInfo);
 	  // 지원완료 갯수 
 	  model.addAttribute("applyCnt", applyCnt); 
 	  // 이력서 열람 갯수
