@@ -311,18 +311,19 @@ public class CompanyController {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
+		
 		// 세션 기업정보로 기업키 저장
 		CompanyDTO cDTO = (CompanyDTO) session.getAttribute("cDTO");
 		dto.setCompany_key(cDTO.getCompany_key());
 
-		// 컴퍼니 키 임시 저장
-		dto.setCompany_key(2);
+		System.out.println(dto+"dto");
+		System.out.println(cDTO+"cDTO");
 
 		if (this.comBoardMapper.addComBoard(dto) > 0) {
 			temp_key = dto.getTemp_key();
 			if (temp_key != 0)
 				this.comBoardMapper.deleteComBoardTemp(temp_key);
-			out.println("<script> alert('공고등록 성공'); location.href='/comBoard'; </script>");
+			out.println("<script> alert('공고등록 성공'); location.href='/C/info'; </script>");
 		} else {
 			out.println("<script> alert('공고등록 실패'); history.back(); </script>");
 		}
@@ -352,7 +353,7 @@ public class CompanyController {
 		System.out.println(dto.getCom_board_key() + "dto.getCom_board_key()");
 
 		if (this.comBoardMapper.updateComBoard(dto) > 0) {
-			out.println("<script> alert('공고수정 성공'); location.href='/comBoard'; </script>"); // 마이페이지로 변경 예정
+			out.println("<script> alert('공고수정 성공'); location.href='/C/info'; </script>"); // 마이페이지로 변경 예정
 		} else {
 			out.println("<script> alert('공고수정 실패'); history.back(); </script>");
 		}

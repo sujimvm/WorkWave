@@ -291,9 +291,6 @@ public class AjaxController {
 			CompanyDTO cdto = (CompanyDTO)session.getAttribute("cDTO");
 			dto.setCompany_key(cdto.getCompany_key());
 			
-			// 컴퍼니 키 임시 저장
-			dto.setCompany_key(2);
-
 			if(temp_key != 0) {
 				if(1 > 0) {
 					System.out.println("공고 임시저장 수정 성공");
