@@ -158,6 +158,8 @@ function executionFrom() {
     	return false;
 	}
 
-		
+	var com_board_time = $("#com_board_time1").val() +":"+ $("#com_board_time2").val() +"~"+ $("#com_board_time3").val() +":"+ $("#com_board_time4").val(); 
+	$("#com_board_time").val(com_board_time);
+	
 	$("#executionFrom").submit();
 }
