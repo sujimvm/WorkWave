@@ -12,9 +12,19 @@
 </head>
 <body>
 
-	<div layout:fragment="content" class="content">
+	<!-- nav bar -->
+	<div class="navbar">
+	  <a th:href='@{/A/main}'><img src="/image/icon/logo_icon.png" alt="Logo" height="60px"></a>
+	   <div class="right">
+	     <a th:href='@{/U/info}'>개인회원 홈</a>
+	   </div>
+	   <div>
+	  <a th:href='@{/U/profile}'>이력서 관리</a>
+	  </div>
+	</div>
 	
-	<div align="center">
+	<div layout:fragment="content" class="content">
+     <div align="center">
 		<div><br><br><!-- 이력서 입력 폼 -->
 			<form id="profileForm" method="POST" action="/U/profile/insertOk" enctype="multipart/form-data">
 				<input name="profile_name" style='width:100%;font-size:25pt' placeholder="이력서 제목을 작성해주세요" class="custom-input"><br><br>

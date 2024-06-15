@@ -104,7 +104,7 @@
      
      
      
-     <insert id="profileInsert" parameterType="pDTO">
+     <insert id="profileInsert" parameterType="pDTO" useGeneratedKeys="true" keyProperty="profile_key">
         <selectKey keyProperty="profile_key" resultType="int" order="BEFORE">
             SELECT user_key_seq.NEXTVAL FROM dual
         </selectKey>
