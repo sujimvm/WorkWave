@@ -10,14 +10,9 @@
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="https://cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 <script th:src="@{/js/comBoard/main.js}"></script>
 <script th:src="@{/js/comBoard/input.js}"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        CKEDITOR.replace('com_board_cont');
-    });
-</script>
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
