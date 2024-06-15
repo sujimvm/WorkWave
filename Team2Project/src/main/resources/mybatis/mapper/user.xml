@@ -52,6 +52,10 @@
 	   and apply_check = 'Y'
    </select>
    
+   <select id="applyInfo" resultType="aDTO">
+   		select * from apply where profile_key in (select profile_key from profile where user_key = #{user_key})
+   </select>
+   
 
   <select id="positionJean" resultType="int">
   	   select count(*) from position where user_key = #{user_key}

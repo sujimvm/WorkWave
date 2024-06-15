@@ -44,27 +44,28 @@
 			<span style="font-size: 12px;">❕ 입사지원 현황은 최대 3년까지 조회할 수 있습니다.</span>
 			<br><br>
 			
-			<ul class="user-list2">
-            	<li>
-            		<span style="width: 16%;">지원일</span>|
-            		<span style="width: 50%;">지원내역</span>|
-            		<span style="width: 17%;">열람</span>|
-            		<span style="width: 17%;">지원취소</span>
-            	</li>
-                <li th:each>
-                	<span style="width: 16%;">지원완료<br>
-                		  2024/06/14
-                	</span>
-                    <span style="width: 50%;">기업이름 <br>
-                    	  공고이름
-                    </span>
-                    <span style="width: 17%;">열람/미열람 여부</span>
-                    <span style="width: 17%;">
-                    	<input type="button" value="지원취소">
-                    </span>
-                </li>
-            </ul>
-			            
+			<ul class="user-list2" th:if="${applyList != null}">
+	            <li>
+	                <span style="width: 16%;">지원일</span>|
+	                <span style="width: 50%;">지원내역</span>|
+	                <span style="width: 17%;">열람</span>|
+	                <span style="width: 17%;">지원취소</span>
+	            </li>
+	            <li th:each="applyInfo : ${applyList}">
+	                <span th:text="${applyInfo.apply_date}" style="width: 16%;"><br>
+	                </span>
+	                <span style="width: 50%;">기업이름 <br>
+	                      공고이름
+	                </span>
+	                <span style="width: 17%;">열람/미열람 여부</span>
+	                <span style="width: 17%;">
+	                    <input type="button" value="지원취소">
+	                </span>
+	            </li>
+	        </ul>
+	        <ul class="user-list2" th:if="${applyList == null}">
+	            <li>정보 없음</li>
+	        </ul>
             
         </div>
 	</div>
