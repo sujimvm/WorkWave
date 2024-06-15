@@ -188,6 +188,7 @@
 	
 	.fontweight {
 		font-weight: bold;
+		 margin-top: 0; 
 	}
 	
 	#sbIdx1 {
@@ -244,11 +245,47 @@
   display: block;
   color: #f2f2f2;
   text-align: center;
-  padding: 14px 60px;
+  padding: 14px 75px;
   text-decoration: none;
+  font-size: 20px;
+  font-weight: bold;
+  
 }
 
 .navbar .right {
   margin-left: auto;
 }
 
+
+  .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    .table th, .table td {
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+    .table th {
+        background-color: #f2f2f2;
+    }
+    
+     .table img {
+        vertical-align: middle;
+        float: left;
+    }
+  
+  
+    
+    .table .textdeco-y {
+        color: green; 
+        font-weight: bold;
+    }
+    .table .textdeco-n {
+        color: black; 
+    }
+
+    .profile-link {
+    display: block; 
+    margin-top: 25px;
+}

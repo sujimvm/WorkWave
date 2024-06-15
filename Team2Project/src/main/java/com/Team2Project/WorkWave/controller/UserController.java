@@ -259,8 +259,8 @@ public class UserController {
 	
 		int check = this.profileMapper.profileInsert(dto);
 		
-		// 유저키의 프로필키(max) 
-		int nowInsertProfileKey = this.profileMapper.nowInsertProfileKey(dto.getUser_key());
+
+	    int nowInsertProfileKey = dto.getProfile_key();
 		
 		//학력 데이터 저장
 		EduDTO edtoArr = codelistDTO.getEDtoList().get(0);

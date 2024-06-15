@@ -11,6 +11,7 @@
 <body>
 <div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
+	
 		<div class="sidebar active">
       		<h3>마이페이지</h3>
         	<a th:href="@{/U/profile/insert}">이력서 등록</a>
@@ -18,18 +19,18 @@
 	        <a th:href="@{/}">입사지원 현황</a>
 	        <a th:href="@{/}">포지션 제안</a>
 	        <a th:href="@{/U/update/userPwdCheck}">회원정보 수정</a>
-	        <a th:href="@{/}">비밀번호 변경</a>
+	        <a th:href="@{/U/update/pwd/companyPwdCheck}">비밀번호 변경</a>
 	        <a th:href="@{/U/delete/userPwdCheck}">회원탈퇴</a>
         </div>
         
-		<div class="sidebar_r"><br> <!--이력서 리스트 전체 -->
-		<h1 class="fontweight">이력서 관리</h1><br>
-		<input type="button" class="buttonloc" value="이력서 등록" th:onclick ="|location.href='@{/U/profile/insert}'|">
+		<div class="sidebar_r"> <!--이력서 리스트 전체 -->
+		<h2 class="fontweight">이력서 관리</h2>
+		<input type="button" class="buttonloc" value="이력서 등록" th:onclick ="|location.href='@{/U/profile/insert}'|"><br><br>
 		
 		
 		<div> <!--작성완료 이력서 목록 -->
 		<br>
-			<table border="1" class="table table-bordered">
+			<table border="1" class="table">
 			<tr align="center">
 				<th width="75%">이력서 제목</th>
 				<th width="25%">이력서 관리</th>
@@ -45,7 +46,7 @@
 				<tr th:each="dto : ${ProfileList}" th:if="${dto.profile_default == 'Y'}">
 					<td>
 						<img th:src="@{'/image/profile/'+${dto.profile_image}}" alt="Profile Image" width="150" height="150">&nbsp;&nbsp;&nbsp;
-						<a th:href="@{/CU/profile/content(no=${dto.profile_key})}" th:text="${dto.profile_name}" class="textdeco"></a>
+						<a th:href="@{/CU/profile/content(no=${dto.profile_key})}" th:text="${dto.profile_name}" class="textdeco textdeco-y profile-link"></a>
 					</td>
 					<td class="textcenter">
 						<input type="button" class="removeForm" value="수정" th:onclick="|location.href='@{/U/profile/update(no=${dto.profile_key})}'|">
@@ -56,7 +57,7 @@
 				<tr th:each="dto : ${ProfileList}" th:unless="${dto.profile_default == 'Y'}">
 					<td>
 					<img th:src="@{'/image/profile/'+${dto.profile_image}}" alt="Profile Image" width="150" height="150">&nbsp;&nbsp;&nbsp;
-						<a th:href="@{/CU/profile/content(no=${dto.profile_key})}" th:text="${dto.profile_name}" class="text-body textdeco"></a>
+						<a th:href="@{/CU/profile/content(no=${dto.profile_key})}" th:text="${dto.profile_name}" class=" textdeco textdeco-n profile-link"></a>
 					</td>
 					<td class="textcenter">
 						<input type="button" class="removeForm" value="수정" th:onclick="|location.href='@{/U/profile/update(no=${dto.profile_key})}'|">
@@ -64,7 +65,6 @@
 						<input type="button" class="defaultForm" value="대표이력서등록" th:onclick="|location.href='@{/U/profile/default(no=${dto.profile_key})}'|">
 					</td>
 				</tr>
-			</tr>
 		</table>
 		</div><br><br>
 		</div>
