@@ -12,47 +12,33 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 <script th:src="@{/js/comBoard/main.js}"></script>
 <script th:src="@{/js/comBoard/input.js}"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    	ClassicEditor
-        .create(document.querySelector('#com_board_cont'), {
-            removePlugins: ['Heading'],
-            language: "ko"
-        })
-        .then(editor => {
-            $('style').append('.ck-content { height: 500px; }');
-            let objEditor = editor;
-
-            editor.model.document.on('change:data', () => {
-                $('#com_board_cont').val(editor.getData());
-            }, {priority: 'high'});
-        })
-        .catch(error => {
-            console.error(error);
-        });
-    });
-</script>
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
-		<form method="post" action="/C/comBoard/insertOk" id="addForm">
+		<form method="post" action="/C/comBoard/insertOk" id="executionFrom">
 			<input type="hidden" name="temp_key" id="temp_key" value=0>
+			
 			<div class="comBoardInputTotalDiv">	
+				<div class="comBoardBtDiv" id="comBoardBtDiv">
+					<input type="button" class="btCss btCss2" value="공고 임시저장" id="addTempBt">
+					<input type="button" class="btCss btCss1" value="공고 등록" id="executionBt">
+					<input type="reset" class="btCss btCss3" value="공고 초기화">
+				</div>
 				<div class="comBoardInputGroupDiv">
 					<h3 class="comBoardInputTitle">모집내용</h3>
 					<div class="comBoardInputTbDiv">
 						<table class="comBoardInputTb">
 							<tr>
-								<th>공고제목</th>
-								<td><input name="com_board_title" class="form-control textW10"></td>
+								<th>공고제목<span class="requiredText">필수</span></th>
+								<td><input name="com_board_title" id="com_board_title" class="textW100"></td>
 							</tr>
 							<tr>
-								<th>업종</th>
+								<th>업종<span class="requiredText">필수</span></th>
 								<td>
-									<input class="jobCodeInput form-control textW3 textGr" id="com_board_group" name="com_board_group" readonly>
-									<input class="jobCodeInput form-control textW3 textGr" id="com_board_sub" name="com_board_sub" readonly>
-									<input class="jobCodeInput form-control textW3 textGr" id="com_board_step" name="com_board_step" readonly>
+									<input class="jobCodeInput textW25 textGr" id="com_board_group" name="com_board_group" readonly>
+									<input class="jobCodeInput textW25 textGr" id="com_board_sub" name="com_board_sub" readonly>
+									<input class="jobCodeInput textW25 textGr" id="com_board_step" name="com_board_step" readonly>
 								</td>
 							</tr>
 							<tr>
@@ -67,9 +53,9 @@
 								</td>
 							</tr>
 							<tr>
-								<th>고용형태</th>
+								<th>고용형태<span class="requiredText">필수</span></th>
 								<td>
-									<select class="form-select selectText textW2" name="com_board_jobtype">
+									<select class="selectText textW15" name="com_board_jobtype" id="com_board_jobtype">
 										<option value="정규직">정규직</option>
 										<option value="계약직">계약직</option>
 										<option value="인턴">인턴</option>
@@ -79,8 +65,8 @@
 								</td>
 							</tr>
 							<tr>
-								<th>모집인원</th>
-								<td><input type="number" name="com_board_mojib" class="form-control textW2 textGr" min="0" max="100"><span class="textBspan">명</span></td>
+								<th>모집인원<span class="requiredText">필수</span></th>
+								<td><input type="number" name="com_board_mojib" id="com_board_mojib" class="textW10 textGr" min="0"><span class="textBspan">명</span></td>
 							</tr>
 						</table>
 					</div>
@@ -93,13 +79,13 @@
 					<div class="comBoardInputTbDiv">
 						<table class="comBoardInputTb">
 							<tr>
-								<th>급여(연봉)</th>
-								<td><input type="number" name="com_board_sal" class="form-control textW2 textGr"><span class="textBspan">만원</span></td>
+								<th>급여(연봉)<span class="requiredText">필수</span></th>
+								<td><input type="number" name="com_board_sal" id="com_board_sal" class="textW20 textGr"><span class="textBspan">만원</span></td>
 							</tr>
 							<tr>
-								<th>근무요일</th>
+								<th>근무요일<span class="requiredText">필수</span></th>
 								<td>
-									<select class="form-select selectText textW2" name="com_board_week">
+									<select class="selectText textW15" name="com_board_week" id="com_board_week">
 										<option value="주1일">주 1일</option>
 										<option value="주2일">주 2일</option>
 										<option value="주3일">주 3일</option>
@@ -110,17 +96,67 @@
 								</td>
 							</tr>
 							<tr>
-								<th>근무시간</th>
+								<th>근무시간<span class="requiredText">필수</span></th>
 								<td>
-									<input type="number" name="com_board_time1" class="form-control textW1 textGr" min="0" max="24"><span class="textBspan">시</span>
-									<input type="number" name="com_board_time2" class="form-control textW1 textGr" min="0" max="60"><span class="textBspan">분 부터 </span>
-									<input type="number" name="com_board_time3" class="form-control textW1 textGr" min="0" max="24"><span class="textBspan">시</span>
-									<input type="number" name="com_board_time4" class="form-control textW1 textGr" min="0" max="60"><span class="textBspan">분 까지</span>
+									<input type="number" name="com_board_time1" id="com_board_time1" class="textW10 textGr" min="0" max="24"><span class="textBspan">시</span>
+									<input type="number" name="com_board_time2" id="com_board_time2" class="textW10 textGr" min="0" max="60"><span class="textBspan">분 부터 </span>
+									<input type="number" name="com_board_time3" id="com_board_time3" class="textW10 textGr" min="0" max="24"><span class="textBspan">시</span>
+									<input type="number" name="com_board_time4" id="com_board_time4" class="textW10 textGr" min="0" max="60"><span class="textBspan">분 까지</span>
 								</td>
 							</tr>
 							<tr>
-								<th>복리후생</th>
-								<td><input name="com_board_benefits"></td>
+								<th>복리후생<br><span class="limitText">(5개이하 선택)</span></th>
+								<td>
+									<input type="hidden" name="com_board_benefits" id="com_board_benefits">
+									<table class="optionTb">
+										<tr>
+											<td width="25%"><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits01" value="인센티브"><label for="com_board_benefits01">인센티브</label></td>
+											<td width="25%"><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits02" value="우수사원 포상제도"><label for="com_board_benefits02">우수사원 포상제도</label></td>
+											<td width="25%"><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits03" value="장기근속 포상"><label for="com_board_benefits03">장기근속 포상</label></td>
+											<td width="25%"><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits04" value="야간근로수당"><label for="com_board_benefits04">야간근로수당</label></td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits05" value="보육수당"><label for="com_board_benefits05">보육수당</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits06" value="정기보너스"><label for="com_board_benefits06">정기보너스</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits07" value="경조금"><label for="com_board_benefits07">경조금</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits08" value="휴가비"><label for="com_board_benefits08">휴가비</label></td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits09" value="자녀교육비"><label for="com_board_benefits09">자녀교육비</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits10" value="임직원 교육비"><label for="com_board_benefits10">임직원 교육비</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits11" value="가족 의료비 지원"><label for="com_board_benefits11">가족 의료비 지원</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits12" value="사내대출"><label for="com_board_benefits12">사내대출</label></td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits13" value="휴식공간"><label for="com_board_benefits13">휴식공간</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits14" value="장애인 편의시설"><label for="com_board_benefits14">장애인 편의시설</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits15" value="기숙사 지원"><label for="com_board_benefits15">기숙사 지원</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits16" value="사내 어린이집"><label for="com_board_benefits16">사내 어린이집</label></td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits17" value="헬스시설"><label for="com_board_benefits17">헬스시설</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits18" value="숙소 지원"><label for="com_board_benefits18">숙소 지원</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits19" value="출퇴근 셔틀버스"><label for="com_board_benefits19">출퇴근 셔틀버스</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits20" value="야간교통비 지급"><label for="com_board_benefits20">야간교통비 지급</label></td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits21" value="차량유류비"><label for="com_board_benefits21">차량유류비</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits22" value="주차 지원"><label for="com_board_benefits22">주차 지원</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits23" value="리프레시 휴가"><label for="com_board_benefits23">리프레시 휴가</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits24" value="경조 휴가"><label for="com_board_benefits24">경조 휴가</label></td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits25" value="사내 동호회"><label for="com_board_benefits25">사내 동호회</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits26" value="점심 식사 지원"><label for="com_board_benefits26">점심 식사 지원</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits27" value="임직원 할인"><label for="com_board_benefits27">임직원 할인</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits28" value="휴양시설"><label for="com_board_benefits28">휴양시설</label></td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits29" value="해외연수"><label for="com_board_benefits29">해외연수</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits30" value="스톡옵션"><label for="com_board_benefits30">스톡옵션</label></td>
+										</tr>
+									</table>
+								</td>
 							</tr>
 						</table>
 					</div>
@@ -133,16 +169,83 @@
 					<div class="comBoardInputTbDiv">
 						<table class="comBoardInputTb">
 							<tr>
-								<th>경력</th>
-								<td><input name="com_board_career"></td>
+								<th>경력<span class="requiredText">필수</span></th>
+								<td>
+									<select class="selectText textW15" name="com_board_career" id="com_board_career">
+										<option value="신입">신입</option>
+										<option value="1년이상">1년이상</option>
+										<option value="2년이상">2년이상</option>
+										<option value="3년이상">3년이상</option>
+										<option value="5년이상">5년이상</option>
+										<option value="10년이상">10년이상</option>
+										<option value="15년이상">15년이상</option>
+										<option value="20년이상">20년이상</option>
+										<option value="경력무관">경력무관</option>
+									</select>
+								</td>
 							</tr>
 							<tr>
-								<th>학력</th>
-								<td><input name="com_board_edu"></td>
+								<th>학력<span class="requiredText">필수</span></th>
+								<td>
+									<select class="selectText textW25" name="com_board_edu" id="com_board_edu">
+										<option value="전문대학졸업">전문대학졸업</option>
+										<option value="대학교졸업">대학교졸업</option>
+										<option value="대학원(석사)">대학원(석사)</option>
+										<option value="대학원(박사)">대학원(박사)</option>
+										<option value="고등락교졸업">고등락교졸업</option>
+										<option value="학력무관">학력무관</option>
+									</select>
+								</td>
 							</tr>
 							<tr>
-								<th>우대조건</th>
-								<td><input name="com_board_conditions"></td>
+								<th>우대조건<br><span class="limitText">(5개이하 선택)</span></th>
+								<td>
+									<input type="hidden" name="com_board_conditions" id="com_board_conditions">
+									<table class="optionTb">
+										<tr>
+											<th width="20%">취업보호·장려</th>
+											<th width="20%">자격·능력</th>
+											<th width="20%">자격·능력</th>
+											<th width="20%">활동·경험</th>
+											<th width="20%">근무조건</th>
+										</tr>
+										<tr>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions06" value="병역특례"><label for="com_board_conditions06">병역특례</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions07" value="국가유공자"><label for="com_board_conditions07">국가유공자</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions08" value="컴퓨터활용능력"><label for="com_board_conditions08">컴퓨터활용능력</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions09" value="운전가능자"><label for="com_board_conditions09">운전가능자</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions10" value="엑셀 고급능력"><label for="com_board_conditions10">엑셀 고급능력</label></td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions11" value="CAD/CAM"><label for="com_board_conditions11">CAD/CAM</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions12" value="회계프로그램"><label for="com_board_conditions12">회계프로그램</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions13" value="보훈대상자"><label for="com_board_conditions13">보훈대상자</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions14" value="포토샵 능숙자"><label for="com_board_conditions14">포토샵 능숙자</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions15" value="영어가능자"><label for="com_board_conditions15">영어가능자</label></td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions16" value="일본어가능자"><label for="com_board_conditions16">일본어가능자</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions17" value="중국어가능자"><label for="com_board_conditions17">중국어가능자</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions18" value="영어능통자"><label for="com_board_conditions18">영어능통자</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions19" value="고용촉진지원금"><label for="com_board_conditions19">고용촉진지원금</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions20" value="군전역간부"><label for="com_board_conditions20">군전역간부</label></td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions21" value="공모전 입상자"><label for="com_board_conditions21">공모전 입상자</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions22" value="유관업무 경험자"><label for="com_board_conditions22">유관업무 경험자</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions23" value="유관업무 경력자"><label for="com_board_conditions23">유관업무 경력자</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions24" value="대기업 근무자"><label for="com_board_conditions24">대기업 근무자</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions25" value="취업보호대상자"><label for="com_board_conditions25">취업보호대상자</label></td>
+										</tr>
+										<tr>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions26" value="인근거주자"><label for="com_board_conditions26">인근거주자</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions27" value="차량소지자"><label for="com_board_conditions27">차량소지자</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions28" value="2교대 근무 가능"><label for="com_board_conditions28">2교대 근무 가능</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions29" value="지방근무 가능자"><label for="com_board_conditions29">지방근무 가능자</label></td>
+											<td><input type="checkbox" class="checkCss" name="com_board_conditions_Ck" id="com_board_conditions30" value="해외근무 가능자"><label for="com_board_conditions30">해외근무 가능자</label></td>
+										</tr>									
+									</table>
+								</td>
 							</tr>
 						</table>
 					</div>
@@ -168,12 +271,12 @@
 					<div class="comBoardInputTbDiv">
 						<table class="comBoardInputTb">
 							<tr>
-								<th>시작일</th>
-								<td><input type="date" name="com_board_start_date"></td>
+								<th>시작일<span class="requiredText">필수</span></th>
+								<td><input type="date" class="textW20" name="com_board_start_date" id="com_board_start_date"></td>
 							</tr>
 							<tr>
-								<th>마감일</th>
-								<td><input type="date" name="com_board_end_date"></td>
+								<th>마감일<span class="requiredText">필수</span></th>
+								<td><input type="date" class="textW20" name="com_board_end_date" id="com_board_end_date"></td>
 							</tr>
 						</table>
 					</div>
@@ -186,28 +289,20 @@
 					<div class="comBoardInputTbDiv">
 						<table class="comBoardInputTb">
 							<tr>
-								<th>담당자 이름</th>
-								<td><input name="com_board_mgr_name"></td>
+								<th>담당자 이름<span class="requiredText">필수</span></th>
+								<td><input name="com_board_mgr_name" id="com_board_mgr_name" class="textW30" maxlength="12"  th:value="${session.cDTO.company_mgr_name}"></td>
 							</tr>
 							<tr>
-								<th>담당자 전화번호</th>
-								<td><input name="com_board_mgr_phone"></td>
+								<th>담당자 연락처<span class="requiredText">필수</span></th>
+								<td><input name="com_board_mgr_phone" id="com_board_mgr_phone" class="textW20" maxlength="13" th:value="${session.cDTO.company_mgr_phone}"></td>
 							</tr>
 							<tr>
-								<th>담당자 이메일</th>
-								<td><input name="com_board_mgr_email"></td>
+								<th>담당자 이메일<span class="requiredText">필수</span></th>
+								<td><input name="com_board_mgr_email" id="com_board_mgr_email" class="textW35" maxlength="30"  th:value="${session.cDTO.company_mgr_email}"></td>
 							</tr>
 						</table>
 					</div>
 				</div><!-- 담당자정보 -->	
-				
-				
-				
-				<div class="comBoardInputBtDiv">
-					<input type="button" value="중간 저장" id="addTempBt">
-					<input type="submit" value="공고 등록">
-				</div>
-				
 			</div>
 		</form>
 	</div>

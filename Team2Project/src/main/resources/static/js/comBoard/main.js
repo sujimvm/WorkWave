@@ -69,18 +69,18 @@ function getJobCodeGroup() {
 			var jobDataSub = jobCodeList.sub;
 			var jobDataStep = jobCodeList.step;
 			jobDataGroup.forEach(function(group) {
-				$('#jobCodeGroupUl').append("<li><input type='checkbox' class='jobCk btn-check' value='"+group.code+"/"+group.name+"' id='j"+group.code+"'><label class='btn' for='j"+group.code+"'>" + group.name + "</label></li>");
+				$('#jobCodeGroupUl').append("<li><input type='checkbox' class='jobCk checkCss' name='g' value='"+group.code+"/"+group.name+"' id='j"+group.code+"'><label for='j"+group.code+"'>" + group.name + "</label></li>");
 				$('#jobCodeSubDiv').append("<ul class='jobCodeSubUl jobCodeUl' id='jobCodeSubUl"+group.code+"'></ul>");
 				$('#jobCodeSubUl'+group.code).hide();
 			}); 
 			jobDataSub.forEach(function(sub) {
-				$('#jobCodeSubUl'+sub.code.substr(0,2)).append("<li><input type='checkbox' class='jobCk btn-check' value='"+sub.code+"/"+sub.name+"' id='j"+sub.code+"'><label class='btn' for='j"+sub.code+"'>" + sub.name + "</label></li>");
+				$('#jobCodeSubUl'+sub.code.substr(0,2)).append("<li><input type='checkbox' class='jobCk checkCss' name='su' value='"+sub.code+"/"+sub.name+"' id='j"+sub.code+"'><label for='j"+sub.code+"'>" + sub.name + "</label></li>");
 				$('#jobCodeStepDiv').append("<ul class='jobCodeStepUl jobCodeUl' id='jobCodeStepUl"+sub.code+"'></ul>");
-				$('#jobCodeStepUl'+sub.code).append("<li><input type='checkbox' class='jobCk jobCk_all btn-check' value='"+sub.code+"' id='j_all_"+sub.code+"'><label class='btn' for='j_all_"+sub.code+"'>전체</label></li>");
+				$('#jobCodeStepUl'+sub.code).append("<li><input type='checkbox' class='jobCk jobCk_all checkCss' value='"+sub.code+"' id='j_all_"+sub.code+"'><label for='j_all_"+sub.code+"'>전체</label></li>");
 				$('#jobCodeStepUl'+sub.code).hide();
 			});
 			jobDataStep.forEach(function(step) {
-				$('#jobCodeStepUl'+step.code.substr(0,5)).append("<li><input type='checkbox' class='jobCk jobCk_step btn-check' value='"+step.code+"/"+step.name+"' id='j"+step.code+"'><label class='btn' for='j"+step.code+"'>" + step.name + "</label></li>");
+				$('#jobCodeStepUl'+step.code.substr(0,5)).append("<li><input type='checkbox' class='jobCk jobCk_step checkCss' name='st' value='"+step.code+"/"+step.name+"' id='j"+step.code+"'><label for='j"+step.code+"'>" + step.name + "</label></li>");
 			});
 		},
 		error: function(xhr, status, error) {
