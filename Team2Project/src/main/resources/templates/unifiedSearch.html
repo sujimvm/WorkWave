@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
+<link rel="stylesheet" th:href="@{/css/searchList.css}">
 <link rel="stylesheet" th:href="@{/css/FAQ.css}">
 </head>
 <body>
@@ -25,7 +26,7 @@
 		<div class="faq-list sidebar_r">
             <h3>"<span th:text="${paging.keyword}"></span>" 검색 결과</h3>
             
-            <ul th:if="${SearchList != null}">
+            <ul th:if="${SearchList != null}" class="search-list">
             	<li>
             		<span>기업명</span>
             		<span>공고 제목</span>
@@ -33,33 +34,37 @@
             	</li>
             	<li th:each="s : ${SearchList}">
             		<span style="color: #007BFF" th:text="${s.company_key}"></span>
-            		<a style="color: #000000" th:href="@{/A/comBoard/content(no=${s.com_board_key})}" th:text="${s.com_board_title}"></a>
-            		<button onclick="" value="지원하기"></button>
+            		<a style="color: #000000" th:href="@{/A/comBoard/content(no=${s.com_board_key})}">
+            			<span  th:text="${s.com_board_title} +'&nbsp;'+ ${s.com_board_career}"></span>
+            		</a>
+            		<button onclick="">지원하기</button>
             	</li>
             </ul>
             
-            <ul th:if="${SearchList == null}">
-            	<span>검색된 공고가 없습니다.</span>
+            <ul th:if="${SearchList == null}" class="search-list">
+            	<li>
+            		<span>검색된 공고가 없습니다. 다른 단어로 검색하여 주십시오.</span>
+            	</li>
             </ul>
 
             <!-- Page navigation -->
             <ul class="pagination">
                 <li th:if="${paging != null and paging.page > paging.block}">
-                    <a th:href="@{/A/notice(page=1)}">[⋘]</a>
+                    <a th:href="@{/A/unifiedSearchList(page=1)}">[⋘]</a>
                 </li>
                 <li th:if="${paging != null and paging.page > paging.block}">
-                    <a th:href="@{/A/notice(page=${paging.startBlock - 1})}">[☚]</a>
+                    <a th:href="@{/A/unifiedSearchList(page=${paging.startBlock - 1})}">[☚]</a>
                 </li>
 
                 <li th:each="i : ${#numbers.sequence(paging.startBlock, paging.endBlock)}">
-                    <a th:href="@{/A/notice(page=${i})}" th:text="'[' + ${i} + ']'"></a>
+                    <a th:href="@{/A/unifiedSearchList(page=${i})}" th:text="'[' + ${i} + ']'"></a>
                 </li>
 
                 <li th:if="${paging != null and paging.endBlock < paging.allPage}">
-                    <a th:href="@{/A/notice(page=${paging.endBlock + 1})}">[➤]</a>
+                    <a th:href="@{/A/unifiedSearchList(page=${paging.endBlock + 1})}">[➤]</a>
                 </li>
                 <li th:if="${paging != null and paging.endBlock < paging.allPage}">
-                    <a th:href="@{/A/notice(page=${paging.allPage})}">[⋙]</a>
+                    <a th:href="@{/A/unifiedSearchList(page=${paging.allPage})}">[⋙]</a>
                 </li>
             </ul>
 	</div>

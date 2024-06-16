@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+.search-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.search-list li span, .search-list li a {
+    flex: 1;
+    text-align: left;
+}
+
+.search-list li span {
+    width: 10%;
+}
+
+.search-list li a {
+    width: 80%;
+    color: #007BFF;
+    text-decoration: none;
+}

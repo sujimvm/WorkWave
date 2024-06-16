@@ -176,19 +176,19 @@
 	  	</select>
 	  	
 	  	<!-- 키워드 통합 검색 -->
-	  	<select id="getUnifiedSearchList" parameterType="page" resultType="bDTO">
-	  		<![CDATA[
-		        select *
-		        from ( select row_number() over(order by com_board_start_date desc) rnum, b.*
-		        from ( select b.* from com_board b
-		               join company c on b.company_key = c.company_key
-		               where (regexp_like(b.com_board_title, '\\b${keyword}\\b', 'i')
-		               or regexp_like(c.company_name, '\\b${keyword}\\b', 'i'))
-		               and b.com_board_end_date >= sysdate
-		            ) b
-		        )
-		        where rnum >= #{startNo} and rnum <= #{endNo}
-		        order by com_board_start_date desc
-	        ]]>
-	  	</select>
+        <select id="getUnifiedSearchList" parameterType="page" resultType="bDTO">
+           <![CDATA[
+              select *
+              from ( select row_number() over(order by b.com_board_start_date desc) rnum, b.*
+              from ( select b.* from com_board b
+                     join company c on b.company_key = c.company_key
+                     where (b.com_board_title like '%' || #{keyword} || '%'
+                     or c.company_name like '%' || #{keyword} || '%')
+                     and b.com_board_end_date >= sysdate
+                  ) b
+              )
+              where rnum >= #{startNo} and rnum <= #{endNo}
+              order by com_board_start_date desc
+           ]]>
+        </select>
   </mapper>
