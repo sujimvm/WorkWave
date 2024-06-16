@@ -123,7 +123,7 @@ public class AllController {
 		model.addAttribute("cont", content);
 
 		// 댓글 리스트
-		List<ChatReplyDTO> replylist = this.chatMapper.replylist();
+		List<ChatReplyDTO> replylist = this.chatMapper.replylist(no);
 		model.addAttribute("list", replylist);
 
 

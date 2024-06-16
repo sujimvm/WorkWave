@@ -7,8 +7,10 @@
   
   
   	<!-- list -->
-    <select id="replylist" resultType="replyDTO">
-        SELECT * FROM Reply order by reply_key desc
+    <select id="replylist" resultType="replyDTO" parameterType="int">
+        SELECT * FROM Reply 
+        WHERE CHAT_KEY = #{no}
+        order by reply_key desc
     </select>
 	  
 	 <!-- Insert -->
