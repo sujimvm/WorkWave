@@ -18,7 +18,8 @@ public class Page {
 	private int allPage;		// 전체 페이지 수
 	private int block = 5;		// 아래에 보여질 최대 페이지 수
 
-		
+	// 검색관련 키워드(통합검색이라 분류 x)
+	private String keyword;
 		
 	// 일반적인 페이징 처리 인자 생성자
 	public Page(int page, int rowsize, int totalRecord) {
@@ -47,6 +48,14 @@ public class Page {
 		}
 		
 	}	// 인자 생성자 
-		
+	
+	// 검색을 하는 페이징 처리 인자 생성자
+		public Page(int page, int rowsize, int totalRecord, String keyword) {
+			
+			this(page, rowsize, totalRecord);
+			
+			this.keyword = keyword;
+			
+		}	// 인자 생성자
 		
 }
