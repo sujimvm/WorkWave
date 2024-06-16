@@ -44,5 +44,5 @@ public interface ComBoardMapper {
 	List<ComBoardDTO> getMainTimeComBoardList(); // (메인) 공고리스트
 	List<ComBoardDTO> getComBoardList(String type); // (메인) 공고리스트
 	
-	
+	List<ComBoardDTO> getUnifiedSearchList(Page pdto);
 }

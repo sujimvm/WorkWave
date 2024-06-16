@@ -12,6 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -158,22 +159,24 @@ public class AllController {
 		return "/comBoard/list";
 	}
 
-	// (상세보기) 페이지 이동
-	@GetMapping("/comBoard/content")
-	public String goComBoardContent(HttpServletRequest request, Model model) {
-
-		int com_board_key = Integer.parseInt(request.getParameter("No"));
-
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("dto", this.comBoardMapper.getComBoard(com_board_key));
-		map.put("P", Integer.parseInt(request.getParameter("P")));
-		map.put("applyTotal", this.comBoardMapper.getApplyCount(com_board_key));
-		map.put("avgAge", this.comBoardMapper.getApplyAvgAge(com_board_key));
-		map.put("avgGender", this.comBoardMapper.getApplyAvgGender(com_board_key));
-		map.put("avgEdu", this.comBoardMapper.getApplyAvgEdu(com_board_key));
-		
-		model.addAttribute("map",map);
-
-		return "/comBoard/content";
-	}
+	/*
+	 * // (상세보기) 페이지 이동
+	 * 
+	 * @GetMapping("/comBoard/content") public String
+	 * goComBoardContent(HttpServletRequest request, Model model) {
+	 * 
+	 * int com_board_key = Integer.parseInt(request.getParameter("No"));
+	 * 
+	 * HashMap<String, Object> map = new HashMap<>(); map.put("dto",
+	 * this.comBoardMapper.getComBoard(com_board_key)); map.put("P",
+	 * Integer.parseInt(request.getParameter("P"))); map.put("applyTotal",
+	 * this.comBoardMapper.getApplyCount(com_board_key)); map.put("avgAge",
+	 * this.comBoardMapper.getApplyAvgAge(com_board_key)); map.put("avgGender",
+	 * this.comBoardMapper.getApplyAvgGender(com_board_key)); map.put("avgEdu",
+	 * this.comBoardMapper.getApplyAvgEdu(com_board_key));
+	 * 
+	 * model.addAttribute("map",map);
+	 * 
+	 * return "/comBoard/content"; }
+	 */
 }
