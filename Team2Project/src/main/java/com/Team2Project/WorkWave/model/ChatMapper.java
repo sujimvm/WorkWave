@@ -25,7 +25,7 @@ public interface ChatMapper {
 	
 	public int like(int chat_key);
 	
-	List<ChatReplyDTO> replylist();
+	List<ChatReplyDTO> replylist(int no);
 
     void insertReply(ChatReplyDTO reply);
 

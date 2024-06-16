@@ -236,7 +236,9 @@
 	width: 900px;
 }
 
-
+.d-none{
+	display:none;
+}
 
 
 

@@ -82,16 +82,15 @@
             	        <br>
             	        <span class="reply-date" th:text="${#dates.format(dto.reply_date, 'yyyy/MM/dd')} + ' 작성'"></span>
             	        <p class="reply-content" th:text="${dto.reply_content}"></p>
-            	  <button class=btn-edit th:attr="data-reply-key=${dto.reply_key}" onclick="editReply(this)">수정</button>
+            	  <button class=btn-edit th:if="${dto.user_id == session.uDTO.user_id}" th:attr="data-reply-key=${dto.reply_key}" onclick="editReply(this)">수정</button>
 	        	  <button class=btn-delete th:attr="data-reply-key=${dto.reply_key}" onclick="deleteReply(this)">삭제</button>
 	        	  <br> <br>
 	        	  <hr>
-	         
-	           
-	           	<div id="edit-form-${dto.reply_key}" class="d-none">
-				             <textarea rows="2" id="edit-reply-${dto.reply_key}"></textarea>
-				             <button th:attr="data-reply-key=${dto.reply_key}" onclick="saveReply(this)">저장</button>
-				             <button th:onclick="'cancelEdit(' + ${dto.reply_key} + ')'" >취소</button>
+
+	           	<div th:id="'edit-form-'+${dto.reply_key}" class="d-none" style="display:none;">
+				             <textarea rows="2" th:id="'edit-reply-'+${dto.reply_key}"></textarea>
+				             <button class=btn-edit th:attr="data-reply-key=${dto.reply_key}" onclick="saveReply(this)">저장</button>
+				             <button class=btn-delete th:onclick="'cancelEdit(' + ${dto.reply_key} + ')'" >취소</button>
 				</div>
 	        </div>
 	        </div>
@@ -116,15 +115,12 @@
 	    function cancelEdit(replyKey) {
 	        $('#edit-form-' + replyKey).addClass('d-none');
 	    }
-	    
-	    /* function editReply(button) {
-            var replyKey = $(button).data('reply-key');
-            $('#edit-form-' + replyKey).removeClass('d-none');
-        } */
+	   
         
         function editReply(button) {
 	        var replyKey = $(button).data('reply-key');
 	        $('#edit-form-' + replyKey).removeClass('d-none');
+	        $('#edit-form-' + replyKey).show();
 	        // 기존 댓글 내용을 수정 폼에 넣기
 	        var currentContent = $('button[data-reply-key="' + replyKey + '"]').closest('.reply_body').find('.reply-content').text();
 	        $('#edit-reply-' + replyKey).val(currentContent);
@@ -211,9 +207,9 @@
 	                        $reply_box.prepend(
 	                        	    `
 	                        	    <div class="reply_body">
-                        	            <span class="user-id">${user_id}</span>
-                        	            <span class="reply-date">${reply_date}</span>
-                        	        	<p class="reply-content">${reply_cont}</p>
+                        	            <span class="user-id">${map.user_id}</span>
+                        	            <span class="reply-date">${map.reply_date}</span>
+                        	        	<p class="reply-content">${map.reply_cont}</p>
 	                        	    </div>
 	                        	    `
 	                        	);
