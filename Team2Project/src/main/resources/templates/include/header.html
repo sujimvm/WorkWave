@@ -43,8 +43,8 @@
 					<a th:href="@{/A/main}"><img src="/image/icon/main_logo.png" alt="Logo"></a>
 				</div>
 				<div class="search-btn">
-					<form>
-						<input class="search-bar" placeholder="채용공고 검색">&nbsp;&nbsp;
+					<form action="/A/unifiedSearchList" method="get">
+						<input class="search-bar" name="keyword" placeholder="채용공고 검색">&nbsp;&nbsp;
 						<input type="submit" value="검색">
 					</form>
 				</div>
@@ -74,8 +74,8 @@
 					<a th:href="@{/A/main}"><img src="/image/icon/main_logo.png" alt="Logo"></a>
 				</div>
 				<div class="search-btn">
-					<form>
-						<input class="search-bar" placeholder="채용공고 검색">&nbsp;&nbsp;
+					<form action="/A/unifiedSearchList" method="get">
+						<input class="search-bar" name="keyword" placeholder="채용공고 검색">&nbsp;&nbsp;
 						<input type="submit" value="검색">
 					</form>
 				</div>

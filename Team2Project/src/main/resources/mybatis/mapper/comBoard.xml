@@ -176,7 +176,7 @@
 	  	</select>
 	  	
 	  	<!-- 키워드 통합 검색 -->
-	  	<select id="unifiedSearchList" parameterType="page" resultType="bDTO">
+	  	<select id="getUnifiedSearchList" parameterType="page" resultType="bDTO">
 	  		<![CDATA[
 		        select *
 		        from ( select row_number() over(order by com_board_start_date desc) rnum, b.*

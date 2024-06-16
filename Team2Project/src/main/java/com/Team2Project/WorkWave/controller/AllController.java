@@ -159,24 +159,54 @@ public class AllController {
 		return "/comBoard/list";
 	}
 
-	/*
-	 * // (상세보기) 페이지 이동
-	 * 
-	 * @GetMapping("/comBoard/content") public String
-	 * goComBoardContent(HttpServletRequest request, Model model) {
-	 * 
-	 * int com_board_key = Integer.parseInt(request.getParameter("No"));
-	 * 
-	 * HashMap<String, Object> map = new HashMap<>(); map.put("dto",
-	 * this.comBoardMapper.getComBoard(com_board_key)); map.put("P",
-	 * Integer.parseInt(request.getParameter("P"))); map.put("applyTotal",
-	 * this.comBoardMapper.getApplyCount(com_board_key)); map.put("avgAge",
-	 * this.comBoardMapper.getApplyAvgAge(com_board_key)); map.put("avgGender",
-	 * this.comBoardMapper.getApplyAvgGender(com_board_key)); map.put("avgEdu",
-	 * this.comBoardMapper.getApplyAvgEdu(com_board_key));
-	 * 
-	 * model.addAttribute("map",map);
-	 * 
-	 * return "/comBoard/content"; }
-	 */
+	
+	// (상세보기) 페이지 이동
+
+	@GetMapping("/comBoard/content") 
+	public String goComBoardContent(HttpServletRequest request, Model model) {
+
+		int com_board_key = Integer.parseInt(request.getParameter("No"));
+
+		HashMap<String, Object> map = new HashMap<>(); 
+		map.put("dto", this.comBoardMapper.getComBoard(com_board_key));
+		map.put("P", Integer.parseInt(request.getParameter("P")));
+		map.put("applyTotal", this.comBoardMapper.getApplyCount(com_board_key));
+		map.put("avgAge", this.comBoardMapper.getApplyAvgAge(com_board_key));
+		map.put("avgGender", this.comBoardMapper.getApplyAvgGender(com_board_key));
+		map.put("avgEdu", this.comBoardMapper.getApplyAvgEdu(com_board_key));
+
+		model.addAttribute("map",map);
+
+		return "/comBoard/content"; 
+
+	}
+
+	// 키워드로 검색하면 통합검색 페이지로 이동하여 키워드 포함한 공고 리스트 출력
+	@GetMapping("/unifiedSearchList")
+	public String getUnifiedSearchList(@RequestParam("keyword") String keyword,
+			HttpServletRequest request,
+			Model model) {
+
+		int page;	// 현재 페이지 변수
+
+		// 페이징 처리 작업
+		if(request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}else {
+			page = 1;
+		}
+
+		totalRecord = this.chatMapper.countchat();
+
+		Page pdto = new Page(page, rowsize, totalRecord, keyword);
+
+		List<ComBoardDTO> search_list = this.comBoardMapper.getUnifiedSearchList(pdto);
+
+		model.addAttribute("SearchList", search_list).addAttribute("paging", pdto);
+
+		return "unifiedSearch";
+
+	}
+
+	 
 }
