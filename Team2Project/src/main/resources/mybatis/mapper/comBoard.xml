@@ -191,4 +191,28 @@
               order by com_board_start_date desc
            ]]>
         </select>
+        
+       	<!-- 상세보기 추천인재(포지션제안용) -->
+        <select id="recommendListCount" parameterType="page" resultType="pDTO">
+           <![CDATA[
+              select count(*) 
+              from ( select row_number() over(order by p.profile_key desc) rnum, p.*
+              from ( select p.* from profile p
+                     join users u on p.user_key = u.user_key
+                     where (p.profile_step like '%' || #{code} || '%') b
+              )
+           ]]>
+        </select>
+	    <select id="getRecommendList" resultType="pDTO"> <!-- 쿼리수정 -->
+		    <![CDATA[
+              select * 
+              from ( select row_number() over(order by p.profile_key desc) rnum, p.*
+              from ( select p.* from profile p
+                     join users u on p.user_key = u.user_key
+                     where (p.profile_step like '%' || #{code} || '%') b
+              )
+              where rnum >= #{startNo} and rnum <= #{endNo}
+              order by p.profile_key desc
+	  		]]>
+	  	</select>
   </mapper>

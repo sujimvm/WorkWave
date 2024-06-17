@@ -44,7 +44,55 @@ $(document).ready(function() {
 		} 
 	});
 	
+    $("#com_board_mgr_phone").blur(function() {
+        // 입력된 전화번호 가져오기
+        var phoneNumber = $("#com_board_mgr_phone").val();
+        if(phoneNumber) {
+            // 정규식을 사용하여 형식 검사
+            var regex = /^(01[0-9]{1}-?[0-9]{4}-?[0-9]{4}|01[0-9]{8})$/;
+
+            if (regex.test(phoneNumber)) {
+                // 올바른 형식일 경우
+				$('#com_board_mgr_phone_CkText').empty();
+				$('#com_board_mgr_phone_Ck').val(1);
+            } else {
+                // 잘못된 형식일 경우
+                $('#com_board_mgr_phone_CkText').empty();
+				$('#com_board_mgr_phone_CkText').append("연락처를 확인해주세요");
+				$('#com_board_mgr_phone_Ck').val(0);
+                return false;
+            }
+
+            var pcs = phoneNumber;
+
+            // 입력된 문자열에서 하이픈('-')을 제거하여 숫자만 추출
+            var pcs = pcs.replace(/[^0-9]/g, '');
+
+            // 전화번호 형식 (010-1234-5678)으로 변환
+            if (pcs.length === 10) {
+                pcs = pcs.substring(0, 3) + '-' + pcs.substring(3, 7) + '-' + pcs.substring(7, 11);
+            } else if (pcs.length === 11) {
+                pcs = pcs.substring(0, 3) + '-' + pcs.substring(3, 7) + '-' + pcs.substring(7, 11);
+            }
+
+            $("#com_board_mgr_phone").val(pcs);
+        }
+    });
 	
+    $("#com_board_mgr_email").blur(function() {
+		var email = $("#com_board_mgr_email").val();
+		var regexp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+		if (!regexp.test(email)) {
+            $('#com_board_mgr_email_CkText').empty();
+			$('#com_board_mgr_email_CkText').append("이메일를 확인해주세요");
+			$('#com_board_mgr_email_Ck').val(0);
+			return false;
+		}else{
+            $('#com_board_mgr_email_CkText').empty();
+			$('#com_board_mgr_email_Ck').val(1);
+		}
+    });
+        
 	ClassicEditor
         .create(document.querySelector('#com_board_cont'), {
             removePlugins: ['Heading'],
@@ -152,8 +200,16 @@ function executionFrom() {
 		alert("담당자 연락처를 입력해주세요.");
     	$("#com_board_mgr_phone").focus();
     	return false;
+	}else if($("#com_board_mgr_phone_Ck").val()!=1){
+		alert("담당자 연락처를 확인해주세요.");
+    	$("#com_board_mgr_phone").focus();
+    	return false;
 	}else if($("#com_board_mgr_email").val()==""){
 		alert("담당자 이메일을 입력해주세요.");
+    	$("#com_board_mgr_email").focus();
+    	return false;
+	}else if($("#com_board_mgr_email_Ck").val()!=1){
+		alert("담당자 이메일을 확인해주세요.");
     	$("#com_board_mgr_email").focus();
     	return false;
 	}

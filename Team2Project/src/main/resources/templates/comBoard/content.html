@@ -135,6 +135,7 @@
 						<img th:if="${map.dto.company_logo != null}" th:src="@{'\\image\\logo\\'+${map.dto.company_logo}}" alt="${map.dto.company_logo_name}">
 						<img th:if="${map.dto.company_logo == null}" src="/image/icon/logo_icon.png" alt="로고미등록">
 					</a>
+					<input type="hidden" id="code" th:value="${map.dto.com_board_step}">
 					<dl>
 						<dt>업종</dt>
 						<dd th:text="${map.dto.com_board_step}"></dd>
@@ -152,8 +153,10 @@
 			
 			
 			<div sec:authorize="isAuthenticated() and hasRole('COMPANY')">
-				<h3>포지션제안</h3>
-				
+				<h3>추전인재</h3>
+				<div>
+					<table id="recommendList"></table>
+				</div>
 			</div><!-- 포지션제안 -->
 			
 			<div>
