@@ -440,11 +440,25 @@ $(document).ready(function(){
 	      return ($.inArray(ext, ["jpg", "jpeg", "gif", "png"]) === -1) ? false : true;
 	  }
 	
-	  function isOverSize(file) {
 
-		  var maxSize = 3 * 1024 * 1024; // 3MB로 제한 
-
-		    return (file.size > maxSize) ? true : false;
-		}
+		$(function(){
+			$("#imageFile").on("change", function(event){
+				var file = event.target.files[0]
+				var maxSize = 3 * 1024 * 1024; 
+	
+			    if(file.size > maxSize){
+					alert("파일첨부 사이즈는 3MB 이내로 가능합니다.");
+					$(this).val(''); 
+					$("#preview").hide();
+					return;
+			    }
+					var reader = new FileReader();
+		       		 reader.onload = function(e){
+		            $("#preview").attr("src", e.target.result).show();
+		       	 };
+		       	 reader.readAsDataURL(file);
+				
+			});
+		});
 	 
 });
