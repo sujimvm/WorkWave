@@ -7,6 +7,7 @@
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script th:src="@{/js/comBoard/content.js}"></script>
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
@@ -17,7 +18,7 @@
 					<div>
 						<div>
 							<h6 th:text="${map.dto.company_name}"></h6>
-							<h4 th:text="${map.dto.com_board_title}"></h3>
+							<h4 th:text="${map.dto.com_board_title}"></h4>
 						</div>
 						<div>
 							<div>
@@ -157,6 +158,10 @@
 				<div>
 					<table id="recommendList"></table>
 				</div>
+				<div>
+					<!-- Page navigation -->
+		            <ul class="pagination" id="pagination"></ul>
+				</div> <!-- 페이징 -->
 			</div><!-- 포지션제안 -->
 			
 			<div>
