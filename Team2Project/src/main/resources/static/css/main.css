@@ -20,7 +20,8 @@
 .mainLoginInfo{
 	height:300px;
 	float: left;
-	background-color: #ff8080;
+	border: 1px solid black;
+	border-radius: 5px;
 }
 .mainLoginNotice{
 	height:300px;
@@ -91,4 +92,62 @@
 .mainListTitle{
 	font-size:20px;
 	margin: 0 29px;
+}
+
+.main-user-table {
+    width: 70%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.main-user-table th, .main-user-table td {
+    padding: 12px 15px;
+}
+
+.main-user-table th {
+    background-color: #f2f2f2;
+}
+
+.main-user-table tr {
+    border-bottom: 1px solid #ffffff;
+}
+
+.main-user-table tr:last-child {
+    border-bottom: 0;
+}
+
+.main-user-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.main-company-table {
+   width: 70%;
+   border-collapse: collapse;
+   margin: 20px 0;
+   font-size: 18px;
+   text-align: center;
+   border-radius: 8px;
+   overflow: hidden;
+   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.main-company-table th, .main-company-table td {
+    padding: 12px 15px;
+}
+
+.main-company-table th {
+    background-color: #f2f2f2;
+}
+
+.main-company-table tr {
+    border-bottom: 1px solid #ffffff;
+}
+
+.main-company-table tr:last-child {
+    border-bottom: 0;
 }
