@@ -47,15 +47,21 @@ public interface UserMapper {
 	public int interest(int user_key);
 	// 지원 취소 갯수
 	public int applyCancel(int user_key);
-	// 지원 정보
+	// 유저 지원 정보 리스트 
 	public List<ApplyDTO> applyInfo(int user_key);
-	// 지원한 공고
+	// 유저 지원한 공고 리스트
+	public ComBoardDTO applyBoard(int com_board_key);
+	// 지원한 공고의 기업 이름
 	
+	// 지원취소시 apply_check 'N' -> 'Y'로 바꾸기
+	void applyCancelUp(int apply_key);
 	
 	UserLoginDTO findUserIdById(String user_id);
 	
 	public String profileName(int user_key);
 	
+	// 유저수 조회
+	int countUser();
 }
 	
 	

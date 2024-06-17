@@ -6,6 +6,7 @@
 <title>Work Wave 유저 입사지원 현황 리스트</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/userCont.css}">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
@@ -30,47 +31,83 @@
 					<th>지원완료</th>
 					<th>열람</th>
 					<th>미열람</th>
-					<th>지원취소</th>
+					<th>지원취소 갯수</th>
 				</tr>
 				
 				<tr>
 					<th th:text="${applyCnt}">지원완료</th>
 					<th th:text="${applyCheckCnt}">열람</th>
 					<th th:text="${UapplyNonCheckCnt}">미열람</th>
-					<th th:text="${applyCancel}">지원취소</th>
+					<th th:text="${applyCancel}">지원취소 갯수</th>
 				</tr>         
             </table>
 			
 			<span style="font-size: 12px;">❕ 입사지원 현황은 최대 3년까지 조회할 수 있습니다.</span>
 			<br><br>
 			
-			<ul class="user-list2" th:if="${applyList != null}">
-	            <li>
+			<ul class="user-list2" th:if="${applyInfoList != null}">
+	            <li style="background-color: #f2f2f2;">
 	                <span style="width: 16%;">지원일</span>|
 	                <span style="width: 50%;">지원내역</span>|
 	                <span style="width: 17%;">열람</span>|
 	                <span style="width: 17%;">지원취소</span>
 	            </li>
-	            <li th:each="applyInfo : ${applyList}">
-	                <span th:text="${applyInfo.apply_date}" style="width: 16%;"><br>
+	            <li th:each="applyInfo, applyBoard : ${applyInfoList}">
+	                <span th:text="${applyInfo.apply_date}" style="width: 16%;"></span>
+	                <span style="width: 50%;">
+	                    <span>기업이름 가져와야됨</span><br>
+	                    <span th:text="${applyBoardList[applyBoard.index].com_board_title}"></span>
 	                </span>
-	                <span style="width: 50%;">기업이름 <br>
-	                      공고이름
-	                </span>
-	                <span style="width: 17%;">열람/미열람 여부</span>
 	                <span style="width: 17%;">
-	                    <input type="button" value="지원취소">
+	                    <th:block th:if="${applyInfo.APPLY_PROFILE_CHECK == 'N'}">미열람</th:block>
+	                    <th:block th:if="${applyInfo.APPLY_PROFILE_CHECK == 'Y'}">열람</th:block>
+	                </span>
+	                <span style="width: 17%;">
+	                    <input type="button" value="지원취소" data-apply-key="${applyInfo.apply_key}">
 	                </span>
 	            </li>
-	        </ul>
-	        <ul class="user-list2" th:if="${applyList == null}">
-	            <li>정보 없음</li>
-	        </ul>
+        	</ul>
+	        <ul class="user-list2" th:if="${applyInfoList == null}">
+	            <li style="background-color: #f2f2f2;">
+	                <span style="width: 16%;">지원일</span>|
+	                <span style="width: 50%;">지원내역</span>|
+	                <span style="width: 17%;">열람</span>|
+	                <span style="width: 17%;">지원취소</span>
+	            </li>
+	            <li>
+	                <span style="width: 16%;">지원일 가져와야됨<br></span>
+	                <span style="width: 50%;">기업이름 가져와야됨 <br> 공고이름 가져와야됨</span>
+	                <span style="width: 17%;">열람/미열람 여부 가져와야됨</span>
+	                <span style="width: 17%;"><input type="button" value="지원취소"></span>
+	            </li>
+        	</ul>
             
         </div>
 	</div>
 	<div th:replace="~{include/footer :: footer}"></div>
-
+	
+	<script type="text/javascript">
+	
+	$(document).ready(function() {
+	    $('input[type="button"][value="지원취소"]').on('click', function() {
+	        var applyKey = $(this).data('apply-key');
+	        $.ajax({
+	            url: '/ajax/applyCancel',
+	            type: 'POST',
+	            data: { apply_key: applyKey },
+	            success: function(response) {
+	                alert('지원 취소 완료');
+	                location.reload();
+	            },
+	            error: function(xhr, status, error) {
+	                alert('지원 취소 실패: ' + error);
+	            }
+	        });
+	    });
+	});
+	
+	
+	</script>
 
 </body>
 </html>

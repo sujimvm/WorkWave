@@ -52,11 +52,18 @@
 	   and apply_check = 'Y'
    </select>
    
+   <update id="applyCancelUp" parameterType="int">
+        UPDATE ApplyTable SET APPLY_CHECK = 'Y' WHERE APPLY_KEY = #{apply_key}
+    </update>
+   
    <select id="applyInfo" resultType="aDTO">
-   		select * from apply where profile_key in (select profile_key from profile where user_key = #{user_key})
+   		select * from apply where user_key = #{user_key}
    </select>
    
-
+   <select id="applyBoard" resultType="bDTO">
+   		select * from com_board where com_board_key = #{com_board_key}
+   </select>
+   
   <select id="positionJean" resultType="int">
   	   select count(*) from position where user_key = #{user_key}
   </select>
@@ -78,5 +85,8 @@
   	   SELECT count(*) FROM users WHERE user_id = #{user_id}
   </select>
   
+  <select id="countUser" resultType="int">
+        select count(*) from users
+  </select>
   
   </mapper>

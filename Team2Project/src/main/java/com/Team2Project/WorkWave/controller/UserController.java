@@ -3,6 +3,7 @@ package com.Team2Project.WorkWave.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,8 +67,14 @@ public class UserController {
 	  UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
 	  
 	  // applyInfo -> 지원일
-	  List<ApplyDTO> applyInfo = this.userMapper.applyInfo(userInfo.getUser_key());
-	  // 기업의 열람 여부
+	  List<ApplyDTO> applyInfoList = this.userMapper.applyInfo(userInfo.getUser_key());
+	  
+	  List<ComBoardDTO> applyBoardList = new ArrayList<>();
+	  
+	  for(ApplyDTO applyInfo : applyInfoList) {
+		  ComBoardDTO applyBoard = this.userMapper.applyBoard(applyInfo.getCom_board_key());
+		  applyBoardList.add(applyBoard);
+	  }
 	  
 	  int applyCnt = this.userMapper.applyCnt(userInfo.getUser_key()); 
 	  int applyCheckCnt = this.userMapper.applyCheckCnt(userInfo.getUser_key());
@@ -75,9 +82,11 @@ public class UserController {
 	  int applyCancel = this.userMapper.applyCancel(userInfo.getUser_key());
 		  
 	  // 지원일
-	  model.addAttribute("applyInfo", applyInfo);
-	  // 지원완료 갯수 
-	  model.addAttribute("applyCnt", applyCnt); 
+	  model.addAttribute("applyInfoList", applyInfoList);
+	  // 지원한 공고
+	  model.addAttribute("applyBoardList", applyBoardList);
+	  // 지원완료 갯수
+	  model.addAttribute("applyCnt", applyCnt);
 	  // 이력서 열람 갯수
 	  model.addAttribute("applyCheckCnt", applyCheckCnt);
       // 이력서 미열람 갯수
