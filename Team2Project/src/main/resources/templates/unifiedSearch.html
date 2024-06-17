@@ -27,15 +27,17 @@
             <h3>"<span th:text="${paging.keyword}"></span>" 검색 결과</h3>
             
             <ul th:if="${SearchList != null}" class="search-list">
-            	<li>
+            	<li class="search-header">
             		<span>기업명</span>
             		<span>공고 제목</span>
             		<span>지원</span>
             	</li>
             	<li th:each="s : ${SearchList}">
             		<span style="color: #007BFF" th:text="${s.company_key}"></span>
-            		<a style="color: #000000" th:href="@{/A/comBoard/content(no=${s.com_board_key})}">
-            			<span  th:text="${s.com_board_title} +'&nbsp;'+ ${s.com_board_career}"></span>
+            		<a th:href="@{/A/comBoard/content(no=${s.com_board_key})}">
+            			<span  th:text="${s.com_board_title}" style="font-size: 15px;"></span>
+            			<br>
+            			<span style="color: #000000" th:text="${s.com_board_career} + ' · ' + ${s.com_board_edu} + ' · ' + ${s.com_board_jobtype}+ ' · ' + ${s.com_board_end_date}"></span>
             		</a>
             		<button onclick="">지원하기</button>
             	</li>

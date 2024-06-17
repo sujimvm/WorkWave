@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface NoticeMapper {
 	
+	List<NoticeDTO> mainNoticeList();
+
 	List<NoticeDTO> noticeList(Page pdto);
 	
 	int countNotices();
