@@ -188,7 +188,21 @@
                   ) b
               )
               where rnum >= #{startNo} and rnum <= #{endNo}
-              order by com_board_start_date desc
+              order by com_board_end_date
+           ]]>
+        </select>
+        
+        <select id="countSearchList" parameterType="String" resultType="int">
+        	<![CDATA[
+              select count(*)
+              from ( select row_number() over(order by b.com_board_start_date desc) rnum, b.*
+              from ( select b.* from com_board b
+                     join company c on b.company_key = c.company_key
+                     where (b.com_board_title like '%' || #{keyword} || '%'
+                     or c.company_name like '%' || #{keyword} || '%')
+                     and b.com_board_end_date >= sysdate
+                  ) b
+              )
            ]]>
         </select>
         

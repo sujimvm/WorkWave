@@ -1,6 +1,7 @@
 package com.Team2Project.WorkWave.controller;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -131,8 +132,14 @@ public class AllController {
 	}
 
 	@GetMapping("/main")
-	public String goMain(HttpSession session) { 
+	public String goMain(HttpSession session, Model model) { 
 
+		int com_board_count = this.comBoardMapper.countComBoard();
+		int user_count = this.userMapper.countUser();
+		int company_count = this.companyMapper.countCompany();
+		List<NoticeDTO> main_notice_list = this.noticeMapper.mainNoticeList();
+
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
 		System.out.println(auth +"gd");
@@ -147,6 +154,12 @@ public class AllController {
 				session.setAttribute("uDTO", userMapper.getUserById(id));
 			}
 
+		// 모델에 데이터 추가
+		model.addAttribute("mainNoticeList", main_notice_list);
+        model.addAttribute("ComBoardCount", com_board_count);
+		model.addAttribute("UsersCount", user_count);
+        model.addAttribute("CompanyCount", company_count);
+			
 		return "main"; 
 	}
 
@@ -196,13 +209,22 @@ public class AllController {
 			page = 1;
 		}
 
-		totalRecord = this.chatMapper.countchat();
+		totalRecord = this.comBoardMapper.countSearchList(keyword);
 
 		Page pdto = new Page(page, rowsize, totalRecord, keyword);
 
 		List<ComBoardDTO> search_list = this.comBoardMapper.getUnifiedSearchList(pdto);
+		
+		List<CompanyDTO> search_company_list = new ArrayList<>();
+		
+		for(ComBoardDTO searchInfo: search_list) {
+			CompanyDTO search_company = this.companyMapper.searchCompany(searchInfo.getCompany_key());
+			search_company_list.add(search_company);
+		}
 
-		model.addAttribute("SearchList", search_list).addAttribute("paging", pdto);
+		model.addAttribute("SearchList", search_list)
+			 .addAttribute("paging", pdto)
+			 .addAttribute("SearchCompanyList", search_company_list);
 
 		return "unifiedSearch";
 

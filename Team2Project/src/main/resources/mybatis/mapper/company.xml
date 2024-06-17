@@ -63,5 +63,9 @@
   	<select id="countCompany" resultType="int">
   		select count(*) from company
   	</select>
+  	
+  	<select id="searchCompany" parameterType="int" resultType="cDTO">
+  		select * from company where company_key = #{company_key}
+  	</select>
   
   </mapper>

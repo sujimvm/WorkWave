@@ -5,40 +5,38 @@
 <title>Insert title here</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/searchList.css}">
-<link rel="stylesheet" th:href="@{/css/FAQ.css}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<style type="text/css">
+	.highlight {
+		font-weight: bolder;
+    }
+</style>
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
     <div layout:fragment="content" class="content">
-	
-	<div class="sidebar active">
-		<h3>공지사항</h3>
-		<a th:href="@{/A/userFAQ}">개인회원</a>
-		<a th:href="@{/A/companyFAQ}">기업회원</a>
-		<a th:href="@{/A/notice}" class="select">공지사항</a>
-		<a th:href="@{/G/findId}">아이디 찾기</a>
-		<a th:href="@{/G/findPwd}">비밀번호 찾기</a>
-		<a sec:authorize="!isAuthenticated()" th:href="@{/login}">회원탈퇴</a>
-		<a sec:authorize="isAuthenticated() and hasRole('USER')" th:href="@{/U/delete/userPwdCheck}">회원탈퇴</a>
-		<a sec:authorize="isAuthenticated() and hasRole('COMPANY')" th:href="@{/C/delete/companyPwdCheck}">회원탈퇴</a>
-	</div>
-		
-		<div class="faq-list sidebar_r">
-            <h3>"<span th:text="${paging.keyword}"></span>" 검색 결과</h3>
+    	<div align="center">
+            <h3>"<span th:text="${paging.keyword}" id="keyword"></span>" 검색 결과</h3>
             
             <ul th:if="${SearchList != null}" class="search-list">
-            	<li class="search-header">
-            		<span>기업명</span>
-            		<span>공고 제목</span>
-            		<span>지원</span>
+            	<li>
+            		<span style="width: 15%; text-align: center;">기업명</span>
+            		<span style="width: 75%; text-align: center;">공고 제목</span>
+            		<span style="width: 10%; text-align: center;">지원</span>
             	</li>
-            	<li th:each="s : ${SearchList}">
-            		<span style="color: #007BFF" th:text="${s.company_key}"></span>
-            		<a th:href="@{/A/comBoard/content(no=${s.com_board_key})}">
-            			<span  th:text="${s.com_board_title}" style="font-size: 15px;"></span>
-            			<br>
-            			<span style="color: #000000" th:text="${s.com_board_career} + ' · ' + ${s.com_board_edu} + ' · ' + ${s.com_board_jobtype}+ ' · ' + ${s.com_board_end_date}"></span>
-            		</a>
+            	<li th:each="s, stat : ${SearchList}">
+            		<span th:with="companyName=${SearchCompanyList[stat.index].company_name}"
+			             th:utext="${#strings.replace(companyName, paging.keyword, '&lt;span class=&quot;highlight&quot;&gt;' + paging.keyword + '&lt;/span&gt;')}"
+			             style="width: 15%; text-align: center;"
+			             class="company_name"></span>
+			       <a th:href="@{/A/comBoard/content(no=${s.com_board_key})}" style="width: 70%; margin-left: 100px;">
+			           <span th:utext="${#strings.replace(s.com_board_title, paging.keyword, '&lt;span class=&quot;highlight&quot;&gt;' + paging.keyword + '&lt;/span&gt;')}"
+			                 style="font-size: 15px;" 
+			                 class="com_board_title"></span>
+			           <br>
+			           <span th:utext="${#strings.replace(s.com_board_career + ' · ' + s.com_board_edu + ' · ' + s.com_board_jobtype + ' · ' + #dates.format(s.com_board_end_date, 'yyyy-MM-dd'), paging.keyword, '&lt;span class=&quot;highlight&quot;&gt;' + paging.keyword + '&lt;/span&gt;')}"
+			                 style="color: #000000; font-size: 12px;"></span>
+			       </a>
             		<button onclick="">지원하기</button>
             	</li>
             </ul>
@@ -69,6 +67,7 @@
                     <a th:href="@{/A/unifiedSearchList(page=${paging.allPage})}">[⋙]</a>
                 </li>
             </ul>
+		</div>
 	</div>
     <div th:replace="~{include/footer :: footer}"></div>
 </body>

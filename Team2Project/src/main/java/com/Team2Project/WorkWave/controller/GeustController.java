@@ -117,11 +117,12 @@ public class GeustController {
 
 		if (file.getOriginalFilename() != null) {
 			if (file != null && !file.isEmpty()) {
-				String logoUploadDir = "C:\\Users\\clxkd\\OneDrive\\바탕 화면\\project1\\WorkWave\\Team2Project\\src\\main\\resources\\static\\image\\logo";
+				String userDir = System.getProperty("user.dir");
+			    String logoUploadDir = userDir+"\\src\\main\\resources\\static\\image\\logo";
 
 				dto.setCompany_logo_name(file.getOriginalFilename());
 
-				String imageName = this.uploadFileService.upload(file, logoUploadDir);
+				String imageName = this.uploadFileService.uploadOriName(file, logoUploadDir);
 				dto.setCompany_logo(imageName);
 			}
 

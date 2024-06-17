@@ -48,4 +48,5 @@ public interface ComBoardMapper {
 	int recommendListCount(String code);
 	List<ProfileDTO> getRecommendList(HashMap<String, Object> reqMapperMap);
 	
+	int countSearchList(String keyword);
 }

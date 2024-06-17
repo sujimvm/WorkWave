@@ -37,4 +37,6 @@ public interface CompanyMapper {
 	int positionCnt(int company_key);
 	
 	int countCompany();
+	
+	CompanyDTO searchCompany(int company_key);
 }
