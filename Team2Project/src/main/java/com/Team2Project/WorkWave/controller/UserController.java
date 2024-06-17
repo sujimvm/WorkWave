@@ -68,13 +68,20 @@ public class UserController {
 	  
 	  // applyInfo -> 지원일
 	  List<ApplyDTO> applyInfoList = this.userMapper.applyInfo(userInfo.getUser_key());
-	  
+	  // 지원한 공고 이름
 	  List<ComBoardDTO> applyBoardList = new ArrayList<>();
+	  // 지원한 공고를 등록한 기업 이름
+	  List<CompanyDTO> applyComList = new ArrayList<>();
 	  
 	  for(ApplyDTO applyInfo : applyInfoList) {
 		  ComBoardDTO applyBoard = this.userMapper.applyBoard(applyInfo.getCom_board_key());
 		  applyBoardList.add(applyBoard);
+		  
+		  CompanyDTO applyCom = this.userMapper.applyCom(applyBoard.getCompany_key());
+		  applyComList.add(applyCom);
 	  }
+	  
+	  
 	  
 	  int applyCnt = this.userMapper.applyCnt(userInfo.getUser_key()); 
 	  int applyCheckCnt = this.userMapper.applyCheckCnt(userInfo.getUser_key());
@@ -85,6 +92,8 @@ public class UserController {
 	  model.addAttribute("applyInfoList", applyInfoList);
 	  // 지원한 공고
 	  model.addAttribute("applyBoardList", applyBoardList);
+	  // 지원한 공고를 등록한 기업
+	  model.addAttribute("applyComList", applyComList);
 	  // 지원완료 갯수
 	  model.addAttribute("applyCnt", applyCnt);
 	  // 이력서 열람 갯수

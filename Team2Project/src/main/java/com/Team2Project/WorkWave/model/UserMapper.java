@@ -52,7 +52,7 @@ public interface UserMapper {
 	// 유저 지원한 공고 리스트
 	public ComBoardDTO applyBoard(int com_board_key);
 	// 지원한 공고의 기업 이름
-	
+	public CompanyDTO applyCom(int company_key);
 	// 지원취소시 apply_check 'N' -> 'Y'로 바꾸기
 	void applyCancelUp(int apply_key);
 	

@@ -52,18 +52,21 @@
 	                <span style="width: 17%;">열람</span>|
 	                <span style="width: 17%;">지원취소</span>
 	            </li>
-	            <li th:each="applyInfo, applyBoard : ${applyInfoList}">
-	                <span th:text="${applyInfo.apply_date}" style="width: 16%;"></span>
+	            <li th:each="applyInfo, stat : ${applyInfoList}">
+	                <span th:text="${applyInfo.apply_date.substring(0, 10)}" style="width: 16%;"></span>
 	                <span style="width: 50%;">
-	                    <span>기업이름 가져와야됨</span><br>
-	                    <span th:text="${applyBoardList[applyBoard.index].com_board_title}"></span>
+	                    <span th:text="${applyComList[stat.index].company_name}"></span><br>
+	                    <span th:text="${applyBoardList[stat.index].com_board_title}"></span>
 	                </span>
 	                <span style="width: 17%;">
-	                    <th:block th:if="${applyInfo.APPLY_PROFILE_CHECK == 'N'}">미열람</th:block>
-	                    <th:block th:if="${applyInfo.APPLY_PROFILE_CHECK == 'Y'}">열람</th:block>
+	                    <th:block th:if="${applyInfo.apply_profile_check == 'N'}">미열람</th:block>
+	                    <th:block th:if="${applyInfo.apply_profile_check == 'Y'}">열람</th:block>
 	                </span>
-	                <span style="width: 17%;">
-	                    <input type="button" value="지원취소" data-apply-key="${applyInfo.apply_key}">
+	                <span  style="width: 17%;">
+	                	<th:block th:if="${applyInfo.apply_check == 'N'}">
+	                		<input type="button" value="지원취소" th:onclick="'applyCancel(' + ${applyInfo.apply_key} + ')'">
+	                	</th:block>
+	                	<th:block th:if="${applyInfo.apply_check == 'Y'}">지원취소완료</th:block>
 	                </span>
 	            </li>
         	</ul>
@@ -78,7 +81,9 @@
 	                <span style="width: 16%;">지원일 가져와야됨<br></span>
 	                <span style="width: 50%;">기업이름 가져와야됨 <br> 공고이름 가져와야됨</span>
 	                <span style="width: 17%;">열람/미열람 여부 가져와야됨</span>
-	                <span style="width: 17%;"><input type="button" value="지원취소"></span>
+	                <span style="width: 17%;">
+	                	<input type="button" value="지원취소">
+	                </span>
 	            </li>
         	</ul>
             
@@ -86,28 +91,30 @@
 	</div>
 	<div th:replace="~{include/footer :: footer}"></div>
 	
-	<script type="text/javascript">
+<script type="text/javascript">
 	
-	$(document).ready(function() {
-	    $('input[type="button"][value="지원취소"]').on('click', function() {
-	        var applyKey = $(this).data('apply-key');
-	        $.ajax({
-	            url: '/ajax/applyCancel',
-	            type: 'POST',
-	            data: { apply_key: applyKey },
-	            success: function(response) {
-	                alert('지원 취소 완료');
-	                location.reload();
-	            },
-	            error: function(xhr, status, error) {
-	                alert('지원 취소 실패: ' + error);
-	            }
-	        });
-	    });
-	});
+	function applyCancel(apply_key) {
+		if(confirm("정말로 취소하시겠습니까?")){
+			$.ajax({
+		        url: '/ajax/applyCancel',
+		        type: 'POST',
+		        data: { apply_key: apply_key },
+		        success: function(response) {
+		            alert('지원 취소 완료');
+		            location.reload();
+		        },
+		        error: function(xhr, status, error) {
+		            console.error('지원 취소 실패:', xhr.responseText);
+		            alert('지원 취소 실패: ' + xhr.responseText);
+		        }
+		    });
+		}else {
+			alert("안함!");
+		}
+	 
+	}
 	
-	
-	</script>
+</script>
 
 </body>
 </html>

@@ -53,7 +53,7 @@
    </select>
    
    <update id="applyCancelUp" parameterType="int">
-        UPDATE ApplyTable SET APPLY_CHECK = 'Y' WHERE APPLY_KEY = #{apply_key}
+        UPDATE apply SET APPLY_CHECK = 'Y' WHERE APPLY_KEY = #{apply_key}
     </update>
    
    <select id="applyInfo" resultType="aDTO">
@@ -62,6 +62,10 @@
    
    <select id="applyBoard" resultType="bDTO">
    		select * from com_board where com_board_key = #{com_board_key}
+   </select>
+   
+   <select id="applyCom" resultType="cDTO">
+   		select * from company where company_key = #{company_key}
    </select>
    
   <select id="positionJean" resultType="int">
