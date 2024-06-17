@@ -45,4 +45,7 @@ public interface ComBoardMapper {
 	List<ComBoardDTO> getComBoardList(String type); // (메인) 공고리스트
 	
 	List<ComBoardDTO> getUnifiedSearchList(Page pdto);
+	int recommendListCount(String code);
+	List<ProfileDTO> getRecommendList(HashMap<String, Object> reqMapperMap);
+	
 }

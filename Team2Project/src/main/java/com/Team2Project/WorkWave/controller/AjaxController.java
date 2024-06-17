@@ -31,18 +31,9 @@ public class AjaxController {
    @Autowired private ChatMapper chatMapper;
    @Autowired private ComBoardMapper comBoardMapper;
    @Autowired private CompanyMapper companyMapper;
-   @Autowired private NoticeMapper noticeMapper;
    @Autowired private ProfileMapper profileMapper;
    @Autowired private UserMapper userMapper;
 
-   @Autowired private MessageMapper messageMapper; 
-   @Autowired private TokenMapper tokenMapper; 
-   @Autowired private PasswordEncoder passwordEncoder;
-
-   @Autowired private EmailService emailService;
-   @Autowired private MessageService messageService;
-   @Autowired private TokenService tokenService;
-   @Autowired private UploadFileService uploadFileService;
    @Autowired private UserService userService;
    
 	// 한 페이지당 보여질 게시물의 수
@@ -80,279 +71,313 @@ public class AjaxController {
 		return res;
 	}
 	
-	   // 아이디 유효성 검사
-	   @PostMapping("/checkUserId")
-	   public Map<String, String> checkUserId(@RequestBody Map<String, String> request) {
-	      String userId = request.get("userId");
-	      boolean isAvailable = userService.isUserIdAvailable(userId);
-	      CompanyDTO companyIdCheck = this.companyMapper.companyInfo(userId);
-	      Map<String, String> response = new HashMap<>();
-	      if (isAvailable && companyIdCheck == null) {
-	         response.put("status", "available");
-	      } else {
-	         response.put("status", "unavailable");
-	      }
-	      return response;
-	   }
-	   
-		// 중분류 카테고리
-		@PostMapping("/jobCodeGroup")
-		public List<CodeDTO> categorysub(@RequestParam("no") String no) {
-			List<CodeDTO> categorysub = this.profileMapper.categorysub(no);
-			return categorysub;
-		}
+   // 아이디 유효성 검사
+   @PostMapping("/checkUserId")
+   public Map<String, String> checkUserId(@RequestBody Map<String, String> request) {
+      String userId = request.get("userId");
+      boolean isAvailable = userService.isUserIdAvailable(userId);
+      CompanyDTO companyIdCheck = this.companyMapper.companyInfo(userId);
+      Map<String, String> response = new HashMap<>();
+      if (isAvailable && companyIdCheck == null) {
+         response.put("status", "available");
+      } else {
+         response.put("status", "unavailable");
+      }
+      return response;
+   }
+   
+	// 중분류 카테고리
+	@PostMapping("/jobCodeGroup")
+	public List<CodeDTO> categorysub(@RequestParam("no") String no) {
+		List<CodeDTO> categorysub = this.profileMapper.categorysub(no);
+		return categorysub;
+	}
 
-		// 소분류 카테고리
-		@PostMapping("/jobCodesub")
-		public List<CodeDTO> categorystep(@RequestParam("no") String no) {
-			List<CodeDTO> categorystep = this.profileMapper.categorystep(no);
-			return categorystep;
+	// 소분류 카테고리
+	@PostMapping("/jobCodesub")
+	public List<CodeDTO> categorystep(@RequestParam("no") String no) {
+		List<CodeDTO> categorystep = this.profileMapper.categorystep(no);
+		return categorystep;
 
-		}
-		// 학교구분과 학교 이름 검색 시 해당 학교 리스트 불러오기
-		@PostMapping("/searchSchoolByName")
-		public List<CodeDTO> schoolName(CodeDTO dto) {
-			List<CodeDTO> schoolName = this.profileMapper.schoolname(dto);
-			return schoolName;
+	}
+	// 학교구분과 학교 이름 검색 시 해당 학교 리스트 불러오기
+	@PostMapping("/searchSchoolByName")
+	public List<CodeDTO> schoolName(CodeDTO dto) {
+		List<CodeDTO> schoolName = this.profileMapper.schoolname(dto);
+		return schoolName;
 
-		}
+	}
 
-		// 학교구분과 전공명 검색 시 해당 전공 데이터 불러오기
-		@PostMapping("/getDepartment")
-		public List<CodeDTO> departmentName(CodeDTO dto) {
-			List<CodeDTO> departmentName = this.profileMapper.department(dto);
-			return departmentName;
+	// 학교구분과 전공명 검색 시 해당 전공 데이터 불러오기
+	@PostMapping("/getDepartment")
+	public List<CodeDTO> departmentName(CodeDTO dto) {
+		List<CodeDTO> departmentName = this.profileMapper.department(dto);
+		return departmentName;
 
-		}
+	}
 
-		// 해당 자격증 리스트 불러오기
-		@PostMapping("/searchCertifications")
-		public List<LicenseDTO> searchlicense(@RequestParam("license_name") String license_name) {
-			List<LicenseDTO> licenseList = this.profileMapper.license(license_name);
-			return licenseList;
+	// 해당 자격증 리스트 불러오기
+	@PostMapping("/searchCertifications")
+	public List<LicenseDTO> searchlicense(@RequestParam("license_name") String license_name) {
+		List<LicenseDTO> licenseList = this.profileMapper.license(license_name);
+		return licenseList;
 
-		}
-		@RequestMapping("/chatLike")
-		public Map<String, String> like(@RequestParam Map<String, String> paramMap){
-			Map<String, String> result = new HashMap<>();
-			result.put("message", "좋아요 증가!");
-			result.put("type", "like");
-			int chat_key = (Integer.parseInt(paramMap.get("chat_key")));
-			this.chatMapper.like(chat_key);
-			return result;
-		}
-		
-		@RequestMapping("/reply")
-		public Map<String, String> reply(@RequestParam Map<String, String> paramMap){
-			Map<String, String> result = new HashMap<>();
-			result.put("message", "댓글 등록완료!");
-			result.put("type", "reply");
-			
-			int chat_key = (Integer.parseInt(paramMap.get("chat_key")));
-			
-			String reply_cont = paramMap.get("reply_cont");
-			ChatReplyDTO reply = new ChatReplyDTO();
-			reply.setChat_key(chat_key);
-			reply.setReply_content(reply_cont);
-			reply.setUser_key(Integer.parseInt(paramMap.get("user_key")));
-			reply.setUser_id(paramMap.get("user_id"));
-		
-			this.chatMapper.insertReply(reply);
-			ChatReplyDTO replyOut = this.chatMapper.getReplyById(chat_key);
-			
-			result.put("reply_cont", reply_cont);
-			result.put("reply_date", replyOut.getReply_date().toString());
-			result.put("user_id", replyOut.getUser_id());
-			
-			/*
-			 * List<ChatReplyDTO> replies = this.chatMapper.getRepliesByChatKey(chat_key);
-			 * result.put("replies", replies);
-			 */
-		
-			
-			return result;
-		}
-		
-		@RequestMapping("/replyLike")
-		public Map<String, String> replylike(@RequestParam Map<String, String> paramMap){
-			Map<String, String> result = new HashMap<>();
-			result.put("message", "댓글 좋아요 증가!");
-			result.put("type", "replylike");
-			int reply_key = (Integer.parseInt(paramMap.get("reply_key")));
-			this.chatMapper.replylike(reply_key);
-			return result;
-		}
-		
-		 @PostMapping("/deleteReply")
-		    public Map<String, String> deleteReply(@RequestParam Map<String, String> paramMap) {
-		        
-		        Map<String, String> result = new HashMap<>();
-		        result.put("message", "댓글이 삭제되었습니다.");
-		        
-		        
-		        int reply_key = (Integer.parseInt(paramMap.get("reply_key")));
-		        
-		        this.chatMapper.deleteReply(reply_key);
+	}
+	@RequestMapping("/chatLike")
+	public Map<String, String> like(@RequestParam Map<String, String> paramMap){
+		Map<String, String> result = new HashMap<>();
+		result.put("message", "좋아요 증가!");
+		result.put("type", "like");
+		int chat_key = (Integer.parseInt(paramMap.get("chat_key")));
+		this.chatMapper.like(chat_key);
+		return result;
+	}
 	
-		        return result;
-		 }
-		 
-		 @PostMapping("/editReply")
-		    public Map<String, String> editReply(@RequestParam Map<String, String> paramMap) {
-		        Map<String, String> result = new HashMap<>();
-		        try {
-		            int reply_key = Integer.parseInt(paramMap.get("reply_key"));
-		            String reply_content = paramMap.get("reply_content");
+	@RequestMapping("/reply")
+	public Map<String, String> reply(@RequestParam Map<String, String> paramMap){
+		Map<String, String> result = new HashMap<>();
+		result.put("message", "댓글 등록완료!");
+		result.put("type", "reply");
+		
+		int chat_key = (Integer.parseInt(paramMap.get("chat_key")));
+		
+		String reply_cont = paramMap.get("reply_cont");
+		ChatReplyDTO reply = new ChatReplyDTO();
+		reply.setChat_key(chat_key);
+		reply.setReply_content(reply_cont);
+		reply.setUser_key(Integer.parseInt(paramMap.get("user_key")));
+		reply.setUser_id(paramMap.get("user_id"));
+	
+		this.chatMapper.insertReply(reply);
+		ChatReplyDTO replyOut = this.chatMapper.getReplyById(chat_key);
+		
+		result.put("reply_cont", reply_cont);
+		result.put("reply_date", replyOut.getReply_date().toString());
+		result.put("user_id", replyOut.getUser_id());
+		
+		/*
+		 * List<ChatReplyDTO> replies = this.chatMapper.getRepliesByChatKey(chat_key);
+		 * result.put("replies", replies);
+		 */
+	
+		
+		return result;
+	}
+	
+	@RequestMapping("/replyLike")
+	public Map<String, String> replylike(@RequestParam Map<String, String> paramMap){
+		Map<String, String> result = new HashMap<>();
+		result.put("message", "댓글 좋아요 증가!");
+		result.put("type", "replylike");
+		int reply_key = (Integer.parseInt(paramMap.get("reply_key")));
+		this.chatMapper.replylike(reply_key);
+		return result;
+	}
+	
+	 @PostMapping("/deleteReply")
+	    public Map<String, String> deleteReply(@RequestParam Map<String, String> paramMap) {
+	        
+	        Map<String, String> result = new HashMap<>();
+	        result.put("message", "댓글이 삭제되었습니다.");
+	        
+	        
+	        int reply_key = (Integer.parseInt(paramMap.get("reply_key")));
+	        
+	        this.chatMapper.deleteReply(reply_key);
 
-		            // 댓글 수정 로직 수행
-		            ChatReplyDTO reply = new ChatReplyDTO();
-		            reply.setReply_key(reply_key);
-		            reply.setReply_content(reply_content);
-		            chatMapper.updateReply(reply);
+	        return result;
+	 }
+	 
+	 @PostMapping("/editReply")
+	    public Map<String, String> editReply(@RequestParam Map<String, String> paramMap) {
+	        Map<String, String> result = new HashMap<>();
+	        try {
+	            int reply_key = Integer.parseInt(paramMap.get("reply_key"));
+	            String reply_content = paramMap.get("reply_content");
 
-		            result.put("message", "댓글 수정 완료!");
-		        } catch (Exception e) {
-		            result.put("message", "댓글 수정 중 오류 발생");
-		        }
+	            // 댓글 수정 로직 수행
+	            ChatReplyDTO reply = new ChatReplyDTO();
+	            reply.setReply_key(reply_key);
+	            reply.setReply_content(reply_content);
+	            chatMapper.updateReply(reply);
 
-		        return result;
-		    }
-		 
-		 
+	            result.put("message", "댓글 수정 완료!");
+	        } catch (Exception e) {
+	            result.put("message", "댓글 수정 중 오류 발생");
+	        }
 
-		// (리스트) 리스트 조회
-		@PostMapping("/comBoardList")
-		public HashMap<String, Object> getComBoardList(HttpSession session, HttpServletRequest request) {
-			HashMap<String, Object> viewMap = new HashMap<>(); //뷰페이지로 이동하는 맵 
-			HashMap<String, Object> reqMapperMap = new HashMap<>(); // 매퍼로 이동하는 맵
+	        return result;
+	    }
+	 
+	 
 
-			int page;	// 현재 페이지 변수
-			
-			// 페이징 처리 작업
-			if(request.getParameter("page") != null) {
-				page = Integer.parseInt(request.getParameter("page"));
-			}else {
-				page = 1;
-			}
-			
-			totalRecord = this.comBoardMapper.countComBoard();
-			
-			Page pdto = new Page(page, rowsize, totalRecord);
-			
-			reqMapperMap.put("pdto",pdto);
+	// (리스트) 리스트 조회
+	@PostMapping("/comBoardList")
+	public HashMap<String, Object> getComBoardList(HttpSession session, HttpServletRequest request) {
+		HashMap<String, Object> viewMap = new HashMap<>(); //뷰페이지로 이동하는 맵 
+		HashMap<String, Object> reqMapperMap = new HashMap<>(); // 매퍼로 이동하는 맵
 
-			List<ComBoardDTO> list = this.comBoardMapper.getComBoardList(reqMapperMap);
-			viewMap.put("list", list);
-			viewMap.put("paging", pdto);
-
-			System.out.println(session.getAttribute("uDTO") +"session.getAttribu ");
-			
-			if(session.getAttribute("uDTO") == null) {
-				System.out.println("비회원");
-			}else {
-				System.out.println("개인회원");
-				UserDTO udto = (UserDTO)session.getAttribute("uDTO");
-				int userKey = udto.getUser_key();
-				int[] interestList = this.comBoardMapper.getInterestCompanyKeyList(userKey); // 관심기업 데이터
-				viewMap.put("interestList", interestList);
-				viewMap.put("applyList", this.comBoardMapper.getApplyList(userKey));
-			}
-			
-			return viewMap;
+		int page;	// 현재 페이지 변수
+		
+		// 페이징 처리 작업
+		if(request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}else {
+			page = 1;
 		}
 		
-		// (리스트) 업종분류 조회
-		@PostMapping("/jobCode")
-		public Map<String, List<CodeDTO>> getJobCodeList() {
-			
-			Map<String, List<CodeDTO>> map = new HashMap<>();
-			map.put("group", this.comBoardMapper.getJobCodeGroupList());
-			map.put("sub", this.comBoardMapper.getJobCodeSubList()); 
-			map.put("step", this.comBoardMapper.getJobCodeStepList());
-			
-			return map;
-		}
-
-		// (리스트) 지역 조회
-		@PostMapping("/locationCode")
-		public Map<String, List<CodeDTO>> getLocationCodeList() {
-			
-			Map<String, List<CodeDTO>> map = new HashMap<>();
-			map.put("group", this.comBoardMapper.getLocationCodeGroupList());
-			map.put("sub", this.comBoardMapper.getLocationCodeSubList());
-			
-			return map;
-		}
-		// (등록) 공고 중간저장
-		@PostMapping("/comBoardTemp/insert")
-		public int addComBoardTemp(ComBoardDTO dto, HttpSession session, HttpServletRequest request) {
-			int temp_key = dto.getTemp_key();
-			// 세션 기업정보로 기업키 저장
-			CompanyDTO cdto = (CompanyDTO)session.getAttribute("cDTO");
-			dto.setCompany_key(cdto.getCompany_key());
-			
-			if(temp_key != 0) {
-				if(1 > 0) {
-					System.out.println("공고 임시저장 수정 성공");
-				}
-			}else{
-				if(this.comBoardMapper.addComBoardTemp(dto) > 0) {
-					System.out.println("공고 임시저장 등록 성공");
-					temp_key = this.comBoardMapper.selectTempPk(dto.getCompany_key());
-				}
-			}
-			
-			return temp_key;
-		}
+		totalRecord = this.comBoardMapper.countComBoard();
 		
-		// 관심기업 등록/해제
-		@PostMapping("/interest/action")
-		public void interestCheck(@RequestParam("check") int check,@RequestParam("company_key") int company_key, HttpServletRequest request, HttpSession session) {
-			
-			InterestDTO iDTO = new InterestDTO();
-			// 세션 개인횡정보로 회원키 저장
+		Page pdto = new Page(page, rowsize, totalRecord);
+		
+		reqMapperMap.put("pdto",pdto);
+
+		List<ComBoardDTO> list = this.comBoardMapper.getComBoardList(reqMapperMap);
+		viewMap.put("list", list);
+		viewMap.put("paging", pdto);
+
+		System.out.println(session.getAttribute("uDTO") +"session.getAttribu ");
+		
+		if(session.getAttribute("uDTO") == null) {
+			System.out.println("비회원");
+		}else {
+			System.out.println("개인회원");
 			UserDTO udto = (UserDTO)session.getAttribute("uDTO");
-			iDTO.setCompany_key(company_key);
-			iDTO.setUser_key(udto.getUser_key());
-			
-			// 1 = check , 0 = uncheck
-			if(check == 1) {
-				this.comBoardMapper.insertInterestCheck(iDTO);
-				System.out.println("insertInterestCheck");
-			}else{
-				this.comBoardMapper.deleteInterestCheck(iDTO);
-				System.out.println("deleteInterestCheck");
+			int userKey = udto.getUser_key();
+			int[] interestList = this.comBoardMapper.getInterestCompanyKeyList(userKey); // 관심기업 데이터
+			viewMap.put("interestList", interestList);
+			viewMap.put("applyList", this.comBoardMapper.getApplyList(userKey));
+		}
+		
+		return viewMap;
+	}
+	
+	// (리스트) 업종분류 조회
+	@PostMapping("/jobCode")
+	public Map<String, List<CodeDTO>> getJobCodeList() {
+		
+		Map<String, List<CodeDTO>> map = new HashMap<>();
+		map.put("group", this.comBoardMapper.getJobCodeGroupList());
+		map.put("sub", this.comBoardMapper.getJobCodeSubList()); 
+		map.put("step", this.comBoardMapper.getJobCodeStepList());
+		
+		return map;
+	}
+
+	// (리스트) 지역 조회
+	@PostMapping("/locationCode")
+	public Map<String, List<CodeDTO>> getLocationCodeList() {
+		
+		Map<String, List<CodeDTO>> map = new HashMap<>();
+		map.put("group", this.comBoardMapper.getLocationCodeGroupList());
+		map.put("sub", this.comBoardMapper.getLocationCodeSubList());
+		
+		return map;
+	}
+	// (등록) 공고 중간저장
+	@PostMapping("/comBoardTemp/insert")
+	public int addComBoardTemp(ComBoardDTO dto, HttpSession session, HttpServletRequest request) {
+		int temp_key = dto.getTemp_key();
+		// 세션 기업정보로 기업키 저장
+		CompanyDTO cdto = (CompanyDTO)session.getAttribute("cDTO");
+		dto.setCompany_key(cdto.getCompany_key());
+		
+		if(temp_key != 0) {
+			if(1 > 0) {
+				System.out.println("공고 임시저장 수정 성공");
+			}
+		}else{
+			if(this.comBoardMapper.addComBoardTemp(dto) > 0) {
+				System.out.println("공고 임시저장 등록 성공");
+				temp_key = this.comBoardMapper.selectTempPk(dto.getCompany_key());
 			}
 		}
 		
-		// 공고 지원 
-		@PostMapping("/apply/insert")
-		public void addApply(@RequestParam("checked") String checked, HttpServletRequest request, HttpSession session) {
+		return temp_key;
+	}
+	
+	// 관심기업 등록/해제
+	@PostMapping("/interest/action")
+	public void interestCheck(@RequestParam("check") int check,@RequestParam("company_key") int company_key, HttpServletRequest request, HttpSession session) {
+		
+		InterestDTO iDTO = new InterestDTO();
+		// 세션 개인횡정보로 회원키 저장
+		UserDTO udto = (UserDTO)session.getAttribute("uDTO");
+		iDTO.setCompany_key(company_key);
+		iDTO.setUser_key(udto.getUser_key());
+		
+		// 1 = check , 0 = uncheck
+		if(check == 1) {
+			this.comBoardMapper.insertInterestCheck(iDTO);
+			System.out.println("insertInterestCheck");
+		}else{
+			this.comBoardMapper.deleteInterestCheck(iDTO);
+			System.out.println("deleteInterestCheck");
+		}
+	}
+	
+	// 공고 지원 
+	@PostMapping("/apply/insert")
+	public void addApply(@RequestParam("checked") String checked, HttpServletRequest request, HttpSession session) {
 
-			UserDTO udto = (UserDTO)session.getAttribute("uDTO");
-			int profile_key = this.comBoardMapper.selectDefaultProfile(udto.getUser_key());
+		UserDTO udto = (UserDTO)session.getAttribute("uDTO");
+		int profile_key = this.comBoardMapper.selectDefaultProfile(udto.getUser_key());
+		
+		System.out.println(checked+"checked");
+		for (int i = 0; i < checked.split(",").length; i++) {
+			ApplyDTO aDTO = new ApplyDTO();
 			
-			System.out.println(checked+"checked");
-			for (int i = 0; i < checked.split(",").length; i++) {
-				ApplyDTO aDTO = new ApplyDTO();
-				
-				aDTO.setProfile_key(profile_key);
-				aDTO.setCom_board_key(Integer.parseInt(checked.split(",")[i]));
-				
-				if(this.comBoardMapper.addApply(aDTO) > 0) System.out.println("지원성공");
-				else System.out.println("지원실패");
-			}
+			aDTO.setProfile_key(profile_key);
+			aDTO.setCom_board_key(Integer.parseInt(checked.split(",")[i]));
+			
+			if(this.comBoardMapper.addApply(aDTO) > 0) System.out.println("지원성공");
+			else System.out.println("지원실패");
 		}
-		
-		//메인 공고리스트 / 최신 / 지원 많은공고 /남은기간
-		@PostMapping("/mainComBoardList")
-		public HashMap<String, Object> mainComBoardList() {
-			HashMap<String, Object> map = new HashMap<>(); //뷰페이지로 이동하는 맵 
-			map.put("new", this.comBoardMapper.getMainNewComBoardList());
-			map.put("hot", this.comBoardMapper.getMainHotComBoardList());
-			map.put("time", this.comBoardMapper.getMainTimeComBoardList());
+	}
+	
+	//메인 공고리스트 / 최신 / 지원 많은공고 /남은기간
+	@PostMapping("/mainComBoardList")
+	public HashMap<String, Object> mainComBoardList() {
+		HashMap<String, Object> map = new HashMap<>(); //뷰페이지로 이동하는 맵 
+		map.put("new", this.comBoardMapper.getMainNewComBoardList());
+		map.put("hot", this.comBoardMapper.getMainHotComBoardList());
+		map.put("time", this.comBoardMapper.getMainTimeComBoardList());
 
-			return map;	
+		return map;	
+	}
+		
+	// (상세보기) 추천인재 리스트 조회
+	@PostMapping("/ajax/recommendList")
+	public HashMap<String, Object> getRecommendList(HttpSession session, HttpServletRequest request) {
+		HashMap<String, Object> viewMap = new HashMap<>(); //뷰페이지로 이동하는 맵 
+		HashMap<String, Object> reqMapperMap = new HashMap<>(); // 매퍼로 이동하는 맵
+
+		int page;	// 현재 페이지 변수
+		
+		// 페이징 처리 작업
+		if(request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}else {
+			page = 1;
 		}
 		
+		totalRecord = this.comBoardMapper.recommendListCount(request.getParameter("code"));
+		
+		Page pdto = new Page(page, rowsize, totalRecord);
+		
+		reqMapperMap.put("pdto",pdto);
+		reqMapperMap.put("code",request.getParameter("code"));
+
+		List<ProfileDTO> list = this.comBoardMapper.getRecommendList(reqMapperMap);
+		viewMap.put("list", list);
+		viewMap.put("paging", pdto);
+
+		return viewMap;
+	}
+	
+	// 유저 지원리스트 지원취소 
+    @PostMapping("/applyCancel")
+    public void applyCancel(@RequestParam("apply_key") int apply_key) {
+       this.userMapper.applyCancelUp(apply_key);
+    }
 }
