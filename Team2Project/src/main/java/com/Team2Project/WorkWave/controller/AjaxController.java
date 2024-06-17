@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -375,9 +377,17 @@ public class AjaxController {
 		return viewMap;
 	}
 	
-	// 유저 지원리스트 지원취소 
-    @PostMapping("/applyCancel")
-    public void applyCancel(@RequestParam("apply_key") int apply_key) {
-       this.userMapper.applyCancelUp(apply_key);
+	@PostMapping("/applyCancel")
+    @ResponseBody
+    public ResponseEntity<String> applyCancel(@RequestParam("apply_key") int apply_key) {
+        try {
+            // applyKey를 사용하여 지원 취소 로직 수행
+        	System.out.println("apply_key ====" + apply_key);
+            userMapper.applyCancelUp(apply_key);
+            return ResponseEntity.ok("지원 취소 완료");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("지원 취소 실패");
+        }
     }
 }
