@@ -59,5 +59,9 @@
   	<select id="positionCnt" resultType="int">
   		select count(*) from position where com_board_key in(select com_board_key from com_board where company_key = #{company_key})
   	</select>
+  	
+  	<select id="countCompany" resultType="int">
+  		select count(*) from company
+  	</select>
   
   </mapper>

@@ -19,5 +19,12 @@
   	<select id="noticeCont" resultType="nDTO" parameterType="page">
   		select * from notice where notice_key = #{no}
   	</select>
+  	
+  	<select id="mainNoticeList" resultType="nDTO">
+  		<![CDATA[
+		select * from (select row_number() over(order by notice_date desc) rnum, b.* from notice b)
+		where rnum <= 3
+	 	]]>
+  	</select>
   
   </mapper>

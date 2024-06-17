@@ -35,4 +35,6 @@ public interface CompanyMapper {
 	int applyNoneCheckCnt(int company_key);
 	
 	int positionCnt(int company_key);
+	
+	int countCompany();
 }

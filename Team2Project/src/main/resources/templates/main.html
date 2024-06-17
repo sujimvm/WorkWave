@@ -8,17 +8,51 @@
 <link rel="stylesheet" th:href="@{/css/main.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script th:src="@{/js/main/list.js}"></script>
+<link rel="stylesheet" th:href="@{/css/FAQ.css}">
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
 		<div class="mainTopDiv">
 			<div class="mainLoginInfo" sec:authorize="!isAuthenticated()" >
+				<div class="containerLeft">
+				    <div class="infoContent">
+				        <h2>등록된 공고 건수</h2>
+				        <p th:text="${ComBoardCount}"></p> 
+				    </div>
+				</div>
+				<div class="containerRight">
+				    <div class="infoContent">
+				        <h2>등록된 회원 수</h2>
+				        <p th:text="${UsersCount}"></p> 
+				    </div>
+				</div>
+				<div class="containerLeft">
+				    <div class="infoContent">
+				        <h2>등록된 기업 수</h2>
+				        <p th:text="${CompanyCount}"></p> 
+				    </div>
+				</div>
 			</div>
 			<div class="mainLoginInfo" sec:authorize="isAuthenticated() and hasRole('USER')">개인회원 로그인 정보 </div>
 			<div class="mainLoginInfo" sec:authorize="isAuthenticated() and hasRole('COMPANY')">기업회원 로그인 정보 </div>
 			
-			<div class="mainLoginBanner">광고</div>
+			<div class="mainLoginNotice">
+				<h3>공지사항</h3>
+            		<ul class="notice-list">
+		            	<li>
+		            		<span>전체</span>
+		            		<span>제목</span>
+		            		<span>날짜</span>
+		            	</li>
+		                <li th:each="notice : ${mainNoticeList}">
+		                	<span style="color: #007BFF">공지</span>
+		                    <a style="color: #000000" th:href="@{/A/noticeCont(no=${notice.notice_key})}" th:text="${notice.notice_title}"></a>
+		                    <span th:text="${notice.notice_date.substring(0, 10)}"></span>
+		                </li>
+		            </ul>
+			</div>
+			<div class="mainLoginAd">광고</div>
 		</div>
 		
 		<div class="mainContentDiv">

@@ -14,16 +14,31 @@
 }
 
 .search-list li span, .search-list li a {
-    flex: 1;
+	margin: 5px;
     text-align: left;
 }
 
 .search-list li span {
-    width: 10%;
+    width: 20%; /* 너비 조절 */
+    flex-grow: 1; /* 선택 사항 */
+    text-align: left;
 }
-
 .search-list li a {
-    width: 80%;
+    width: 70%; /* 너비 조절 */
+    flex-grow: 2; /* 선택 사항 */
     color: #007BFF;
     text-decoration: none;
+    white-space: nowrap; /* 줄 바꿈 방지 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* 넘치는 부분 ... 처리 */
+}
+
+.search-list button {
+	background-color: #0B57D0;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 10px;
+	width: 10%;
 }
