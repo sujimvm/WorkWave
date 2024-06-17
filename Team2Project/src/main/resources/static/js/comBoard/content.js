@@ -6,6 +6,7 @@ $(document).ready(function() {
 
 // 공고리스트 조회 및 출력
 function getRecommendList(page) {
+	
 	$.ajax({
 		url: '/ajax/recommendList',
 		type: 'post',
