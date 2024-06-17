@@ -11,6 +11,7 @@
 <script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 <script th:src="@{/js/comBoard/main.js}"></script>
 <script th:src="@{/js/comBoard/input.js}"></script>
+<script th:src="@{/js/comBoard/update.js}"></script>
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
@@ -53,6 +54,7 @@
 							<tr>
 								<th>고용형태<span class="requiredText">필수</span></th>
 								<td>
+									<input type="hidden" id="com_board_jobtype_select" th:value="${dto.com_board_jobtype}">
 									<select class="selectText textW15" name="com_board_jobtype" id="com_board_jobtype">
 										<option value="정규직">정규직</option>
 										<option value="계약직">계약직</option>
@@ -61,7 +63,6 @@
 										<option value="프리랜서">프리랜서</option>
 									</select>
 								</td>
-								<!-- <td><input name="com_board_jobtype" th:value="${dto.com_board_jobtype}"></td> -->
 							</tr>
 							<tr>
 								<th>모집인원<span class="requiredText">필수</span></th>
@@ -83,6 +84,7 @@
 							<tr>
 								<th>근무요일<span class="requiredText">필수</span></th>
 								<td>
+									<input type="hidden" id="com_board_week_select" th:value="${dto.com_board_week}">
 									<select class="selectText textW15" name="com_board_week" id="com_board_week">
 										<option value="주1일">주 1일</option>
 										<option value="주2일">주 2일</option>
@@ -90,6 +92,7 @@
 										<option value="주4일">주 4일</option>
 										<option value="주5일">주 5일</option>
 										<option value="주6일">주 6일</option>
+										<option value="주7일">주 7일</option>
 									</select>
 								</td>
 								<!-- <td><span>주</span><input type="number" name="com_board_week" max="7" th:value="${dto.com_board_week}"><span>일</span></td> -->
@@ -97,18 +100,17 @@
 							<tr>
 								<th>근무시간<span class="requiredText">필수</span></th>
 								<td>
-									<input type="hidden" name="com_board_time" id="com_board_time">
+									<input type="hidden" name="com_board_time" id="com_board_time" th:value="${dto.com_board_time}">
 									<input type="number" name="com_board_time1" id="com_board_time1" class="textW10 textGr" min="0" max="24"><span class="textBspan">시</span>
 									<input type="number" name="com_board_time2" id="com_board_time2" class="textW10 textGr" min="0" max="60"><span class="textBspan">분 부터 </span>
 									<input type="number" name="com_board_time3" id="com_board_time3" class="textW10 textGr" min="0" max="24"><span class="textBspan">시</span>
 									<input type="number" name="com_board_time4" id="com_board_time4" class="textW10 textGr" min="0" max="60"><span class="textBspan">분 까지</span>
 								</td>
-								<!-- <td><input name="com_board_time" th:value="${dto.com_board_time}"></td> -->
 							</tr>
 							<tr>
 								<th>복리후생<br><span class="limitText">(5개이하 선택)</span></th>
 								<td>
-									<input type="hidden" name="com_board_benefits" id="com_board_benefits">
+									<input type="hidden" name="com_board_benefits" id="com_board_benefits_Checked" th:value="${dto.com_board_benefits}">
 									<table class="optionTb">
 										<tr>
 											<td width="25%"><input type="checkbox" class="checkCss" name="com_board_benefits_Ck" id="com_board_benefits01" value="인센티브"><label for="com_board_benefits01">인센티브</label></td>
@@ -172,6 +174,7 @@
 							<tr>
 								<th>경력<span class="requiredText">필수</span></th>
 								<td>
+									<input type="hidden" id="com_board_career_select" th:value="${dto.com_board_career}">
 									<select class="selectText textW15" name="com_board_career" id="com_board_career">
 										<option value="신입">신입</option>
 										<option value="1년이상">1년이상</option>
@@ -189,12 +192,13 @@
 							<tr>
 								<th>학력<span class="requiredText">필수</span></th>
 								<td>
+									<input type="hidden" id="com_board_edu_select" th:value="${dto.com_board_edu}">
 									<select class="selectText textW25" name="com_board_edu" id="com_board_edu">
+										<option value="고등락교졸업">고등학교졸업</option>
 										<option value="전문대학졸업">전문대학졸업</option>
 										<option value="대학교졸업">대학교졸업</option>
 										<option value="대학원(석사)">대학원(석사)</option>
 										<option value="대학원(박사)">대학원(박사)</option>
-										<option value="고등락교졸업">고등락교졸업</option>
 										<option value="학력무관">학력무관</option>
 									</select>
 								</td>
@@ -203,7 +207,7 @@
 							<tr>
 								<th>우대조건<br><span class="limitText">(5개이하 선택)</span></th>
 								<td>
-									<input type="hidden" name="com_board_conditions" id="com_board_conditions">
+									<input type="hidden" name="com_board_conditions" id="com_board_conditions_Checked" th:value="${dto.com_board_conditions}">
 									<table class="optionTb">
 										<tr>
 											<th width="20%">취업보호·장려</th>
@@ -274,11 +278,11 @@
 						<table class="comBoardInputTb">
 							<tr>
 								<th>시작일<span class="requiredText">필수</span></th>
-								<td><input type="date" class="textW20" name="com_board_start_date" id="com_board_start_date" th:value="${dto.com_board_start_date}"></td>
+								<td><input type="date" class="textW20" name="com_board_start_date" id="com_board_start_date" th:value="${dto.com_board_start_date}" th:field ="${dto.com_board_start_date}"></td>
 							</tr>
 							<tr>
 								<th>마감일<span class="requiredText">필수</span></th>
-								<td><input type="date" class="textW20" name="com_board_end_date" id="com_board_end_date" th:value="${dto.com_board_end_date}"></td>
+								<td><input type="date" class="textW20" name="com_board_end_date" id="com_board_end_date" th:value="${dto.com_board_end_date}" th:field ="${dto.com_board_end_date}"></td>
 							</tr>
 						</table>
 					</div>
@@ -296,7 +300,7 @@
 								<th>담당자 연락처<span class="requiredText">필수</span></th>
 								<td>
 									<input name="com_board_mgr_phone" id="com_board_mgr_phone" class="textW20" maxlength="13" th:value="${dto.com_board_mgr_phone}">
-									<input type="hidden" id="com_board_mgr_phone_Ck">
+									<input type="hidden" id="com_board_mgr_phone_Ck" value="1">
 									<span class="requiredText" id="com_board_mgr_phone_CkText"></span>
 								</td>
 							</tr>
@@ -305,7 +309,7 @@
 								<td>
 									<input name="com_board_mgr_email" id="com_board_mgr_email" class="textW35" maxlength="30"  th:value="${dto.com_board_mgr_email}">
 									<span class="requiredText" id="com_board_mgr_email_CkText"></span>
-									<input type="hidden" id="com_board_mgr_email_Ck">
+									<input type="hidden" id="com_board_mgr_email_Ck" value="1">
 								</td>
 							</tr>
 						</table>
