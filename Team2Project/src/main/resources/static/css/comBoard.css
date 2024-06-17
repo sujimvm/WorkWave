@@ -165,11 +165,11 @@ input[type=number] { /* 파이어폭스에서의 초기화 방법 */
 .tdNoPadding{
 	padding: 0;	
 }
-.jobCodeUl{
+.codeUl{
 	list-style: none;
 	padding-left: 10px;
 }
-.jobCodeUl li{
+.codeUl li{
 	padding: 5px;
 }
 /* button */

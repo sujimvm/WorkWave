@@ -1,5 +1,8 @@
+var locationCodeOutput = 0;
+
 // 화면 시작 
 $(document).ready(function() {
+	getLocationCodeGroup();
 	getComBoardList($("#getPage").val());
 	
 	// 관심기업 추가/삭제
@@ -21,7 +24,64 @@ $(document).ready(function() {
 		});
 		addApply(checked);
 	});
+	
+	// 지역 0 이면 클릭 시 show , 1이면 클릭 시 hide
+	$(document).on('click', '#locationCodeOutputDiv', function() {
+		if(locationCodeOutput == 0){
+			locationCodeOutput = 1;
+			$('#locationCodeTotalDiv').show();
+		}else{
+			locationCodeOutput = 0;
+			$('#locationCodeTotalDiv').hide();
+		}
+	});
+	$(document).on('click', '#locationCodeGroupUl .locCk', function() {
+	   if ($(this).is(':checked')){
+		   $('.locationCodeSubUl').hide();
+		   $('#locationCodeSubUl'+$(this).val().split('/')[0]).show();
+	  }
+	});
+	
+	$(document).on('click', '.locationCodeSubUl .locCk_sub', function() {
+		if ($("#l_all_"+$(this).val().split('/')[0].substr(0,2)).is(':checked')){
+			$("#l_all_"+$(this).val().split('/')[0].substr(0,2)).prop("checked",false);
+		} 
+	});
+	
+	$(document).on('click', '.locationCodeSubUl .locCk_all', function() {
+		if ($(".locCk_sub").is(':checked')){
+			$(".locCk_sub").prop("checked",false);
+		} 
+	});
 });
+
+// 지역 대분류 조회
+function getLocationCodeGroup() {
+	$.ajax({
+		url: '/ajax/locationCode',
+		type: 'post',
+		dataType: 'json',
+		success: function(locationCodeList) {
+			var locationDataGroup = locationCodeList.group;
+			var locationDataSub = locationCodeList.sub;
+			locationDataGroup.forEach(function(group) {
+				$('#locationCodeGroupUl').append("<li><input type='checkbox' class='locCk checkCss' value='"+group.code+"/"+group.name+"' id='l"+group.code+"' name='locationCode'><label for='l"+group.code+"'>" + group.name + "</label></li>");
+				$('#locationCodeSubDiv').append("<ul class='locationCodeSubUl codeUl' id='locationCodeSubUl"+group.code+"'></ul>");
+				$('#locationCodeSubUl'+group.code).append("<li><input type='checkbox' class='locCk locCk_all checkCss' value='"+group.code+"' id='l_all_"+group.code+"' name='locationCode'><label for='l_all_"+group.code+"'>전체</label></li>");
+				$('#locationCodeSubUl'+group.code).hide();
+			}); 
+				
+			locationDataSub.forEach(function(sub) {
+				$('#locationCodeSubUl'+sub.code.substr(0,2)).append("<li><input type='checkbox' class='locCk locCk_sub checkCss' value='"+sub.code+"/"+sub.name+"' id='l"+sub.code+"' name='locationCode'><label for='l"+sub.code+"'>" + sub.name + "</label></li>");
+			});
+			
+			
+		},
+		error: function(xhr, status, error) {
+			console.error(xhr);
+		}
+	});
+}
 
 // 공고리스트 조회 및 출력
 function getComBoardList(nowPg) {
