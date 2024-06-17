@@ -34,8 +34,40 @@
 				    </div>
 				</div>
 			</div>
-			<div class="mainLoginInfo" sec:authorize="isAuthenticated() and hasRole('USER')">개인회원 로그인 정보 </div>
-			<div class="mainLoginInfo" sec:authorize="isAuthenticated() and hasRole('COMPANY')">기업회원 로그인 정보 </div>
+			<div class="mainLoginInfo" sec:authorize="isAuthenticated() and hasRole('USER')">
+				<h3 th:inline="text">[[${session.uDTO.user_name}]] 님 안녕하세요.</h3>
+				<table class="main-user-table">
+				<tr>
+					<th>지원완료</th>
+					<th>이력서 열람</th>
+					<th>포지션 제안</th>
+					<th>관심 기업</th>
+				</tr>
+				
+				<tr>
+					<th th:text="${applyCnt}">지원완료</th>
+					<th th:text="${applyCheckCnt}">이력서 열람</th>
+					<th th:text="${positionJean}">포지션 제안</th>
+					<th th:text="${interest}">관심 기업</th>
+				</tr>         
+            </table>
+			</div>
+			<div class="mainLoginInfo" sec:authorize="isAuthenticated() and hasRole('COMPANY')">
+				<h3 th:inline="text">[[${session.cDTO.company_name}]] 기업회원님 안녕하세요.</h3>
+				<table class="main-company-table">
+	            <tr>
+	               <th>게재 중 공고</th>
+	               <th>미열람 지원자</th>
+	               <th>포지션 제안을 보낸 지원자 수</th>
+	            </tr>
+	            
+	            <tr>
+	               <th th:text="${comBoarding}">지원완료</th>
+	               <th th:text="${applyNoneCheckCnt}">이력서 열람</th>
+	               <th th:text="${positionCnt}">포지션 제안</th>
+	            </tr>         
+           	</table>
+			</div>
 			
 			<div class="mainLoginNotice">
 				<h3 align="center">공지사항</h3>

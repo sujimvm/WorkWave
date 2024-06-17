@@ -149,9 +149,39 @@ public class AllController {
 			if(role.equals("[ROLE_COMPANY]")) {
 				session.setAttribute("role", role);
 				session.setAttribute("cDTO", companyMapper.companyInfo(id));
+				
+				CompanyDTO companyInfo = this.companyMapper.companyInfo(id);
+				  
+				int comBoarding = this.companyMapper.companyBoardingCnt(companyInfo.getCompany_key());
+				int applyNoneCheckCnt = this.companyMapper.applyNoneCheckCnt(companyInfo.getCompany_key());
+				int positionCnt = this.companyMapper.positionCnt(companyInfo.getCompany_key());
+				
+				model.addAttribute("comBoarding", comBoarding); 
+				model.addAttribute("applyNoneCheckCnt", applyNoneCheckCnt); 
+				model.addAttribute("positionCnt", positionCnt); 
+				
 			}else if(role.equals("[ROLE_USER]")){
 				session.setAttribute("role", role);
 				session.setAttribute("uDTO", userMapper.getUserById(id));
+				
+				UserDTO userInfo = this.userMapper.getUserById(id);
+				
+				int applyCnt = this.userMapper.applyCnt(userInfo.getUser_key());
+				int applyCheckCnt = this.userMapper.applyCheckCnt(userInfo.getUser_key());
+				int positionJean = this.userMapper.positionJean(userInfo.getUser_key());
+				int interest = this.userMapper.interest(userInfo.getUser_key());
+				String profileName = this.userMapper.profileName(userInfo.getUser_key());
+				     
+				// 지원완료 갯수
+				model.addAttribute("applyCnt", applyCnt);
+				// 이력서 열람 갯수
+				model.addAttribute("applyCheckCnt", applyCheckCnt);
+				// 포지션 제안 갯수
+				model.addAttribute("positionJean", positionJean);
+				// 관심 기업 갯수
+				model.addAttribute("interest", interest);
+				// 이력서 제목
+				model.addAttribute("profileName", profileName);
 			}
 
 		// 모델에 데이터 추가
