@@ -347,7 +347,7 @@ public class AjaxController {
 	}
 		
 	// (상세보기) 추천인재 리스트 조회
-	@PostMapping("/ajax/recommendList")
+	@PostMapping("/recommendList")
 	public HashMap<String, Object> getRecommendList(HttpSession session, HttpServletRequest request) {
 		HashMap<String, Object> viewMap = new HashMap<>(); //뷰페이지로 이동하는 맵 
 		HashMap<String, Object> reqMapperMap = new HashMap<>(); // 매퍼로 이동하는 맵

@@ -18,6 +18,7 @@ $(document).ready(function() {
 		$(".jobCk_all").closest("li").remove();
 	});
 	
+	//직업분류 소분류 클릭 시 값 넘기기
 	$(document).on('click', '.jobCodeStepUl .jobCk_step', function() {
 		if ($(".jobCk_step").is(':checked')){
 			var step_name = $(this).val().split('/')[1];
@@ -30,6 +31,7 @@ $(document).ready(function() {
 		} 
 	});
 	
+	// 복지 체크갯수 제한
 	$(document).on('click', 'input:checkbox[name=com_board_benefits_Ck]', function() {
 		if ($('input:checkbox[name=com_board_benefits_Ck]:checked').length > 5){
 			alert("5개까지만 선택 가능합니다.");
@@ -37,6 +39,7 @@ $(document).ready(function() {
 		} 
 	});
 	
+	// 우대조건 체크갯수 제한
 	$(document).on('click', 'input:checkbox[name=com_board_conditions_Ck]', function() {
 		if ($('input:checkbox[name=com_board_conditions_Ck]:checked').length > 5){
 			alert("5개까지만 선택 가능합니다.");
@@ -44,6 +47,7 @@ $(document).ready(function() {
 		} 
 	});
 	
+	// 담당자 전화번호 예외처리
     $("#com_board_mgr_phone").blur(function() {
         // 입력된 전화번호 가져오기
         var phoneNumber = $("#com_board_mgr_phone").val();
@@ -79,6 +83,7 @@ $(document).ready(function() {
         }
     });
 	
+	// 담당자 이메일 예외처리
     $("#com_board_mgr_email").blur(function() {
 		var email = $("#com_board_mgr_email").val();
 		var regexp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -93,6 +98,7 @@ $(document).ready(function() {
 		}
     });
         
+    // 에디터 
 	ClassicEditor
         .create(document.querySelector('#com_board_cont'), {
             removePlugins: ['Heading'],
@@ -110,7 +116,8 @@ $(document).ready(function() {
             console.error(error);
         });
         
-        
+     
+     //버튼 고정
 	 $(window).scroll(function( ){  //스크롤이 움직일때마다 이벤트 발생 
 	      var position = $(window).scrollTop(); // 현재 스크롤바의 위치값을 반환합니다.
 	      $("#comBoardBtDiv").stop().animate({top:position+"px"}, 1); //해당 오브젝트 위치값 재설정
@@ -139,7 +146,7 @@ function addTemp() {
 // 실행
 function executionFrom() {
 	
-	    
+	// 체크박스 값 처리
     var com_board_benefits_Ck = [];
     $('input:checkbox[name=com_board_benefits_Ck]:checked').each(function(){
 		com_board_benefits_Ck.push($(this).val());
@@ -214,6 +221,7 @@ function executionFrom() {
     	return false;
 	}
 
+	// 시간 값처리
 	var com_board_time = $("#com_board_time1").val() +":"+ $("#com_board_time2").val() +"-"+ $("#com_board_time3").val() +":"+ $("#com_board_time4").val(); 
 	$("#com_board_time").val(com_board_time);
 	
