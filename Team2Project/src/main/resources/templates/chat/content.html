@@ -22,10 +22,10 @@
                 <tr>
                     <th class="chat-table">
                         <th:block th:if="${null != session.uDTO}">
-                            <span th:text="${session.uDTO.user_name}"></span> <br>
+                            <!-- <span th:text="${session.uDTO.user_name}"></span> <br> -->
                             <span class="user_id" th:text="${session.uDTO.user_id}"></span> <br>
                             <span style="display: none;" class="user_key" th:text="${session.uDTO.user_key}"></span> <br>
-                            <span th:inline="text">질문 [[${chatCnt}]]개</span>
+                            <span th:inline="text">내가 작성한 글 [[${chatCnt}]] 개</span>
                         </th:block>
                         <th:block th:if="${null == session.uDTO}">
                             <span>게스트</span>
@@ -38,14 +38,14 @@
         <div class="chat-info sidebar_r">
 			<h3 th:inline="text">🍳 [[${cont.chat_title}]]</h3>
 			<ul class="chat-list">
-			    <li style="padding-bottom: 40px;"><div  th:utext="${cont.chat_cont}"></div></li>
-			    <li th:inline="text"> 😀 [[${cont.user_id}]]</li>
-			    <li th:inline="text"> [[${cont.chat_tag}]]</li>
+			    <li><div  th:utext="${cont.chat_cont}"></div></li>
+			    <li style="border-bottom: 1px solid #ddd;" th:inline="text"> 😀 [[${cont.user_id}]]</li>
+			    <li style="border-bottom: 1px solid #ddd;" th:inline="text"> [[${cont.chat_tag}]]</li>
 			    <li th:inline="text" style="align-content: center">
 			        👀 [[${cont.chat_hit}]]
 			        <button id="like-btn" class="like-btn">🧡</button> <span id="like">[[${cont.chat_like}]]</span>
 			    </li>
-			    
+			  
 			    <br>
 			    
 			    <div>
@@ -82,18 +82,21 @@
             	        <br>
             	        <span class="reply-date" th:text="${#dates.format(dto.reply_date, 'yyyy/MM/dd')} + ' 작성'"></span>
             	        <p class="reply-content" th:text="${dto.reply_content}"></p>
+            	      
             	  <button class=btn-edit th:if="${dto.user_id == session.uDTO.user_id}" th:attr="data-reply-key=${dto.reply_key}" onclick="editReply(this)">수정</button>
 	        	  <button class=btn-delete th:attr="data-reply-key=${dto.reply_key}" onclick="deleteReply(this)">삭제</button>
 	        	  <br> <br>
-	        	  <hr>
+	        	  
 
 	           	<div th:id="'edit-form-'+${dto.reply_key}" class="d-none" style="display:none;">
-				             <textarea rows="2" th:id="'edit-reply-'+${dto.reply_key}"></textarea>
+				             <textarea rows="2" th:id="'edit-reply-'+${dto.reply_key}"></textarea> <br>
+				             <label for="replyedit" >댓글 수정</label> <br>
 				             <button class=btn-edit th:attr="data-reply-key=${dto.reply_key}" onclick="saveReply(this)">저장</button>
 				             <button class=btn-delete th:onclick="'cancelEdit(' + ${dto.reply_key} + ')'" >취소</button>
 				</div>
 	        </div>
 	        </div>
+	        <hr>
 	        
 	        
 		
@@ -114,7 +117,7 @@
 
 	    function cancelEdit(replyKey) {
 	        $('#edit-form-' + replyKey).addClass('d-none');
-	    }
+	    }	
 	   
         
         function editReply(button) {

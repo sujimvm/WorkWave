@@ -20,16 +20,17 @@
    					<th>내 정보</th>
    				</tr>
    				<tr>
-					<th class="chat-table">
-						<th:block th:if="${null != session.uDTO}">
-							<span th:text="${session.uDTO.user_name}"></span> <br>
-							<span th:text="${session.uDTO.user_id}"></span> <br>
-							<span th:inline="text">질문 [[${chatCnt}]]개</span>
-    					  	</th:block>
-   				  	 	<th:block th:if="${null == session.uDTO}">
-      							<span>게스트</span>
-     					 	</th:block>
-					</th>
+					 <th class="chat-table">
+                        <th:block th:if="${null != session.uDTO}">
+                            <!-- <span th:text="${session.uDTO.user_name}"></span> <br> -->
+                            <span class="user_id" th:text="${session.uDTO.user_id}"></span> <br>
+                            <span style="display: none;" class="user_key" th:text="${session.uDTO.user_key}"></span> <br>
+                            <span th:inline="text">내가 작성한 글 [[${chatCnt}]] 개</span>
+                        </th:block>
+                        <th:block th:if="${null == session.uDTO}">
+                            <span>게스트</span>
+                        </th:block>
+                    </th>
 				</tr>
 			</table>
 		</div>
@@ -39,27 +40,24 @@
 			<div class="chat-table2">
 				<th:block th:if="${not #lists.isEmpty(List)}" th:each="dto : ${List}">
 					<table>
-						 <tr>
-							<th>
+						 <tr style="border-collapse: collapse;">
+							<th >
 								<a th:href="@{/A/chat/content(no=${dto.chat_key})}">
 									<span th:text="${dto.chat_title}"></span>
 								</a>
 							</th>
 						</tr>
-						<tr>
+						<tr style="border-collapse: collapse;">
 							<th>
-								<div th:utext="${#strings.abbreviate(dto.chat_cont, 18)}" style=" font-size: 0.9em;"></div>
+								<div th:utext="${#strings.abbreviate(dto.chat_cont, 30)}" style=" font-size: 0.9em;"></div>
 							</th>
 						</tr>
 						<tr>
-							<th th:inline="text">
+							<th style="border-bottom: 1px solid #ddd;" th:inline="text">
 								👀 [[${dto.chat_hit}]]
 								🧡 [[${dto.chat_like}]]
 							</th>
-						</tr>
-						  <tr class="separator-row">
-                    <td colspan="2"></td> <!-- 각 세트 사이의 구분을 위한 구분선 추가 -->
-                </tr>
+						</tr>	
 					</table>
 					
 				</th:block>
