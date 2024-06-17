@@ -56,7 +56,7 @@ public class CompanySecurityConfig {
         .logout(logout -> logout
         	.logoutUrl("/logout")
         	.invalidateHttpSession(true)
-        	.logoutSuccessUrl("/")
+        	.logoutSuccessUrl("/A/main")
             .permitAll()
         )
         .exceptionHandling(exception -> exception

@@ -99,6 +99,37 @@
 	font-size: 11px;
 }
 
+.main-notice-list {
+    list-style-type: none;
+    padding: 0px 20px 20px 20px;
+    margin: 0;
+}
+
+.main-notice-list li {
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.main-notice-list li span, .main-notice-list li a {
+    text-align: left;
+}
+
+/* .main-notice-list li span {
+}
+ */
+.main-notice-list li a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.main-notice-list li a:hover {
+    text-decoration: underline;
+}
+
+.main-notice-list li a:visited {
+    color: #551A8B;
+}
 
 
 

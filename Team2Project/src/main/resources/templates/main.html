@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
 <meta charset="UTF-8">
 <link rel="icon" href="/image/icon/logo_icon.png"/>  
@@ -38,17 +38,17 @@
 			<div class="mainLoginInfo" sec:authorize="isAuthenticated() and hasRole('COMPANY')">기업회원 로그인 정보 </div>
 			
 			<div class="mainLoginNotice">
-				<h3>공지사항</h3>
-            		<ul class="notice-list">
+				<h3 align="center">공지사항</h3>
+            		<ul class="main-notice-list">
 		            	<li>
-		            		<span>전체</span>
-		            		<span>제목</span>
-		            		<span>날짜</span>
+		            		<span style="width: 10%; text-align: center;">전체</span>
+		            		<span style="width: 60%; margin-left: 5%;">제목</span>
+		            		<span style="width: 30%; text-align: center;">날짜</span>
 		            	</li>
 		                <li th:each="notice : ${mainNoticeList}">
-		                	<span style="color: #007BFF">공지</span>
-		                    <a style="color: #000000" th:href="@{/A/noticeCont(no=${notice.notice_key})}" th:text="${notice.notice_title}"></a>
-		                    <span th:text="${notice.notice_date.substring(0, 10)}"></span>
+		                	<span style="color: #007BFF; width: 10%; text-align: center;" >공지</span>
+		                    <a style="color: #000000; width: 60%; margin-left: 5%;" th:href="@{/A/noticeCont(no=${notice.notice_key})}" th:text="${notice.notice_title}"></a>
+		                    <span style="width: 30%;" th:text="${notice.notice_date.substring(0, 10)}"></span>
 		                </li>
 		            </ul>
 			</div>

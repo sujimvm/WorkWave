@@ -34,7 +34,7 @@ function getComBoardList() {
 
 				if(index == 4) timeTd += "</tr><tr>";
 				timeTd += "<td onclick=\"location.href='/A/comBoard/content?P=1&No=" + time.com_board_key + "'\"><div class='mainListTbDiv'>";
-				if(time.company_logo != null) timeTd +=  "<div class='mainListLogoDiv'><img src='/image/icon/"+ time.company_logo +"'></div>";
+				if(time.company_logo != null) timeTd +=  "<div class='mainListLogoDiv'><img src='/image/logo/"+ time.company_logo +"'></div>";
 				if(time.company_logo == null) timeTd +=  "<div class='mainListLogoDiv'><img src='/image/icon/main_logo.png'></div>";
 				timeTd +=  "<div class='mainListNameDiv'>"+ time.company_name +"</div>";
 				timeTd +=  "<div class='mainListTitleDiv'>"+ time.com_board_title +"</div>";
@@ -63,7 +63,7 @@ function getComBoardList() {
 
 				if(index == 4) hotTd += "</tr><tr>";
 				hotTd += "<td onclick=\"location.href='/A/comBoard/content?P=1&No=" + hot.com_board_key + "'\"><div class='mainListTbDiv'>";
-				if(hot.company_logo != null) hotTd +=  "<div class='mainListLogoDiv'><img src='/image/icon/"+ hot.company_logo +"'></div>";
+				if(hot.company_logo != null) hotTd +=  "<div class='mainListLogoDiv'><img src='/image/logo/"+ hot.company_logo +"'></div>";
 				if(hot.company_logo == null) hotTd +=  "<div class='mainListLogoDiv'><img src='/image/icon/main_logo.png'></div>";
 				hotTd +=  "<div class='mainListNameDiv'>"+ hot.company_name +"</div>";
 				hotTd +=  "<div class='mainListTitleDiv'>"+ hot.com_board_title +"</div>";
@@ -90,7 +90,7 @@ function getComBoardList() {
 
 				if(index == 4) newTd += "</tr><tr>";
 				newTd += "<td onclick=\"location.href='/A/comBoard/content?P=1&No=" + newL.com_board_key + "'\"><div class='mainListTbDiv'>";
-				if(newL.company_logo != null) newTd +=  "<div class='mainListLogoDiv'><img src='/image/icon/"+ newL.company_logo +"'></div>";
+				if(newL.company_logo != null) newTd +=  "<div class='mainListLogoDiv'><img src='/image/logo/"+ newL.company_logo +"'></div>";
 				if(newL.company_logo == null) newTd +=  "<div class='mainListLogoDiv'><img src='/image/icon/main_logo.png'></div>";
 				newTd +=  "<div class='mainListNameDiv'>"+ newL.company_name +"</div>";
 				newTd +=  "<div class='mainListTitleDiv'>"+ newL.com_board_title +"</div>";
