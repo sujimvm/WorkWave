@@ -23,7 +23,7 @@
   	<select id="mainNoticeList" resultType="nDTO">
   		<![CDATA[
 		select * from (select row_number() over(order by notice_date desc) rnum, b.* from notice b)
-		where rnum <= 3
+		where rnum <= 4
 	 	]]>
   	</select>
   

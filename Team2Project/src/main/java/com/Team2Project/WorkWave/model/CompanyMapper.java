@@ -32,6 +32,8 @@ public interface CompanyMapper {
 
 	int companyBoardingCnt(int company_key);
 	
+	int companyBoardEndCnt(int company_key);
+	
 	int applyNoneCheckCnt(int company_key);
 	
 	int positionCnt(int company_key);
