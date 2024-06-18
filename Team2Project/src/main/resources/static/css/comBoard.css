@@ -1,13 +1,39 @@
 @charset "UTF-8";
 
+.comBoardTitleDiv{
+	width: 80%;
+	margin: 0 auto;
+}
+
 /* list  */
+.comBoardListPageTotalDiv{
+	width: 1000px;
+	margin: 0 auto;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+.comBoardSearchTotalDiv{
+	width:80%;
+	margin: 0 auto;
+	padding:30px;
+	border: 1px solid #eeeeee;
+}
+.comBoardSearchDiv{
+	border-bottom: 1px solid #eeeeee;
+    padding-bottom: 10px;
+}
+.comBoardSearchDiv h6{
+	margin: 0;
+    margin-bottom: 5px;
+    padding-left: 5px;
+}
+
+/* content */
 /* 기업로그이미지 */
 .top_r_cominfo_div img{
 	width: 100px;
 	height: 40px;
 }
-
-/* content */
 .recommendListTb img{
 	width: 90px;
 	height: 110px;
@@ -61,13 +87,13 @@
 	font-size: 14px;
 }
 .comBoardInputTb th,td{
-	padding:20px;
+	padding:15px;
 	border-bottom: 1px solid #e9e9e9;
 	
 }
 .comBoardInputTb th{
 	color: #5c5c5c;
-	width: 20%;
+	width: 19%;
 }
 /* 체크박스 테이블 */
 .optionTb{
@@ -88,7 +114,12 @@
 	display: none;
 }
 .checkCss + label {
-	padding: 3px;
+	padding: 3px 10px;
+	cursor: pointer;
+	color: #666666;
+}
+.checkCss + label:hover {
+	color: #000000;
 }
 .checkCss:checked + label {
 	border-radius: 10px;
@@ -105,20 +136,21 @@
 	font-weight: bold;
 }
 .textGr{float: left; margin-right: 5px;}
-.textW100{width: 100%; height: 30px; border-radius: 5px; border: 1px solid #bebebe;}
-.textW95{width: 95%; height: 30px; border-radius: 5px; border: 1px solid #bebebe;}
-.textW90{width: 90%; height: 30px; border-radius: 5px; border: 1px solid #bebebe;}
-.textW80{width: 80%; height: 30px; border-radius: 5px; border: 1px solid #bebebe;}
-.textW70{width: 70%; height: 30px; border-radius: 5px; border: 1px solid #bebebe;}
-.textW60{width: 60%; height: 30px; border-radius: 5px; border: 1px solid #bebebe;}
-.textW50{width: 50%; height: 30px; border-radius: 5px; border: 1px solid #bebebe;}
-.textW40{width: 40%; height: 30px; border-radius: 5px; border: 1px solid #bebebe;}
-.textW35{width: 35%; height: 30px; border-radius: 5px; border: 1px solid #bebebe;}
-.textW30{width: 30%; height: 30px; border-radius: 5px; border: 1px solid #bebebe;}
-.textW25{width: 25%; height: 30px; border-radius: 5px; border: 1px solid #bebebe;}
-.textW20{width: 20%; height: 30px; border-radius: 5px; border: 1px solid #bebebe;}
-.textW15{width: 15%; height: 30px; border-radius: 5px; border: 1px solid #bebebe;}
-.textW10{width: 10%; height: 30px; border-radius: 5px; border: 1px solid #bebebe;}
+.textW100{width: 100%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW95{width: 95%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW90{width: 90%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW80{width: 80%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW70{width: 70%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW60{width: 60%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW50{width: 50%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW40{width: 40%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW35{width: 35%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW30{width: 30%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW25{width: 25%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW20{width: 20%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW15{width: 15%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW10{width: 10%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW5{width: 5%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
 .selectText{
 	font-size: 14px;
 }
@@ -182,29 +214,34 @@ input[type=number] { /* 파이어폭스에서의 초기화 방법 */
 }
 .codeUl{
 	list-style: none;
-	padding-left: 10px;
+	padding-left: 10px;    
 }
 .codeUl li{
 	padding: 5px;
+	font-size: 13px;
 }
 /* button */
 .btCss{
-    border: none;
-    padding: 10px 15px;
+	padding: 10px 15px;
     cursor: pointer;
     width: 160px;
-    height: 50px;
+    height: 45px;
     margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: bold;
 }
 .btCss1{
-    background-color: #0B57D0;
-    color: white;
+    background-color: #2551a8;
+    color: #ffffff;
+    border: 1px solid #2551a8;
 }
 .btCss2{
-	background-color: #5c5c5c;
-    color: white;
+	background-color: #c4d8ff;
+    color: #4879db;
+    border: 1px solid #c4d8ff;
 }
 .btCss3{
-    background-color: #08dbb3;
-    color: white;
+    background-color: #ffffff;
+    color: #8a8a89;
+    border: 1px solid #8a8a89;
 }

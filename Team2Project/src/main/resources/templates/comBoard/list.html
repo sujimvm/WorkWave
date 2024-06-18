@@ -16,74 +16,98 @@
 	<div layout:fragment="content" class="content">
 		<input sec:authorize="isAuthenticated() and hasRole('USER')" type="hidden" id="sessionID" th:value="${session.uDTO.user_id}">
 		<input type="hidden" id="getPage" th:value="${P}">
-		<div>
-			<div id="jobCodeOutputDiv"><span>분류검색</span></div>
-			<div id="jobCodeTotalDiv" class="codeTotalDiv" style="display: none;">
-				<div id="jobCodeGroupDiv" class="codeDiv">
-					<ul id="jobCodeGroupUl" class="codeUl"></ul>
+		<div class="comBoardListPageTotalDiv">
+			<div class="comBoardSearchTotalDiv">
+				<div class="comBoardSearchDiv">
+					<input name="" class="textW95" placeholder="기업명, 공고명 검색">
 				</div>
-				<div id="jobCodeSubDiv" class="codeDiv"></div>
-				<div id="jobCodeStepDiv" class="codeDiv"></div>
-			</div>
-			
-			<div id="locationCodeOutputDiv">지역검색</div>
-			<div id="locationCodeTotalDiv" class="codeTotalDiv" style="display: none;">
-				<div id="locationCodeGroupDiv" class="codeDiv">
-					<ul id="locationCodeGroupUl" class="codeUl"></ul>
+				<div id="jobCodeOutputDiv" class="comBoardSearchDiv">
+					<h6>분류명</h6>
+					<input name="jobCode" class="textW95" readonly="readonly">
+					<div id="jobCodeTotalDiv" class="codeTotalDiv" style="display: none;">
+						<div id="jobCodeGroupDiv" class="codeDiv">
+							<ul id="jobCodeGroupUl" class="codeUl"></ul>
+						</div>
+						<div id="jobCodeSubDiv" class="codeDiv"></div>
+						<div id="jobCodeStepDiv" class="codeDiv"></div>
+					</div>
 				</div>
-				<div id="locationCodeSubDiv" class="codeDiv"></div>
-			</div>
-			<div>
-				<div id="eduCodeDiv">
-					<ul>
-						<li><input type="checkbox" name="" id="" value=""><label for="">전문대학졸업</label></li>
-						<li><input type="checkbox" name="" id="" value=""><label for="">대학교졸업</label></li>
-						<li><input type="checkbox" name="" id="" value=""><label for="">대학원(석사)</label></li>
-						<li><input type="checkbox" name="" id="" value=""><label for="">대학원(박사)</label></li>
-						<li><input type="checkbox" name="" id="" value=""><label for="">고등락교졸업</label></li>
-						<li><input type="checkbox" name="" id="" value=""><label for="">학력무관</label></li>
-					</ul>
-				</div>
-				<div id="careerCodeDiv">
-					<ul>
-						<li><input type="checkbox" name="" id="" value="신입"><label for="">신입</label></li>
-						<li><input type="checkbox" name="" id="" value="1년이상"><label for="">1년이상</label></li>
-						<li><input type="checkbox" name="" id="" value="2년이상"><label for="">2년이상</label></li>
-						<li><input type="checkbox" name="" id="" value="3년이상"><label for="">3년이상</label></li>
-						<li><input type="checkbox" name="" id="" value="5년이상"><label for="">5년이상</label></li>
-						<li><input type="checkbox" name="" id="" value="10년이상"><label for="">10년이상</label></li>
-						<li><input type="checkbox" name="" id="" value="15년이상"><label for="">15년이상</label></li>
-						<li><input type="checkbox" name="" id="" value="20년이상"><label for="">20년이상</label></li>
-						<li><input type="checkbox" name="" id="" value="경력무관"><label for="">경력무관</label></li>
-					</ul>
-				</div>
-				<div id="searchDataDiv">
-					<ul>
-						<li><input type="checkbox" name="" id="" value=""><label for="">정규직</label></li>
-						<li><input type="checkbox" name="" id="" value=""><label for="">계약직</label></li>
-						<li><input type="checkbox" name="" id="" value=""><label for="">인턴</label></li>
-						<li><input type="checkbox" name="" id="" value=""><label for="">파견직</label></li>
-						<li><input type="checkbox" name="" id="" value=""><label for="">프리랜서</label></li>
-						<li><input type="checkbox" name="" id="" value=""><label for="">무관</label></li>
-					</ul>
-				</div><!-- 선택한 검색 값 -->
-			</div>
 				
-			<div><!-- 검색버튼 -->
-				<input type="button" value="조건검색">
-			</div>
-		</div> <!-- 검색 input -->
-		
-		<div>
-			<table id="jobListTb"></table>
+				<div id="locationCodeOutputDiv" class="comBoardSearchDiv">
+					<h6>지역명</h6>
+					<input name="locCode" class="textW95" readonly="readonly">
+					<div id="locationCodeTotalDiv" class="codeTotalDiv" style="display: none;">
+						<div id="locationCodeGroupDiv" class="codeDiv">
+							<ul id="locationCodeGroupUl" class="codeUl"></ul>
+						</div>
+						<div id="locationCodeSubDiv" class="codeDiv"></div>
+					</div>
+				</div>
+				<div id="eduCodeDiv" class="comBoardSearchDiv">
+					<h6>학력</h6>
+					<table class="optionTb">
+						<tr>
+							<td><input type="checkbox" name="" id="eduCode01" class="checkCss" value="고등학교졸업"><label for="eduCode01">고등학교졸업</label></td>
+							<td><input type="checkbox" name="" id="eduCode02" class="checkCss" value="전문대학졸업"><label for="eduCode02">전문대학졸업</label></td>
+							<td><input type="checkbox" name="" id="eduCode03" class="checkCss" value="대학교졸업"><label for="eduCode03">대학교졸업</label></td>
+							<td><input type="checkbox" name="" id="eduCode04" class="checkCss" value="대학원(석사)"><label for="eduCode04">대학원(석사)</label></td>
+							<td><input type="checkbox" name="" id="eduCode05" class="checkCss" value="대학원(박사)"><label for="eduCode05">대학원(박사)</label></td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="" id="eduCode06" class="checkCss" value="학력무관"><label for="eduCode06">학력무관</label></td>
+						</tr>
+					</table>
+				</div>
+				<div id="careerCodeDiv" class="comBoardSearchDiv">
+					<h6>경력</h6>
+					<table class="optionTb">
+						<tr>
+							<td><input type="checkbox" name="" id="careerCode01"  class="checkCss" value="신입"><label for="careerCode01">신입</label></td>
+							<td><input type="checkbox" name="" id="careerCode02"  class="checkCss" value="1년이상"><label for="careerCode02">1년이상</label></td>
+							<td><input type="checkbox" name="" id="careerCode03"  class="checkCss" value="2년이상"><label for="careerCode03">2년이상</label></td>
+							<td><input type="checkbox" name="" id="careerCode04"  class="checkCss" value="3년이상"><label for="careerCode04">3년이상</label></td>
+							<td><input type="checkbox" name="" id="careerCode05"  class="checkCss" value="5년이상"><label for="careerCode05">5년이상</label></td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="" id="careerCode06"  class="checkCss" value="10년이상"><label for="careerCode06">10년이상</label></td>
+							<td><input type="checkbox" name="" id="careerCode07"  class="checkCss" value="15년이상"><label for="careerCode07">15년이상</label></td>
+							<td><input type="checkbox" name="" id="careerCode08"  class="checkCss" value="20년이상"><label for="careerCode08">20년이상</label></td>
+							<td><input type="checkbox" name="" id="careerCode09"  class="checkCss" value="경력무관"><label for="careerCode09">경력무관</label></td>
+						</tr>
+					</table>
+				</div>
+				<div id="searchDataDiv" class="comBoardSearchDiv">
+					<h6>직급</h6>
+					<table class="optionTb">
+						<tr>
+							<td><input type="checkbox" name="" id="typeCode01"  class="checkCss" value="정규직"><label for="typeCode01">정규직</label></td>
+							<td><input type="checkbox" name="" id="typeCode02"  class="checkCss" value="계약직"><label for="typeCode02">계약직</label></td>
+							<td><input type="checkbox" name="" id="typeCode03"  class="checkCss" value="인턴"><label for="typeCode03">인턴</label></td>
+							<td><input type="checkbox" name="" id="typeCode04"  class="checkCss" value="파견직"><label for="typeCode04">파견직</label></td>
+							<td><input type="checkbox" name="" id="typeCode05"  class="checkCss" value="프리랜서"><label for="typeCode05">프리랜서</label></td>
+						</tr>
+						<tr>
+							<td><input type="checkbox" name="" id="typeCode06"  class="checkCss" value="무관"><label for="typeCode06">무관</label></td>
+						</tr>
+					</table>
+				</div><!-- 선택한 검색 값 -->
+					
+				<div ><!-- 검색버튼 -->
+					<input type="button" value="조건검색">
+				</div>
+			</div> <!-- 검색 input -->
+			
 			<div>
-				<input type="button" id="all_apply" value="선택한 기업 지원하기" >
-			</div>
-		</div> <!-- 리스트 -->
-		<div>
-			<!-- Page navigation -->
-            <ul class="pagination" id="pagination"></ul>
-		</div> <!-- 페이징 -->
+				<table id="jobListTb"></table>
+				<div>
+					<input type="button" id="all_apply" value="선택한 기업 지원하기" >
+				</div>
+			</div> <!-- 리스트 -->
+			<div>
+				<!-- Page navigation -->
+	            <ul class="pagination" id="pagination"></ul>
+			</div> <!-- 페이징 -->
+		</div>
 	</div>
 	<div th:replace="~{include/footer :: footer}"></div>
 </body>
