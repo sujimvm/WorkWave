@@ -55,6 +55,10 @@ public interface UserMapper {
 	public CompanyDTO applyCom(int company_key);
 	// 지원취소시 apply_check 'N' -> 'Y'로 바꾸기
 	void applyCancelUp(int apply_key);
+	// 유저가 받은 포지션 제안 리스트
+	public List<PositionDTO> positionInfo(int user_key);
+	// 포지션 제안을 보낸 기업 이름
+	public CompanyDTO positionCompany(int company_key);
 	
 	UserLoginDTO findUserIdById(String user_id);
 	
