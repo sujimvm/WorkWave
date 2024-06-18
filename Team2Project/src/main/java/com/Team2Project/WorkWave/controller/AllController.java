@@ -33,6 +33,7 @@ public class AllController {
 	@Autowired private CompanyMapper companyMapper;
 	@Autowired private NoticeMapper noticeMapper;
 	@Autowired private UserMapper userMapper;
+	@Autowired private ProfileMapper profileMapper;
 
 	// 한 페이지당 보여질 게시물의 수
 	private final int rowsize = 10;
@@ -93,7 +94,7 @@ public class AllController {
 	}
 
 	@GetMapping("/chat")
-	public String list(Model model, HttpServletRequest request) {
+	public String list(Model model, HttpServletRequest request, HttpSession session) {
 		
 		int page;	// 현재 페이지 변수
 
@@ -107,10 +108,24 @@ public class AllController {
 		totalRecord = this.chatMapper.countchat();
 
 		Page pdto = new Page(page, rowsize, totalRecord);
-
+		
+		///////////////////////////////////
+		
+		UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
+		// 이력서의 이미지 사진
+		List<ProfileDTO> profileList = this.profileMapper.profileList(userInfo.getUser_key());
+		// 내가 작성한 게시물 갯수
+		int chatCnt = this.chatMapper.chatCnt(userInfo.getUser_key());
+		// 내가 작성한 게시물의 댓글 갯수
+		int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
+		
 		List<ChatDTO> list = this.chatMapper.list(pdto);
+		
 
 		model.addAttribute("List", list).addAttribute("paging", pdto);
+		model.addAttribute("chatCnt", chatCnt)
+			 .addAttribute("replyCnt", replyCnt)
+			 .addAttribute("profileList", profileList);
 
 		return "chat/list";
 	}
@@ -121,6 +136,19 @@ public class AllController {
 		// 게시물 상세정보
 		ChatDTO content = this.chatMapper.getContent(no);
 		this.chatMapper.readcount(no);
+		
+		UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
+		// 이력서의 이미지 사진
+		List<ProfileDTO> profileList = this.profileMapper.profileList(userInfo.getUser_key());
+		// 내가 작성한 게시물 갯수
+		int chatCnt = this.chatMapper.chatCnt(userInfo.getUser_key());
+		// 내가 작성한 게시물의 댓글 갯수
+		int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
+		
+		model.addAttribute("chatCnt", chatCnt)
+			 .addAttribute("replyCnt", replyCnt)
+			 .addAttribute("profileList", profileList);
+		
 		model.addAttribute("cont", content);
 
 		// 댓글 리스트
@@ -132,66 +160,73 @@ public class AllController {
 	}
 
 	@GetMapping("/main")
-	public String goMain(HttpSession session, Model model) { 
+	   public String goMain(HttpSession session, Model model) { 
 
-		int com_board_count = this.comBoardMapper.countComBoard();
-		int user_count = this.userMapper.countUser();
-		int company_count = this.companyMapper.countCompany();
-		List<NoticeDTO> main_notice_list = this.noticeMapper.mainNoticeList();
+	      int com_board_count = this.comBoardMapper.countComBoard();
+	      int user_count = this.userMapper.countUser();
+	      int company_count = this.companyMapper.countCompany();
+	      List<NoticeDTO> main_notice_list = this.noticeMapper.mainNoticeList();
 
-		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	      
+	      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-		System.out.println(auth +"gd");
-		
-			String role = auth.getAuthorities().toString();
-			String id = auth.getName();
-			if(role.equals("[ROLE_COMPANY]")) {
-				session.setAttribute("role", role);
-				session.setAttribute("cDTO", companyMapper.companyInfo(id));
-				
-				CompanyDTO companyInfo = this.companyMapper.companyInfo(id);
-				  
-				int comBoarding = this.companyMapper.companyBoardingCnt(companyInfo.getCompany_key());
-				int applyNoneCheckCnt = this.companyMapper.applyNoneCheckCnt(companyInfo.getCompany_key());
-				int positionCnt = this.companyMapper.positionCnt(companyInfo.getCompany_key());
-				
-				model.addAttribute("comBoarding", comBoarding); 
-				model.addAttribute("applyNoneCheckCnt", applyNoneCheckCnt); 
-				model.addAttribute("positionCnt", positionCnt); 
-				
-			}else if(role.equals("[ROLE_USER]")){
-				session.setAttribute("role", role);
-				session.setAttribute("uDTO", userMapper.getUserById(id));
-				
-				UserDTO userInfo = this.userMapper.getUserById(id);
-				
-				int applyCnt = this.userMapper.applyCnt(userInfo.getUser_key());
-				int applyCheckCnt = this.userMapper.applyCheckCnt(userInfo.getUser_key());
-				int positionJean = this.userMapper.positionJean(userInfo.getUser_key());
-				int interest = this.userMapper.interest(userInfo.getUser_key());
-				String profileName = this.userMapper.profileName(userInfo.getUser_key());
-				     
-				// 지원완료 갯수
-				model.addAttribute("applyCnt", applyCnt);
-				// 이력서 열람 갯수
-				model.addAttribute("applyCheckCnt", applyCheckCnt);
-				// 포지션 제안 갯수
-				model.addAttribute("positionJean", positionJean);
-				// 관심 기업 갯수
-				model.addAttribute("interest", interest);
-				// 이력서 제목
-				model.addAttribute("profileName", profileName);
-			}
+	      System.out.println(auth +"gd");
+	      
+	         String role = auth.getAuthorities().toString();
+	         String id = auth.getName();
+	         if(role.equals("[ROLE_COMPANY]")) {
+	            session.setAttribute("role", role);
+	            session.setAttribute("cDTO", companyMapper.companyInfo(id));
+	            
+	            CompanyDTO companyInfo = this.companyMapper.companyInfo(id);
+	              
+	            int comBoarding = this.companyMapper.companyBoardingCnt(companyInfo.getCompany_key());
+				/*
+				 * int comBoardEnd =
+				 * this.companyMapper.companyBoardEndCnt(companyInfo.getCompany_key());
+				 */
+	            int applyNoneCheckCnt = this.companyMapper.applyNoneCheckCnt(companyInfo.getCompany_key());
+	            int positionCnt = this.companyMapper.positionCnt(companyInfo.getCompany_key());
+	            
+	            
+	            model.addAttribute("comBoarding", comBoarding)
+						/* .addAttribute("comBoardEnd", comBoardEnd) */
+	                .addAttribute("applyNoneCheckCnt", applyNoneCheckCnt) 
+	                .addAttribute("positionCnt", positionCnt); 
+	            
+	         }else if(role.equals("[ROLE_USER]")){
+	            session.setAttribute("role", role);
+	            session.setAttribute("uDTO", userMapper.getUserById(id));
+	            
+	            UserDTO userInfo = this.userMapper.getUserById(id);
+	            
+	            int applyCnt = this.userMapper.applyCnt(userInfo.getUser_key());
+	            int applyCheckCnt = this.userMapper.applyCheckCnt(userInfo.getUser_key());
+	            int positionJean = this.userMapper.positionJean(userInfo.getUser_key());
+	            int interest = this.userMapper.interest(userInfo.getUser_key());
+	            String profileName = this.userMapper.profileName(userInfo.getUser_key());
+	                 
+	            // 지원완료 갯수
+	            model.addAttribute("applyCnt", applyCnt);
+	            // 이력서 열람 갯수
+	            model.addAttribute("applyCheckCnt", applyCheckCnt);
+	            // 포지션 제안 갯수
+	            model.addAttribute("positionJean", positionJean);
+	            // 관심 기업 갯수
+	            model.addAttribute("interest", interest);
+	            // 이력서 제목
+	            model.addAttribute("profileName", profileName);
+	         }
 
-		// 모델에 데이터 추가
-		model.addAttribute("mainNoticeList", main_notice_list);
-        model.addAttribute("ComBoardCount", com_board_count);
-		model.addAttribute("UsersCount", user_count);
-        model.addAttribute("CompanyCount", company_count);
-			
-		return "main"; 
-	}
+	      // 모델에 데이터 추가
+	      model.addAttribute("mainNoticeList", main_notice_list);
+	      model.addAttribute("ComBoardCount", com_board_count);
+	      model.addAttribute("UsersCount", user_count);
+	      model.addAttribute("CompanyCount", company_count);
+	         
+	      return "main"; 
+	   }
+
 
 	// (리스트) 페이지 이동
 	@GetMapping("/comBoard")
