@@ -7,22 +7,31 @@ $(document).ready(function() {
 	
 	// 관심기업 추가/삭제
 	$(document).on('click', '.interest_check', function() {
-		if ($(this).is(':checked')){
-			interestCheck(1,$(this).val());
-			alert("관심기업 등록이 완료되었습니다");
+		if($("#sessionID").val() != undefined){
+			if ($(this).is(':checked')){
+				interestCheck(1,$(this).val());
+				alert("관심기업 등록이 완료되었습니다");
+			}else{
+				interestCheck(0,$(this).val());
+				alert("관심기업 해제가 완료되었습니다");
+			}
+			getComBoardList($("#getPage").val());
 		}else{
-			interestCheck(0,$(this).val());
-			alert("관심기업 해제가 완료되었습니다");
+			alert("로그인 후 이용가능합니다.");
 		}
 	});
 	
 	//공고 지원
 	$(document).on('click', '#all_apply', function() {
-		var checked = [];
-		$('input:checkbox[name=apply_check]:checked').each(function(){
-			checked.push($(this).val());
-		});
-		addApply(checked);
+		if($("#sessionID").val() != undefined){
+			var checked = [];
+			$('input:checkbox[name=apply_check]:checked').each(function(){
+				checked.push($(this).val());
+			});
+			addApply(checked);
+		}else{
+			alert("로그인 후 이용가능합니다.");
+		}
 	});
 	
 	// 지역 0 이면 클릭 시 show , 1이면 클릭 시 hide
@@ -154,13 +163,12 @@ function interestCheck(check, company_key) {
 	$.ajax({
 		url: '/ajax/interest/action',
 		type: 'post',
-		dataType: 'json',
 		data:{"check":check,"company_key":company_key},
-		error: function(xhr, status, error) {
+		success: function() {
+		},error: function(xhr, status, error) {
 			console.error(xhr);
 		}
 	});
-	getComBoardList($("#getPage").val());
 }
 
 
@@ -171,12 +179,13 @@ function addApply(checked) {
 	$.ajax({
 		url: '/ajax/apply/insert',
 		type: 'post',
-		dataType: 'json',
 		data:{"checked":checked},
-		error: function(xhr, status, error) {
+		success: function() {
+			alert("공고 지원이 완료되었습니다");
+			getComBoardList($("#getPage").val());
+		},error: function(xhr, status, error) {
 			console.error(xhr);
 		}
 	});
-	alert("지원이 완료되었습니다");
-	getComBoardList($("#getPage").val());
+	
 }

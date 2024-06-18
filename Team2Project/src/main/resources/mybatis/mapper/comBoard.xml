@@ -96,8 +96,11 @@
 	  	<select id="selectDefaultProfile" resultType="int" parameterType="int">
 	  		select profile_key from profile where user_key = #{user_key} and profile_default = 'Y'
 	  	</select>
+	  	<select id="selectComBoardCompanyKey" resultType="int" parameterType="int">
+	  		select company_key from com_board where com_board_key = #{com_board_key}
+	  	</select>
 	  	<insert id="addApply" parameterType="aDTO">
-	  		insert into apply values(key_seq.nextval, #{profile_key}, #{com_board_key}, sysdate, default)
+	  		insert into apply values(key_seq.nextval, #{profile_key}, #{com_board_key}, sysdate, default,#{user_key},#{company_key},default)
 	  	</insert>
 	  	
 	  	
@@ -129,6 +132,37 @@
 			where p.profile_key in (select profile_key from apply where com_board_key = 25 ))
 			where rnum = 1 group by edu_kind order by edu_kind
 	  	</select>
+	  	<!-- 상세보기 추천인재(포지션제안용) -->
+        <select id="recommendListCount" parameterType="String" resultType="int">
+           <![CDATA[
+				select COUNT(*) 
+				from (select row_number() over(order by profile_key desc) rnum, p.* 
+				from profile p where p.profile_default = 'Y' 
+				and p.profile_step1 like '%' || #{code} || '%' 
+				or p.profile_step2 like '%' || #{code} || '%') rp 
+				left join users u on rp.user_key = u.user_key
+           ]]>
+        </select>
+	    <select id="getRecommendList" parameterType="HashMap" resultType="pDTO"> 
+		    <![CDATA[
+				select * 
+				from (select row_number() over(order by profile_key desc) rnum, p.* 
+				from profile p where p.profile_default = 'Y' 
+				and p.profile_step1 like '%' || #{code} || '%' 
+				or p.profile_step2 like '%' || #{code} || '%') rp 
+				left join users u on rp.user_key = u.user_key 
+				where rnum >= #{pdto.startNo} and rnum <= #{pdto.endNo} 
+				order by profile_key desc
+	  		]]>
+	  	</select>
+    	<select id="getPositionSuccessList" resultType="int" parameterType="int">
+	  		select user_key from position 
+	  		where com_board_key = #{com_board_key}
+	  	</select>
+	  	<insert id="insertPosition" parameterType="psDTO">
+	  		insert into position values(key_seq.nextval, #{user_key}, #{com_board_key}, #{position_title}, #{position_cont}, 'N', sysdate, #{company_key})
+	  	</insert>
+	  	
 	  	
 	  	<!-- 공고 수정 -->
 	  	<update id="updateComBoard" parameterType="bDTO">
@@ -206,23 +240,4 @@
            ]]>
         </select>
         
-       	<!-- 상세보기 추천인재(포지션제안용) -->
-        <select id="recommendListCount" parameterType="String" resultType="int">
-           <![CDATA[
-				select COUNT(*) 
-				from (select row_number() over(order by profile_key desc) rnum, p.* 
-				from profile p where p.profile_step1 like '%' || #{code} || '%' or p.profile_step2 like '%' || #{code} || '%') rp 
-				left join users u on rp.user_key = u.user_key
-           ]]>
-        </select>
-	    <select id="getRecommendList" parameterType="HashMap" resultType="pDTO"> 
-		    <![CDATA[
-				select * 
-				from (select row_number() over(order by profile_key desc) rnum, p.* 
-				from profile p where p.profile_step1 like '%' || #{code} || '%' or p.profile_step2 like '%' || #{code} || '%') rp 
-				left join users u on rp.user_key = u.user_key 
-				where rnum >= #{pdto.startNo} and rnum <= #{pdto.endNo} 
-				order by profile_key desc
-	  		]]>
-	  	</select>
   </mapper>
