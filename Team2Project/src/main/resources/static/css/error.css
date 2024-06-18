@@ -1,0 +1,18 @@
+@charset "UTF-8";
+
+.errordiv{
+	
+ 	display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+}
+
+button {
+	height: 45px;
+	width: 150px;
+	background-color: #0B57D0;
+	color: #fff;
+	font-weight: bold;
+}

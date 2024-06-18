@@ -45,6 +45,7 @@ public class CompanySecurityConfig {
             // 여기는 개인 롤을 가진 계정만 접근가능
             .requestMatchers("/U/**").hasRole("USER")
 			.requestMatchers("/G/**").anonymous()
+			.requestMatchers("/error/**").permitAll()
             
         )
         .formLogin(form -> form
@@ -59,15 +60,12 @@ public class CompanySecurityConfig {
         	.logoutSuccessUrl("/A/main")
             .permitAll()
         )
-        .exceptionHandling(exception -> exception
-        	.accessDeniedHandler(accessDeniedHandler)
+        
+        .exceptionHandling(exceptionHandling -> exceptionHandling
+                .accessDeniedHandler(accessDeniedHandler)
+               
         )
-				/*
-				 * .sessionManagement(sessionManagement -> sessionManagement
-				 * .invalidSessionUrl("/relogin.go") .maximumSessions(1)
-				 * .maxSessionsPreventsLogin(true)
-				 * .expiredSessionStrategy(sessionExpiredHandler) )
-				 */
+        
 		.csrf(csrf -> csrf
 			.disable()
 		);

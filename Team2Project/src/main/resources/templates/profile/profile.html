@@ -24,14 +24,14 @@
 	</div>
 	
 	<div layout:fragment="content" class="content">
-     <div align="center">
+     <div class="divsize" align="center">
 		<div><br><br><!-- 이력서 입력 폼 -->
 			<form id="profileForm" method="POST" action="/U/profile/insertOk" enctype="multipart/form-data">
 				<input name="profile_name" style='width:100%;font-size:25pt' placeholder="이력서 제목을 작성해주세요" class="custom-input"><br><br>
 				<h2 class="fw-bolder">인적사항</h2><br>
 				<table border="1" class="table table-bordered">
 				    <tr>
-				        <td rowspan="3" width="100px" height="250px">
+				        <td rowspan="3" class="imgWidth">
 				            <img width="190px" height="210px" id="preview">
 				            <input type="file" id="imageFile" name="profile_image_input" accept=".jpeg, .jpg, .png">
 				        </td>
