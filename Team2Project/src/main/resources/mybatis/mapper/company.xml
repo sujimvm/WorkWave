@@ -51,13 +51,18 @@
   		AND COM_BOARD_END_DATE > SYSDATE]]>
   	</select>
   	
+  	<select id="companyBoardEndCnt" parameterType="int" resultType="int">
+  		<![CDATA[SELECT COUNT(*) FROM COM_BOARD WHERE COMPANY_KEY = #{company_key}
+  		and COM_BOARD_END_DATE < SYSDATE]]>
+  	</select>
+  	
   	<select id="applyNoneCheckCnt" resultType="int">
   		select count(*) from apply where com_board_key in (select com_board_key from com_board where company_key = #{company_key})
       	and APPLY_PROFILE_CHECK = 'N'
   	</select>
   	
   	<select id="positionCnt" resultType="int">
-  		select count(*) from position where com_board_key in(select com_board_key from com_board where company_key = #{company_key})
+  		select count(*) from position where company_key = #{company_key}
   	</select>
   	
   	<select id="countCompany" resultType="int">

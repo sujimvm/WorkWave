@@ -359,12 +359,15 @@ public class CompanyController {
 		CompanyDTO companyInfo = (CompanyDTO) session.getAttribute("cDTO");
 		  
 		int comBoarding = this.companyMapper.companyBoardingCnt(companyInfo.getCompany_key());
+		int comBoardEnd = this.companyMapper.companyBoardEndCnt(companyInfo.getCompany_key());
 		int applyNoneCheckCnt = this.companyMapper.applyNoneCheckCnt(companyInfo.getCompany_key());
 		int positionCnt = this.companyMapper.positionCnt(companyInfo.getCompany_key());
 		
-		model.addAttribute("comBoarding", comBoarding); 
-		model.addAttribute("applyNoneCheckCnt", applyNoneCheckCnt); 
-		model.addAttribute("positionCnt", positionCnt); 
+		
+		model.addAttribute("comBoarding", comBoarding)
+			 .addAttribute("comBoardEnd", comBoardEnd)
+			 .addAttribute("applyNoneCheckCnt", applyNoneCheckCnt) 
+			 .addAttribute("positionCnt", positionCnt); 
 		
 		return "company/cont";
 	}

@@ -111,6 +111,13 @@
     border-bottom: 1px solid #ddd;
 }
 
+.main-notice-list li:first-child {
+	border-top: 1px solid #ddd;
+    display: flex;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
 .main-notice-list li span, .main-notice-list li a {
     text-align: left;
 }

@@ -71,14 +71,16 @@
 			<table class="company-table">
 	            <tr>
 	               <th>게재 중 공고</th>
+	               <th>마감된 공고</th>
 	               <th>미열람 지원자</th>
-	               <th>포지션 제안을 보낸 지원자 수</th>
+	               <th>포지션 제안</th>
 	            </tr>
 	            
 	            <tr>
-	               <th th:text="${comBoarding}">지원완료</th>
-	               <th th:text="${applyNoneCheckCnt}">이력서 열람</th>
-	               <th th:text="${positionCnt}">포지션 제안</th>
+	               <th th:text="${comBoarding}"></th>
+	               <th th:text="${comBoardEnd}"></th>
+	               <th th:text="${applyNoneCheckCnt}"></th>
+	               <th th:text="${positionCnt}"></th>
 	            </tr>         
            	</table>
 		</div>
