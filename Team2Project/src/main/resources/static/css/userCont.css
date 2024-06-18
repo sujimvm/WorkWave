@@ -265,5 +265,12 @@ input[type="reset"] {
     cursor: pointer;
 }
 
-
+.profilego {
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0px;
+    color: #0B57D0;
+    text-decoration: none;
+    padding-right: 0;
+}
 
