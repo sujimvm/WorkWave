@@ -279,7 +279,12 @@
     top: 6px;
   }
 
-  
 
+.read {
+    width: 25px; height: 25px;
+    background: url(/image/icon/chat_icon.png) -76px 20px;
+}
+
+  
 
 

@@ -58,8 +58,8 @@
 			    <li><div  th:utext="${cont.chat_cont}"></div></li>
 			    <li style="border-bottom: 1px solid #ddd;" th:inline="text"> 😀 [[${cont.user_id}]]</li>
 			    <li style="border-bottom: 1px solid #ddd;" th:inline="text"> [[${cont.chat_tag}]]</li>
-			    <li th:inline="text" style="align-content: center">
-			        👀 [[${cont.chat_hit}]]
+			    <li class="read" th:inline="text" style="margin-left: 30px;">
+			         [[${cont.chat_hit}]]
 			        <button id="like-btn" class="like-btn">🧡</button> <span id="like">[[${cont.chat_like}]]</span>
 			    </li>
 			  
