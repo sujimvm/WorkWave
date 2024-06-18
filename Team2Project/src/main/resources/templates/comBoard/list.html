@@ -14,6 +14,7 @@
 <body>
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
+		<input sec:authorize="isAuthenticated() and hasRole('USER')" type="hidden" id="sessionID" th:value="${session.uDTO.user_id}">
 		<input type="hidden" id="getPage" th:value="${P}">
 		<div>
 			<div id="jobCodeOutputDiv"><span>분류검색</span></div>
@@ -75,7 +76,9 @@
 		
 		<div>
 			<table id="jobListTb"></table>
-			<input type="button" id="all_apply" value="선택한 기업 지원하기">
+			<div>
+				<input type="button" id="all_apply" value="선택한 기업 지원하기" >
+			</div>
 		</div> <!-- 리스트 -->
 		<div>
 			<!-- Page navigation -->

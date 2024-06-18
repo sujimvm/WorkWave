@@ -238,12 +238,8 @@ public class AjaxController {
 		viewMap.put("list", list);
 		viewMap.put("paging", pdto);
 
-		System.out.println(session.getAttribute("uDTO") +"session.getAttribu ");
-		
 		if(session.getAttribute("uDTO") == null) {
-			System.out.println("비회원");
 		}else {
-			System.out.println("개인회원");
 			UserDTO udto = (UserDTO)session.getAttribute("uDTO");
 			int userKey = udto.getUser_key();
 			int[] interestList = this.comBoardMapper.getInterestCompanyKeyList(userKey); // 관심기업 데이터
@@ -290,7 +286,6 @@ public class AjaxController {
 			}
 		}else{
 			if(this.comBoardMapper.addComBoardTemp(dto) > 0) {
-				System.out.println("공고 임시저장 등록 성공");
 				temp_key = this.comBoardMapper.selectTempPk(dto.getCompany_key());
 			}
 		}
@@ -311,10 +306,8 @@ public class AjaxController {
 		// 1 = check , 0 = uncheck
 		if(check == 1) {
 			this.comBoardMapper.insertInterestCheck(iDTO);
-			System.out.println("insertInterestCheck");
 		}else{
 			this.comBoardMapper.deleteInterestCheck(iDTO);
-			System.out.println("deleteInterestCheck");
 		}
 	}
 	
@@ -323,17 +316,16 @@ public class AjaxController {
 	public void addApply(@RequestParam("checked") String checked, HttpServletRequest request, HttpSession session) {
 
 		UserDTO udto = (UserDTO)session.getAttribute("uDTO");
-		int profile_key = this.comBoardMapper.selectDefaultProfile(udto.getUser_key());
 		
-		System.out.println(checked+"checked");
 		for (int i = 0; i < checked.split(",").length; i++) {
 			ApplyDTO aDTO = new ApplyDTO();
 			
-			aDTO.setProfile_key(profile_key);
+			aDTO.setUser_key(udto.getUser_key());
+			aDTO.setProfile_key(this.comBoardMapper.selectDefaultProfile(udto.getUser_key()));
 			aDTO.setCom_board_key(Integer.parseInt(checked.split(",")[i]));
+			aDTO.setCompany_key(this.comBoardMapper.selectComBoardCompanyKey(aDTO.getCom_board_key()));
 			
-			if(this.comBoardMapper.addApply(aDTO) > 0) System.out.println("지원성공");
-			else System.out.println("지원실패");
+			this.comBoardMapper.addApply(aDTO);
 		}
 	}
 	
@@ -371,14 +363,15 @@ public class AjaxController {
 		reqMapperMap.put("code",request.getParameter("code"));
 
 		List<ProfileDTO> list = this.comBoardMapper.getRecommendList(reqMapperMap);
+		int[] successList = this.comBoardMapper.getPositionSuccessList(Integer.parseInt(request.getParameter("comBoardKey")));
 		viewMap.put("list", list);
+		viewMap.put("successList", successList);
 		viewMap.put("paging", pdto);
 
 		return viewMap;
 	}
 	
 	@PostMapping("/applyCancel")
-    @ResponseBody
     public ResponseEntity<String> applyCancel(@RequestParam("apply_key") int apply_key) {
         try {
             // applyKey를 사용하여 지원 취소 로직 수행
@@ -390,4 +383,12 @@ public class AjaxController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("지원 취소 실패");
         }
     }
+	
+	// 공고 지원 
+	@PostMapping("/position/insert")
+	public void addPosition(PositionDTO psDTO, HttpServletRequest request, HttpSession session) {
+		CompanyDTO cdto = (CompanyDTO)session.getAttribute("cDTO");
+		psDTO.setCompany_key(cdto.getCompany_key());
+		this.comBoardMapper.insertPosition(psDTO);
+	}
 }

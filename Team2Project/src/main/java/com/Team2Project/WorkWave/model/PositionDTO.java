@@ -4,10 +4,10 @@ import lombok.Data;
 
 @Data
 public class PositionDTO {
-	private String position_key;
-	private String user_key;
-	private String company_key;
-	private String com_board_key;
+	private int position_key;
+	private int user_key;
+	private int company_key;
+	private int com_board_key;
 	private String position_title;
 	private String position_cont;
 	private String position_check;
