@@ -30,6 +30,7 @@ public interface ComBoardMapper {
 	int deleteInterestCheck(InterestDTO dto); // 관심기업 삭제
 
 	int selectDefaultProfile(int user_key); // 기본 프로필 키 조회
+	int selectComBoardCompanyKey(int company_key); // 지원하는 기업 키 조회
 	int addApply(ApplyDTO dto); // 공고 지원
 	
 	ComBoardDTO getComBoard(int com_board_key);
@@ -37,6 +38,11 @@ public interface ComBoardMapper {
 	List<Map<String, Object>> getApplyAvgAge(int com_board_key);
 	List<Map<String, Object>> getApplyAvgGender(int com_board_key);
 	List<Map<String, Object>> getApplyAvgEdu(int com_board_key);
+	int recommendListCount(String code);//공고 상세보기 추천인재 리스트 총 갯수
+	List<ProfileDTO> getRecommendList(HashMap<String, Object> reqMapperMap);//공고 상세보기 추천인재 리스트
+	int[] getPositionSuccessList(int com_board_key); // 공고 지원 리스트
+	int insertPosition(PositionDTO dto); // 관심기업 추가
+
 	int updateComBoard(ComBoardDTO dto); // 공고수정
 	
 	List<ComBoardDTO> getMainNewComBoardList(); // (메인) 공고리스트
@@ -45,8 +51,7 @@ public interface ComBoardMapper {
 	List<ComBoardDTO> getComBoardList(String type); // (메인) 공고리스트
 	
 	List<ComBoardDTO> getUnifiedSearchList(Page pdto);
-	int recommendListCount(String code);
-	List<ProfileDTO> getRecommendList(HashMap<String, Object> reqMapperMap);
+	
 	
 	int countSearchList(String keyword);
 }

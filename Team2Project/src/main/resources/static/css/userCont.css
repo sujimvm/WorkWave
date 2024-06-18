@@ -87,7 +87,7 @@
 }
 
 .user-table {
-    width: 70%;
+    width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
     font-size: 18px;
@@ -240,7 +240,6 @@ input[type="reset"] {
 
 .user-list2 li span, .user-list li a {
     /* flex: 1; */
-    text-align: center;
 }
 
 .user-list2 li a {
@@ -255,5 +254,23 @@ input[type="reset"] {
 
 .user-list li a:visited {
     color: #551A8B;
+}
+
+.user-btn {
+	background-color: #0B57D0; /* 파란색 버튼 */
+    color: white;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.profilego {
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0px;
+    color: #0B57D0;
+    text-decoration: none;
+    padding-right: 0;
 }
 

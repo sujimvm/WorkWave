@@ -68,6 +68,14 @@
    		select * from company where company_key = #{company_key}
    </select>
    
+   <select id="positionInfo">
+   		select * from position where user_key = #{user_key}
+   </select>
+   
+   <select id="positionCompany">
+   		select * from company where company_key = #{company_key}
+   </select>
+   
   <select id="positionJean" resultType="int">
   	   select count(*) from position where user_key = #{user_key}
   </select>

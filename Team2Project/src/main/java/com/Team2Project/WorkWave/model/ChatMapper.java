@@ -25,7 +25,9 @@ public interface ChatMapper {
 	
 	public int like(int chat_key);
 	
-	public int chatcnt(int no);
+	public int chatCnt(int user_key);
+	
+	public int replyCnt(int user_key);
 	
 	List<ChatReplyDTO> replylist(int no);
 
@@ -39,7 +41,6 @@ public interface ChatMapper {
     
     public int replylike(int reply_key);
 	
-    public int chatCnt(int user_key);
     
     List<ChatReplyDTO> getRepliesByChatKey(int chat_key);
 	

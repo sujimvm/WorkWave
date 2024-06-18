@@ -13,19 +13,34 @@
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
 		<div class="sidebar active">
-			<h3><a th:href="@{/U/chat/insert}">질문 · 글쓰기</a></h3>
+			<h3><a style="text-align: center; background-color: #007BFF; padding-bottom: 20px; padding-top: 20px; font-size: 18px;" 
+				   th:href="@{/U/chat/insert}">질문 · 글쓰기</a></h3>
    			<br>
    			<table class="chat-user">
    				<tr>
-   					<th>내 정보</th>
+   					<th:block th:if="${profileList != null and profileList.size() > 0}">
+   						<th:block th:each="profile : ${profileList}">
+				            <img th:if="${profile.profile_default == 'Y'}" 
+				                 th:src="@{'/image/profile/' + ${profile.profile_image}}"
+				                 alt="Profile Image" style="width: 90px; height: 90px; margin-left: 75px; margin-bottom: -8px;" />
+        				</th:block>
+   					</th:block>
+   					<th:block th:if="${profileList == null or profileList.isEmpty()}">
+   						<img th:src="@{/image/profile/기본 고양이 이미지.PNG}" alt="Profile Image" 
+   						     style="width: 90px; height: 90px; margin-left: 75px; margin-bottom: -8px;" />
+   					</th:block>
+   				</tr>
+   				<tr>
+   					<th th:inline="text">[[${session.uDTO.user_name}]] 님</th>
    				</tr>
    				<tr>
 					 <th class="chat-table">
                         <th:block th:if="${null != session.uDTO}">
                             <!-- <span th:text="${session.uDTO.user_name}"></span> <br> -->
                             <span class="user_id" th:text="${session.uDTO.user_id}"></span> <br>
-                            <span style="display: none;" class="user_key" th:text="${session.uDTO.user_key}"></span> <br>
-                            <span th:inline="text">내가 작성한 글 [[${chatCnt}]] 개</span>
+                            <span style="display: none;" class="user_key" th:text="${session.uDTO.user_key}"></span><br>
+                            <span th:inline="text">작성글 [[${chatCnt}]]</span>&nbsp;
+                            <span th:inline="text">답변글 [[${replyCnt}]]</span>
                         </th:block>
                         <th:block th:if="${null == session.uDTO}">
                             <span>게스트</span>
@@ -53,11 +68,13 @@
 							</th>
 						</tr>
 						<tr>
-							<th style="border-bottom: 1px solid #ddd;" th:inline="text">
-								👀 [[${dto.chat_hit}]]
-								🧡 [[${dto.chat_like}]]
-							</th>
-						</tr>	
+						    <th style="border-bottom: 1px solid #ddd;" th:inline="text">
+						        <img src="/image/icon/eye.png" alt="Chat Hit" style="width: 20px; height: 20px; margin-top: 5px;">
+						        [[${dto.chat_hit}]]
+						        <img src="/image/icon/like.png" alt="Chat Like" style="width: 20px; height: 20px; margin-top: 5px;">
+						        [[${dto.chat_like}]]
+						    </th>
+						</tr>		
 					</table>
 					
 				</th:block>
@@ -77,7 +94,7 @@
                 </li>
 
                 <li th:each="i : ${#numbers.sequence(paging.startBlock, paging.endBlock)}">
-                    <a th:href="@{/A/chat(page=${i})}" th:text="'[' + ${i} + ']'"></a>
+                    <a th:href="@{/A/chat(page=${i})}" th:text="${i}"></a>
                 </li>
 
                 <li th:if="${paging != null and paging.endBlock < paging.allPage}">

@@ -4,9 +4,14 @@
 <meta charset="UTF-8">
 <link rel="icon" href="/image/icon/logo_icon.png"/> 
 <title>Work Wave 공고 상세보기</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"/>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
+
+<script src="https://cdn.ckeditor.com/ckeditor5/41.4.2/classic/ckeditor.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+
 <script th:src="@{/js/comBoard/content.js}"></script>
 </head>
 <body>
@@ -153,10 +158,10 @@
 			</div>
 			
 			
-			<div sec:authorize="isAuthenticated() and hasRole('COMPANY')">
+			<div sec:authorize="isAuthenticated() and hasRole('COMPANY')" th:if="${session.cDTO.company_key == map.dto.company_key}">
 				<h3>추전인재</h3>
 				<div>
-					<table id="recommendList"></table>
+					<table id="recommendList" class="recommendListTb"></table>
 				</div>
 				<div>
 					<!-- Page navigation -->
@@ -167,7 +172,28 @@
 			<div>
 				<input type="button" th:onclick="|location.href='@{/A/comBoard(P=${map.P})}'|" value="목록">
 			</div>
+			
+			 <!-- Modal HTML embedded directly into document -->
+		    <div id="recommendModal" class="modal">
+		    	<form id="positionForm" >
+					<input type="hidden" name="user_name" id="user_name">
+					<input type="hidden" name="user_key" id="user_key">
+					<input type="hidden" name="com_board_key" id="com_board_key" th:value="${map.dto.com_board_key}">
+					<table>
+						<tr>
+							<td><input name="position_title" class="textW100" placeholder="포지션 제안 제목을 입력하세요"></td>
+						</tr>
+						<tr>
+							<td><textarea name="position_cont" id="position_cont" placeholder="포지션 제안 내용을 입력하세요"></textarea></td>
+						</tr>
+					</table>
+					<div>
+						<input type="button" value="포지션제안" onclick="goPositionInputModal()">
+					</div>
+		    	</form>
+		    </div>
 		</div>
+
 	<div th:replace="~{include/footer :: footer}"></div>
 </body>
 </html>

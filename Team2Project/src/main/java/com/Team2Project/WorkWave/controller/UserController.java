@@ -3,6 +3,8 @@ package com.Team2Project.WorkWave.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,8 +83,6 @@ public class UserController {
 		  applyComList.add(applyCom);
 	  }
 	  
-	  
-	  
 	  int applyCnt = this.userMapper.applyCnt(userInfo.getUser_key()); 
 	  int applyCheckCnt = this.userMapper.applyCheckCnt(userInfo.getUser_key());
 	  int UapplyNonCheckCnt = this.userMapper.UapplyNonCheckCnt(userInfo.getUser_key());
@@ -105,6 +105,38 @@ public class UserController {
 	   
 	  return "user/applyList";
 	}
+    
+    // 유저 기업으로부터 포지션제안 받은 포지션리스트
+    @GetMapping("/userPosition")
+    public String userPosition(HttpSession session, Model model) {
+    	
+    	UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
+    	
+    	// 유저가 받은 포지션 제안 정보
+    	List<PositionDTO> positionInfoList = this.userMapper.positionInfo(userInfo.getUser_key());
+    	// 포지션 제안을 보낸 기업 이름
+  	    List<CompanyDTO> positionComList = new ArrayList<>();
+  	    
+  	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    	
+    	for(PositionDTO positionInfo : positionInfoList) {
+    		CompanyDTO positionCom = this.userMapper.positionCompany(positionInfo.getCompany_key());
+    		positionComList.add(positionCom);
+    		
+    		LocalDate positionDate = LocalDate.parse(positionInfo.getPosition_date().substring(0, 10), formatter);
+            LocalDate expirationDate = positionDate.plusDays(7);
+            positionInfo.setExpirationDate(expirationDate.format(formatter));
+    	}
+    	
+    	
+    	
+    	// 유저가 받은 포지션 제안 정보
+    	model.addAttribute("positionInfoList", positionInfoList)
+    	// 포지션 제안을 보낸 기업 이름
+    		 .addAttribute("positionComList", positionComList);
+    	
+    	return "user/positionList";
+    }
    
 
    // 유저 정보 수정받기 전 비밀번호 확인 페이지로 이동
@@ -565,7 +597,19 @@ public class UserController {
 				}
    
 		@GetMapping("/chat/insert")
-		public String write() {
+		public String write(HttpSession session, Model model) {
+			
+			UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
+			// 이력서의 이미지 사진
+			List<ProfileDTO> profileList = this.profileMapper.profileList(userInfo.getUser_key());
+			// 내가 작성한 게시물 갯수
+			int chatCnt = this.chatMapper.chatCnt(userInfo.getUser_key());
+			// 내가 작성한 게시물의 댓글 갯수
+			int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
+			
+			model.addAttribute("chatCnt", chatCnt)
+				 .addAttribute("replyCnt", replyCnt)
+				 .addAttribute("profileList", profileList);
 			
 			return "chat/write";
 		}
@@ -620,9 +664,21 @@ public class UserController {
 		}
 		
 		@GetMapping("/chat/update")
-		public String modify(@RequestParam("no")int no, Model model) {
+		public String modify(@RequestParam("no")int no, Model model, HttpSession session) {
 			
 			ChatDTO content = this.chatMapper.getContent(no);
+			
+			UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
+			// 이력서의 이미지 사진
+			List<ProfileDTO> profileList = this.profileMapper.profileList(userInfo.getUser_key());
+			// 내가 작성한 게시물 갯수
+			int chatCnt = this.chatMapper.chatCnt(userInfo.getUser_key());
+			// 내가 작성한 게시물의 댓글 갯수
+			int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
+			
+			model.addAttribute("chatCnt", chatCnt)
+				 .addAttribute("replyCnt", replyCnt)
+				 .addAttribute("profileList", profileList);
 			
 			model.addAttribute("modify", content);
 			
