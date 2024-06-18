@@ -13,30 +13,47 @@
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
         <div class="sidebar active">
-            <h3><a th:href="@{/U/chat/insert}">질문 · 글쓰기</a></h3>
-            <br>
-            <table class="chat-user">
-                <tr>
-                    <th>내 정보</th>
-                </tr>
-                <tr>
-                    <th class="chat-table">
+			<h3><a style="text-align: center; background-color: #007BFF; padding-bottom: 20px; padding-top: 20px; font-size: 18px;" 
+				   th:href="@{/U/chat/insert}">질문 · 글쓰기</a></h3>
+   			<br>
+   			<table class="chat-user">
+   				<tr>
+   					<th:block th:if="${profileList != null and profileList.size() > 0}">
+   						<th:block th:each="profile : ${profileList}">
+				            <img th:if="${profile.profile_default == 'Y'}" 
+				                 th:src="@{'/image/profile/' + ${profile.profile_image}}"
+				                 alt="Profile Image" style="width: 90px; height: 90px; margin-left: 75px; margin-bottom: -8px;" />
+        				</th:block>
+   					</th:block>
+   					<th:block th:if="${profileList == null or profileList.isEmpty()}">
+   						<img th:src="@{/image/profile/기본 고양이 이미지.PNG}" alt="Profile Image" 
+   						     style="width: 90px; height: 90px; margin-left: 75px; margin-bottom: -8px;" />
+   					</th:block>
+   				</tr>
+   				<tr>
+   					<th th:inline="text">[[${session.uDTO.user_name}]] 님</th>
+   				</tr>
+   				<tr>
+					 <th class="chat-table">
                         <th:block th:if="${null != session.uDTO}">
                             <!-- <span th:text="${session.uDTO.user_name}"></span> <br> -->
                             <span class="user_id" th:text="${session.uDTO.user_id}"></span> <br>
-                            <span style="display: none;" class="user_key" th:text="${session.uDTO.user_key}"></span> <br>
-                            <span th:inline="text">내가 작성한 글 [[${chatCnt}]] 개</span>
+                            <span style="display: none;" class="user_key" th:text="${session.uDTO.user_key}"></span><br>
+                            <span th:inline="text">작성글 [[${chatCnt}]]</span>&nbsp;
+                            <span th:inline="text">답변글 [[${replyCnt}]]</span>
                         </th:block>
                         <th:block th:if="${null == session.uDTO}">
                             <span>게스트</span>
                         </th:block>
                     </th>
-                </tr>
-            </table>
-        </div>
+				</tr>
+			</table>
+		</div>
         
         <div class="chat-info sidebar_r">
-			<h3 th:inline="text">🍳 [[${cont.chat_title}]]</h3>
+			<h3 th:inline="text" class="Q">
+    			<span style="margin-left: 30px;">[[${cont.chat_title}]]</span>
+			</h3>
 			<ul class="chat-list">
 			    <li><div  th:utext="${cont.chat_cont}"></div></li>
 			    <li style="border-bottom: 1px solid #ddd;" th:inline="text"> 😀 [[${cont.user_id}]]</li>
@@ -49,10 +66,10 @@
 			    <br>
 			    
 			    <div>
-				    <a th:href="@{/U/chat/update(no=${cont.chat_key})}">
+				    <a style="text-decoration: none;" th:href="@{/U/chat/update(no=${cont.chat_key})}">
     					<input type="button" value="글수정" class="btn-custom">
 					</a>
-					<a href="javascript:void(0);" th:onclick="|if(confirm('글삭제?')){
+					<a style="text-decoration: none;" href="javascript:void(0);" th:onclick="|if(confirm('글삭제?')){
 								location.href='@{/U/chat/delete(no=${cont.chat_key})}'
 								}else{return;}|">
    						 <input type="button" value="글삭제" class="btn-custom">

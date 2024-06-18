@@ -565,7 +565,19 @@ public class UserController {
 				}
    
 		@GetMapping("/chat/insert")
-		public String write() {
+		public String write(HttpSession session, Model model) {
+			
+			UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
+			// 이력서의 이미지 사진
+			List<ProfileDTO> profileList = this.profileMapper.profileList(userInfo.getUser_key());
+			// 내가 작성한 게시물 갯수
+			int chatCnt = this.chatMapper.chatCnt(userInfo.getUser_key());
+			// 내가 작성한 게시물의 댓글 갯수
+			int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
+			
+			model.addAttribute("chatCnt", chatCnt)
+				 .addAttribute("replyCnt", replyCnt)
+				 .addAttribute("profileList", profileList);
 			
 			return "chat/write";
 		}
@@ -620,9 +632,21 @@ public class UserController {
 		}
 		
 		@GetMapping("/chat/update")
-		public String modify(@RequestParam("no")int no, Model model) {
+		public String modify(@RequestParam("no")int no, Model model, HttpSession session) {
 			
 			ChatDTO content = this.chatMapper.getContent(no);
+			
+			UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
+			// 이력서의 이미지 사진
+			List<ProfileDTO> profileList = this.profileMapper.profileList(userInfo.getUser_key());
+			// 내가 작성한 게시물 갯수
+			int chatCnt = this.chatMapper.chatCnt(userInfo.getUser_key());
+			// 내가 작성한 게시물의 댓글 갯수
+			int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
+			
+			model.addAttribute("chatCnt", chatCnt)
+				 .addAttribute("replyCnt", replyCnt)
+				 .addAttribute("profileList", profileList);
 			
 			model.addAttribute("modify", content);
 			
