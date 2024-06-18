@@ -101,14 +101,14 @@
 								<th>근무시간<span class="requiredText">필수</span></th>
 								<td>
 									<input type="hidden" name="com_board_time" id="com_board_time" th:value="${dto.com_board_time}">
-									<input type="number" name="com_board_time1" id="com_board_time1" class="textW10 textGr" min="0" max="24"><span class="textBspan">시</span>
-									<input type="number" name="com_board_time2" id="com_board_time2" class="textW10 textGr" min="0" max="60"><span class="textBspan">분 부터 </span>
-									<input type="number" name="com_board_time3" id="com_board_time3" class="textW10 textGr" min="0" max="24"><span class="textBspan">시</span>
-									<input type="number" name="com_board_time4" id="com_board_time4" class="textW10 textGr" min="0" max="60"><span class="textBspan">분 까지</span>
+									<input type="number" name="com_board_time1" id="com_board_time1" class="textW5 textGr" min="0" max="24"><span class="textBspan">시</span>
+									<input type="number" name="com_board_time2" id="com_board_time2" class="textW5 textGr" min="0" max="60"><span class="textBspan">분 부터 </span>
+									<input type="number" name="com_board_time3" id="com_board_time3" class="textW5 textGr" min="0" max="24"><span class="textBspan">시</span>
+									<input type="number" name="com_board_time4" id="com_board_time4" class="textW5 textGr" min="0" max="60"><span class="textBspan">분 까지</span>
 								</td>
 							</tr>
 							<tr>
-								<th>복리후생<br><span class="limitText">(5개이하 선택)</span></th>
+								<th>복리후생<br><span class="limitText">(최대 5개)</span></th>
 								<td>
 									<input type="hidden" name="com_board_benefits" id="com_board_benefits_Checked" th:value="${dto.com_board_benefits}">
 									<table class="optionTb">
@@ -205,7 +205,7 @@
 								<!-- <td><input name="com_board_edu" th:value="${dto.com_board_edu}"></td> -->
 							</tr>
 							<tr>
-								<th>우대조건<br><span class="limitText">(5개이하 선택)</span></th>
+								<th>우대조건<br><span class="limitText">(최대 5개)</span></th>
 								<td>
 									<input type="hidden" name="com_board_conditions" id="com_board_conditions_Checked" th:value="${dto.com_board_conditions}">
 									<table class="optionTb">
