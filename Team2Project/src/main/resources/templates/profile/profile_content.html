@@ -22,13 +22,13 @@
 	</div><br><br>
 	
 	<div layout:fragment="content" class="content">
-	<div align="center">
+	<div class="divsize" align="center">
 		<div><!-- 이력서 출력 폼 -->
 			<h1 th:text="${Content.profile_name}"></h1><br>
 			<div>
-				<table border="1" class="table table-bordered">
+				<table border="1" class="table table-bordered textloc">
 					<tr>
-						<td rowspan="3"><img th:src="@{'/image/profile/'+${Content.profile_image}}" alt="Profile Image" width="170" height="200"></td>
+						<td rowspan="3" class="imgWidth"><img th:src="@{'/image/profile/'+${Content.profile_image}}" alt="Profile Image" width="170" height="200"></td>
 						<td th:text="${Content.user_name}"></td>
 						<td th:text="${Content.user_gender}"></td>
 						<td colspan="2" th:text="${#strings.substringBefore(Content.user_birth, ' ')}"></td>
@@ -128,36 +128,29 @@
 			</div>
 			
 
-			<div class="Portfolio_div">
-			    <h2 class="fw-bolder">포트폴리오</h2>
-			    <a th:href="@{/CU/profile/download/ppt/{filename}(filename=${Content.profile_ppt})}" class="form-control w-50"  download th:text="${Content.profile_ppt}"></a><br><br>
-			</div>
-			
-			
-			<div class="hopejob_div">
 		    <h2 class="fw-bolder">희망근무조건</h2><br>
-		    <table border="1" class="table w-50">
+			<div class="hopejob_div">
+		    <table border="1" class="table">
 		        <tr>
 		            <th scope="row">희망근무형태</th>
 		            <td scope="row" th:text="${Content.profile_job}"></td>
+		            <th>지원분야 1</th>
+		            <td class="textcenter" th:text="${Content.profile_step1}"></td>
 		        </tr>
 		        <tr>
 		            <th>희망연봉</th>
 		            <td th:text="${Content.profile_pay}"></td>
-		        </tr>
-		    </table><br>
-		    <h2 class="fw-bolder">희망직무</h2><br>
-		    <table border="1" class="table w-50">
-		        <tr>
-		        	<th>지원분야</th>
-		            <td class="textcenter" th:text="${Content.profile_step1}"></td>
-		        </tr>
-		        <tr>
-		       		 <th>지원분야</th>
+		            <th>지원분야 2</th>
 		            <td class="textcenter" th:text="${Content.profile_step2}"></td>
 		        </tr>
-		    </table>
+		    </table><br>
 		  </div>
+		  
+		  
+			<div class="Portfolio_div">
+			    <h2 class="fw-bolder">포트폴리오</h2>
+			    <a th:href="@{/CU/profile/download/ppt/{filename}(filename=${Content.profile_ppt})}" class="form-control w-50"  download th:text="${Content.profile_ppt}"></a><br><br>
+			</div>
 	  </div> 
   </div><br><br><br>
   			<div align="center">
