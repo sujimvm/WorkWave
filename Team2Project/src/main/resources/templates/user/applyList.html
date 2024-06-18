@@ -28,10 +28,10 @@
 			
 			<table class="user-table">
 				<tr>
-					<th>지원완료</th>
-					<th>열람</th>
-					<th>미열람</th>
-					<th>지원취소 갯수</th>
+					<th width="25%">지원완료</th>
+					<th width="25%">열람</th>
+					<th width="25%">미열람</th>
+					<th width="25%">지원취소</th>
 				</tr>
 				
 				<tr>
@@ -46,25 +46,31 @@
 			<br><br>
 			
 			<ul class="user-list2" th:if="${applyInfoList != null}">
-	            <li style="background-color: #f2f2f2;">
+	            <li style="background-color: #f2f2f2; text-align: center">
 	                <span style="width: 16%;">지원일</span>|
 	                <span style="width: 50%;">지원내역</span>|
 	                <span style="width: 17%;">열람</span>|
 	                <span style="width: 17%;">지원취소</span>
 	            </li>
-	            <li th:each="applyInfo, stat : ${applyInfoList}">
-	                <span th:text="${applyInfo.apply_date.substring(0, 10)}" style="width: 16%;"></span>
-	                <span style="width: 50%;">
-	                    <span th:text="${applyComList[stat.index].company_name}"></span><br>
-	                    <span th:text="${applyBoardList[stat.index].com_board_title}"></span>
+	            <li style="display: flex; align-items: center; height: auto; padding: 10px;"
+	            	th:each="applyInfo, stat : ${applyInfoList}">
+	                <span style="width: 16%; text-align: center;"
+	                	  th:text="${applyInfo.apply_date.substring(0, 10)}" ></span>
+	                <span style="width: 50%; text-align: left; margin-left: 20px;">
+	                    	<span style="font-size: 13px;" th:text="${applyComList[stat.index].company_name}"></span><br>
+		                    <a th:href="@{/A/comBoard/content(no=${applyBoardList[stat.index].com_board_key})}">
+		                    	<span style="font-size: 15px;" 
+		                    	      th:utext="${#strings.abbreviate(applyBoardList[stat.index].com_board_title, 30)}"></span>
+		                    </a>
 	                </span>
-	                <span style="width: 17%;">
+	                <span style="width: 17%; text-align: center;">
 	                    <th:block th:if="${applyInfo.apply_profile_check == 'N'}">미열람</th:block>
 	                    <th:block th:if="${applyInfo.apply_profile_check == 'Y'}">열람</th:block>
 	                </span>
-	                <span  style="width: 17%;">
+	                <span  style="width: 17%; text-align: center">
 	                	<th:block th:if="${applyInfo.apply_check == 'N'}">
-	                		<input type="button" value="지원취소" th:onclick="'applyCancel(' + ${applyInfo.apply_key} + ')'">
+	                		<input style="margin-left: 13px;" class="user-btn" type="button" value="지원취소" 
+	                		       th:onclick="'applyCancel(' + ${applyInfo.apply_key} + ')'">
 	                	</th:block>
 	                	<th:block th:if="${applyInfo.apply_check == 'Y'}">지원취소완료</th:block>
 	                </span>
