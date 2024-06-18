@@ -68,11 +68,13 @@
 							</th>
 						</tr>
 						<tr>
-							<th style="border-bottom: 1px solid #ddd;" th:inline="text">
-								👀 [[${dto.chat_hit}]]
-								🧡 [[${dto.chat_like}]]
-							</th>
-						</tr>	
+						    <th style="border-bottom: 1px solid #ddd;" th:inline="text">
+						        <img src="/image/icon/eye.png" alt="Chat Hit" style="width: 20px; height: 20px; margin-top: 5px;">
+						        [[${dto.chat_hit}]]
+						        <img src="/image/icon/like.png" alt="Chat Like" style="width: 20px; height: 20px; margin-top: 5px;">
+						        [[${dto.chat_like}]]
+						    </th>
+						</tr>		
 					</table>
 					
 				</th:block>
