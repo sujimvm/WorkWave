@@ -17,12 +17,15 @@
 		<input sec:authorize="isAuthenticated() and hasRole('USER')" type="hidden" id="sessionID" th:value="${session.uDTO.user_id}">
 		<input type="hidden" id="getPage" th:value="${P}">
 		<div class="comBoardListPageTotalDiv">
+			<div>
+				<h2>채용공고 검색</h2>
+			</div>
 			<div class="comBoardSearchTotalDiv">
 				<div class="comBoardSearchDiv">
 					<input name="" class="textW95" placeholder="기업명, 공고명 검색">
 				</div>
 				<div id="jobCodeOutputDiv" class="comBoardSearchDiv">
-					<h6>분류명</h6>
+					<h5>분류명</h5>
 					<input name="jobCode" class="textW95" readonly="readonly">
 					<div id="jobCodeTotalDiv" class="codeTotalDiv" style="display: none;">
 						<div id="jobCodeGroupDiv" class="codeDiv">
@@ -34,7 +37,7 @@
 				</div>
 				
 				<div id="locationCodeOutputDiv" class="comBoardSearchDiv">
-					<h6>지역명</h6>
+					<h5>지역명</h5>
 					<input name="locCode" class="textW95" readonly="readonly">
 					<div id="locationCodeTotalDiv" class="codeTotalDiv" style="display: none;">
 						<div id="locationCodeGroupDiv" class="codeDiv">
@@ -44,7 +47,7 @@
 					</div>
 				</div>
 				<div id="eduCodeDiv" class="comBoardSearchDiv">
-					<h6>학력</h6>
+					<h5>학력</h5>
 					<table class="optionTb">
 						<tr>
 							<td><input type="checkbox" name="" id="eduCode01" class="checkCss" value="고등학교졸업"><label for="eduCode01">고등학교졸업</label></td>
@@ -59,7 +62,7 @@
 					</table>
 				</div>
 				<div id="careerCodeDiv" class="comBoardSearchDiv">
-					<h6>경력</h6>
+					<h5>경력</h5>
 					<table class="optionTb">
 						<tr>
 							<td><input type="checkbox" name="" id="careerCode01"  class="checkCss" value="신입"><label for="careerCode01">신입</label></td>
@@ -77,7 +80,7 @@
 					</table>
 				</div>
 				<div id="searchDataDiv" class="comBoardSearchDiv">
-					<h6>직급</h6>
+					<h5>직급</h5>
 					<table class="optionTb">
 						<tr>
 							<td><input type="checkbox" name="" id="typeCode01"  class="checkCss" value="정규직"><label for="typeCode01">정규직</label></td>
@@ -100,7 +103,7 @@
 			<div>
 				<table id="jobListTb"></table>
 				<div>
-					<input type="button" id="all_apply" value="선택한 기업 지원하기" >
+					<input sec:authorize="!isAuthenticated() or hasRole('USER')"  type="button" id="all_apply" value="선택한 기업 지원하기" >
 				</div>
 			</div> <!-- 리스트 -->
 			<div>

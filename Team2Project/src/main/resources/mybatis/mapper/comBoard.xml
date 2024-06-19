@@ -160,7 +160,8 @@
 	  		where com_board_key = #{com_board_key}
 	  	</select>
 	  	<insert id="insertPosition" parameterType="psDTO">
-	  		insert into position values(key_seq.nextval, #{user_key}, #{com_board_key}, #{position_title}, #{position_cont}, 'N', sysdate, #{company_key})
+	  		insert into position(position_key,user_key,com_board_key,position_title,position_cont,position_check,position_date,company_key) 
+	  		values(key_seq.nextval, #{user_key}, #{com_board_key}, #{position_title}, #{position_cont}, 'N', sysdate, #{company_key})
 	  	</insert>
 	  	
 	  	
