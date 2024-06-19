@@ -2,10 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" href="image/icon/logo_icon.png"/> 
+<link rel="icon" href="/image/icon/logo_icon.png"/> 
 <title>Work Wave 비밀번호 재확인</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"/>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/userCont.css}">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
@@ -45,33 +49,146 @@
 	                <span style="width: 60%; text-align: left; margin-left: 15px; padding: 10px 0 10px 0;">
 	                	  <span style="font-size: 14px;" 
 	                	  	    th:text="${positionComList[stat.index].company_name}"></span><br>
-	                	  <a th:href="@{/U/userPosition/cont}">
-	                	  	<span style="font-size: 16px;"
-	                	  		  th:text="${positionInfo.position_title}">
-	                	    </span>
-						  </a>	                
+	                	  	    
+	                	  <span  
+	                	        style="font-size: 16px; cursor: pointer; color: #0B57D0;" 
+	                	        th:text="${positionInfo.position_title}"
+	                	        th:attr="data-com-board-key=${positionInfo.com_board_key},
+	                	        		 data-position-title=${positionInfo.position_title},
+	                	        	     data-company-name=${positionComList[stat.index].company_name},
+	                	        	     data-position-date=${positionInfo.position_date},
+	                	        	     data-expiration-date=${positionInfo.expirationDate},
+	                	        	     data-position-cont=${positionInfo.position_cont},
+	                	        	     data-mgr-name=${positionComList[stat.index].company_mgr_name},
+	                	        	     data-mgr-phone=${positionComList[stat.index].company_mgr_phone},
+	                	        	     data-mgr-email=${positionComList[stat.index].company_mgr_email}"
+	                	        onclick="positionInputModal(this)">
+	                	  </span>
 	                </span>
-	                <span style="width: 20%; text-align: center;"
-	                	  th:text="${positionInfo.expirationDate.substring(0, 10)}"></span>
+	                <span id="expiration-date" 
+					      style="width: 20%; text-align: center;"
+					      th:text="${positionInfo.expirationDate.substring(0, 10)}">
+					</span>
 	                <th:block th:if="${positionInfo.position_check == 'N'}">	  
 	                	<span style="width: 20%; text-align: center;">미열람</span>
 	                </th:block>
 	                <th:block th:if="${positionInfo.position_check == 'Y'}">	  
 	                	<span style="width: 20%; text-align: center;">열람</span>
 	                </th:block>
+	                <th:block th:if="${positionInfo.position_check == 'O'}">	  
+	                	<span style="width: 20%; text-align: center;">제안수락</span>
+	                </th:block>
+	                <th:block th:if="${positionInfo.position_check == 'X'}">	  
+	                	<span style="width: 20%; text-align: center;">제안거절</span>
+	                </th:block>
 	            </li>
+	            
         	</ul>
         	
         	<ul class="user-list2" th:if="${positionInfoList == null or positionInfoList.isEmpty()}">
-        		<li>
-	            	<h3>포지션 제안 x</h3>
+        		<li style="text-align: center">
+	            	<h3>아직 제안이 없어요..  😂😂</h3>
 	            </li>
         	</ul>
 	       
       	</div>
       	
+      		<!-- 포지션 상세 모달 -->
+      		<div id="recommendModal" class="modal">
+      		<input type="hidden" id="apply_com_board_key">
+		    <table class="position-cont">
+				<thead style="font-size: 15px">
+					<tr>
+						<td id="modal-position-title" colspan="3"></td>
+					</tr>
+					<tr style="font-weight: bold">
+						<td id="modal-company-name" colspan="3"></td>
+					</tr>
+					<tr>
+						<td colspan="2"><span>제안일: </span><span id="modal-position-date"></span></td>
+						<td><span>마감일: </span><span id="modal-expiration-date"></span></td>
+					</tr>
+				</thead>
+				<tbody align="center" style="line-height: 2;">
+					<tr>
+						<td id="modal-position-cont" style="font-size: 14px" colspan="3"></td>
+					</tr>
+				</tbody>
+				<tfoot style="font-size: 14px;">
+					<tr>
+						<th style="width: 22%;" rowspan="3">인사담당자 정보</th>
+						<td id="modal-mgr-name" colspan="2"></td>
+					</tr>
+					<tr>
+						<td id="modal-mgr-phone" colspan="2"></td>
+					</tr>
+					<tr>
+						<td id="modal-mgr-email" colspan="2"></td>
+					</tr>
+					<tr>
+						<td colspan="3" style="text-align: center;">
+							<input type="button" value="제안 수락" onclick="jeanOk()">
+							<input type="button" value="제안 거절" onclick="jeanNo()">
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+				
+		 	</div>
       	
       	
+   <script type="text/javascript" th:inline="javascript">
+   		document.addEventListener("DOMContentLoaded", function() {
+	    var expirationElement = document.getElementById('expiration-date');
+	    var expirationDate = new Date(expirationElement.innerText);
+	    var currentDate = new Date();
+	    
+	    if (currentDate > expirationDate) {
+	      expirationElement.innerText = '마감';
+	    }
+	  });
+   		
+   		function positionInputModal(element) {
+   			var comBoardKey = element.getAttribute('data-com-board-key');
+   	        var positionTitle = element.getAttribute('data-position-title');
+   	        var companyName = element.getAttribute('data-company-name');
+   	        var positionDate = element.getAttribute('data-position-date');
+   	        var expirationDate = element.getAttribute('data-expiration-date');
+   	        var positionCont = element.getAttribute('data-position-cont');
+   	        var mgrName = element.getAttribute('data-mgr-name');
+   	        var mgrPhone = element.getAttribute('data-mgr-phone');
+   	        var mgrEmail = element.getAttribute('data-mgr-email');
+			
+   	        document.getElementById('modal-position-title').innerText = positionTitle;
+   	        document.getElementById('modal-company-name').innerText = companyName;
+   	        document.getElementById('modal-position-date').innerText = positionDate.substring(0, 10);
+   	        document.getElementById('modal-expiration-date').innerText = expirationDate.substring(0, 10);
+   	        document.getElementById('modal-position-cont').innerText = positionCont;
+
+   	        document.getElementById('modal-mgr-name').innerText = mgrName;
+   	        document.getElementById('modal-mgr-phone').innerText = mgrPhone;
+   	        document.getElementById('modal-mgr-email').innerText = mgrEmail;
+
+   	        $("#recommendModal").modal();
+   	        $("#apply_com_board_key").val(comBoardKey);
+   	        
+   	    }
+     	// 공고 지원 등록 / 해제
+   		function jeanOk() {
+   			
+   			$.ajax({
+   				url: '/ajax/apply/insert',
+   				type: 'post',
+   				data:{"checked":$("#apply_com_board_key").val()},
+   				success: function() {
+   					alert('제안을 수락하셨습니다.');
+   				},error: function(xhr, status, error) {
+   					console.error(xhr);
+   				}
+   			});
+   		}
+   		
+   </script>
    </div>
    <div th:replace="~{include/footer :: footer}"></div>
 </body>

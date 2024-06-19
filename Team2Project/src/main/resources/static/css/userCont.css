@@ -274,3 +274,31 @@ input[type="reset"] {
     padding-right: 0;
 }
 
+.modal {
+	min-width: 700px;
+	height: 80%;
+	overflow-y: auto;
+    max-height: 80%;
+}
+
+.position-cont {
+	width: 100%;
+    border-collapse: collapse; 
+    margin-bottom: 20px; 
+    border-top: 1px solid #797979; 
+}
+
+.position-cont th,
+.position-cont td {
+  border: none; 
+  border-bottom: 1px solid #c0c0c0;
+  padding: 10px; 
+  text-align: left; 
+}
+
+.position-cont tfoot td {
+}
+
+
+
+

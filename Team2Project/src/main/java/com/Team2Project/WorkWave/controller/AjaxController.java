@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -391,4 +392,34 @@ public class AjaxController {
 		psDTO.setCompany_key(cdto.getCompany_key());
 		this.comBoardMapper.insertPosition(psDTO);
 	}
+	
+	// 포지션 제안 수락
+	@PostMapping("/positionOk")
+	public void positionOk(HttpSession session,
+			               Model model) {
+		
+		UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
