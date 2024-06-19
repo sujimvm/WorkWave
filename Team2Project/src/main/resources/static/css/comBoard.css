@@ -1,20 +1,13 @@
 @charset "UTF-8";
 
-.comBoardTitleDiv{
-	width: 80%;
-	margin: 0 auto;
-}
-
 /* list  */
 .comBoardListPageTotalDiv{
-	width: 1000px;
+	width: 70%;
 	margin: 0 auto;
 	margin-top: 50px;
 	margin-bottom: 50px;
 }
 .comBoardSearchTotalDiv{
-	width:80%;
-	margin: 0 auto;
 	padding:30px;
 	border: 1px solid #eeeeee;
 }
