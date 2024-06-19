@@ -43,26 +43,26 @@
 			
 				<!-- Y인 이력서를 우선적으로 처리 -->
 			<tr th:unless="${#lists.isEmpty(ProfileList)}">
-				<tr th:each="dto : ${ProfileList}" th:if="${dto.profile_default == 'Y'}">
+				<tr th:each="dto : ${ProfileList}" th:if="${dto.profile_default == 'Y'}"  class="listhover">
 					<td>
 						<img th:src="@{'/image/profile/'+${dto.profile_image}}" alt="Profile Image" width="150" height="150">&nbsp;&nbsp;&nbsp;
 						<a th:href="@{/CU/profile/content(no=${dto.profile_key})}" th:text="${dto.profile_name}" class="textdeco textdeco-y profile-link"></a>
 					</td>
 					<td class="textcenter">
-						<input type="button" class="removeForm" value="수정" th:onclick="|location.href='@{/U/profile/update(no=${dto.profile_key})}'|">
-						<input type="button" class="removeForm" value="삭제" th:onclick="|location.href='@{/U/profile/delect(no=${dto.profile_key})}'|">
+						<a class="removeForm" th:href="@{/U/profile/update(no=${dto.profile_key})}">수정</a>
+						<a class="removeForm" th:href="@{/U/profile/delect(no=${dto.profile_key})}">삭제</a>
 					</td>
 				</tr>
 				<!-- 나머지 이력서 -->
-				<tr th:each="dto : ${ProfileList}" th:unless="${dto.profile_default == 'Y'}">
+				<tr th:each="dto : ${ProfileList}" th:unless="${dto.profile_default == 'Y'}" class="listhover">
 					<td>
 					<img th:src="@{'/image/profile/'+${dto.profile_image}}" alt="Profile Image" width="150" height="150">&nbsp;&nbsp;&nbsp;
 						<a th:href="@{/CU/profile/content(no=${dto.profile_key})}" th:text="${dto.profile_name}" class=" textdeco textdeco-n profile-link"></a>
 					</td>
 					<td class="textcenter">
-						<input type="button" class="removeForm" value="수정" th:onclick="|location.href='@{/U/profile/update(no=${dto.profile_key})}'|">
-						<input type="button" class="removeForm" value="삭제" th:onclick="|location.href='@{/U/profile/delect(no=${dto.profile_key})}'|">
-						<input type="button" class="defaultForm" value="대표이력서등록" th:onclick="|location.href='@{/U/profile/default(no=${dto.profile_key})}'|">
+						<a class="removeForm" th:href="@{/U/profile/update(no=${dto.profile_key})}">수정</a>
+						<a class="removeForm" th:href="@{/U/profile/delect(no=${dto.profile_key})}">삭제</a>
+						<a class="defaultForm" th:href="@{/U/profile/default(no=${dto.profile_key})}">대표이력서등록</a>
 					</td>
 				</tr>
 		</table>
