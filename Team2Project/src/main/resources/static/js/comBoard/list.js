@@ -1,9 +1,16 @@
 var locationCodeOutput = 0;
+var scrollNum = 0;
+var prevPage = 1;
 
 // 화면 시작 
 $(document).ready(function() {
 	getLocationCodeGroup();
 	getComBoardList($("#getPage").val());
+	
+	$(window).scroll(function () { 
+		scrollNum = $(document).scrollTop();
+	});
+	
 	// 관심기업 추가/삭제
 	$(document).on('click', '.interest_check', function() {
 		if($("#sessionID").val() != undefined){
@@ -167,10 +174,13 @@ function getComBoardList(nowPg) {
 			
 			if($("#getPage").val()==''){
 				$('html').scrollTop('0');
+			}else if($("#getPage").val()==prevPage){
+				$('html').scrollTop(scrollNum);
 			}else{
-				$('html').scrollTop('910');
+				$('html').scrollTop('860');
 			}
-		
+			
+			prevPage = paging.page;
 		},
 		error: function(xhr, status, error) {
 			console.error(xhr);
