@@ -89,6 +89,14 @@
 		select count(*) from reply where user_key = #{user_key}
 	</select>
 	
+	<!-- <select id="replycount" resultType="int">
+		SELECT COUNT(*) AS reply_cont
+		FROM reply
+		WHERE CHAT_KEY = #{chat_key}
+	</select> -->
+	
+	
+	
 
 
   </mapper>

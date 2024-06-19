@@ -38,7 +38,7 @@
 
 .chat-list li {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     padding: 10px 0;
     
 }
@@ -115,6 +115,15 @@
     cursor: pointer;
 }
 
+.btn-custom1{
+	background-color: #c0c0c0; /* 회색 버튼 */
+    color: white;
+    padding: 8px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 .like-btn {
     background-color: transparent;
     border: none;
@@ -137,7 +146,7 @@
 }
 .form-container input[type="text"],
 .form-container textarea {
-    width: 100%;
+    width: 97%;
     padding: 10px;
     margin: 10px 0;
     border: 1px solid #ccc;
@@ -163,9 +172,9 @@
 }
 
 .form-container input[type="button"] {
-    background-color: #d3d3d3;
-    color: black;
-    padding: 10px 20px;
+	background-color: #c0c0c0; /* 회색 버튼 */
+    color: white;
+    padding: 10px 26px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -201,6 +210,13 @@
     margin-left: 10px;
 }
 
+#reply_box1 {
+    border: 1px solid #d1d1d1; /* 테두리 두께와 색상 */
+    padding: 10px; /* 내부 여백 */
+    border-radius: 5px; /* 모서리 둥글게 */
+    background-color: #f9f9f9; /* 배경색 (옵션) */
+}
+
 .btn-edit{
 	background-color: #007BFF; /* 파란색 버튼 */
     color: white;
@@ -212,7 +228,7 @@
 
 
 .btn-delete{
-	background-color: #ff0000; /* 파란색 버튼 */
+	background-color: #c0c0c0; /* 회색 버튼 */
     color: white;
     padding: 8px 10px;
     border: none;

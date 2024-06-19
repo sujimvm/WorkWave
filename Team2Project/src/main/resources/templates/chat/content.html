@@ -56,12 +56,20 @@
 			</h3>
 			<ul class="chat-list">
 			    <li><div  th:utext="${cont.chat_cont}"></div></li>
-			    <li style="border-bottom: 1px solid #ddd;" th:inline="text"> 😀 [[${cont.user_id}]]</li>
+			    <!-- <li style="border-bottom: 1px solid #ddd;" th:inline="text"> 😀 [[${cont.user_id}]]</li> -->
+			    <li style="border-bottom: 1px solid #ddd;" th:inline="text">
+				    <img src="/image/profile/기본 고양이 이미지.PNG" style="width: 20px; height: 20px; vertical-align: middle;">
+				    [[${cont.user_id}]]
+				</li>
 			    <li style="border-bottom: 1px solid #ddd;" th:inline="text"> [[${cont.chat_tag}]]</li>
-			    <li class="read" th:inline="text" style="margin-left: 30px;">
-			         [[${cont.chat_hit}]]
-			        <button id="like-btn" class="like-btn">🧡</button> <span id="like">[[${cont.chat_like}]]</span>
-			    </li>
+			    <li th:inline="text" >
+				    <img src="/image/icon/eye1.png" alt="Chat Hit" style="width: 25px; height: 20px; margin-top: 2px;">
+				    [[${cont.chat_hit}]]
+				    <button id="like-btn" class="like-btn" >
+				        <img src="/image/icon/like.png" alt="Like" style="width: 20px; height: 20px;">
+				    </button>
+				    <span id="like">[[${cont.chat_like}]]</span>
+				</li>
 			  
 			    <br>
 			    
@@ -72,21 +80,21 @@
 					<a style="text-decoration: none;" href="javascript:void(0);" th:onclick="|if(confirm('글삭제?')){
 								location.href='@{/U/chat/delete(no=${cont.chat_key})}'
 								}else{return;}|">
-   						 <input type="button" value="글삭제" class="btn-custom">
+   						 <input type="button" value="글삭제" class="btn-custom1">
 					</a>
 				</div>
 			    <li>
 			        <th:block th:if="${null != session.uDTO}">
 			            <div class="reply-div" id="reply-box">
 			                <form id="replyForm" method="post">
-			                    <textarea id="replyCont" name="reply_cont" rows="3" cols="120" placeholder="솔직하고 따뜻한 댓글을 남겨주세요~"></textarea>
+			                    <textarea id="replyCont" name="reply_cont" rows="3" cols="113" placeholder="솔직하고 따뜻한 댓글을 남겨주세요~" style="resize:none;"></textarea>
 			                    <input id="replyBtn" class="reply-btn" type="submit" value="댓글 작성">
 			                </form>
 			            </div>
 			        </th:block>
 			        <th:block th:if="${null == session.uDTO}">
 			            <a th:href="@{/login}">
-			                <textarea name="reply_cont" rows="2" cols="100" placeholder="로그인 후 댓글을 남겨주세요~"></textarea>
+			                <textarea name="reply_cont" rows="2" cols="100" placeholder="로그인 후 댓글을 남겨주세요~" ></textarea>
 			            </a>
 			        </th:block>
 			    </li>
@@ -94,11 +102,14 @@
 			</ul>	
 			<br>
 			<div id="reply_box">
-				<div class="reply_body" th:if="${not #lists.isEmpty(list)}" th:each="dto : ${list}">
-            	        <span class="user-id"  th:text="${dto.user_id}"></span>
+				<div id="reply_box1" class="reply_body" th:if="${not #lists.isEmpty(list)}" th:each="dto : ${list}">
+            	        <span class="user-id">
+						    <img src="/image/profile/기본 고양이 이미지.PNG" alt="User Icon" style="width: 30px; height: 30px; margin-top: -3px; vertical-align: middle;">
+						    <span th:text="${dto.user_id}"></span>
+						</span>
             	        <br>
-            	        <span class="reply-date" th:text="${#dates.format(dto.reply_date, 'yyyy/MM/dd')} + ' 작성'"></span>
             	        <p class="reply-content" th:text="${dto.reply_content}"></p>
+            	        <span style="font-size: 11px;" th:text="${#dates.format(dto.reply_date, 'yyyy/MM/dd')} + ' 작성'"></span> <br><br>
             	      
             	  <button class=btn-edit th:if="${dto.user_id == session.uDTO.user_id}" th:attr="data-reply-key=${dto.reply_key}" onclick="editReply(this)">수정</button>
 	        	  <button class=btn-delete th:attr="data-reply-key=${dto.reply_key}" onclick="deleteReply(this)">삭제</button>
@@ -106,14 +117,17 @@
 	        	  
 
 	           	<div th:id="'edit-form-'+${dto.reply_key}" class="d-none" style="display:none;">
-				             <textarea rows="2" th:id="'edit-reply-'+${dto.reply_key}"></textarea> <br>
-				             <label for="replyedit" >댓글 수정</label> <br>
+	           				 <label for="replyedit" >댓글 수정</label> <br>
+				             <textarea rows="3" cols="113" th:id="'edit-reply-'+${dto.reply_key}" style="resize:none;"></textarea> <br> <br>
+				             
 				             <button class=btn-edit th:attr="data-reply-key=${dto.reply_key}" onclick="saveReply(this)">저장</button>
 				             <button class=btn-delete th:onclick="'cancelEdit(' + ${dto.reply_key} + ')'" >취소</button>
+				             <br> <br> 
 				</div>
+	        	</div>
 	        </div>
-	        </div>
-	        <hr>
+	        <br>
+	    
 	        
 	        
 		
