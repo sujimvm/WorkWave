@@ -6,6 +6,7 @@
 <title>Work Wave 통합 로그인</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/login.css}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 	
@@ -30,13 +31,15 @@
       <div class="tab" onclick="showForm('companyLogin')">기업회원</div>
     </div>
 
-
     <div id="userLogin" class="form-container">
       <form action="/loginOk" method="post">
         <input type="text" name="username" placeholder="아이디" required>
         <input type="password" name="password" placeholder="비밀번호" required>
         <input type="submit" value="로그인">
       </form>
+      <div th:if="${errorMessage}" class="errorMessage">
+    	<p th:text="${errorMessage}"></p>
+	  </div>
       <a th:href="@{/G/userJoin}">회원가입</a>
     </div>
 
@@ -46,13 +49,15 @@
         <input type="password" name="password" placeholder="비밀번호" required>
         <input type="submit" value="로그인">
       </form>
+      <div th:if="${errorMessage}" class="errorMessage">
+    	<p th:text="${errorMessage}"></p>
+	  </div>
       <a th:href="@{/G/companyJoin}">회원가입</a>
     </div>
     <br>
     <div class="link-container">
       <a th:href="@{/G/findId}">아이디 찾기</a> |
       <a th:href="@{/G/findPwd}">비밀번호 찾기</a>
-      
     </div>
     
   </div>

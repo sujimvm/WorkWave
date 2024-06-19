@@ -51,6 +51,7 @@ public class CompanySecurityConfig {
         .formLogin(form -> form
             .loginPage("/login")
             .loginProcessingUrl("/loginOk")
+            .failureHandler(new CustomLoginFailureHandler())
             .defaultSuccessUrl("/A/main", true)
             .permitAll()
         )
