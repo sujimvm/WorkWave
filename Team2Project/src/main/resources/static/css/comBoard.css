@@ -8,7 +8,7 @@
 	margin-bottom: 50px;
 }
 .comBoardSearchTotalDiv{
-	padding:30px;
+	padding:10px;
 	background-color: #fbfbfb;
 	border: 1px solid #eeeeee;
 }
@@ -59,7 +59,13 @@
 	position: relative;
 }
 .interestCheckDiv{
+	overflow: hidden;  		
+	text-overflow: ellipsis;  	
+	white-space: nowrap; 		
+	word-break:break-all;
 	float: left;
+	position: relative;
+	top: 3px;
 }
 .apply_check {
 	border: 1px solid #dddddd;
@@ -79,29 +85,33 @@
 	top: -6px;
 }
 .apply_check:checked {
-  border: 1px solid #dddddd;
-  background: #fff;
-  border-radius: 0;
-  cursor: pointer;
-  height: 16px;
-  outline: 0;
-  width: 16px;
   -webkit-appearance: auto;
   -moz-appearance: auto;
   appearance: auto;
+  background: #fff;
+  border-radius: 0;
+  cursor: pointer;
+  height: 17px;
+  outline: 0;
+  width: 16px;
+}
+.apply_check:checked + label {
+	position: relative;
+	top: -5px;
 }
 
 .interest_check{
 	display: none;
 }
+
 .interest_check + label {
+	cursor: pointer;
 	display: block;    
 	width: 16px;
     height: 16px;
 	background-image: url("/image/icon/interest_icon1.png");
 	background-size: 16px;
 	background-repeat: no-repeat;
-	margin: 3px 3px 3px 4px;
 }
 .interest_check + label:hover {
 	background-image: url("/image/icon/interest_icon2.png");
@@ -351,9 +361,9 @@ input[type=number] { /* 파이어폭스에서의 초기화 방법 */
     font-weight: bold;
 }
 .btCss1{
-    background-color: #2551a8;
+    background-color: #0B57D0;
     color: #ffffff;
-    border: 1px solid #2551a8;
+    border: 1px solid #0B57D0;
 }
 .btCss1:hover{
     background-color: #416dc3;
