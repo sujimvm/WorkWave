@@ -15,6 +15,7 @@
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
 		<input sec:authorize="isAuthenticated() and hasRole('USER')" type="hidden" id="sessionID" th:value="${session.uDTO.user_id}">
+		<input sec:authorize="isAuthenticated() and hasRole('COMPANY')" type="hidden" id="sessionID" th:value=1>
 		<input type="hidden" id="getPage" th:value="${P}">
 		<div class="comBoardListPageTotalDiv">
 			<div>
@@ -25,8 +26,7 @@
 					<input name="" class="textW95" placeholder="기업명, 공고명 검색">
 				</div>
 				<div id="jobCodeOutputDiv" class="comBoardSearchDiv">
-					<h5>분류명</h5>
-					<input name="jobCode" class="textW95" readonly="readonly">
+					<input name="jobCode" class="textW95" readonly="readonly" placeholder="직업 선택">
 					<div id="jobCodeTotalDiv" class="codeTotalDiv" style="display: none;">
 						<div id="jobCodeGroupDiv" class="codeDiv">
 							<ul id="jobCodeGroupUl" class="codeUl"></ul>
@@ -37,8 +37,7 @@
 				</div>
 				
 				<div id="locationCodeOutputDiv" class="comBoardSearchDiv">
-					<h5>지역명</h5>
-					<input name="locCode" class="textW95" readonly="readonly">
+					<input name="locCode" class="textW95" readonly="readonly" placeholder="지역 선택">
 					<div id="locationCodeTotalDiv" class="codeTotalDiv" style="display: none;">
 						<div id="locationCodeGroupDiv" class="codeDiv">
 							<ul id="locationCodeGroupUl" class="codeUl"></ul>
@@ -95,15 +94,23 @@
 					</table>
 				</div><!-- 선택한 검색 값 -->
 					
-				<div ><!-- 검색버튼 -->
-					<input type="button" value="조건검색">
-				</div>
 			</div> <!-- 검색 input -->
 			
+			<div class="comBoardListBtDiv"><!-- 검색버튼 -->
+				<input type="button" class="btCss btCss1" value="조건검색">
+			</div>
+			
 			<div>
-				<table id="jobListTb"></table>
-				<div>
-					<input sec:authorize="!isAuthenticated() or hasRole('USER')"  type="button" id="all_apply" value="선택한 기업 지원하기" >
+				<div class="totalPageInfoDiv">
+					<div id="total"></div>
+					<div id="pageInfo"></div>
+				</div>
+				<div id="searchOptionDiv">
+					
+				</div>
+				<table id="jobListTb" class="comBoardListTb"></table>
+				<div class="comBoardListBtDiv">
+					<input type="button" id="all_apply" class="btCss btCss1" value="선택기업 지원" >
 				</div>
 			</div> <!-- 리스트 -->
 			<div>
