@@ -116,3 +116,15 @@
     text-decoration: underline;
   } */
   
+.errorMessage {
+	border: 1px solid red;
+	font-size: 10px;
+	background-color: #fbe5e7;
+	color: red;
+	height: 35px;
+	position: relative;
+	border-radius: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+  

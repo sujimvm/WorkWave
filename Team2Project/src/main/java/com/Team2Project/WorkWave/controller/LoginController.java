@@ -1,5 +1,7 @@
 package com.Team2Project.WorkWave.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.Team2Project.WorkWave.model.ChatMapper;
 import com.Team2Project.WorkWave.model.ComBoardMapper;
@@ -29,8 +32,13 @@ public class LoginController {
 	@Autowired private UserMapper userMapper;
 
 	@GetMapping("/login")
-    public String userLogin() {
-       return "mainLogin";
+    public String userLogin(@RequestParam(name = "error", required = false) String error, Model model) throws UnsupportedEncodingException {
+		
+		if (error != null) {
+            String errorMessage = URLDecoder.decode(error, "UTF-8");
+            model.addAttribute("errorMessage", errorMessage);
+		}
+        return "mainLogin";
     }
 	
 	@GetMapping("/")
