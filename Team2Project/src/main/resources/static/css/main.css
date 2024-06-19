@@ -25,6 +25,7 @@
 	float: left;
 	border-radius: 10px;
 	display: flex;
+	flex-direction: column;
 }
 
 .mainLoginInfo tr {
@@ -105,90 +106,96 @@
 
 .main-Info-table {
 	flex: 1;
-    margin:5px;
+    margin:10px;
     text-align: center;
     overflow: hidden;
     border-radius: 10px;
+    position: relative;
 }
 
 .main-Info-table-icon {
-	background-color: white !important;
-	height: 40%;
+	background-color: #0B57D0 !important;
+	height: 30%;
+	border-radius: 27%;
+	width: 25%;
 }
 
-.main-Info-table th{
-	font-size: 20px;
-	
-	line-height: 1.5;
-	
+.main-Info-table-tr {
+	position: relative;
 	height: 30%;
 }
 
 .main-Info-table td {
-	font-size: 25px;
 	padding: 0px;
-	background-color: #007BFF;
-	color: white;
+	background-color: white;
+	line-height: 1.5;
+	color: #0B57D0;
 	height: 30%;
 }
 
-
-.main-user-table {
-    width: 90%;
-    border-collapse: collapse;
-    margin: 40px 20px 20px 20px;
-    font-size: 15px;
-    text-align: center;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+.main-Info-table-number {
+	font-size: 35px; 
+	font-weight: bold;
+	position: absolute;
+	right: 28%;
+	bottom: 2%;
 }
 
-.main-user-table th, .main-user-table td {
-    padding: 12px 15px;
+.main-Info-table-text {
+	position:absolute; 
+	right: 17%; 
+	bottom: 10%;
+}
+
+.main-user-profile {
+	margin-left: 5%;
+	margin-top: 5%;
+	
+}
+
+.main-user-info-text {
+	position: absolute;
+	font-size: 20px;
+	margin: 5px 10px;
+}
+
+.main-user-profile-img{
+	width: 90px;
+	height: 90px;
+	position: relative;
+	border-radius: 10px;
+	left: 35%;
+}
+
+.main-user-table {
+    font-size: 15px;
+    text-align: center;
+    overflow: hidden;
+    margin: 5%;
+    flex:2;
+    position: relative;
 }
 
 .main-user-table th {
-    background-color: #f2f2f2;
+	background-color: #0b57d0;
+    color: white;
+    font-weight: bold;
+    margin: 5px;
+}
+.main-user-table td {
+	color: black;
+	font-weight: normal;
+	font-size: 20px;
 }
 
 .main-user-table tr {
-    border-bottom: 1px solid #ffffff;
+    border: 1px solid #ffffff;
 }
 
-.main-user-table tr:last-child {
-    border-bottom: 0;
-}
-
-.main-user-table tr:hover {
-    background-color: #f1f1f1;
-}
-
-.main-company-table {
-   width: 90%;
-   border-collapse: collapse;
-   margin: 40px 20px 20px 20px;
-   font-size: 15px;
-   text-align: center;
-   border-radius: 8px;
-   overflow: hidden;
-   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-}
-
-.main-company-table th, .main-company-table td {
-    padding: 12px 15px;
-}
-
-.main-company-table th {
-    background-color: #f2f2f2;
-}
-
-.main-company-table tr {
-    border-bottom: 1px solid #ffffff;
-}
-
-.main-company-table tr:last-child {
-    border-bottom: 0;
+.main-user-table-number {
+	font-weight: bold;
+	font-size: 25px;
+	color: #0B57D0;
 }
 
 .mainAd {
@@ -196,6 +203,7 @@
 	width: 90%;
 }
 .adImg {
+	cursor: pointer;
 	vertical-align: middle;
 	width: 386.66px;
 	height: 300px;

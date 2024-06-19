@@ -17,67 +17,75 @@
 		<div class="mainTopDiv">
 			<div class="mainLoginInfo" sec:authorize="!isAuthenticated()" >
 				<table class="main-Info-table">
-					<tr>
+					<tr class="main-Info-table-tr">
 						<td class="main-Info-table-icon">
-							<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#007BFF" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
+							<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" class="bi bi-file-earmark-text" viewBox="0 0 16 16">
 							  <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
 							  <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
 							</svg>
 						</td>
+						<td>
+							<span style="font-size: 15px; color: black; position: absolute; top: 15%; left: 61%;">등록된 공고</span>
+							<br>
+							<span class="main-Info-table-number" th:text="${#numbers.formatInteger(ComBoardCount + 6320,3,'COMMA')}"></span><span class="main-Info-table-text">건</span>
+						</td>
 					</tr>
 					<tr>
-						<th>등록된<br>공고</th>
+						<td colspan="2" style="height: 5%;"></td>
 					</tr>
-						
-					<tr>
-						<td th:text="${ComBoardCount+100000}"></th>
-					</tr>
-				</table>
-					
-				<table class="main-Info-table">
-					<tr>
+					<tr class="main-Info-table-tr">
 						<td class="main-Info-table-icon">
-							<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#007BFF" class="bi bi-people-fill" viewBox="0 0 16 16">
+							<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" class="bi bi-people-fill" viewBox="0 0 16 16">
 							  <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
 							</svg>
 						</td>
+						<td>
+							<span style="font-size: 15px; color: black; position: absolute; top: 15%; left: 61%;">등록된 유저</span>
+							<br>
+							<span class="main-Info-table-number" th:text="${#numbers.formatInteger(UsersCount + 21240,3,'COMMA')}"></span><span class="main-Info-table-text">명</span>
+						</td>
 					</tr>
-					
-					<tr>
-						<th>등록된<br>회원</th>
+					<tr >
+						<td colspan="2" style="height: 5%;"></td>
 					</tr>
-					
-					<tr>
-						<td th:text="${UsersCount}"></td>
-					</tr>
-				</table>
-				
-				<table class="main-Info-table">
-					<tr>
+					<tr class="main-Info-table-tr">
 						<td class="main-Info-table-icon" >
-							<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#007BFF" class="bi bi-buildings-fill" viewBox="0 0 16 16">
+							<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="white" class="bi bi-buildings-fill" viewBox="0 0 16 16">
 							  <path d="M15 .5a.5.5 0 0 0-.724-.447l-8 4A.5.5 0 0 0 6 4.5v3.14L.342 9.526A.5.5 0 0 0 0 10v5.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V14h1v1.5a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5zM2 11h1v1H2zm2 0h1v1H4zm-1 2v1H2v-1zm1 0h1v1H4zm9-10v1h-1V3zM8 5h1v1H8zm1 2v1H8V7zM8 9h1v1H8zm2 0h1v1h-1zm-1 2v1H8v-1zm1 0h1v1h-1zm3-2v1h-1V9zm-1 2h1v1h-1zm-2-4h1v1h-1zm3 0v1h-1V7zm-2-2v1h-1V5zm1 0h1v1h-1z"/>
 							</svg>
 						</td>
-					</tr>
-					<tr>
-						<th>등록된<br>기업</th>
-					</tr>
-					<tr>
-						<td th:text="${CompanyCount}"></td>
+						<td>
+							<span style="font-size: 15px; color: black; position: absolute; top: 15%; left: 61%;">등록된 기업</span>
+							<br>
+							<span class="main-Info-table-number" th:text="${#numbers.formatInteger(CompanyCount + 3420,3,'COMMA')}"></span><span class="main-Info-table-text">개</span>
+						</td>
 					</tr>
 				</table>
 			</div>
 			<div class="mainLoginInfo" sec:authorize="isAuthenticated() and hasRole('USER')">
-				<h3 th:inline="text" style="margin: 20px;">[[${session.uDTO.user_name}]] 님 안녕하세요.</h3>
+				<div class="main-user-profile">
+					<th:block th:if="${profileList != null and profileList.size() > 0}">
+						<th:block th:each="profile : ${profileList}">
+							<img class="main-user-profile-img" th:if="${profile.profile_default == 'Y'}" 
+								 alt="프로필 이미지" 
+								 th:src="@{'/image/profile/' + ${profile.profile_image}}">
+						</th:block>
+						
+					</th:block>
+					
+					<th:block th:if="${profileList == null or profileList.isEmpty()}">
+						<img class="main-user-profile-img" alt="기본 프로필 이미지" th:src="@{/image/profile/기본 고양이 이미지.png}">
+					</th:block>
+				</div>
+				
 				<table class="main-user-table">
 				<tr>
 					<th>지원완료</th>
 					<th>이력서 열람</th>
 				</tr>
 				<tr>
-					<th th:text="${applyCnt}">지원완료</th>
-					<th th:text="${applyCheckCnt}">이력서 열람</th>
+					<td class="main-user-table-number" th:text="${applyCnt}">지원완료</td>
+					<td class="main-user-table-number" th:text="${applyCheckCnt}">이력서 열람</td>
 				</tr>
 				
 				<tr>	
@@ -86,36 +94,47 @@
 				</tr>
 				
 				<tr>
-					<th th:text="${positionJean}">포지션 제안</th>
-					<th th:text="${interest}">관심 기업</th>
+					<td class="main-user-table-number" th:text="${positionJean}">포지션 제안</td>
+					<td class="main-user-table-number" th:text="${interest}">관심 기업</td>
 				</tr>         
             </table>
 			</div>
 			<div class="mainLoginInfo" sec:authorize="isAuthenticated() and hasRole('COMPANY')">
-				<h3 th:inline="text" style="margin: 20px;">[[${session.cDTO.company_name}]] 기업회원님 안녕하세요.</h3>
-				<table class="main-company-table">
-	            <tr>
-	               <th>게재 중 공고</th>
-	               <th>마감된 공고</th>
-	               
-	            </tr>
-	            
-	            <tr>
-	               <th th:text="${comBoarding}">지원완료</th>
-	               <th th:text="${comBoardEnd}">지원완료</th>
-	            </tr>
-	            
-	            <tr>
-	               <th>미열람 지원자</th>
-	               <th>포지션 제안</th>
-	               
-	            </tr>
-	            
-	            <tr>
-	               <th th:text="${applyNoneCheckCnt}">이력서 열람</th>
-	               <th th:text="${positionCnt}">포지션 제안</th>
-	            </tr>         
-           	</table>
+           		<div class="main-user-profile">
+					<th:block th:if="${session.cDTO.company_logo != null}">
+						<img class="main-user-profile-img" 
+							 alt="로고 이미지" 
+							 th:src="@{'/image/logo/' + ${session.cDTO.company_logo_name}}">
+					</th:block>
+					
+					<th:block th:if="${session.cDTO.company_logo == null}">
+						<img class="main-user-profile-img" alt="기본 프로필 이미지" th:src="@{/image/profile/기본 고양이 이미지.png}">
+					</th:block>
+				</div>
+				
+				<table class="main-user-table">
+					<tr>
+		               <td>게재 중 공고</td>
+		               <td>마감된 공고</td>
+		               
+		            </tr>
+		            
+		            <tr>
+		               <td class="main-user-table-number" th:text="${comBoarding}">지원완료</td>
+		               <td class="main-user-table-number" th:text="${comBoardEnd}">지원완료</td>
+		            </tr>
+		            
+		            <tr>
+		               <td>미열람 지원자</td>
+		               <td>포지션 제안</td>
+		               
+		            </tr>
+		            
+		            <tr>
+		               <td class="main-user-table-number" th:text="${applyNoneCheckCnt}">이력서 열람</td>
+		               <td class="main-user-table-number" th:text="${positionCnt}">포지션 제안</td>
+		            </tr>         
+	            </table>
 			</div>
 			
 			<div class="mainLoginNotice">
@@ -132,22 +151,22 @@
 			<div class="mainLoginAd">
 				<div class="mainAd fade">
 				  <div class="adNumbertext">1 / 3</div>
-				  <img class="adImg" src="/image/logo/햄식이.jpg">
+				  <img class="adImg" src="/image/logo/햄식이.jpg" id="ad1" onclick="ad1">
 				</div>
 				
 				<div class="mainAd fade">
 				  <div class="adNumbertext">2 / 3</div>
-				  <img class="adImg" src="/image/icon/고양이.png">
+				  <img class="adImg" src="/image/icon/고양이.png" id="ad2" onclick="ad2">
 				</div>
 				
 				<div class="mainAd fade">
 				  <div class="adNumbertext">3 / 3</div>
-				  <img class="adImg" src="/image/profile/이주빈.jpg">
+				  <img class="adImg" src="/image/profile/이주빈.jpg" id="ad3" onclick="ad3">
 				</div>
 				<div style="margin: -35px 20px; z-index: 2; position: absolute; right: 10px;">
-				  <span class="dot"></span> 
-				  <span class="dot"></span> 
-				  <span class="dot"></span> 
+				  <span class="dot" onclick="currentSlide(1)"></span> 
+				  <span class="dot" onclick="currentSlide(2)"></span> 
+				  <span class="dot" onclick="currentSlide(3)"></span> 
 				</div>
 			</div>
 		</div>
