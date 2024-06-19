@@ -51,7 +51,7 @@
 		</div>
 
 		<div class="chat-info sidebar_r">
-			<h3>웨이브톡</h3>
+			<h3 class="Q">웨이브톡</h3>
 			<div class="chat-table2">
 				<th:block th:if="${not #lists.isEmpty(List)}" th:each="dto : ${List}">
 					<table>
@@ -69,10 +69,12 @@
 						</tr>
 						<tr>
 						    <th style="border-bottom: 1px solid #ddd;" th:inline="text">
-						        <img src="/image/icon/eye.png" alt="Chat Hit" style="width: 20px; height: 20px; margin-top: 5px;">
+						        <img src="/image/icon/eye1.png" style="width: 25px; height: 20px; margin-bottom: -5px; margin-right: -6px">
 						        [[${dto.chat_hit}]]
-						        <img src="/image/icon/like.png" alt="Chat Like" style="width: 20px; height: 20px; margin-top: 5px;">
+						        <img src="/image/icon/like.png" style="width: 20px; height: 20px; margin-bottom: -4px;">
 						        [[${dto.chat_like}]]
+						        <!-- <img src="/image/icon/like.png" style="width: 20px; height: 20px; margin-bottom: -4px;">
+						        [[${dto.chat_like}]] -->
 						    </th>
 						</tr>		
 					</table>
