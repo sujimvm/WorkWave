@@ -25,7 +25,7 @@ function getComBoardList() {
 			var hotEmpty = 8 - hot.length;
 			var newEmpty = 8 - newL.length;
 			
-			const today = new Date('2024-06-12');
+			const today = new Date();
 			
 			/* 마감 공고 */
 			time.forEach(function(time,index) {

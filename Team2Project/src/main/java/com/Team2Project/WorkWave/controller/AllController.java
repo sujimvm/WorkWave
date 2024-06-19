@@ -181,16 +181,13 @@ public class AllController {
 	            CompanyDTO companyInfo = this.companyMapper.companyInfo(id);
 	              
 	            int comBoarding = this.companyMapper.companyBoardingCnt(companyInfo.getCompany_key());
-				/*
-				 * int comBoardEnd =
-				 * this.companyMapper.companyBoardEndCnt(companyInfo.getCompany_key());
-				 */
+				int comBoardEnd =this.companyMapper.companyBoardEndCnt(companyInfo.getCompany_key());
 	            int applyNoneCheckCnt = this.companyMapper.applyNoneCheckCnt(companyInfo.getCompany_key());
 	            int positionCnt = this.companyMapper.positionCnt(companyInfo.getCompany_key());
 	            
 	            
 	            model.addAttribute("comBoarding", comBoarding)
-						/* .addAttribute("comBoardEnd", comBoardEnd) */
+					.addAttribute("comBoardEnd", comBoardEnd) 
 	                .addAttribute("applyNoneCheckCnt", applyNoneCheckCnt) 
 	                .addAttribute("positionCnt", positionCnt); 
 	            
@@ -205,6 +202,7 @@ public class AllController {
 	            int positionJean = this.userMapper.positionJean(userInfo.getUser_key());
 	            int interest = this.userMapper.interest(userInfo.getUser_key());
 	            String profileName = this.userMapper.profileName(userInfo.getUser_key());
+	            List<ProfileDTO> profileList = this.profileMapper.profileList(userInfo.getUser_key());
 	                 
 	            // 지원완료 갯수
 	            model.addAttribute("applyCnt", applyCnt);
@@ -216,6 +214,8 @@ public class AllController {
 	            model.addAttribute("interest", interest);
 	            // 이력서 제목
 	            model.addAttribute("profileName", profileName);
+	            
+	            model.addAttribute("profileList", profileList);
 	         }
 
 	      // 모델에 데이터 추가
