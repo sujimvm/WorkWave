@@ -9,17 +9,144 @@
 }
 .comBoardSearchTotalDiv{
 	padding:30px;
+	background-color: #fbfbfb;
 	border: 1px solid #eeeeee;
 }
 .comBoardSearchDiv{
 	border-bottom: 1px solid #eeeeee;
-    padding-bottom: 10px;
+    padding: 10px;
 }
-.comBoardSearchDiv h6{
+.comBoardSearchDiv h5{
 	margin: 0;
-    margin-bottom: 5px;
-    padding-left: 5px;
 }
+.comBoardListBtDiv{
+	margin-top: 30px;
+	text-align: right;
+}
+.comBoardListTb{
+	width: 100%;
+	border-top: 2px solid;
+	border-spacing: 0;
+}
+.comBoardListTb tr:hover{
+	background-color: #f6fafd;
+}
+.comBoardListTb th,td{
+	padding: 10px;
+}
+.comBoardListTb th{
+	border-bottom: 1px solid #eeeeee;
+	width: 20%;
+	font-weight: 100;
+    font-size: small;
+	vertical-align: middle;
+	padding-left: 5px;
+}
+.comBoardListTb td{
+	border-bottom: 1px solid #eeeeee;
+	border-left: 1px solid #eeeeee;
+}
+.comBoardListTb a{
+	text-decoration: none;
+}
+.applyCheckDiv{
+	overflow: hidden;  		
+	text-overflow: ellipsis;  	
+	white-space: nowrap; 		
+	word-break:break-all;
+	max-width: 130px;
+	float: left;
+	position: relative;
+}
+.interestCheckDiv{
+	float: left;
+}
+.apply_check {
+	border: 1px solid #dddddd;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background: #fff;
+	border-radius: 0;
+	cursor: pointer;
+	height: 16px;
+	outline: 0;
+	width: 16px;
+	margin-right: 5px;
+}
+.apply_check + label {
+	position: relative;
+	top: -6px;
+}
+.apply_check:checked {
+  border: 1px solid #dddddd;
+  background: #fff;
+  border-radius: 0;
+  cursor: pointer;
+  height: 16px;
+  outline: 0;
+  width: 16px;
+  -webkit-appearance: auto;
+  -moz-appearance: auto;
+  appearance: auto;
+}
+
+.interest_check{
+	display: none;
+}
+.interest_check + label {
+	display: block;    
+	width: 16px;
+    height: 16px;
+	background-image: url("/image/icon/interest_icon1.png");
+	background-size: 16px;
+	background-repeat: no-repeat;
+	margin: 3px 3px 3px 4px;
+}
+.interest_check + label:hover {
+	background-image: url("/image/icon/interest_icon2.png");
+}
+.interest_check:checked + label {
+	background-image: url("/image/icon/interest_icon3.png");
+}
+.titleDiv{
+	width: 100%;
+	overflow: hidden;  		
+	text-overflow: ellipsis;  	
+	white-space: nowrap; 		
+	word-break:break-all;
+	max-width: 500px;
+	margin: 3px 0;
+}
+.listTitleDiv{
+	font-weight: bold;
+	font-size: 15px;
+	color: #000000;
+}
+.listSubDiv{
+	font-size: 12px;
+	color: #888888;
+}
+.listGroupDiv{
+	font-size: 11px;
+	color: #888888;
+}
+.totalPageInfoDiv{
+	width: 100%;
+	margin-top: 40px;
+	margin-bottom: 10px;
+}
+.totalPageInfoDiv #total{
+	float: left;
+	font-size: 18px;
+}
+.totalPageInfoDiv #pageInfo{
+	float: right;
+	font-size: 12px;
+}
+
+
+
 
 /* content */
 /* 기업로그이미지 */
@@ -228,13 +355,33 @@ input[type=number] { /* 파이어폭스에서의 초기화 방법 */
     color: #ffffff;
     border: 1px solid #2551a8;
 }
+.btCss1:hover{
+    background-color: #416dc3;
+}
 .btCss2{
 	background-color: #c4d8ff;
     color: #4879db;
     border: 1px solid #c4d8ff;
 }
+.btCss2:hover{
+	background-color: #d9e6ff;
+}
 .btCss3{
     background-color: #ffffff;
     color: #8a8a89;
     border: 1px solid #8a8a89;
+}
+.btCss3:hover{
+    background-color: #f2f2f2;
+}
+.btCss4{    
+	width: 70px;
+    height: 30px;
+    border: 0;
+    background-color: #FF9800;
+    color: #fff;
+    cursor: pointer;
+}
+.btCss4:hover{    
+    background-color: #ffa726;
 }
