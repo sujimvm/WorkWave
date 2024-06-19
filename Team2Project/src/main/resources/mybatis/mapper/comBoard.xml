@@ -100,7 +100,8 @@
 	  		select company_key from com_board where com_board_key = #{com_board_key}
 	  	</select>
 	  	<insert id="addApply" parameterType="aDTO">
-	  		insert into apply values(key_seq.nextval, #{profile_key}, #{com_board_key}, sysdate, default,#{user_key},#{company_key},default)
+	  		insert into apply (apply_key,profile_key ,com_board_key,apply_date,apply_profile_check,user_key,company_key,apply_check)
+	  		values(key_seq.nextval, #{profile_key}, #{com_board_key}, sysdate, default,#{user_key},#{company_key},default)
 	  	</insert>
 	  	
 	  	
