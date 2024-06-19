@@ -42,10 +42,13 @@
 	            </li>
 	            <li style="display: flex; align-items: center; height: auto; padding: 10px;"
 	            	th:each="positionInfo, stat : ${positionInfoList}">
-	                <span style="width: 60%">
-	                	  <span th:text="${positionComList[stat.index].company_name}"></span><br>
+	                <span style="width: 60%; text-align: left; margin-left: 15px;">
+	                	  <span style="font-size: 14px;" 
+	                	  	    th:text="${positionComList[stat.index].company_name}"></span><br>
 	                	  <a th:href="@{/U/userPosition/cont}">
-	                	  	<span th:text="${positionInfo.position_title}"></span>
+	                	  	<span style="font-size: 16px;"
+	                	  		  th:text="${positionInfo.position_title}">
+	                	    </span>
 						  </a>	                
 	                </span>
 	                <span style="width: 20%"
