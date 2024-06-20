@@ -7,7 +7,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"/>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/userCont.css}">
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
 </head>
@@ -54,6 +53,7 @@
 	                	        style="font-size: 16px; cursor: pointer; color: #0B57D0;" 
 	                	        th:text="${positionInfo.position_title}"
 	                	        th:attr="data-com-board-key=${positionInfo.com_board_key},
+	                	        		 data-position-key=${positionInfo.position_key},
 	                	        		 data-position-title=${positionInfo.position_title},
 	                	        	     data-company-name=${positionComList[stat.index].company_name},
 	                	        	     data-position-date=${positionInfo.position_date},
@@ -96,6 +96,7 @@
       		<!-- 포지션 상세 모달 -->
       		<div id="recommendModal" class="modal">
       		<input type="hidden" id="apply_com_board_key">
+      		<input type="hidden" id="modal_position_key">
 		    <table class="position-cont">
 				<thead style="font-size: 15px">
 					<tr>
@@ -125,15 +126,19 @@
 					<tr>
 						<td id="modal-mgr-email" colspan="2"></td>
 					</tr>
-					<tr>
+					<tr id="positionBtn">
 						<td colspan="3" style="text-align: center;">
-							<input type="button" value="제안 수락" onclick="jeanOk()">
-							<input type="button" value="제안 거절" onclick="jeanNo()">
+							<input type="button" value="제안 수락" onclick="jeanOk()" id="positionResultBtn1">
+							<input type="button" value="제안 거절" onclick="jeanNo()" id="positionResultBtn2">
 						</td>
 					</tr>
 				</tfoot>
 			</table>
-				
+			
+			<div>
+				<span id="positionResultOk" style="display: none;">이미 수락한 제안입니다.</span>
+				<span id="positionResultNo" style="display: none;">이미 거절한 제안입니다.</span>
+			</div>	
 		 	</div>
       	
       	
@@ -158,7 +163,8 @@
    	        var mgrName = element.getAttribute('data-mgr-name');
    	        var mgrPhone = element.getAttribute('data-mgr-phone');
    	        var mgrEmail = element.getAttribute('data-mgr-email');
-			
+   	        var positionKey = element.getAttribute("data-position-key");
+   	        
    	        document.getElementById('modal-position-title').innerText = positionTitle;
    	        document.getElementById('modal-company-name').innerText = companyName;
    	        document.getElementById('modal-position-date').innerText = positionDate.substring(0, 10);
@@ -171,20 +177,93 @@
 
    	        $("#recommendModal").modal();
    	        $("#apply_com_board_key").val(comBoardKey);
+   	     	$("#modal_position_key").val(positionKey);
+   	        
+   	        $.ajax({
+   	        	url: '/ajax/position/check',
+   	        	type: 'post',
+   	        	data: {'check': positionKey},
+   	        	success: function() {
+   	        		console.log();
+   	        	},error: function(xhr, status, error) {
+   					console.error(xhr);
+   				}
+   	        });
+   	        
+	   	     $.ajax({
+	             url: '/ajax/position/result/check',
+	             type: 'get',
+	             data: {'positionKey': positionKey},
+	             success: function(result){
+	                 debugger; // 디버깅을 위한 중단점 설정
+	                 
+	                 // 서버로부터 받은 결과(result)가 'O' 또는 'X'일 경우 버튼을 비활성화
+	                 if(result == 'O' || result == 'X') {
+	                     $('#positionResultBtn1').prop('disabled', true); // 버튼 비활성화
+	                     $('#positionResultBtn2').prop('disabled', true); // 버튼 비활성화
+	                     $('#positionBtn').hide(); // 버튼 비활성화
+	                     if(result == 'O'){
+	                    	 $('#positionResultOk').show();
+	                    	 $('#positionResultNo').hide();
+	                     }else if(result == 'X'){
+	                    	 $('#positionResultNo').show();
+	                    	 $('#positionResultOk').hide();
+	                     }
+	                 }
+	             },
+	             error: function(xhr, status, error) {
+	                 console.error(xhr); // 오류 발생 시 콘솔에 오류 출력
+	             }
+	         });
+	   	     
+	   		/* // 모달 창 닫기 이벤트 감지
+	   	    $('#recommendModal').on('hide.bs.modal', function() {
+	   	        // 페이지 새로고침
+	   	        location.reload();
+	   	    }); */
    	        
    	    }
      	// 공고 지원 등록 / 해제
    		function jeanOk() {
-   			
+     		
    			$.ajax({
    				url: '/ajax/apply/insert',
    				type: 'post',
    				data:{"checked":$("#apply_com_board_key").val()},
    				success: function() {
    					alert('제안을 수락하셨습니다.');
+   					$.ajax({
+   						url: '/ajax/positionOk',
+   						type: 'post',
+   						data: {'positionKey': $("#modal_position_key").val()},
+   						success: function() {
+   							console.log();
+   						 	$('#recommendModal').modal('hide');
+   					    
+   						},error: function(xhr, status, error) {
+   		   					console.error(xhr);
+   		   				}
+   					});
    				},error: function(xhr, status, error) {
    					console.error(xhr);
    				}
+   			});
+   		}
+     	
+   	// 공고 지원 등록 / 해제
+   		function jeanNo() {
+     		
+   			$.ajax({
+   				url: '/ajax/positionNo',
+   				type: 'post',
+   				data: {'positionKey': $("#modal_position_key").val()},
+   				success: function() {
+   					console.log();
+   					alert('제안을 거절하셨습니다.');
+   					$('#recommendModal').modal('hide');
+   				},error: function(xhr, status, error) {
+	   					console.error(xhr);
+	   			}
    			});
    		}
    		

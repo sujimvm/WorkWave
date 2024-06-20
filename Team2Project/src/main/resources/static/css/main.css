@@ -181,6 +181,7 @@
     color: white;
     font-weight: bold;
     margin: 5px;
+    width: 50%;
 }
 .main-user-table td {
 	color: black;
