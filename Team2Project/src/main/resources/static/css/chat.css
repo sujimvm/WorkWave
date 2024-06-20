@@ -256,7 +256,7 @@
 }
 
 .chat-table2 th {
-    background-color: #f2f2f2;
+    background-color: #ffffff;
 }
 
 .chat-table2 tr {
@@ -293,6 +293,17 @@
     background-image: url(/image/icon/chat_icon.png);
     position: absolute;
     top: 6px;
+  }
+  
+.Q1::after {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 28px;
+    background-image: url(/image/icon/chat_icon.png);
+    position: absolute;
+    top: 7px;
+    margin-left: -27px;
   }
 
 

@@ -51,12 +51,12 @@
 		</div>
 
 		<div class="chat-info sidebar_r">
-			<h3 class="Q">웨이브톡</h3>
+			<h3 class="Q1" style="margin-left: 19px;">웨이브톡</h3>
 			<div class="chat-table2">
 				<th:block th:if="${not #lists.isEmpty(List)}" th:each="dto : ${List}">
 					<table>
 						 <tr style="border-collapse: collapse;">
-							<th >
+							<th>
 								<a th:href="@{/A/chat/content(no=${dto.chat_key})}">
 									<span th:text="${dto.chat_title}"></span>
 								</a>
@@ -73,8 +73,7 @@
 						        [[${dto.chat_hit}]]
 						        <img src="/image/icon/like.png" style="width: 20px; height: 20px; margin-bottom: -4px;">
 						        [[${dto.chat_like}]]
-						        <!-- <img src="/image/icon/like.png" style="width: 20px; height: 20px; margin-bottom: -4px;">
-						        [[${dto.chat_like}]] -->
+						        <span th:text="${#dates.format(dto.chat_date, 'yyyy/MM/dd')} + ' 작성'"></span>
 						    </th>
 						</tr>		
 					</table>
