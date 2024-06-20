@@ -18,7 +18,40 @@ $(document).ready(function() {
         .catch(error => {
             console.error(error);
         });
+        
+        	// 관심기업 추가/삭제
+	$(document).on('click', '#interest_check', function() {
+		
+		if($("#sessionID").val() == 1){
+			alert("개인회원으로 로그인 시 이용가능합니다.");
+			$(this).prop("checked",false);
+		}else if($("#sessionID").val() != undefined){
+			if ($(this).is(':checked')){
+				interestCheck(1,$(this).val());
+			}else{
+				interestCheck(0,$(this).val());
+			}
+		}else{
+			alert("로그인 후 이용가능합니다.");
+			$(this).prop("checked",false);
+		}
+	});
 });
+
+// 관심기업 체크 시 관심기업 등록 / 해제
+function interestCheck(check, company_key) {
+	
+	$.ajax({
+		url: '/ajax/interest/action',
+		type: 'post',
+		data:{"check":check,"company_key":company_key},
+		success: function() {
+		},error: function(xhr, status, error) {
+			console.error(xhr);
+		}
+	});
+}
+
 
 //포지션제안 
 function positionInputModal(key,name) {

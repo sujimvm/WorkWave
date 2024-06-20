@@ -1,5 +1,4 @@
 var jobCodeOutput = 0;
-var openGroup = 0;
 
 // 화면 시작 
 $(document).ready(function() {
@@ -12,21 +11,11 @@ $(document).ready(function() {
 	});
 	
 	$(document).on('click', '#jobCodeGroupUl .jobCk', function(e) {
-		checkedGroup = $(this).val().split('/')[0];
 		
 		if ($(this).is(':checked')){
 			$('.jobCodeSubUl').hide();
 			$('.jobCodeStepUl').hide();
 			$('#jobCodeSubUl'+$(this).val().split('/')[0]).show();
-			openGroup = $(this).val().split('/')[0];
-		}
-		
-		if(openGroup != checkedGroup){
-			e.preventDefault();
-			$('.jobCodeSubUl').hide();
-			$('.jobCodeStepUl').hide();
-			$('#jobCodeSubUl'+$(this).val().split('/')[0]).show();
-			openGroup = $(this).val().split('/')[0];
 		}
 		
 	});

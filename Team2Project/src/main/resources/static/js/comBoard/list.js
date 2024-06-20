@@ -13,16 +13,17 @@ $(document).ready(function() {
 	
 	// 관심기업 추가/삭제
 	$(document).on('click', '.interest_check', function() {
-		if($("#sessionID").val() != undefined){
+		
+		if($("#sessionID").val() == 1){
+			alert("개인회원으로 로그인 시 이용가능합니다.");
+			$(this).prop("checked",false);
+		}else if($("#sessionID").val() != undefined){
 			if ($(this).is(':checked')){
 				interestCheck(1,$(this).val());
 			}else{
 				interestCheck(0,$(this).val());
 			}
 			getComBoardList($("#getPage").val());
-		}else if($("#sessionID").val() == 1){
-			alert("개인회원으로 로그인 시 이용가능합니다.");
-			$(this).prop("checked",false);
 		}else{
 			alert("로그인 후 이용가능합니다.");
 			$(this).prop("checked",false);
@@ -173,9 +174,7 @@ function getComBoardList(nowPg) {
 		
 			$('#pagination').append(paging_li);
 			
-			if($("#getPage").val()==''){
-				$('html').scrollTop('0');
-			}else if($("#getPage").val()==prevPage){
+			if($("#getPage").val()=='' || $("#getPage").val()==prevPage){
 				$('html').scrollTop(scrollNum);
 			}else{
 				$('html').scrollTop('860');
