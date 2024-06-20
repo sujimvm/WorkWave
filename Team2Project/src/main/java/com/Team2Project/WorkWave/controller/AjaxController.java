@@ -284,7 +284,7 @@ public class AjaxController {
 	      dto.setCompany_key(cdto.getCompany_key());
 	      
 	      if(temp_key > 0) {
-//	         this.comBoardMapper.updateComBoardTemp(dto);
+	         this.comBoardMapper.updateComBoardTemp(dto);
 	      }else{
 	         if(this.comBoardMapper.addComBoardTemp(dto) > 0) {
 	            temp_key = this.comBoardMapper.selectTempPk(dto.getCompany_key());
