@@ -59,6 +59,14 @@ public interface UserMapper {
 	public List<PositionDTO> positionInfo(int user_key);
 	// 포지션 제안을 보낸 기업 이름
 	public CompanyDTO positionCompany(int company_key);
+	// 포지션 제안을 확인했을 때 check가 Y로
+	void positionCheck(int position_key); 
+	// 포지션 제안을 수락했을 때 check가 O로
+	void positionOk(int position_key);
+	// 포지션 제안을 거절했을 때 check가 X로
+	void positionNo(int position_key);
+	// 포지션 제안 결과
+	PositionDTO positionResult(int position_key);
 	
 	UserLoginDTO findUserIdById(String user_id);
 	

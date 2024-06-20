@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -273,26 +274,24 @@ public class AjaxController {
 		
 		return map;
 	}
-	// (등록) 공고 중간저장
-	@PostMapping("/comBoardTemp/insert")
-	public int addComBoardTemp(ComBoardDTO dto, HttpSession session, HttpServletRequest request) {
-		int temp_key = dto.getTemp_key();
-		// 세션 기업정보로 기업키 저장
-		CompanyDTO cdto = (CompanyDTO)session.getAttribute("cDTO");
-		dto.setCompany_key(cdto.getCompany_key());
-		
-		if(temp_key != 0) {
-			if(1 > 0) {
-				System.out.println("공고 임시저장 수정 성공");
-			}
-		}else{
-			if(this.comBoardMapper.addComBoardTemp(dto) > 0) {
-				temp_key = this.comBoardMapper.selectTempPk(dto.getCompany_key());
-			}
-		}
-		
-		return temp_key;
-	}
+	   // (등록) 공고 중간저장
+	   @PostMapping("/comBoardTemp/insert")
+	   public int addComBoardTemp(ComBoardDTO dto, HttpSession session, HttpServletRequest request) {
+	      int temp_key = dto.getTemp_key();
+	      // 세션 기업정보로 기업키 저장
+	      CompanyDTO cdto = (CompanyDTO)session.getAttribute("cDTO");
+	      dto.setCompany_key(cdto.getCompany_key());
+	      
+	      if(temp_key > 0) {
+//	         this.comBoardMapper.updateComBoardTemp(dto);
+	      }else{
+	         if(this.comBoardMapper.addComBoardTemp(dto) > 0) {
+	            temp_key = this.comBoardMapper.selectTempPk(dto.getCompany_key());
+	         }
+	      }
+	      
+	      return temp_key;
+	   }
 	
 	// 관심기업 등록/해제
 	@PostMapping("/interest/action")
@@ -393,15 +392,37 @@ public class AjaxController {
 		this.comBoardMapper.insertPosition(psDTO);
 	}
 	
+	// 포지션 제안 확인시 열람으로 바뀌는 메서드
+	@PostMapping("/position/check")
+	public void positionCheck(@RequestParam("check") int position_key, HttpServletRequest request, HttpSession session) {
+		
+		this.userMapper.positionCheck(position_key);
+		
+	}
+	
 	// 포지션 제안 수락
 	@PostMapping("/positionOk")
-	public void positionOk(HttpSession session,
-			               Model model) {
+	public void positionOk(@RequestParam("positionKey") int position_key) {
 		
-		UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
+		this.userMapper.positionOk(position_key);
 		
+	}
+	
+	// 포지션 제안 수락
+	@PostMapping("/positionNo")
+	public void positionNo(@RequestParam("positionKey") int position_key) {
 		
+		this.userMapper.positionNo(position_key);
 		
+	}
+	
+	@GetMapping("/position/result/check")
+	public String positionResult(@RequestParam("positionKey") int position_key) {
+		
+		PositionDTO result = this.userMapper.positionResult(position_key);
+		System.out.println(result);
+		
+		return result.getPosition_check();
 	}
 	
 	

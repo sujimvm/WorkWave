@@ -101,4 +101,20 @@
         select count(*) from users
   </select>
   
+  <update id="positionCheck" parameterType="int">
+  		update position set position_check = 'Y' WHERE position_key = #{position_key} AND position_check = 'N'
+  </update>
+  
+  <update id="positionOk" parameterType="int">
+  		update position set position_check = 'O' WHERE position_key = #{position_key}
+  </update>
+  
+  <update id="positionNo" parameterType="int">
+  		update position set position_check = 'X' WHERE position_key = #{position_key}
+  </update>
+  
+  <select id="positionResult" parameterType="int" resultType="psDTO">
+  		select position_check from position where position_key = #{position_key}
+  </select>
+  
   </mapper>
