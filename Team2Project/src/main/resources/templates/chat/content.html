@@ -73,16 +73,17 @@
 			  
 			    <br>
 			    
-			    <div>
-				    <a style="text-decoration: none;" th:href="@{/U/chat/update(no=${cont.chat_key})}">
+			    <div style="text-align: center;">
+				    <a th:if="${cont.user_id == session.uDTO.user_id}" style="text-decoration: none;" th:href="@{/U/chat/update(no=${cont.chat_key})}">
     					<input type="button" value="글수정" class="btn-custom">
 					</a>
-					<a style="text-decoration: none;" href="javascript:void(0);" th:onclick="|if(confirm('글삭제?')){
+					<a th:if="${cont.user_id == session.uDTO.user_id}" style="text-decoration: none;" href="javascript:void(0);" th:onclick="|if(confirm('글삭제?')){
 								location.href='@{/U/chat/delete(no=${cont.chat_key})}'
 								}else{return;}|">
    						 <input type="button" value="글삭제" class="btn-custom1">
 					</a>
 				</div>
+				<br>
 			    <li>
 			        <th:block th:if="${null != session.uDTO}">
 			            <div class="reply-div" id="reply-box">
@@ -112,7 +113,7 @@
             	        <span style="font-size: 11px;" th:text="${#dates.format(dto.reply_date, 'yyyy/MM/dd')} + ' 작성'"></span> <br><br>
             	      
             	  <button class=btn-edit th:if="${dto.user_id == session.uDTO.user_id}" th:attr="data-reply-key=${dto.reply_key}" onclick="editReply(this)">수정</button>
-	        	  <button class=btn-delete th:attr="data-reply-key=${dto.reply_key}" onclick="deleteReply(this)">삭제</button>
+	        	  <button class=btn-delete th:if="${dto.user_id == session.uDTO.user_id}" th:attr="data-reply-key=${dto.reply_key}" onclick="deleteReply(this)">삭제</button>
 	        	  <br> <br>
 	        	  
 
