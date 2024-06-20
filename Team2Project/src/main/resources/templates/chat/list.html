@@ -51,29 +51,45 @@
 		</div>
 
 		<div class="chat-info sidebar_r">
-			<h3 class="Q1" style="margin-left: 19px;">웨이브톡</h3>
+			<h3>웨이브톡</h3>
+				<!-- 글 검색 기능 -->
+				<!-- <div>
+					<form action="/A/chatSearchList" method="get">
+						<input name="keyword" placeholder="제목, 내용을 검색해보세요" >&nbsp;&nbsp;
+						<input type="submit" value="검색">
+					</form>
+				</div> -->
 			<div class="chat-table2">
 				<th:block th:if="${not #lists.isEmpty(List)}" th:each="dto : ${List}">
 					<table>
 						 <tr style="border-collapse: collapse;">
 							<th>
-								<a th:href="@{/A/chat/content(no=${dto.chat_key})}">
-									<span th:text="${dto.chat_title}"></span>
+								<a th:href="@{/A/chat/content(no=${dto.chat_key})}" style="text-decoration-line: none; color: black; ">
+								    <img src="/image/icon/chat_title.png" style="width: 20px; height: 20px; margin-bottom: 5px; vertical-align: middle;">
+								    <span th:text="${dto.chat_title}"></span>
 								</a>
 							</th>
 						</tr>
 						<tr style="border-collapse: collapse;">
-							<th>
-								<div th:utext="${#strings.abbreviate(dto.chat_cont, 30)}" style=" font-size: 0.9em;"></div>
-							</th>
+							 <th>
+						        <a th:href="@{/A/chat/content(no=${dto.chat_key})}" style="text-decoration: none; color: black; font-size: 0.9em; font-weight: 300;">
+						            <span th:utext="${#strings.abbreviate(dto.chat_cont, 150)}" style="display: block;"></span>
+						        </a>
+						    </th>
 						</tr>
 						<tr>
-						    <th style="border-bottom: 1px solid #ddd;" th:inline="text">
+							<th>
+								<span th:text="${dto.chat_tag}" style="color: black; font-size: 0.9em; font-weight: 300;"></span>
+							</th>
+						
+						</tr>
+						<tr>
+						    <th style="border-bottom: 1px solid #ddd; font-weight: 300;" th:inline="text">
 						        <img src="/image/icon/eye1.png" style="width: 25px; height: 20px; margin-bottom: -5px; margin-right: -6px">
 						        [[${dto.chat_hit}]]
 						        <img src="/image/icon/like.png" style="width: 20px; height: 20px; margin-bottom: -4px;">
 						        [[${dto.chat_like}]]
-						        <span th:text="${#dates.format(dto.chat_date, 'yyyy/MM/dd')} + ' 작성'"></span>
+						        <span th:text="${#dates.format(dto.chat_date, 'yyyy/MM/dd')} + ' 작성'" style="float: right; font-size: 0.8em;"></span>
 						    </th>
 						</tr>		
 					</table>

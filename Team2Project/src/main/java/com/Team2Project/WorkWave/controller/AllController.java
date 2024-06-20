@@ -112,16 +112,13 @@ public class AllController {
 		///////////////////////////////////
 		
 		UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
-		
-		
+
 		// 이력서의 이미지 사진
 		List<ProfileDTO> profileList = this.profileMapper.profileList(userInfo.getUser_key());
 		// 내가 작성한 게시물 갯수
 		int chatCnt = this.chatMapper.chatCnt(userInfo.getUser_key());
 		// 내가 작성한 게시물의 댓글 갯수
 		int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
-		
-		
 		
 		List<ChatDTO> list = this.chatMapper.list(pdto);
 		
