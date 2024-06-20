@@ -72,5 +72,21 @@
   	<select id="searchCompany" parameterType="int" resultType="cDTO">
   		select * from company where company_key = #{company_key}
   	</select>
+  	
+  	<select id="getComBoardList" parameterType="int" resultType="bDTO">
+  		select * from com_board where company_key = #{company_key}
+  	</select>
+  	
+  	<select id="getComBoardTempList" parameterType="int" resultType="bDTO">
+  		select * from com_board_temp where company_key = #{company_key}
+  	</select>
+  	
+  	<select id="getComBoardApply" resultType="int" parameterType="int">
+  		select count(*) from apply where com_board_key = #{com_board_key} 
+  	</select>
+  	
+  	<select id="getComBoardApplyNonCheck" resultType="int" parameterType="int">
+  		select count(*) from apply where apply_profile_check = 'N' and com_board_key = #{com_board_key}
+  	</select>
   
   </mapper>

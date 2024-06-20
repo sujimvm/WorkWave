@@ -2,6 +2,7 @@ package com.Team2Project.WorkWave.controller;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -423,6 +424,38 @@ public class AjaxController {
 		System.out.println(result);
 		
 		return result.getPosition_check();
+	}
+	
+	@GetMapping("/companyComBoard")
+	public HashMap<String, Object> getCompanyComBoard(HttpSession session, HttpServletRequest request) {
+		HashMap<String, Object> viewMap = new HashMap<>(); //뷰페이지로 이동하는 맵 
+		HashMap<String, Object> reqMapperMap = new HashMap<>(); // 매퍼로 이동하는 맵
+		
+		CompanyDTO company = (CompanyDTO) session.getAttribute("cDTO");
+		
+		// 해당 기업의 공고들 가져오기
+		List<ComBoardDTO> com_board_list = this.companyMapper.getComBoardList(company.getCompany_key());
+		// 해당 기업의 작성중 공고 가져오기
+		List<ComBoardDTO> temp_list = this.companyMapper.getComBoardTempList(company.getCompany_key());
+		
+		List<Integer> apply_total_list = new ArrayList<>();
+		List<Integer> apply_non_check_list = new ArrayList<>();
+		
+		for(ComBoardDTO com_board : com_board_list) {
+			int apply_total = this.companyMapper.getComBoardApply(com_board.getCom_board_key());
+			apply_total_list.add(apply_total);
+			
+			int apply_non_check = this.companyMapper.getComBoardApplyNonCheck(com_board.getCom_board_key());
+			apply_non_check_list.add(apply_non_check);
+		}
+		
+		viewMap.put("comBoardList", com_board_list);
+		viewMap.put("applyTotalList", apply_total_list);
+		viewMap.put("applyNonCheckList", apply_non_check_list);
+		viewMap.put("tempList", temp_list);
+		
+		
+		return viewMap;
 	}
 	
 	

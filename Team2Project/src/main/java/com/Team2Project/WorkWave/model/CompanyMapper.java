@@ -1,6 +1,8 @@
 package com.Team2Project.WorkWave.model;
 
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -41,4 +43,9 @@ public interface CompanyMapper {
 	int countCompany();
 	
 	CompanyDTO searchCompany(int company_key);
+	
+	List<ComBoardDTO> getComBoardList(int company_key);
+	List<ComBoardDTO> getComBoardTempList(int company_key);
+	int getComBoardApply(int com_board_key);
+	int getComBoardApplyNonCheck(int com_board_key);
 }
