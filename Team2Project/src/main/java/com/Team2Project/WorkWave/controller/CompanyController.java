@@ -2,6 +2,7 @@ package com.Team2Project.WorkWave.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -370,6 +371,13 @@ public class CompanyController {
 			 .addAttribute("positionCnt", positionCnt); 
 		
 		return "company/cont";
+	}
+	
+	// 해당 기업의 공고 리스트 페이지로 이동
+	@GetMapping("/comBoardList")
+	public String companyBoardList(HttpSession session, Model model) {
+		
+		return "company/comBoardList";
 	}
 
 }
