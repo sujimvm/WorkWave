@@ -151,6 +151,7 @@ function executionFrom() {
     $('input:checkbox[name=com_board_benefits_Ck]:checked').each(function(){
 		com_board_benefits_Ck.push($(this).val());
 	});
+	alert(com_board_benefits_Ck);
 	$("#com_board_benefits").val(com_board_benefits_Ck);
 		
     var com_board_conditions_Ck = [];

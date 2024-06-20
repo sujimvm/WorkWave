@@ -24,7 +24,8 @@ public interface ComBoardMapper {
 	int addComBoard(ComBoardDTO dto); // 공고등록
 	void deleteComBoardTemp(int temp_key); //임시테이블 공고삭제
 	int addComBoardTemp(ComBoardDTO dto); // 공고 임시저장
-	int selectTempPk(int company_key); // 공고 임시저장
+	int selectTempPk(int company_key); // 공고 임시저장 테이블 키
+	int updateComBoardTemp(ComBoardDTO dto); // 공고 임시저장
 
 	int insertInterestCheck(InterestDTO dto); // 관심기업 추가
 	int deleteInterestCheck(InterestDTO dto); // 관심기업 삭제

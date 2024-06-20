@@ -81,6 +81,18 @@
 	  	<select id="selectTempPk" parameterType="int" resultType="int">
 	  		select max(com_board_key) from com_board_temp where company_key = #{company_key}
 	  	</select>
+	  	<!-- 공고등록 임시저장 수정 -->
+	  	<update id="updateComBoardTemp" parameterType="bDTO">
+	    	update com_board_temp 
+	    	set com_board_title = #{com_board_title}, com_board_start_date = #{com_board_start_date,jdbcType=DATE},
+	  		com_board_end_date = #{com_board_end_date,jdbcType=DATE}, com_board_group = #{com_board_group}, 
+	  		com_board_sub = #{com_board_sub}, com_board_step = #{com_board_step}, com_board_jobtype = #{com_board_jobtype},
+	  		com_board_mojib = #{com_board_mojib}, com_board_week = #{com_board_week}, com_board_time = #{com_board_time}, 
+	  		com_board_career = #{com_board_career}, com_board_edu = #{com_board_edu}, com_board_sal = #{com_board_sal},
+	  		com_board_conditions = #{com_board_conditions}, com_board_benefits = #{com_board_benefits}, com_board_mgr_name = #{com_board_mgr_name}, 
+	  		com_board_mgr_phone = #{com_board_mgr_phone}, com_board_mgr_email = #{com_board_mgr_email}, com_board_cont = #{com_board_cont}
+	    	where com_board_key = #{temp_key}
+	    </update>
 	  	
 	  	
 	  	<!-- 관심기업 등록/해제 -->
@@ -190,24 +202,23 @@
 	            order by com_board_date desc
 	  		]]>
 	  	</select>
-	    <select id="getMainHotComBoardList" resultType="bDTO"> <!-- 쿼리수정 -->
+	    <select id="getMainHotComBoardList" resultType="bDTO"> 
 		    <![CDATA[
-		  		select * 
-		  		from (select row_number() over(order by com_board_date desc) rnum, b.* 
-		  		from com_board b  where com_board_start_date <= sysdate and com_board_end_date >= sysdate)Pb 
-		  		join company c on c.company_key = Pb.company_key
-		  		where rnum >= 1 and rnum <= 8
-	            order by com_board_date
+		  		select * from com_board cb join company c on cb.company_key = c.company_key
+				where cb.com_board_key in (select a.com_board_key
+				from (select row_number() over(order by count(*) desc) rnum, com_board_key
+				from apply group by com_board_key order by count(*) desc ) a
+				where rnum >= 1 and rnum <= 8)
 	  		]]>
 	  	</select>
-	    <select id="getMainTimeComBoardList" resultType="bDTO"> <!-- 쿼리수정 -->
+	    <select id="getMainTimeComBoardList" resultType="bDTO"> 
 		    <![CDATA[
 		  		select * 
-		  		from (select row_number() over(order by com_board_date) rnum, b.* 
+		  		from (select row_number() over(order by com_board_end_date) rnum, b.* 
 		  		from com_board b  where com_board_start_date <= sysdate and com_board_end_date >= sysdate)Pb 
 		  		join company c on c.company_key = Pb.company_key
 		  		where rnum >= 1 and rnum <= 8
-	            order by com_board_date desc
+	            order by com_board_end_date
 	  		]]>
 	  	</select>
 	  	

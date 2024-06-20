@@ -24,7 +24,7 @@ $(document).ready(function() {
 	$("#com_board_time3").val(endTime[0]);
 	$("#com_board_time4").val(endTime[1]);
 	
-	var benefitsCks = $("#com_board_benefits_Checked").val();
+	var benefitsCks = $("#com_board_benefits").val();
 	if(benefitsCks != ""){
 		var benefitsCk = benefitsCks.split(",");
 		benefitsCk.forEach(function(benefitsCk) {
@@ -51,7 +51,7 @@ $(document).ready(function() {
 		}
 	}
 	
-	var conditionsCks = $("#com_board_conditions_Checked").val();
+	var conditionsCks = $("#com_board_conditions").val();
 	if(conditionsCks != ""){
 		var conditionsCk = conditionsCks.split(",");
 		conditionsCk.forEach(function(conditionsCk) {
