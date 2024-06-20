@@ -318,13 +318,15 @@ input[type=number] { /* 파이어폭스에서의 초기화 방법 */
     -moz-appearance: textfield;
 }
 .codeTotalDiv{
+	width:100%;
 	display: -webkit-inline-box;
 }
 .codeDiv{
-	width:260px;
+	width:33%;
 	height: 200px;
 	overflow: scroll;
 	border: 1px solid ;
+	background-color: #fff;
 }
 .codeDiv::-webkit-scrollbar {
   width: 5px;
@@ -394,4 +396,11 @@ input[type=number] { /* 파이어폭스에서의 초기화 방법 */
 }
 .btCss4:hover{    
     background-color: #ffa726;
+}
+.btCss_x{    
+	width: 70px;
+    height: 30px;
+    border: 0;
+    color: #fff;
+	background-color: #8f00ff;
 }

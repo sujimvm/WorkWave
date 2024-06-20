@@ -151,6 +151,7 @@ function getComBoardList(nowPg) {
 					$('#apply_check_'+applyList).attr("disabled", true);
 					$('#addApplyBt_'+applyList).attr("value", "지원완료");
 					$('#addApplyBt_'+applyList).attr("disabled", true);
+					$('#addApplyBt_'+applyList).attr("class", "btCss_x");
 				});
 			}
 			
