@@ -27,7 +27,7 @@ public interface ChatMapper {
 	
 	public int chatCnt(int user_key);
 	
-	/* public ChatDTO replycount(int chat_key); */
+	public int replyCount(int chat_key);
 	
 	public int replyCnt(int user_key);
 	

@@ -121,12 +121,15 @@ public class AllController {
 		int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
 		
 		List<ChatDTO> list = this.chatMapper.list(pdto);
-		
+
 
 		model.addAttribute("List", list).addAttribute("paging", pdto);
 		model.addAttribute("chatCnt", chatCnt)
 			 .addAttribute("replyCnt", replyCnt)
 			 .addAttribute("profileList", profileList);
+		
+			 
+		
 
 		return "chat/list";
 	}
@@ -145,6 +148,8 @@ public class AllController {
 		int chatCnt = this.chatMapper.chatCnt(userInfo.getUser_key());
 		// 내가 작성한 게시물의 댓글 갯수
 		int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
+		
+		
 		
 		model.addAttribute("chatCnt", chatCnt)
 			 .addAttribute("replyCnt", replyCnt)

@@ -89,7 +89,9 @@
 						        [[${dto.chat_hit}]]
 						        <img src="/image/icon/like.png" style="width: 20px; height: 20px; margin-bottom: -4px;">
 						        [[${dto.chat_like}]]
-						        <span th:text="${#dates.format(dto.chat_date, 'yyyy/MM/dd')} + ' 작성'" style="float: right; font-size: 0.8em;"></span>
+						        <img src="/image/icon/chat_reply.png" style="width: 25px; height: 25px; margin-bottom: -7px;">
+						      
+						         <span th:text="${#dates.format(dto.chat_date, 'yyyy/MM/dd')} + ' 작성'" style="float: right; font-size: 0.8em;"></span>
 						    </th>
 						</tr>		
 					</table>
