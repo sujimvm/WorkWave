@@ -20,20 +20,22 @@
 		<div class="sidebar active">
 			<h3>마이페이지</h3>
 	        <a th:href="@{/C/comBoard/insert}">공고 등록</a>
-	        <a th:href="@{/C/comBoardList}">공고 리스트</a>
-	        <a th:href="@{/C/comBoard}">지원자 현황</a>
+	        <a th:href="@{/C/comBoardList}" class="select">공고 리스트</a>
 	        <a th:href="@{/C/update/companyPwdCheck}">기업정보 수정</a>
 	        <a th:href="@{/C/update/pwd/companyPwdCheck}">비밀번호 변경</a>
 	        <a th:href="@{/C/delete/companyPwdCheck}">회원탈퇴</a>
 		</div>
 		
 		<div class="faq-list sidebar_r">
-			<ul>
+			<ul class="nav-btn">
 				<li id="all-list">전체 공고</li>
 				<li id="end-list">마감된 공고</li>
 				<li id="ing-list">게재중 공고</li>
 				<li id="waiting-list">대기중 공고</li>
 			</ul>
+			<div class="totalPageInfoDiv">
+				<div id="total"></div>
+			</div>
 			<table id="boardListTb" class="comBoardListTb"></table>
 			<br>
 			
