@@ -26,14 +26,14 @@
             <h3>공지사항</h3>
             <ul class="notice-list">
             	<li>
-            		<span>전체</span>
-            		<span>제목</span>
-            		<span>날짜</span>
+            		<span style="width: 15%;">전체</span>
+            		<span style="width: 70%;">제목</span>
+            		<span style="width: 15%;">날짜</span>
             	</li>
                 <li th:each="notice : ${nList}">
-                	<span style="color: #007BFF">공지</span>
-                    <a style="color: #000000" th:href="@{/A/noticeCont(no=${notice.notice_key})}" th:text="${notice.notice_title}"></a>
-                    <span th:text="${notice.notice_date.substring(0, 10)}"></span>
+                	<span style="color: #007BFF; width: 15%;">공지</span>
+                    <a style="color: #000000; width: 70%;" th:href="@{/A/noticeCont(no=${notice.notice_key})}" th:text="${notice.notice_title}"></a>
+                    <span style="width: 15%;" th:text="${notice.notice_date.substring(0, 10)}"></span>
                 </li>
             </ul>
 
