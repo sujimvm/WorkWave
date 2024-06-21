@@ -12,7 +12,7 @@
     			var maxSize = 500 * 1024;  
 
     		    if(file.size > maxSize){
-    				alert("파일첨부 사이즈는 5MB 이내로 가능합니다.");
+    				alert("파일첨부 사이즈는 5MB 이내로 가능합니다."); 
     				$(this).val(''); 
     				return; 
     			}
