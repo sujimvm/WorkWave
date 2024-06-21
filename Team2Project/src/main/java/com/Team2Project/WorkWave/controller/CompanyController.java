@@ -2,6 +2,7 @@ package com.Team2Project.WorkWave.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -392,5 +393,31 @@ public class CompanyController {
 		model.addAttribute("dto",this.comBoardMapper.getComBoardTemp(temp_key));
 		return "/comBoard/temp"; 
 	}
+	
+	
+	// 공고리스트 해당 공고에 총 지원자 리스트 페이지
+	@GetMapping("/totalApply")
+	public String totalApply(@RequestParam("no") int com_board_key, Model model) {
+		
+		List<ProfileDTO> totalApplyList = this.companyMapper.totalApplyList(com_board_key);
+		
+		List<UserDTO> userList = new ArrayList<>();
+		
+		for(ProfileDTO totalApply : totalApplyList) {
+			UserDTO userInfo = this.companyMapper.userList(totalApply.getUser_key());
+			userList.add(userInfo);
+		}
+		
+		model.addAttribute("totalApplyList", totalApplyList)
+			 .addAttribute("userList", userList);
+		
+		return "company/totalApply";
+	}
+	
+	
+	
+	
+	
+	
 
 }
