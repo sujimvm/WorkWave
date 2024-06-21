@@ -2,6 +2,7 @@ package com.Team2Project.WorkWave.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -378,6 +379,18 @@ public class CompanyController {
 	public String companyBoardList(HttpSession session, Model model) {
 		
 		return "company/comBoardList";
+	}
+	
+	// (상세보기) 페이지 이동
+	@GetMapping("/comBoard/content") 
+	public String goComBoardContent(HttpSession session, HttpServletRequest request, Model model) {
+
+		int temp_key = Integer.parseInt(request.getParameter("No"));
+
+		CompanyDTO companyInfo = (CompanyDTO) session.getAttribute("cDTO");
+		
+		model.addAttribute("dto",this.comBoardMapper.getComBoardTemp(temp_key));
+		return "/comBoard/temp"; 
 	}
 
 }

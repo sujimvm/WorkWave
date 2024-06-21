@@ -253,4 +253,8 @@
            ]]>
         </select>
         
+        
+	  	<select id="getComBoardTemp" parameterType="int" resultType="bDTO">
+	  		select * from com_board_temp b join company c on c.company_key = b.company_key where b.com_board_key = #{com_board_key}
+	  	</select>
   </mapper>

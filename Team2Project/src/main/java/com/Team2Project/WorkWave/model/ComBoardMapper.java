@@ -55,4 +55,5 @@ public interface ComBoardMapper {
 	
 	
 	int countSearchList(String keyword);
+	ComBoardDTO getComBoardTemp(int com_board_key);
 }
