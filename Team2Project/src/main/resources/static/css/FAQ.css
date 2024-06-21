@@ -33,6 +33,7 @@
 }
 
 .notice-list {
+	width: 100%;
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -40,22 +41,16 @@
 
 .notice-list li {
     display: flex;
-    justify-content: space-between;
-    padding: 10px 0;
+    padding: 10px 10px;
     border-bottom: 1px solid #ddd;
+    margin-top: 10px; 
 }
 
 .notice-list li span, .notice-list li a {
-    flex: 1;
     text-align: left;
 }
 
-.notice-list li span {
-    width: 10%;
-}
-
 .notice-list li a {
-    width: 80%;
     color: #007BFF;
     text-decoration: none;
 }
