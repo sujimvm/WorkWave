@@ -48,4 +48,7 @@ public interface CompanyMapper {
 	List<ComBoardDTO> getComBoardTempList(int company_key);
 	int getComBoardApply(int com_board_key);
 	int getComBoardApplyNonCheck(int com_board_key);
+	
+	List<ProfileDTO> totalApplyList(int com_board_key);
+	UserDTO userList(int user_key);
 }

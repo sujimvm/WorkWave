@@ -88,5 +88,18 @@
   	<select id="getComBoardApplyNonCheck" resultType="int" parameterType="int">
   		select count(*) from apply where apply_profile_check = 'N' and com_board_key = #{com_board_key}
   	</select>
+  	
+  	<select id="totalApplyList" resultType="pDTO" parameterType="int">
+  		SELECT p.* 
+			FROM profile p
+			JOIN users u ON p.user_key = u.user_key
+			JOIN apply a ON u.user_key = a.user_key
+			WHERE a.com_board_key = #{com_board_key}
+			ORDER BY a.APPLY_PROFILE_CHECK DESC
+  	</select>
+  	
+  	<select id="userList" resultType="uDTO">
+  		select * from users where user_key = #{user_key}	
+  	</select>
   
   </mapper>
