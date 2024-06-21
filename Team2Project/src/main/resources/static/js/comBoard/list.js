@@ -75,11 +75,41 @@ $(document).ready(function() {
 	});
 	
 	
-	$(document).on('click', 'input:checkbox[name=com_board_benefits_Ck]', function() {
-		if ($('input:checkbox[name=com_board_benefits_Ck]:checked').length > 5){
-			alert("5개까지만 선택 가능합니다.");
+	$(document).on('click', 'input:checkbox[name=eduCode]', function() {
+		if ($('input:checkbox[name=eduCode]:checked').length > 4){
+			alert("4개까지만 선택 가능합니다.");
 			$(this).prop("checked",false);
-		} 
+		}else{
+			var eduCode_Ck = [];
+			$('input:checkbox[name=eduCode]:checked').each(function(){
+				eduCode_Ck.push($(this).val());
+			});
+			$('#eduCode_checked').val(eduCode_Ck);
+		}
+	});
+	$(document).on('click', 'input:checkbox[name=careerCode]', function() {
+		if ($('input:checkbox[name=careerCode]:checked').length > 4){
+			alert("4개까지만 선택 가능합니다.");
+			$(this).prop("checked",false);
+		}else{
+			var careerCode_Ck = [];
+		    $('input:checkbox[name=careerCode]:checked').each(function(){
+				careerCode_Ck.push($(this).val());
+			});
+			$('#careerCode_checked').val(careerCode_Ck);
+		}
+	});
+	$(document).on('click', 'input:checkbox[name=typeCode]', function() {
+		if ($('input:checkbox[name=typeCode]:checked').length > 4){
+			alert("4개까지만 선택 가능합니다.");
+			$(this).prop("checked",false);
+		}else{
+		    var typeCode_Ck = [];
+		    $('input:checkbox[name=typeCode]:checked').each(function(){
+				typeCode_Ck.push($(this).val());
+			});
+			$('#typeCode_checked').val(typeCode_Ck);
+		}
 	});
 });
 
@@ -116,24 +146,11 @@ function getComBoardList(nowPg) {
 	$("#getPage").val(nowPg);
 	if(nowPg == '') nowPg = 1;
 	
-	// 체크박스 값 처리
-    var eduCode_Ck = [];
-    $('input:checkbox[name=eduCode]:checked').each(function(){
-		eduCode_Ck.push($(this).val());
-	});
-    var careerCode_Ck = [];
-    $('input:checkbox[name=careerCode]:checked').each(function(){
-		careerCode_Ck.push($(this).val());
-	});
-    var typeCode_Ck = [];
-    $('input:checkbox[name=typeCode]:checked').each(function(){
-		typeCode_Ck.push($(this).val());
-	});
 	$.ajax({
 		url: '/ajax/comBoardList',
 		type: 'post',
-		dataType: 'json',
-		data:{"page":nowPg,"eduCode":eduCode_Ck,"careerCode":careerCode_Ck,"typeCode":typeCode_Ck},
+		dataType: "JSON",
+		data: {"page": nowPg,"eduCode": $('#eduCode_checked').val(),"careerCode": $('#careerCode_checked').val(),"typeCode": $('#typeCode_checked').val()},
 		success: function(map) {
 			$('#jobListTb').empty(); // Clear any existing rows
 			$('#pagination').empty();
