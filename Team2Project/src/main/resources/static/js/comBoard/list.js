@@ -73,6 +73,14 @@ $(document).ready(function() {
 			$(".locCk_sub").prop("checked",false);
 		} 
 	});
+	
+	
+	$(document).on('click', 'input:checkbox[name=com_board_benefits_Ck]', function() {
+		if ($('input:checkbox[name=com_board_benefits_Ck]:checked').length > 5){
+			alert("5개까지만 선택 가능합니다.");
+			$(this).prop("checked",false);
+		} 
+	});
 });
 
 // 지역 대분류 조회
@@ -107,11 +115,25 @@ function getLocationCodeGroup() {
 function getComBoardList(nowPg) {
 	$("#getPage").val(nowPg);
 	if(nowPg == '') nowPg = 1;
+	
+	// 체크박스 값 처리
+    var eduCode_Ck = [];
+    $('input:checkbox[name=eduCode]:checked').each(function(){
+		eduCode_Ck.push($(this).val());
+	});
+    var careerCode_Ck = [];
+    $('input:checkbox[name=careerCode]:checked').each(function(){
+		careerCode_Ck.push($(this).val());
+	});
+    var typeCode_Ck = [];
+    $('input:checkbox[name=typeCode]:checked').each(function(){
+		typeCode_Ck.push($(this).val());
+	});
 	$.ajax({
 		url: '/ajax/comBoardList',
 		type: 'post',
 		dataType: 'json',
-		data:{"page":nowPg},
+		data:{"page":nowPg,"eduCode":eduCode_Ck,"careerCode":careerCode_Ck,"typeCode":typeCode_Ck},
 		success: function(map) {
 			$('#jobListTb').empty(); // Clear any existing rows
 			$('#pagination').empty();
@@ -130,13 +152,13 @@ function getComBoardList(nowPg) {
 				var row = "<tr>" +
 					"<th>"+
 					"<div class='applyCheckDiv'><input type='checkbox' name='apply_check' class='apply_check' id='apply_check_"+list.com_board_key+"' value='"+list.com_board_key+"'>"+
-					"<label for='apply_check_"+list.com_board_key+"'>" + list.company_name + "</label></div>"+
+					"<label for='apply_check_"+list.com_board_key+"' title='" + list.company_name + "'>" + list.company_name + "</label></div>"+
 					"<div class='interestCheckDiv'><input type='checkbox' id='interestIcon_"+list.company_key+"' class='interest_check' name='interest_check_"+list.company_key+"' value='"+list.company_key+"'>"+
 					"<label for='interestIcon_"+list.company_key+"'></label></div>"+
 					"</th>" + // 선택 지원 | 기업명 | 관심기업 체크박스
-					"<td><a href='/A/comBoard/content?P="+nowPg+"&No="+list.com_board_key+"'><div class='listTitleDiv titleDiv'>" + list.com_board_title + "</div>" + 
+					"<td><a href='/A/comBoard/content?P="+nowPg+"&No="+list.com_board_key+"' title='" + list.com_board_title + "'><div class='listTitleDiv titleDiv'>" + list.com_board_title + "</div></a>" + 
 					"<div class='listSubDiv titleDiv'>"+list.com_board_career +"&nbsp;&#124;&nbsp;"+ list.com_board_edu +"&nbsp;&#124;&nbsp;"+ list.company_addr +"&nbsp;&#124;&nbsp;"+ list.com_board_jobtype  + "</div>" + 
-					"<div class='listGroupDiv titleDiv'>"+list.com_board_group +"&nbsp;&gt;&nbsp;"+ list.com_board_sub +"&nbsp;&gt;&nbsp;"+ list.com_board_step + "</div></a></td>" +
+					"<div class='listGroupDiv titleDiv'>"+list.com_board_group +"&nbsp;&gt;&nbsp;"+ list.com_board_sub +"&nbsp;&gt;&nbsp;"+ list.com_board_step + "</div></td>" +
 					"<td width='15%' style='text-align: center;'><input type='button' class='btCss4' id='addApplyBt_"+list.com_board_key+"' onclick='addApply("+list.com_board_key+",\""+ list.company_name +"\")' value='지원하기'></td>" + // 해당기업 지원하기
 					"</tr>";
 				$('#jobListTb').append(row);

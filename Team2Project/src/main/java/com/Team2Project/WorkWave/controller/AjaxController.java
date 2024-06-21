@@ -219,19 +219,25 @@ public class AjaxController {
 	// (리스트) 리스트 조회
 	@PostMapping("/comBoardList")
 	public HashMap<String, Object> getComBoardList(HttpSession session, HttpServletRequest request) {
+		String eduCode = request.getParameter("eduCode");
+		System.out.println(eduCode+"eduCode");
+		System.out.println(request.getParameter("eduCode"));
+		System.out.println(request.getParameter("careerCode"));
+		System.out.println(request.getParameter("typeCode"));
+		
 		HashMap<String, Object> viewMap = new HashMap<>(); //뷰페이지로 이동하는 맵 
 		HashMap<String, Object> reqMapperMap = new HashMap<>(); // 매퍼로 이동하는 맵
 
 		int page;	// 현재 페이지 변수
-		
-		// 페이징 처리 작업
-		if(request.getParameter("page") != null) {
-			page = Integer.parseInt(request.getParameter("page"));
-		}else {
+		{
 			page = 1;
 		}
 		
-		totalRecord = this.comBoardMapper.countComBoard();
+
+		// 페이징 처리 작업
+		if(request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}else 		totalRecord = this.comBoardMapper.countComBoard();
 		
 		Page pdto = new Page(page, rowsize, totalRecord);
 		
