@@ -220,13 +220,27 @@ public class AjaxController {
 	@PostMapping("/comBoardList")
 	public HashMap<String, Object> getComBoardList(HttpSession session, HttpServletRequest request) {
 		
-		System.out.println(request.getParameter("eduCode"));
-		System.out.println(request.getParameter("careerCode"));
-		System.out.println(request.getParameter("typeCode"));
-		
 		HashMap<String, Object> viewMap = new HashMap<>(); //뷰페이지로 이동하는 맵 
 		HashMap<String, Object> reqMapperMap = new HashMap<>(); // 매퍼로 이동하는 맵
-
+		
+		String jobCode = request.getParameter("jobCode");
+		String locCode = request.getParameter("locCode");
+		String eduCode = request.getParameter("eduCode");
+		String careerCode = request.getParameter("careerCode");
+		String typeCode = request.getParameter("typeCode");
+		
+		reqMapperMap.put("keyword", request.getParameter("keyword"));
+		if(jobCode.equals(""))reqMapperMap.put("jobCode", null);
+		else reqMapperMap.put("jobCode", jobCode.split(","));
+		if(locCode.equals(""))reqMapperMap.put("locCode", null);
+		else reqMapperMap.put("locCode", locCode.split(","));
+		if(eduCode.equals(""))reqMapperMap.put("eduCode", null);
+		else reqMapperMap.put("eduCode", eduCode.split(","));
+		if(careerCode.equals(""))reqMapperMap.put("careerCode", null);
+		else reqMapperMap.put("careerCode", careerCode.split(","));
+		if(typeCode.equals(""))reqMapperMap.put("typeCode", null);
+		else reqMapperMap.put("typeCode", typeCode.split(","));
+		
 		int page;	// 현재 페이지 변수
 		
 		// 페이징 처리 작업
@@ -236,7 +250,7 @@ public class AjaxController {
 			page = 1;
 		}
 		
-		totalRecord = this.comBoardMapper.countComBoard();
+		totalRecord = this.comBoardMapper.countComBoard_list(reqMapperMap);
 		
 		Page pdto = new Page(page, rowsize, totalRecord);
 		
@@ -381,7 +395,6 @@ public class AjaxController {
     public ResponseEntity<String> applyCancel(@RequestParam("apply_key") int apply_key) {
         try {
             // applyKey를 사용하여 지원 취소 로직 수행
-        	System.out.println("apply_key ====" + apply_key);
             userMapper.applyCancelUp(apply_key);
             return ResponseEntity.ok("지원 취소 완료");
         } catch (Exception e) {
@@ -426,7 +439,6 @@ public class AjaxController {
 	public String positionResult(@RequestParam("positionKey") int position_key) {
 		
 		PositionDTO result = this.userMapper.positionResult(position_key);
-		System.out.println(result);
 		
 		return result.getPosition_check();
 	}
@@ -462,23 +474,5 @@ public class AjaxController {
 		
 		return viewMap;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }

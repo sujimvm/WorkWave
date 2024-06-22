@@ -49,14 +49,14 @@ document.addEventListener("DOMContentLoaded", function(){
 	var ad3 = document.getElementById('ad3')
 	
 	ad1.addEventListener('click', function() {
-    	window.open('https://www.naver.com'); // 이동할 URL로 수정
+    	window.open('https://studyinjpn.com/ko'); // 이동할 URL로 수정
     });
     
     ad2.addEventListener('click', function() {
-    	window.open('https://www.daum.net'); // 이동할 URL로 수정
+    	window.open('http://www.eduplusshow.co.kr/'); // 이동할 URL로 수정
     });
     
     ad3.addEventListener('click', function() {
-    	window.open('https://www.google.com'); // 이동할 URL로 수정
+    	window.open('https://www.startup-afro.kr/fairDash.do'); // 이동할 URL로 수정
     });
 })

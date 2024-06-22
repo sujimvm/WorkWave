@@ -13,6 +13,7 @@ public interface ComBoardMapper {
 	List<ComBoardDTO> getComBoardList(HashMap<String, Object> reqMapperMap); // 공고리스트
 	int[] getInterestCompanyKeyList(int user_key); // 관심기업리스트
 	int countComBoard(); // 공고리스트 카운트
+	int countComBoard_list(HashMap<String, Object> reqMapperMap); // 공고리스트 카운트
 	int[] getApplyList(int profile_key); // 공고 지원 리스트
 	
 	List<CodeDTO> getJobCodeGroupList(); // 직업대분류리스트

@@ -6,7 +6,7 @@ $(document).ready(function() {
 	getJobCodeGroup();
 	
 	// 직업분류 0 이면 클릭 시 show , 1이면 클릭 시 hide (함수호출)
-	$(document).on('click', '#jobCodeOutputDiv', function() {
+	$(document).on('click', '#jobCodeViewDiv', function() {
 		viewJobCodeOutput();
 	});
 	
@@ -58,11 +58,11 @@ function getJobCodeGroup() {
 			jobDataSub.forEach(function(sub) {
 				$('#jobCodeSubUl'+sub.code.substr(0,2)).append("<li><input type='checkbox' class='jobCk checkCss' name='su' value='"+sub.code+"/"+sub.name+"' id='j"+sub.code+"'><label for='j"+sub.code+"'>" + sub.name + "</label></li>");
 				$('#jobCodeStepDiv').append("<ul class='jobCodeStepUl codeUl' id='jobCodeStepUl"+sub.code+"'></ul>");
-				$('#jobCodeStepUl'+sub.code).append("<li><input type='checkbox' class='jobCk jobCk_all checkCss' value='"+sub.code+"' id='j_all_"+sub.code+"'><label for='j_all_"+sub.code+"'>전체</label></li>");
+				$('#jobCodeStepUl'+sub.code).append("<li><input type='checkbox' class='jobCk jobCk_all checkCss jobStep' value='"+sub.code+"' id='j_all_"+sub.code+"'><label for='j_all_"+sub.code+"'>전체</label></li>");
 				$('#jobCodeStepUl'+sub.code).hide();
 			});
 			jobDataStep.forEach(function(step) {
-				$('#jobCodeStepUl'+step.code.substr(0,5)).append("<li><input type='checkbox' class='jobCk jobCk_step checkCss' name='st' value='"+step.code+"/"+step.name+"' id='j"+step.code+"'><label for='j"+step.code+"'>" + step.name + "</label></li>");
+				$('#jobCodeStepUl'+step.code.substr(0,5)).append("<li><input type='checkbox' class='jobCk jobCk_step checkCss jobStep' name='st' value='"+step.code+"/"+step.name+"' id='j"+step.code+"'><label for='j"+step.code+"'>" + step.name + "</label></li>");
 			});
 		},
 		error: function(xhr, status, error) {

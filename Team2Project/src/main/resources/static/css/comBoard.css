@@ -16,8 +16,31 @@
 	border-bottom: 1px solid #eeeeee;
     padding: 10px;
 }
+.codeViewDiv{
+	width: 99%;
+	min-height: 20px;
+	border: 1px solid #bebebe;
+	border-radius: 5px;
+	padding: 5px;
+	font-size: 10px;
+	background-color: #fff;
+	
+}
+.codeViewDiv span{
+	margin: 0 5px;
+	line-height: 20px;
+}
+.codeViewDiv span span{
+	font-weight: bold;
+	cursor: pointer;
+	color: #2d83fa;
+	border: 1px solid #bebebe;
+	padding: 0 3px;
+	border-radius: 5px;
+}
 .comBoardSearchDiv h5{
 	margin: 0;
+	margin-bottom: 5px;
 }
 .comBoardListBtDiv{
 	margin-top: 30px;
@@ -321,6 +344,7 @@
 }
 .textGr{float: left; margin-right: 5px;}
 .textW100{width: 100%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.textW99{width: 99%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
 .textW95{width: 95%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
 .textW90{width: 90%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
 .textW80{width: 80%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
@@ -335,6 +359,7 @@
 .textW15{width: 15%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
 .textW10{width: 10%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
 .textW5{width: 5%; height: 30px; border-radius: 5px; border: 1px solid #bebebe; padding-left: 5px;}
+.searchText{font-size: 10px;}
 .selectText{
 	font-size: 14px;
 }

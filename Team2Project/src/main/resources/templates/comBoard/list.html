@@ -23,10 +23,13 @@
 			</div>
 			<div class="comBoardSearchTotalDiv">
 				<div class="comBoardSearchDiv">
-					<input name="" class="textW95" placeholder="기업명, 공고명 검색">
+					<h5>공고명</h5>
+					<input name="keyword" id="keyword" class="textW99">
 				</div>
 				<div id="jobCodeOutputDiv" class="comBoardSearchDiv">
-					<input name="jobCode" class="textW95" readonly="readonly" placeholder="직업 선택">
+					<input type="hidden" name="jobCode" id="jobCode">
+					<h5>직업분류</h5>
+					<div id="jobCodeViewDiv" class="codeViewDiv"></div>
 					<div id="jobCodeTotalDiv" class="codeTotalDiv" style="display: none;">
 						<div id="jobCodeGroupDiv" class="codeDiv">
 							<ul id="jobCodeGroupUl" class="codeUl"></ul>
@@ -37,7 +40,9 @@
 				</div>
 				
 				<div id="locationCodeOutputDiv" class="comBoardSearchDiv">
-					<input name="locCode" class="textW95" readonly="readonly" placeholder="지역 선택">
+					<input type="hidden" name="locCode" id="locCode">
+					<h5>지역</h5>
+					<div id="locCodeViewDiv" class="codeViewDiv"></div>
 					<div id="locationCodeTotalDiv" class="codeTotalDiv" style="display: none;">
 						<div id="locationCodeGroupDiv" class="codeDiv">
 							<ul id="locationCodeGroupUl" class="codeUl"></ul>

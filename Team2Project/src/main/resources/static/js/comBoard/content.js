@@ -97,23 +97,27 @@ function getRecommendList(page) {
 			var successList = map.successList;
 			var paging = map.paging;
 			var paging_li = "";
-			list.forEach(function(list) {
-				var row = "<tr>"+
-				"<td rowspan='3'><img src='/image/profile/"+ list.profile_image +"'></td>"+
-				"<td>"+ list.user_name +"</td>"+
-				"<td rowspan='3'><input type='button' id='positionBt_"+ list.user_key +"' value='포지션제안' onclick='positionInputModal("+ list.user_key +",\""+ list.user_name +"\")'></td>"+
-				"</tr>"+
-				"<tr><td><a href='javascript:test(\""+ list.profile_key +"\")'>"+ list.profile_name +"</a></td></tr>"+
-				"<tr><td>"+ list.profile_group1 +list.profile_sub1 +list.profile_step1 +list.profile_group2 +list.profile_sub2 +list.profile_step2 +"</td></tr>";
+			if(list.length > 0){
+				list.forEach(function(list) {
+					var row = "<tr>"+
+					"<td rowspan='3'><img src='/image/profile/"+ list.profile_image +"'></td>"+
+					"<td>"+ list.user_name +"</td>"+
+					"<td rowspan='3'><input type='button' id='positionBt_"+ list.user_key +"' value='포지션제안' onclick='positionInputModal("+ list.user_key +",\""+ list.user_name +"\")'></td>"+
+					"</tr>"+
+					"<tr><td><a href='javascript:test(\""+ list.profile_key +"\")'>"+ list.profile_name +"</a></td></tr>"+
+					"<tr><td>"+ list.profile_group1 +list.profile_sub1 +list.profile_step1 +list.profile_group2 +list.profile_sub2 +list.profile_step2 +"</td></tr>";
+					
+					$('#recommendList').append(row);	
+				}); 
 				
-				$('#recommendList').append(row);	
-			}); 
-			
-			if(successList != undefined){
-				successList.forEach(function(successList) {
-					$('#positionBt_'+successList).attr("value", "요청완료");
-					$('#positionBt_'+successList).attr("disabled", true);
-				});
+				if(successList != undefined){
+					successList.forEach(function(successList) {
+						$('#positionBt_'+successList).attr("value", "요청완료");
+						$('#positionBt_'+successList).attr("disabled", true);
+					});
+				}
+			}else{
+				$('#recommendList').append("<tr><th width='100%'>추천인재가 존재하지 않습니다.<th></tr>");
 			}
 			
 			if(paging != undefined && paging.page > paging.block){
