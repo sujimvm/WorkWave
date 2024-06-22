@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="icon" href="/image/icon/logo_icon.png"/> 
-<title>Work Wave 공고수정</title>
+<title>Work Wave 임시저장 공고</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
 
@@ -16,12 +16,13 @@
 <body>
 	<div th:replace="~{include/header}"></div>
 	<div layout:fragment="content" class="content">
-		<form method="post" action="/C/comBoard/updateOk" id="executionFrom">
-			<input type="hidden" name="com_board_key" id="com_board_key" th:value="${dto.com_board_key}">
+		<form method="post" action="/C/comBoard/insertOk" id="executionFrom">
+			<input type="hidden" name="temp_key" id="com_board_key" th:value="${dto.com_board_key}">
 			
 			<div class="comBoardInputTotalDiv">	
 				<div class="comBoardBtDiv" id="comBoardBtDiv">
-					<input type="button" class="btCss btCss1" value="공고 수정" id="executionBt">
+					<input type="button" class="btCss btCss1" value="공고 등록" id="executionBt">
+					<input type="button" class="btCss btCss2" value="공고 임시저장" id="addTempBt">
 					<input type="reset" class="btCss btCss3" value="공고 초기화">
 				</div>
 				<div class="comBoardInputGroupDiv">

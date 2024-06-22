@@ -88,7 +88,7 @@ function appendTempList(selector, templist) {
 				"<td>"+"<div class='listTitleDiv titleDiv'>" + templist.com_board_title + "</div>" + 
 				"<div class='listSubDiv titleDiv'>"+templist.com_board_career +"&nbsp;&#124;&nbsp;"+ templist.com_board_edu +"&nbsp;&#124;&nbsp;"+"&nbsp;&#124;&nbsp;"+ templist.com_board_jobtype  + "</div>" + 
 				"<div class='listGroupDiv titleDiv'>"+templist.com_board_group +"&nbsp;&gt;&nbsp;"+ templist.com_board_sub +"&nbsp;&gt;&nbsp;"+ templist.com_board_step + "</div>"+"</td>"+
-				"<td>"+"<input type='button' onclick='tempComBoard()' value='이어서 작성하기'>"+"</td>" +
+				"<td><a href='/C/comBoard/content?No="+templist.com_board_key+"'>이어서 작성하기</a></td>" +
 				"</tr>";
 		$(selector).append(row);
 	});

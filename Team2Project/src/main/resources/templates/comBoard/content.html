@@ -19,9 +19,9 @@
 		<div layout:fragment="content" class="content">
 			<input sec:authorize="isAuthenticated() and hasRole('USER')" type="hidden" id="sessionID" th:value="${session.uDTO.user_id}">
 			<input sec:authorize="isAuthenticated() and hasRole('COMPANY')" type="hidden" id="sessionID" th:value=1>
-			<div>
+			<div class="comBoardContentTotalDiv">
+				<h3 class="comBoardInputTitle topTitle">채용정보</h3>
 				<div class="comBoardContentDiv">
-					<h3 class="comBoardInputTitle">채용정보</h3>
 					<div class="top_l_cominfo_div">
 						<div class="top_cominfo_div">
 							<p class="comName">
@@ -31,8 +31,8 @@
 							</p>
 							<p class="comBTitle" th:text="${map.dto.com_board_title}"></p>
 						</div>
-						<div class="l_cominfo_div">
-							<h6>지원자격</h6>
+						<div class="l_cominfo_div cominfo_div">
+							<h5>지원자격</h5>
 							<dl class="infoDl">
 								<dt>경력</dt>
 								<dd th:text="${map.dto.com_board_career}"></dd>
@@ -40,8 +40,8 @@
 								<dd th:text="${map.dto.com_board_edu}"></dd>
 							</dl>
 						</div>
-						<div class="r_cominfo_div">
-							<h6>근무조건</h6>
+						<div class="r_cominfo_div cominfo_div">
+							<h5>근무조건</h5>
 							<dl class="infoDl">
 								<dt>고용형태</dt>
 								<dd th:text="${map.dto.com_board_jobtype}"></dd>
@@ -56,97 +56,87 @@
 					</div>
 					
 					<div class="top_r_cominfo_div">
-						<a>
-							<img th:if="${map.dto.company_logo != null}" th:src="@{'\\image\\logo\\'+${map.dto.company_logo}}" alt="${map.dto.company_logo_name}">
-							<img th:if="${map.dto.company_logo == null}" src="/image/icon/logo_icon.png" alt="로고미등록">
-						</a>
+						<img th:if="${map.dto.company_logo != null}" th:src="@{'\\image\\logo\\'+${map.dto.company_logo}}" alt="${map.dto.company_logo_name}">
+						<img th:if="${map.dto.company_logo == null}" src="/image/icon/logo_icon.png" alt="로고미등록">
 						<dl class="infoDl">
 							<dt>업종</dt>
 							<dd th:text="${map.dto.com_board_step}"></dd>
 							<dt>사원 수</dt>
 							<dd th:text="${map.dto.company_emp_count}"></dd>
 							<dt>설립입</dt>
-							<dd th:text="${map.dto.company_regdate}"></dd>
+							<dd th:text="${#dates.format(map.dto.company_regdate, 'yyyy-MM-dd')}"></dd>
 							<dt>홈페이지</dt>
 							<dd><a th:href="@{${map.dto.company_homepage}}" th:text="${map.dto.company_homepage}"></a></dd>
 						</dl>
 					</div>
 				</div><!-- 채용정보 -->
 				
-				<div class="comBoardContentDiv">
-					<ul>
-						<li><a th:href="@{/}">상세요강</a></li>
-						<li><a th:href="@{/}">접수기간</a></li>
-						<li sec:authorize="isAuthenticated() and hasRole('USER')"><a th:href="@{/}">지원자현황</a></li>
-						<li><a th:href="@{/}">기업정보</a></li>
-					</ul>
-				</div><!-- content nav -->
-				
+				<h3 class="comBoardInputTitle">상세모집내용</h3>
 				<div class="comBoardContentDiv">
 					<div th:utext="${map.dto.com_board_cont}"></div>
 				</div><!-- 상세 -->
 				
+				<h3 class="comBoardInputTitle">접수기간</h3>
 				<div class="comBoardContentDiv">
-					<h3 class="comBoardInputTitle">접수기간</h3>
 					<dl class="infoDl">
 						<dt>시작일</dt>
-						<dd th:text="${map.dto.com_board_start_date}"></dd>
+						<dd th:text="${#dates.format(map.dto.com_board_start_date, 'yyyy-MM-dd')}"></dd>
 						<dt>마감일</dt>
-						<dd th:text="${map.dto.com_board_end_date}"></dd>
+						<dd th:text="${#dates.format(map.dto.com_board_end_date, 'yyyy-MM-dd')}"></dd>
 					</dl>
 				</div><!-- 접수기간 -->
 				
 				<div sec:authorize="isAuthenticated() and hasRole('USER')" class="comBoardContentDiv">
-					<h3>지원자 현황 통계</h3>
+					<h3 class="comBoardInputTitle">지원자 현황 통계</h3>
 					<div>
-						<h6>지원자 수</h6>
-						<p th:text="${map.applyTotal}"></p>
-					</div>
-					<div>
-						<h6>모집인원</h6>
-						<p th:text="${map.dto.com_board_mojib}"></p>
-					</div>
-					<div>
-						<h6>연령</h6>
-						<div th:if="${!map.avgAge.isEmpty()}">
-							<table>
-								<tr th:each="avgAge:${map.avgAge}">
-									<th>
-										<div>
-											<div></div>
-										</div>
-									</th>
-								</tr>
-							</table>
+						<div>
+							<h5>지원자 수</h5>
+							<p th:text="${map.applyTotal}"></p>
 						</div>
-					</div>
-					<div>
-						<h6>성별</h6>
-						<div th:if="${!map.avgGender.isEmpty()}">
-							<dl class="infoDl" th:each="avgGender:${map.avgGender}">
-								<dt th:if="${avgGender.GENDER=='M'}">남자</dt>
-								<dt th:if="${avgGender.GENDER=='F'}">여자</dt>
-								<dd th:text="${avgGender.COUNT+'명'}"></dd>
-							</dl>
+						<div>
+							<h5>모집인원</h5>
+							<p th:text="${map.dto.com_board_mojib}"></p>
 						</div>
-					</div>
-					<div>
-						<h6>학력</h6>
-						<div th:if="${!map.avgEdu.isEmpty()}">
-							<dl class="infoDl" th:each="avgEdu:${map.avgGender}">
-								<dt th:text="${avgEdu.Edu}"></dt>
-								<dd th:text="${avgEdu.COUNT+'명'}"></dd>
-							</dl>
+						<div>
+							<h5>연령</h5>
+							<div th:if="${!map.avgAge.isEmpty()}">
+								<table>
+									<tr th:each="avgAge:${map.avgAge}">
+										<th>
+											<div>
+												<div></div>
+											</div>
+										</th>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div>
+							<h5>성별</h5>
+							<div th:if="${!map.avgGender.isEmpty()}">
+								<dl class="infoDl" th:each="avgGender:${map.avgGender}">
+									<dt th:if="${avgGender.GENDER=='M'}">남자</dt>
+									<dt th:if="${avgGender.GENDER=='F'}">여자</dt>
+									<dd th:text="${avgGender.COUNT+'명'}"></dd>
+								</dl>
+							</div>
+						</div>
+						<div>
+							<h5>학력</h5>
+							<div th:if="${!map.avgEdu.isEmpty()}">
+								<dl class="infoDl" th:each="avgEdu:${map.avgGender}">
+									<dt th:text="${avgEdu.Edu}"></dt>
+									<dd th:text="${avgEdu.COUNT+'명'}"></dd>
+								</dl>
+							</div>
 						</div>
 					</div>
 				</div><!-- 지원자 통계 -->
 				
+				<h3 class="comBoardInputTitle">기업정보</h3>
 				<div class="comBoardContentDiv">
-					<h3 class="comBoardInputTitle">기업정보</h3>
-					<a>
-						<img th:if="${map.dto.company_logo != null}" th:src="@{'\\image\\logo\\'+${map.dto.company_logo}}" alt="${map.dto.company_logo_name}">
-						<img th:if="${map.dto.company_logo == null}" src="/image/icon/logo_icon.png" alt="로고미등록">
-					</a>
+					<img th:if="${map.dto.company_logo != null}" th:src="@{'\\image\\logo\\'+${map.dto.company_logo}}" alt="${map.dto.company_logo_name}">
+					<img th:if="${map.dto.company_logo == null}" src="/image/icon/logo_icon.png" alt="로고미등록">
 					<input type="hidden" id="code" th:value="${map.dto.com_board_step}">
 					<dl class="infoDl">
 						<dt>업종</dt>
@@ -161,43 +151,44 @@
 						<dd th:text="${map.dto.com_board_benefits}"></dd>
 					</dl>
 				</div><!-- 기업정보 -->
-			</div>
 			
-			
-			<div class="comBoardContentDiv" sec:authorize="isAuthenticated() and hasRole('COMPANY')" th:if="${session.cDTO.company_key == map.dto.company_key}">
-				<h3 class="comBoardInputTitle">추전인재</h3>
-				<div>
-					<table id="recommendList" class="recommendListTb"></table>
+				<div sec:authorize="isAuthenticated() and hasRole('COMPANY')" th:if="${session.cDTO.company_key == map.dto.company_key}">
+					<h3 class="comBoardInputTitle">추전인재</h3>
+					<div class="comBoardContentDiv">
+						<div>
+							<table id="recommendList" class="recommendListTb"></table>
+						</div>
+						<div>
+							<!-- Page navigation -->
+				            <ul class="pagination" id="pagination"></ul>
+						</div> <!-- 페이징 -->
+					</div><!-- 포지션제안 -->
+				
+					 <!-- Modal HTML embedded directly into document -->
+				    <div id="recommendModal" class="modal">
+				    	<form id="positionForm" >
+							<input type="hidden" name="user_name" id="user_name">
+							<input type="hidden" name="user_key" id="user_key">
+							<input type="hidden" name="com_board_key" id="com_board_key" th:value="${map.dto.com_board_key}">
+							<table>
+								<tr>
+									<td><input name="position_title" id="position_title" class="textW100" placeholder="포지션 제안 제목을 입력하세요"></td>
+								</tr>
+								<tr>
+									<td><textarea name="position_cont" id="position_cont" placeholder="포지션 제안 내용을 입력하세요"></textarea></td>
+								</tr>
+							</table>
+							<div class="comBoardBtDiv_fix">
+								<input type="button" value="포지션제안" class="btCss1 btCss" onclick="goPositionInputModal()">
+							</div>
+				    	</form>
+				    </div>
+			    </div>
+			    
+				<div class="comBoardBtDiv_fix" style="margin-bottom: 60px;">
+					<input type="button" class="btCss1 btCss" th:onclick="|location.href='@{/A/comBoard(P=${map.P})}'|" value="목록">
 				</div>
-				<div>
-					<!-- Page navigation -->
-		            <ul class="pagination" id="pagination"></ul>
-				</div> <!-- 페이징 -->
-			</div><!-- 포지션제안 -->
-			
-			<div>
-				<input type="button" th:onclick="|location.href='@{/A/comBoard(P=${map.P})}'|" value="목록">
 			</div>
-			
-			 <!-- Modal HTML embedded directly into document -->
-		    <div id="recommendModal" class="modal">
-		    	<form id="positionForm" >
-					<input type="hidden" name="user_name" id="user_name">
-					<input type="hidden" name="user_key" id="user_key">
-					<input type="hidden" name="com_board_key" id="com_board_key" th:value="${map.dto.com_board_key}">
-					<table>
-						<tr>
-							<td><input name="position_title" class="textW100" placeholder="포지션 제안 제목을 입력하세요"></td>
-						</tr>
-						<tr>
-							<td><textarea name="position_cont" id="position_cont" placeholder="포지션 제안 내용을 입력하세요"></textarea></td>
-						</tr>
-					</table>
-					<div>
-						<input type="button" value="포지션제안" onclick="goPositionInputModal()">
-					</div>
-		    	</form>
-		    </div>
 		</div>
 
 	<div th:replace="~{include/footer :: footer}"></div>

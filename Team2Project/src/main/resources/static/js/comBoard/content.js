@@ -8,7 +8,7 @@ $(document).ready(function() {
             language: "ko"
         })
         .then(editor => {
-            $('style').append('.ck-content {height: 400px; }');
+            $('style').append('.ck-content {height: 300px; }');
             let objEditor = editor;
 
             editor.model.document.on('change:data', () => {
@@ -55,6 +55,8 @@ function interestCheck(check, company_key) {
 
 //포지션제안 
 function positionInputModal(key,name) {
+	$("#position_title").val("");
+    $("#position_cont").val("");
     $("#recommendModal").modal();
     $("#user_key").val(key);
     $("#user_name").val(name);
@@ -69,6 +71,7 @@ function goPositionInputModal() {
 	        data: positionForm,
 			success: function() {
 				alert("포지션제안이 완료되었습니다");
+				location.reload();
 			},
 			error: function(xhr, status, error) {
 				console.error(xhr);
@@ -77,7 +80,7 @@ function goPositionInputModal() {
 	}
 }
 
-function test(num) {
+function profileView(num) {
 window.open("/CU/profile/content?no="+num);
 }
 
@@ -104,7 +107,7 @@ function getRecommendList(page) {
 					"<td>"+ list.user_name +"</td>"+
 					"<td rowspan='3'><input type='button' id='positionBt_"+ list.user_key +"' value='포지션제안' onclick='positionInputModal("+ list.user_key +",\""+ list.user_name +"\")'></td>"+
 					"</tr>"+
-					"<tr><td><a href='javascript:test(\""+ list.profile_key +"\")'>"+ list.profile_name +"</a></td></tr>"+
+					"<tr><td><a href='javascript:profileView(\""+ list.profile_key +"\")'>"+ list.profile_name +"</a></td></tr>"+
 					"<tr><td>"+ list.profile_group1 +list.profile_sub1 +list.profile_step1 +list.profile_group2 +list.profile_sub2 +list.profile_step2 +"</td></tr>";
 					
 					$('#recommendList').append(row);	

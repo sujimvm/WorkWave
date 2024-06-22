@@ -127,6 +127,23 @@ $(document).ready(function() {
 // 임시저장
 function addTemp() {
 	
+	// 체크박스 값 처리
+    var com_board_benefits_Ck = [];
+    $('input:checkbox[name=com_board_benefits_Ck]:checked').each(function(){
+		com_board_benefits_Ck.push($(this).val());
+	});
+	$("#com_board_benefits").val(com_board_benefits_Ck);
+		
+    var com_board_conditions_Ck = [];
+    $('input:checkbox[name=com_board_conditions_Ck]:checked').each(function(){
+		com_board_conditions_Ck.push($(this).val());
+	});
+	$("#com_board_conditions").val(com_board_conditions_Ck);
+	
+	// 시간 값처리
+	var com_board_time = $("#com_board_time1").val() +":"+ $("#com_board_time2").val() +"-"+ $("#com_board_time3").val() +":"+ $("#com_board_time4").val(); 
+	$("#com_board_time").val(com_board_time);
+	
 	var executionFrom = $("#executionFrom").serialize();
 	
 	$.ajax({
@@ -136,6 +153,7 @@ function addTemp() {
         data: executionFrom,
 		success: function(temp_key) {
 			$("#temp_key").val(temp_key);
+			alert("임시저장이 완료되었습니다");
 		},
 		error: function(xhr, status, error) {
 			console.error(xhr);
@@ -151,7 +169,6 @@ function executionFrom() {
     $('input:checkbox[name=com_board_benefits_Ck]:checked').each(function(){
 		com_board_benefits_Ck.push($(this).val());
 	});
-	alert(com_board_benefits_Ck);
 	$("#com_board_benefits").val(com_board_benefits_Ck);
 		
     var com_board_conditions_Ck = [];
