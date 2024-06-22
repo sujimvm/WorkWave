@@ -11,6 +11,54 @@ $(document).ready(function() {
 		scrollNum = $(document).scrollTop();
 	});
 	
+	//직업분류 소분류 클릭 시 값 넘기기
+	$(document).on('click', '.jobCodeStepUl .jobCk_step', function() {
+		// 체크박스 값 처리;
+		var jobCode = [];
+	    $(".jobCk_step:checked").each(function(){
+			jobCode.push($(this).val().split('/')[1]);
+		});
+		
+		if ($(".jobCk_step").is(':checked')){
+			var step_name = $(this).val().split('/')[1];
+			var sub_name = $("#j"+$(this).val().split('/')[0].substr(0,5)).val().split('/')[1];
+			var group_name = $("#j"+$(this).val().split('/')[0].substr(0,2)).val().split('/')[1];
+			
+			$("#jobCodeViewDiv").append("<span>"+group_name+">"+sub_name+">"+step_name+"<span>X</span></span>");
+			
+		} 
+		$("#jobCode").val(jobCode);
+	});
+	$(document).on('click', '#jobCodeViewDiv span span', function() {
+		
+		jobCodeOutput = 1;
+		$('#jobCodeTotalDiv').hide();
+		$(this).closest("span").parent("span").remove();
+	});
+	
+	$(document).on('click', '.locationCodeSubUl .locCk_sub', function() {
+		// 체크박스 값 처리;
+		var locCode = [];
+	    $(".locCk_sub:checked").each(function(){
+			locCode.push($(this).val().split('/')[1]);
+		});
+		
+		if ($(".locCk_sub").is(':checked')){
+			var sub_name = $(this).val().split('/')[1];
+			var group_name = $("#l"+$(this).val().split('/')[0].substr(0,2)).val().split('/')[1];
+			
+			$("#locCodeViewDiv").append("<span>"+group_name+">"+sub_name+"<span>X</span></span>");
+			
+		} 
+		$("#locCode").val(locCode);
+	});
+	$(document).on('click', '#locCodeViewDiv span span', function() {
+		
+		locationCodeOutput = 1;
+		$('#locationCodeTotalDiv').hide();
+		$(this).closest("span").parent("span").remove();
+	});
+		
 	// 관심기업 추가/삭제
 	$(document).on('click', '.interest_check', function() {
 		
@@ -46,7 +94,7 @@ $(document).ready(function() {
 	});
 	
 	// 지역 0 이면 클릭 시 show , 1이면 클릭 시 hide
-	$(document).on('click', '#locationCodeOutputDiv', function() {
+	$(document).on('click', '#locCodeViewDiv', function() {
 		if(locationCodeOutput == 0){
 			locationCodeOutput = 1;
 			$('#locationCodeTotalDiv').show();
@@ -150,7 +198,13 @@ function getComBoardList(nowPg) {
 		url: '/ajax/comBoardList',
 		type: 'post',
 		dataType: "JSON",
-		data: {"page": nowPg,"eduCode": $('#eduCode_checked').val(),"careerCode": $('#careerCode_checked').val(),"typeCode": $('#typeCode_checked').val()},
+		data: {"page": nowPg,
+				"keyword": $('#keyword').val(),
+				"jobCode": $('#jobCode').val(),
+				"locCode": $('#locCode').val(),
+				"eduCode": $('#eduCode_checked').val(),
+				"careerCode": $('#careerCode_checked').val(),
+				"typeCode": $('#typeCode_checked').val()},
 		success: function(map) {
 			$('#jobListTb').empty(); // Clear any existing rows
 			$('#pagination').empty();
@@ -240,7 +294,6 @@ function interestCheck(check, company_key) {
 		}
 	});
 }
-
 
 
 // 공고 지원 등록 / 해제

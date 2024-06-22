@@ -6,10 +6,42 @@
   <mapper namespace="com.Team2Project.WorkWave.model.ComBoardMapper">
   		<!-- 공고리스트 -->
     	<select id="getComBoardList" parameterType="HashMap" resultType="bDTO">
-    		<![CDATA[
 	  		select * 
 	  		from (select row_number() over(order by com_board_date desc) rnum, b.* 
-	  		from com_board b where com_board_start_date <= sysdate and com_board_end_date >= sysdate)Pb join company c on c.company_key = Pb.company_key
+	  		from com_board b 
+	  		<![CDATA[
+	  		where com_board_start_date <= sysdate 
+	  		and com_board_end_date >= sysdate
+	  		]]>
+	  		<if test="keyword != null and keyword != ''">
+	  			and b.com_board_title LIKE '%'||#{keyword}||'%'
+	  		</if>
+	  		<if test="jobCode != null">
+				and b.com_board_step in 
+				<foreach collection="jobCode" item="arr" open="(" close=")" separator=",">
+					#{arr}
+				</foreach>
+	  		</if>
+	  		<if test="eduCode != null">
+				and b.com_board_edu in 
+				<foreach collection="eduCode" item="arr" open="(" close=")" separator=",">
+					#{arr}
+				</foreach>
+	  		</if>
+	  		<if test="careerCode != null">
+				and b.com_board_career in 
+				<foreach collection="careerCode" item="arr" open="(" close=")" separator=",">
+					#{arr}
+				</foreach>
+	  		</if>
+	  		<if test="typeCode != null">
+				and b.com_board_jobtype in 
+				<foreach collection="typeCode" item="arr" open="(" close=")" separator=",">
+					#{arr}
+				</foreach>
+	  		</if>
+			<![CDATA[
+	  		)Pb join company c on c.company_key = Pb.company_key
 	  		where rnum >= #{pdto.startNo} and rnum <= #{pdto.endNo}
 	  		]]>
 	  	</select>
@@ -17,12 +49,54 @@
     	<select id="getInterestCompanyKeyList" resultType="int" parameterType="int">
 	  		select company_key from interest where user_key = #{user_key}
 	  	</select>
-	  	<select id="countComBoard" resultType="int">
-		  	<![CDATA[
-		  		select COUNT(*) 
-		  		from (select row_number() over(order by com_board_date desc) rnum, b.* 
-		  		from com_board b where com_board_start_date <= sysdate and com_board_end_date >= sysdate)Pb join company c on c.company_key = Pb.company_key
+	  	<select id="countComBoard" parameterType="HashMap" resultType="int">
+	  		select COUNT(*) 
+	  		from (select row_number() over(order by com_board_date desc) rnum, b.* 
+	  		from com_board b 
+	  		<![CDATA[
+	  		where com_board_start_date <= sysdate 
+	  		and com_board_end_date >= sysdate
+	  		)Pb join company c on c.company_key = Pb.company_key
+  			]]>
+	    </select>
+	  	<select id="countComBoard_list" parameterType="HashMap" resultType="int">
+	  		select COUNT(*) 
+	  		from (select row_number() over(order by com_board_date desc) rnum, b.* 
+	  		from com_board b 
+	  		<![CDATA[
+	  		where com_board_start_date <= sysdate 
+	  		and com_board_end_date >= sysdate
 	  		]]>
+	  		<if test="keyword != null and keyword != ''">
+	  			and b.com_board_title LIKE '%'||#{keyword}||'%'
+	  		</if>
+	  		<if test="jobCode != null">
+				and b.com_board_step in 
+				<foreach collection="jobCode" item="arr" open="(" close=")" separator=",">
+					#{arr}
+				</foreach>
+	  		</if>
+	  		<if test="eduCode != null">
+				and b.com_board_edu in 
+				<foreach collection="eduCode" item="arr" open="(" close=")" separator=",">
+					#{arr}
+				</foreach>
+	  		</if>
+	  		<if test="careerCode != null">
+				and b.com_board_career in 
+				<foreach collection="careerCode" item="arr" open="(" close=")" separator=",">
+					#{arr}
+				</foreach>
+	  		</if>
+	  		<if test="typeCode != null">
+				and b.com_board_jobtype in 
+				<foreach collection="typeCode" item="arr" open="(" close=")" separator=",">
+					#{arr}
+				</foreach>
+	  		</if>
+			<![CDATA[
+	  		)Pb join company c on c.company_key = Pb.company_key
+  			]]>
 	    </select>
 	  	<!-- 공고 지원리스트 -->
     	<select id="getApplyList" resultType="int" parameterType="int">

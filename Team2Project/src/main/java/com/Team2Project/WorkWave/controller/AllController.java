@@ -175,8 +175,6 @@ public class AllController {
 
 	      
 	      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-	      System.out.println(auth +"gd");
 	      
 	         String role = auth.getAuthorities().toString();
 	         String id = auth.getName();
