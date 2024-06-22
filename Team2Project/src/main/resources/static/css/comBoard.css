@@ -180,57 +180,95 @@
 
 
 
-
 /* content */
+.comBoardContentTotalDiv{
+    width: 80%;
+    margin: 0 auto;
+}
 .comBoardContentDiv{
-	width: 75%;
-	margin: 0 auto;
 	border: 1px solid #eee;
 	border-top: 2px solid #000;
-	padding: 10px 30px;
-	margin-top: 60px;
+	padding: 0px 30px;
 	margin-bottom: 60px;
+}
+.topTitle{
+	width: 69%;
+	border-right: 1px solid #f1f1f1; 
+    margin: 0 !important;
+    padding: 20px 0 10px 0;
 }
 .top_l_cominfo_div {
 	width: 69%;
 	display: inline-block;
+	vertical-align: top;
+	border-right: 1px solid #f1f1f1; 
+	min-height: 250px;
+	padding-top: 20px;
 }
 .top_cominfo_div {
 	width: 100%;
 	display: inline-block;
+	vertical-align: top;
+	margin-bottom: 10px;
+	border-bottom: 1px solid #f1f1f1; 
 }
 .top_cominfo_div p{
 	margin: 5px 0 ;
 }
 .top_cominfo_div .comName{
 	font-size: 16px;
+	position: relative;
 }
 .top_cominfo_div .comBTitle{
-	font-size: 20px;
+	font-size: 20px;    
+	margin-bottom: 20px;
+}
+.top_cominfo_div label{
+    position: absolute;
+	top: 4px;
+}
+.top_cominfo_div span{
+	margin-left: 20px;
 }
 .l_cominfo_div{
-	width: 49%;
+	width: 35%;
 	display: inline-block;
+	vertical-align: top;
 }
 .r_cominfo_div {
-	width: 49%;
+	width: 60%;
 	display: inline-block;
+	vertical-align: top;
 }
-
+.cominfo_div h5{
+	margin: 0;
+	margin-bottom: 10px;
+}
 .top_r_cominfo_div {
-	width: 29%;
-	display: inline-block;
+    width: 26.9%;
+    display: inline-block;
+    padding-top: 30px;
+    padding-left: 30px;
+	text-align: center;
 }
 /* 기업로그이미지 */
 .top_r_cominfo_div img{
 	width: 100px;
 	height: 40px;
+	margin-bottom: 20px;
+}
+.infoDl{
+	margin: 0px;
+	text-align: left;
 }
 .infoDl dt,dd{
 	display: inline-block;
 	margin: 0;
 	font-size: 13px;
 	color: #888;
+	overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 1px 0;
 }
 .infoDl dt{
 	width: 22%;
@@ -263,6 +301,11 @@
 	padding: 50px;
 	background-color: #fafafa;
     position: relative;
+}
+.comBoardBtDiv_fix{
+	text-align: center;
+	margin-top: 20px;
+	margin-bottom: 30px;
 }
 .comBoardBtDiv{
     width: 167px;
