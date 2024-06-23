@@ -184,6 +184,13 @@ input[type="reset"] {
 	font-size: 16px !important;
 }
 
+.com-board-title-width {
+	width: 70%;
+}
+
+.apply-list-header {
+	display: flex;
+}
 
 
 

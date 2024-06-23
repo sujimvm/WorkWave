@@ -142,7 +142,7 @@
             		<ul class="main-notice-list">
 		                <li th:each="notice : ${mainNoticeList}">
 		                	<span style="color: #007BFF; width: 10%; text-align: center;" >공지</span>
-		                    <a style="color: #000000; width: 60%; margin-left: 5%;" th:href="@{/A/noticeCont(no=${notice.notice_key})}" th:text="${notice.notice_title}"></a>
+		                    <a th:classappend="'main-notice-title'" style="color: #000000; width: 60%; margin-left: 5%;" th:href="@{/A/noticeCont(no=${notice.notice_key})}" th:text="${notice.notice_title}"></a>
 		                    <span style="width: 30%;" th:text="${notice.notice_date.substring(0, 10)}"></span>
 		                </li>
 		            </ul>
