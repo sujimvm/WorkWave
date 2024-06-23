@@ -382,7 +382,7 @@ public class UserController {
 		public String categorygrouptest(Model model,HttpSession session) {
 			
 		UserDTO user = (UserDTO) session.getAttribute("uDTO");
-	
+		
 		int userKey = user.getUser_key();
 			
 			

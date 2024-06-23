@@ -73,7 +73,6 @@
      </select>
      
      
-     
      <select id="profileCkeck" parameterType="int" resultType="int">
      
      select count(*) from profile where user_key = #{no}
