@@ -399,16 +399,22 @@ public class CompanyController {
 	@GetMapping("/totalApply")
 	public String totalApply(@RequestParam("no") int com_board_key, Model model) {
 		
-		List<ProfileDTO> totalApplyList = this.companyMapper.totalApplyList(com_board_key);
+		List<ApplyDTO> totalApplyList = this.companyMapper.totalApplyDTO(com_board_key);
+		
+		List<ProfileDTO> totalApplyProfile = new ArrayList<>();
 		
 		List<UserDTO> userList = new ArrayList<>();
 		
-		for(ProfileDTO totalApply : totalApplyList) {
+		for(ApplyDTO totalApply : totalApplyList ) {
+			ProfileDTO applyProfile = this.companyMapper.applyProfile(totalApply.getApply_key());
+			totalApplyProfile.add(applyProfile);
+			
 			UserDTO userInfo = this.companyMapper.userList(totalApply.getUser_key());
 			userList.add(userInfo);
 		}
 		
 		model.addAttribute("totalApplyList", totalApplyList)
+			 .addAttribute("totalApplyProfile", totalApplyProfile)
 			 .addAttribute("userList", userList);
 		
 		return "company/totalApply";

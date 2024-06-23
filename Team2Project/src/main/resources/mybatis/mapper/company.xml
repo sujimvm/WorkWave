@@ -89,17 +89,23 @@
   		select count(*) from apply where apply_profile_check = 'N' and com_board_key = #{com_board_key}
   	</select>
   	
-  	<select id="totalApplyList" resultType="pDTO" parameterType="int">
-  		SELECT p.* 
-			FROM profile p
-			JOIN users u ON p.user_key = u.user_key
-			JOIN apply a ON u.user_key = a.user_key
-			WHERE a.com_board_key = #{com_board_key}
-			ORDER BY a.APPLY_PROFILE_CHECK DESC
+  	<select id="totalApplyDTO" parameterType="int" resultType="aDTO">
+  		select * from apply where com_board_key = #{com_board_key} ORDER BY APPLY_PROFILE_CHECK
+  	</select>
+  	
+  	<select id="applyProfile" resultType="pDTO" parameterType="int">
+  		SELECT * 
+	    FROM profile p
+	    JOIN apply a ON p.profile_key = a.profile_key
+	    WHERE a.apply_key = #{apply_key}
   	</select>
   	
   	<select id="userList" resultType="uDTO">
   		select * from users where user_key = #{user_key}	
+  	</select>
+  	
+  	<select id="applyProfileCheck" parameterType="int">
+  		update apply set apply_profile_check = 'Y' where apply_key = #{apply_key}
   	</select>
   
   </mapper>
