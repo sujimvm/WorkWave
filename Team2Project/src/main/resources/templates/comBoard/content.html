@@ -72,61 +72,80 @@
 				</div><!-- 채용정보 -->
 				
 				<h3 class="comBoardInputTitle">상세모집내용</h3>
-				<div class="comBoardContentDiv">
+				<div class="comBoardContentDiv" style="min-height: 300px;">
 					<div th:utext="${map.dto.com_board_cont}"></div>
 				</div><!-- 상세 -->
 				
 				<h3 class="comBoardInputTitle">접수기간</h3>
 				<div class="comBoardContentDiv">
-					<dl class="infoDl">
-						<dt>시작일</dt>
-						<dd th:text="${#dates.format(map.dto.com_board_start_date, 'yyyy-MM-dd')}"></dd>
-						<dt>마감일</dt>
-						<dd th:text="${#dates.format(map.dto.com_board_end_date, 'yyyy-MM-dd')}"></dd>
-					</dl>
+					<input type="hidden" id="com_board_end_date" th:value="${#dates.format(map.dto.com_board_end_date, 'yyyy/MM/dd HH:mm:ss')}">
+					<div class="timerDiv">
+						<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" style="color: #8171d3;" class="bi bi-calendar2-week" viewBox="0 0 16 16">
+							<path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1z"/>
+							<path d="M2.5 4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5zM11 7.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm-5 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+						</svg>
+						<p>남은시간</p>
+						<div id="timer"></div>
+						<dl class="infoDl">
+							<dt>시작일</dt>
+							<dd th:text="${#dates.format(map.dto.com_board_start_date, 'yyyy-MM-dd')}"></dd>
+							<dt>마감일</dt>
+							<dd th:text="${#dates.format(map.dto.com_board_end_date, 'yyyy-MM-dd')}"></dd>
+						</dl>
+					</div>
 				</div><!-- 접수기간 -->
 				
 				<div sec:authorize="isAuthenticated() and hasRole('USER')" class="comBoardContentDiv">
 					<h3 class="comBoardInputTitle">지원자 현황 통계</h3>
-					<div>
-						<div>
+					<div class="comBoardAvgDivs">
+						<div class="comBoardAvgDiv">
 							<h5>지원자 수</h5>
 							<p th:text="${map.applyTotal}"></p>
-						</div>
-						<div>
 							<h5>모집인원</h5>
 							<p th:text="${map.dto.com_board_mojib}"></p>
 						</div>
-						<div>
+						<div class="comBoardAvgDiv">
 							<h5>연령</h5>
-							<div th:if="${!map.avgAge.isEmpty()}">
-								<table>
-									<tr th:each="avgAge:${map.avgAge}">
-										<th>
-											<div>
-												<div></div>
-											</div>
-										</th>
-									</tr>
-								</table>
-							</div>
-						</div>
-						<div>
-							<h5>성별</h5>
-							<div th:if="${!map.avgGender.isEmpty()}">
-								<dl class="infoDl" th:each="avgGender:${map.avgGender}">
-									<dt th:if="${avgGender.GENDER=='M'}">남자</dt>
-									<dt th:if="${avgGender.GENDER=='F'}">여자</dt>
-									<dd th:text="${avgGender.COUNT+'명'}"></dd>
+							<div th:unless="${#lists.isEmpty(map.avgAge)}">
+								<dl class="infoDl">
+									<dt>25세 이하</dt>
+									<dd th:each="avgAge:${map.avgAge}" th:if="${avgAge.AGE == 25}" th:text="${avgAge.COUNT+'명'}">0명</dd>
+									<dt>30세 이하</dt>
+									<dd th:each="avgAge:${map.avgAge}" th:if="${avgAge.AGE == 30}" th:text="${avgAge.COUNT+'명'}">0명</dd>
+									<dt>35세 이하</dt>
+									<dd th:each="avgAge:${map.avgAge}" th:if="${avgAge.AGE == 35}" th:text="${avgAge.COUNT+'명'}">0명</dd>
+									<dt>40세 이하</dt>
+									<dd th:each="avgAge:${map.avgAge}" th:if="${avgAge.AGE == 40}" th:text="${avgAge.COUNT+'명'}">0명</dd>
+									<dt>45세 이하</dt>
+									<dd th:each="avgAge:${map.avgAge}" th:if="${avgAge.AGE == 45}" th:text="${avgAge.COUNT+'명'}">0명</dd>
+									<dt>50세 이상</dt>
+									<dd th:each="avgAge:${map.avgAge}" th:if="${avgAge.AGE == 50}" th:text="${avgAge.COUNT+'명'}">0명</dd>
 								</dl>
 							</div>
 						</div>
-						<div>
+						<div class="comBoardAvgDiv">
+							<h5>성별</h5>
+							<div th:unless="${#lists.isEmpty(map.avgGender)}">
+								<dl class="infoDl">
+									<dt>남자</dt>
+									<dd th:each="avgGender:${map.avgGender}" th:if="${avgGender.GENDER=='M'}" th:text="${avgGender.COUNT+'명'}">0명</dd>
+									<dt>여자</dt>
+									<dd th:each="avgGender:${map.avgGender}" th:if="${avgGender.GENDER=='F'}" th:text="${avgGender.COUNT+'명'}">0명</dd>
+								</dl>
+							</div>
+						</div>
+						<div class="comBoardAvgDiv">
 							<h5>학력</h5>
-							<div th:if="${!map.avgEdu.isEmpty()}">
-								<dl class="infoDl" th:each="avgEdu:${map.avgGender}">
-									<dt th:text="${avgEdu.Edu}"></dt>
-									<dd th:text="${avgEdu.COUNT+'명'}"></dd>
+							<div th:unless="${#lists.isEmpty(map.avgEdu)}">
+								<dl class="infoDl">
+									<dt>고등학교졸업</dt>
+									<dd th:each="avgEdu:${map.avgEdu}" th:if="${avgEdu.EDU=='0'}" th:text="${avgEdu.COUNT+'명'}">0명</dd>
+									<dt>전문대학졸업</dt>
+									<dd th:each="avgEdu:${map.avgEdu}" th:if="${avgEdu.EDU=='1'}" th:text="${avgEdu.COUNT+'명'}">0명</dd>
+									<dt>대학교졸업</dt>
+									<dd th:each="avgEdu:${map.avgEdu}" th:if="${avgEdu.EDU=='2'}" th:text="${avgEdu.COUNT+'명'}">0명</dd>
+									<dt>대학원</dt>
+									<dd th:each="avgEdu:${map.avgEdu}" th:if="${avgEdu.EDU=='3'}" th:text="${avgEdu.COUNT+'명'}">0명</dd>
 								</dl>
 							</div>
 						</div>
@@ -135,21 +154,26 @@
 				
 				<h3 class="comBoardInputTitle">기업정보</h3>
 				<div class="comBoardContentDiv">
-					<img th:if="${map.dto.company_logo != null}" th:src="@{'\\image\\logo\\'+${map.dto.company_logo}}" alt="${map.dto.company_logo_name}">
-					<img th:if="${map.dto.company_logo == null}" src="/image/icon/logo_icon.png" alt="로고미등록">
+					<div class="comBoardLogoDiv">
+						<img th:if="${map.dto.company_logo != null}" th:src="@{'\\image\\logo\\'+${map.dto.company_logo}}" alt="${map.dto.company_logo_name}">
+						<img th:if="${map.dto.company_logo == null}" src="/image/icon/logo_icon.png" alt="로고미등록">
+					</div>
 					<input type="hidden" id="code" th:value="${map.dto.com_board_step}">
-					<dl class="infoDl">
-						<dt>업종</dt>
-						<dd th:text="${map.dto.com_board_step}"></dd>
-						<dt>사원 수</dt>
-						<dd th:text="${map.dto.company_emp_count}"></dd>
-						<dt>설립입</dt>
-						<dd th:text="${map.dto.company_regdate}"></dd>
-						<dt>매출액</dt>
-						<dd th:text="${map.dto.company_sal}"></dd>
-						<dt>복리후생</dt>
-						<dd th:text="${map.dto.com_board_benefits}"></dd>
-					</dl>
+					<div class="comBoardInfoDiv">
+						<p th:text="${map.dto.company_name}"></p>
+						<dl class="infoDl">
+							<dt>업종</dt>
+							<dd th:text="${map.dto.com_board_step}"></dd>
+							<dt>사원 수</dt>
+							<dd th:text="${map.dto.company_emp_count}"></dd>
+							<dt>설립입</dt>
+							<dd th:text="${map.dto.company_regdate}"></dd>
+							<dt>매출액</dt>
+							<dd th:text="${map.dto.company_sal}"></dd>
+							<dt>복리후생</dt>
+							<dd th:text="${map.dto.com_board_benefits}"></dd>
+						</dl>
+					</div>
 				</div><!-- 기업정보 -->
 			
 				<div sec:authorize="isAuthenticated() and hasRole('COMPANY')" th:if="${session.cDTO.company_key == map.dto.company_key}">

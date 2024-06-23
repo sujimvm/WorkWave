@@ -257,10 +257,9 @@
 	height: 40px;
 	margin-bottom: 20px;
 }
-.infoDl{
-	margin: 0px;
-	text-align: left;
-}
+.infoDl{margin: 0px;text-align: left;}
+.infoDl dt{width: 22%;}
+.infoDl dd{width: 75%;}
 .infoDl dt,dd{
 	display: inline-block;
 	margin: 0;
@@ -270,20 +269,77 @@
     text-overflow: ellipsis;
     padding: 1px 0;
 }
-.infoDl dt{
-	width: 22%;
+.timerDiv{
+    width: 35%;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
 }
-.infoDl dd{
-	width: 75%;
+.timerDiv #timer{
+    font-size: 35px;
+    font-weight: bold;
+}
+.timerDiv p{
+    margin: 0;
+    font-size: 13px;
+    color: #555;
+}
+.timerDiv .infoDl{margin: 10px; margin-left: 95px;}
+.timerDiv .infoDl dd{width: 60%;}
+.comBoardAvgDiv .infoDl{margin-left: 40px;}
+.comBoardAvgDiv .infoDl dt{width: 40%;}
+.comBoardAvgDiv .infoDl dd{width: 20%;}
+
+.comBoardLogoDiv{
+	width: 30%;
+	display: inline-block;
+}
+.comBoardLogoDiv img{
+	width: 200px;
+	height: 100px;
+	margin-bottom: 20px;
+}
+.comBoardInfoDiv{
+	width: 35%;
+	display: inline-block;
+	padding-bottom: 30px;
+}
+.comBoardAvgDivs{
+	
+}
+.comBoardAvgDivs .comBoardAvgDiv{
+	width: 24%;
+	display: inline-block;
+	text-align: center;
+	vertical-align: top;
 }
 
-
-
+.recommendListTb{
+	width: 100%;
+	border-spacing: 0;
+}
+.recommendListTb tr:hover{
+	background-color: #f6fafd;
+}
+.recommendListTb td{
+	padding: 10px;
+}
+.recommendListTb p{
+	margin: 5px 0;
+	font-size: 13px;
+	color: #525252;
+}
+.recommendListTb a{
+	text-decoration:none;
+	color: #000000;
+	font-size: 18px;
+	font-weight: bold;
+	line-height: 35px;
+}
 .recommendListTb img{
-	width: 90px;
-	height: 110px;
+    width: 70px;
+    height: 90px;
 }
-
 .modal{
 	width: 600px;
 	max-width: 600px;
@@ -509,7 +565,6 @@ input[type=number] { /* 파이어폭스에서의 초기화 방법 */
     background-color: #f2f2f2;
 }
 .btCss4{    
-	width: 70px;
     height: 30px;
     border: 0;
     background-color: #FF9800;

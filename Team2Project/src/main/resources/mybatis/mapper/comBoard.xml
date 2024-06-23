@@ -216,7 +216,7 @@
 		  	select edu_kind as edu, count(*) as count
 			from (select e.edu_kind, row_number() over (partition by p.user_key order by p.profile_key) as rnum
 			from edu e join profile p on e.profile_key = p.profile_key 
-			where p.profile_key in (select profile_key from apply where com_board_key = 25 ))
+			where p.profile_key in (select profile_key from apply where com_board_key = #{com_board_key} ))
 			where rnum = 1 group by edu_kind order by edu_kind
 	  	</select>
 	  	<!-- 상세보기 추천인재(포지션제안용) -->
