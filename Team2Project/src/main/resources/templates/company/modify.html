@@ -31,14 +31,13 @@
 	<div layout:fragment="content" class="content">
 		<div class="mainContainer">
 		<div class="sidebar active">
-      		<h3>마이페이지</h3>
+			<h3>마이페이지</h3>
 	        <a th:href="@{/C/comBoard/insert}">공고 등록</a>
-	        <a th:href="@{/}">공고 리스트</a>
-	        <a th:href="@{/}">지원자 현황</a>
+	        <a th:href="@{/C/comBoardList}">공고 리스트</a>
 	        <a th:href="@{/C/update/companyPwdCheck}" class="select">기업정보 수정</a>
 	        <a th:href="@{/C/update/pwd/companyPwdCheck}">비밀번호 변경</a>
 	        <a th:href="@{/C/delete/companyPwdCheck}">회원탈퇴</a>
-      </div>
+		</div>
 		
 		<div class="faq-list sidebar_r">
 		
