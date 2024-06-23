@@ -179,7 +179,9 @@ input[type="reset"] {
 }
 
 .nav-btn-selected {
-    border: 2px solid #007bff;
+	background-color:  #0B57D0 !important;
+	color: white !important;
+	font-size: 16px !important;
 }
 
 

@@ -14,33 +14,33 @@ function getCompanyComboardList(companyKey) {
 		success: function(viewMap) {
 			var list = viewMap.comBoardList;
 			var templist = viewMap.tempList;
-			var apply_total_list = viewMap.applyTotalList; // 각 공고의 총 지원자 수 리스트
-        	var apply_non_check_list = viewMap.applyNonCheckList;
+			var apply_total_map = viewMap.applyTotalMap; // 각 공고의 총 지원자 수 맵
+            var apply_non_check_map = viewMap.applyNonCheckMap;
         	
 			// 기존 리스트 제거
             $('#boardListTb').empty();
             $('#boardTempListTb').empty();
             
-            appendList('#boardListTb', list, apply_total_list, apply_non_check_list);
+            appendList('#boardListTb', list, apply_total_map, apply_non_check_map);
             appendTempList('#boardTempListTb', templist);
             
             $('#all-list').on('click', function() {
-				displayList('all', list, apply_total_list, apply_non_check_list);
+				displayList('all', list, apply_total_map, apply_non_check_map);
 				highlightSelected('#all-list');
 			});
 			
 			$('#end-list').on('click', function() {
-				displayList('end', list, apply_total_list, apply_non_check_list);
+				displayList('end', list, apply_total_map, apply_non_check_map);
 				highlightSelected('#end-list');
 			});
 			
 			$('#ing-list').on('click', function() {
-				displayList('ing', list, apply_total_list, apply_non_check_list);
+				displayList('ing', list, apply_total_map, apply_non_check_map);
 				highlightSelected('#ing-list');
 			});
 			
 			$('#waiting-list').on('click', function() {
-				displayList('wait', list, apply_total_list, apply_non_check_list);
+				displayList('wait', list, apply_total_map, apply_non_check_map);
 				highlightSelected('#waiting-list');
 			});
 			
@@ -51,7 +51,7 @@ function getCompanyComboardList(companyKey) {
 	});
 };
 
-function displayList(status, list, apply_total_list, apply_non_check_list) {
+function displayList(status, list, apply_total_map, apply_non_check_map) {
 	$('#boardListTb').empty();
 	
 	var selectList = list.filter(function(list) {
@@ -70,17 +70,21 @@ function displayList(status, list, apply_total_list, apply_non_check_list) {
 		}
 	});
 	
-	appendList('#boardListTb', selectList, apply_total_list, apply_non_check_list);
+	appendList('#boardListTb', selectList, apply_total_map, apply_non_check_map);
 }
 
-function appendList(selector, list, apply_total_list, apply_non_check_list){
-	list.forEach(function(list, index){
+function appendList(selector, list, apply_total_map, apply_non_check_map){
+	
+	list.forEach(function(list){
+		var totalApplicants = apply_total_map[list.com_board_key]; // 지원자 수가 없을 경우 0으로 설정
+    	var nonCheckedApplicants = apply_non_check_map[list.com_board_key]; // 미확인 지원자 수가 없을 경우 0으로 설정
+		
 		var row = "<tr>" +
 				"<td>"+"<div class='listTitleDiv titleDiv'>" + list.com_board_title + "</div>" + 
 				"<div class='listSubDiv titleDiv'>"+list.com_board_career +"&nbsp;&#124;&nbsp;"+ list.com_board_edu +"&nbsp;&#124;&nbsp;"+"&nbsp;&#124;&nbsp;"+ list.com_board_jobtype  + "</div>" + 
 				"<div class='listGroupDiv titleDiv'>"+list.com_board_group +"&nbsp;&gt;&nbsp;"+ list.com_board_sub +"&nbsp;&gt;&nbsp;"+ list.com_board_step + "</div>"+"</td>" +
-				"<td><a href='/C/totalApply?no="+list.com_board_key+"'>"+apply_total_list[index]+"</a></td>" +
-				"<td><a href='/C/totalApply?no="+list.com_board_key+"'>"+apply_non_check_list[index]+"</td>" +
+				"<td><a href='/C/totalApply?no="+list.com_board_key+"'>"+totalApplicants+"</a></td>" +
+				"<td><a href='/C/totalApply?no="+list.com_board_key+"'>"+nonCheckedApplicants+"</td>" +
 				"</tr>";
 		$(selector).append(row);
 	});

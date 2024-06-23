@@ -455,24 +455,31 @@ public class AjaxController {
 		// 해당 기업의 작성중 공고 가져오기
 		List<ComBoardDTO> temp_list = this.companyMapper.getComBoardTempList(company.getCompany_key());
 		
-		List<Integer> apply_total_list = new ArrayList<>();
-		List<Integer> apply_non_check_list = new ArrayList<>();
+		Map<Integer, Integer> apply_total_map = new HashMap<>();
+	    Map<Integer, Integer> apply_non_check_map = new HashMap<>();
 		
-		for(ComBoardDTO com_board : com_board_list) {
-			int apply_total = this.companyMapper.getComBoardApply(com_board.getCom_board_key());
-			apply_total_list.add(apply_total);
-			
-			int apply_non_check = this.companyMapper.getComBoardApplyNonCheck(com_board.getCom_board_key());
-			apply_non_check_list.add(apply_non_check);
-		}
+	    for (ComBoardDTO com_board : com_board_list) {
+	        int apply_total = this.companyMapper.getComBoardApply(com_board.getCom_board_key());
+	        apply_total_map.put(com_board.getCom_board_key(), apply_total);
+	        
+	        int apply_non_check = this.companyMapper.getComBoardApplyNonCheck(com_board.getCom_board_key());
+	        apply_non_check_map.put(com_board.getCom_board_key(), apply_non_check);
+	    }
 		
 		viewMap.put("comBoardList", com_board_list);
-		viewMap.put("applyTotalList", apply_total_list);
-		viewMap.put("applyNonCheckList", apply_non_check_list);
+		viewMap.put("applyTotalMap", apply_total_map);
+	    viewMap.put("applyNonCheckMap", apply_non_check_map);
 		viewMap.put("tempList", temp_list);
 		
 		
 		return viewMap;
+	}
+	
+	// 프로필 이름 클릭시 해당 프로필 체크를 Y로 바꾸기
+	@PostMapping("/updateProfileCheck")
+	public void updateProfileCheck(@RequestParam("applyKey") int apply_key) {
+		System.out.println(apply_key);
+		this.companyMapper.applyProfileCheck(apply_key);
 	}
 	
 }

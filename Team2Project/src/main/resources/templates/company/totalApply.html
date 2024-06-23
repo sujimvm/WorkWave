@@ -9,7 +9,7 @@
 <link rel="stylesheet" th:href="@{/css/company.css}">
 <link rel="stylesheet" th:href="@{/css/comBoard.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script th:src="@{/js/company/comBoardList.js}"></script>
+<script th:src="@{/js/company/totalApply.js}"></script>
 <script th:inline="javascript">
 </script>
 </head>
@@ -29,7 +29,7 @@
 		<div class="faq-list sidebar_r">
 		<h3>총 지원자 리스트</h3>
 		<th:block th:if="${totalApplyList != null}">
-			<table th:each="totalApply, stat : ${totalApplyList}">
+			<table th:each="apply, stat : ${totalApplyList}">
 				<tr>
 					<td>이력서 사진</td>
 					<td>이름</td>
@@ -37,18 +37,21 @@
 				</tr>
 				<tr>
 					<td rowspan="3">
-						<img style="width:180px; height: 180px;" th:src="@{'/image/profile/' + ${totalApply.profile_image}}">
+						<img style="width:180px; height: 180px;" th:src="@{'/image/profile/' + ${totalApplyProfile[stat.index].profile_image}}">
 					</td>
 				</tr>
 				<tr>
 					<td th:text="${userList[stat.index].user_name}"></td>
 					<td rowspan="2">
-            			<span>미열람</span>
+            			<span th:if="${apply.apply_profile_check == 'N'}">미열람</span>
+            			<span th:if="${apply.apply_profile_check == 'Y'}">열람</span>
             		</td>
 				</tr>
 				<tr>
 					<td>
-                		<a th:href="@{'/CU/profile/content?no=' + ${totalApply.profile_key}}" th:text="${totalApply.profile_name}"></a>
+                		<a th:href="@{'/CU/profile/content?no=' + ${apply.profile_key}}"
+                		   th:attr="onclick='updateProfileCheck(' + ${apply.apply_key} + ', this)'"
+                		   th:text="${totalApplyProfile[stat.index].profile_name}"></a>
             		</td>
 				</tr>
 							
