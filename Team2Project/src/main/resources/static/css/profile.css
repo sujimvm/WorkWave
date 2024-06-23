@@ -318,3 +318,8 @@ p {
 .textloc{
 	line-height: 50px;
 }
+
+.no-line-height{
+	
+	line-height: normal;
+}

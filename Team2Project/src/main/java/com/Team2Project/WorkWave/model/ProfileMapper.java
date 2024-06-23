@@ -41,7 +41,7 @@ public interface ProfileMapper {
       public ProfileDTO profileinfo(int no);
       
       // 이력서에 저장될 유저 정보 get
-      public UserDTO fromProfileUserInfo(int no);
+     public UserDTO fromProfileUserInfo(int no);
       
       // 이력서 추가하는 메서드
       public int profileInsert(ProfileDTO dto);
