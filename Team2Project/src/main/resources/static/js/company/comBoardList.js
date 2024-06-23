@@ -80,26 +80,33 @@ function appendList(selector, list, apply_total_map, apply_non_check_map){
     	var nonCheckedApplicants = apply_non_check_map[list.com_board_key]; // 미확인 지원자 수가 없을 경우 0으로 설정
 		
 		var row = "<tr>" +
-				"<td>"+"<div class='listTitleDiv titleDiv'>" + list.com_board_title + "</div>" + 
+				"<td class='com-board-title-width'>"+"<div class='listTitleDiv titleDiv'>" + list.com_board_title + "</div>" + 
 				"<div class='listSubDiv titleDiv'>"+list.com_board_career +"&nbsp;&#124;&nbsp;"+ list.com_board_edu +"&nbsp;&#124;&nbsp;"+"&nbsp;&#124;&nbsp;"+ list.com_board_jobtype  + "</div>" + 
 				"<div class='listGroupDiv titleDiv'>"+list.com_board_group +"&nbsp;&gt;&nbsp;"+ list.com_board_sub +"&nbsp;&gt;&nbsp;"+ list.com_board_step + "</div>"+"</td>" +
-				"<td><a href='/C/totalApply?no="+list.com_board_key+"'>"+totalApplicants+"</a></td>" +
-				"<td><a href='/C/totalApply?no="+list.com_board_key+"'>"+nonCheckedApplicants+"</td>" +
+				"<td class='com-board-apply-width'><a href='/C/totalApply?no="+list.com_board_key+"'>"+totalApplicants+"</a></td>" +
+				"<td class='com-board-apply-width'><a href='/C/totalApply?no="+list.com_board_key+"'>"+nonCheckedApplicants+"</td>" +
 				"</tr>";
 		$(selector).append(row);
 	});
 }
 
 function appendTempList(selector, templist) {
-	templist.forEach(function(templist){
+	
+	if(templist && templist.length > 0){
+		templist.forEach(function(templist){
 		var row = "<tr>" +
-				"<td>"+"<div class='listTitleDiv titleDiv'>" + templist.com_board_title + "</div>" + 
+				"<td class='com-board-title-width'>"+"<div class='listTitleDiv titleDiv'>" + templist.com_board_title + "</div>" + 
 				"<div class='listSubDiv titleDiv'>"+templist.com_board_career +"&nbsp;&#124;&nbsp;"+ templist.com_board_edu +"&nbsp;&#124;&nbsp;"+"&nbsp;&#124;&nbsp;"+ templist.com_board_jobtype  + "</div>" + 
 				"<div class='listGroupDiv titleDiv'>"+templist.com_board_group +"&nbsp;&gt;&nbsp;"+ templist.com_board_sub +"&nbsp;&gt;&nbsp;"+ templist.com_board_step + "</div>"+"</td>"+
 				"<td><a href='/C/comBoard/content?No="+templist.com_board_key+"'>이어서 작성하기</a></td>" +
 				"</tr>";
 		$(selector).append(row);
-	});
+		});	
+	}else {
+		var row = "<tr>"+
+				  "<td>"+ "<span>현재 작성중인 공고가 없습니다.</span></td></tr>";
+		$(selector).append(row);
+	}
 }
 
 function highlightSelected(element) {
