@@ -17,7 +17,7 @@
 				   th:href="@{/U/chat/insert}">질문 · 글쓰기</a></h3>
    			<br>
    			<table class="chat-user">
-   				<tr>
+   				<tr sec:authorize="isAuthenticated() and hasRole('USER')">
    					<th:block th:if="${profileList != null and profileList.size() > 0}">
    						<th:block th:each="profile : ${profileList}">
 				            <img th:if="${profile.profile_default == 'Y'}" 
@@ -30,8 +30,24 @@
    						     style="width: 90px; height: 90px; margin-left: 75px; margin-bottom: -8px;" />
    					</th:block>
    				</tr>
+   				<tr sec:authorize="isAuthenticated() and hasRole('COMPANY')">
+   					<th:block th:if="${session.cDTO.company_logo == null}">
+   						<img th:src="@{/image/profile/기본 고양이 이미지.PNG}" alt="Profile Image" 
+   						     style="width: 90px; height: 90px; margin-left: 75px; margin-bottom: -8px;" />
+   					</th:block>
+   					<th:block th:if="${session.cDTO.company_logo != null}">
+   						<img th:src="'\\image\\logo\\'+${session.cDTO.company_logo}" alt="Profile Image" 
+   						     style="width: 90px; height: 90px; margin-left: 75px; margin-bottom: -8px;" />
+   					</th:block>
+   				</tr>
+   				<tr sec:authorize="!isAuthenticated()">
+   					<th:block>
+   					<img th:src="@{/image/profile/기본 고양이 이미지.PNG}" alt="Profile Image" 
+   						     style="width: 90px; height: 90px; margin-left: 75px; margin-bottom: -8px;" />
+   					</th:block>
+   				</tr>
    				<tr>
-   					<th th:inline="text">[[${session.uDTO.user_name}]] 님</th>
+   					<th th:inline="text" sec:authorize="isAuthenticated() and hasRole('USER')">[[${session.uDTO.user_name}]] 님</th>
    				</tr>
    				<tr>
 					 <th class="chat-table">
@@ -42,8 +58,14 @@
                             <span th:inline="text">작성글 [[${chatCnt}]]</span>&nbsp;
                             <span th:inline="text">답변글 [[${replyCnt}]]</span>
                         </th:block>
-                        <th:block th:if="${null == session.uDTO}">
-                            <span>게스트</span>
+                        <th:block sec:authorize="isAuthenticated() and hasRole('COMPANY')">
+                            <span th:text="${session.cDTO.company_name}+' 님'"></span><br><br>
+                            <span>기업회원은 글과 댓글을 <br> 작성할 수 없습니다.</span>
+                        </th:block>
+                        
+                        <th:block sec:authorize="!isAuthenticated()">
+                        	<span>게스트</span><br><br>
+                            <span>게스트는 글과 댓글을 <br> 작성할 수 없습니다.</span>
                         </th:block>
                     </th>
 				</tr>
@@ -73,7 +95,7 @@
 			  
 			    <br>
 			    
-			    <div style="text-align: center;">
+			    <div style="text-align: center;" sec:authorize="isAuthenticated() and hasRole('USER')">
 				    <a th:if="${cont.user_id == session.uDTO.user_id}" style="text-decoration: none;" th:href="@{/U/chat/update(no=${cont.chat_key})}">
     					<input type="button" value="글수정" class="btn-custom">
 					</a>
@@ -85,7 +107,7 @@
 				</div>
 				<br>
 			    <li>
-			        <th:block th:if="${null != session.uDTO}">
+			        <th:block sec:authorize="isAuthenticated() and hasRole('USER')" th:if="${null != session.uDTO}">
 			            <div class="reply-div" id="reply-box">
 			                <form id="replyForm" method="post">
 			                    <textarea id="replyCont" name="reply_cont" rows="3" cols="113" placeholder="솔직하고 따뜻한 댓글을 남겨주세요~" style="resize:none;"></textarea>
@@ -93,10 +115,13 @@
 			                </form>
 			            </div>
 			        </th:block>
-			        <th:block th:if="${null == session.uDTO}">
+			        <th:block sec:authorize="!isAuthenticated()">
 			            <a th:href="@{/login}">
 			                <textarea name="reply_cont" rows="2" cols="100" placeholder="로그인 후 댓글을 남겨주세요~" ></textarea>
 			            </a>
+			        </th:block>
+			        <th:block sec:authorize="!isAuthenticated() and hasRole('COMPANY')">
+			                <textarea name="reply_cont" rows="2" cols="100" placeholder="기업회원은 댓글을 남길수 없어요..." ></textarea>
 			        </th:block>
 			    </li>
 			    
@@ -112,8 +137,8 @@
             	        <p class="reply-content" th:text="${dto.reply_content}"></p>
             	        <span style="font-size: 11px;" th:text="${#dates.format(dto.reply_date, 'yyyy/MM/dd')} + ' 작성'"></span> <br><br>
             	      
-            	  <button class=btn-edit th:if="${dto.user_id == session.uDTO.user_id}" th:attr="data-reply-key=${dto.reply_key}" onclick="editReply(this)">수정</button>
-	        	  <button class=btn-delete th:if="${dto.user_id == session.uDTO.user_id}" th:attr="data-reply-key=${dto.reply_key}" onclick="deleteReply(this)">삭제</button>
+            	  <button sec:authorize="isAuthenticated() and hasRole('USER')" class=btn-edit th:if="${dto.user_id == session.uDTO.user_id}" th:attr="data-reply-key=${dto.reply_key}" onclick="editReply(this)">수정</button>
+	        	  <button sec:authorize="isAuthenticated() and hasRole('USER')" class=btn-delete th:if="${dto.user_id == session.uDTO.user_id}" th:attr="data-reply-key=${dto.reply_key}" onclick="deleteReply(this)">삭제</button>
 	        	  <br> <br>
 	        	  
 

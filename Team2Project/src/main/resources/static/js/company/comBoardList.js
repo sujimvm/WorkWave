@@ -26,18 +26,22 @@ function getCompanyComboardList(companyKey) {
             
             $('#all-list').on('click', function() {
 				displayList('all', list, apply_total_list, apply_non_check_list);
+				highlightSelected('#all-list');
 			});
 			
 			$('#end-list').on('click', function() {
 				displayList('end', list, apply_total_list, apply_non_check_list);
+				highlightSelected('#end-list');
 			});
 			
 			$('#ing-list').on('click', function() {
 				displayList('ing', list, apply_total_list, apply_non_check_list);
+				highlightSelected('#ing-list');
 			});
 			
 			$('#waiting-list').on('click', function() {
 				displayList('wait', list, apply_total_list, apply_non_check_list);
+				highlightSelected('#waiting-list');
 			});
 			
 			$('#all-list').click();
@@ -94,14 +98,9 @@ function appendTempList(selector, templist) {
 	});
 }
 
-// 버튼 클릭 시 작성중 공고로 
-/*function tempComBoard() {
-	$.ajax(function(){
-		url: '/C/comBoard/content?No=temp_key'
-		data: 'get'
-		type: 
-		
-	})
-}*/
+function highlightSelected(element) {
+    $('.nav-btn li').removeClass('nav-btn-selected'); // 모든 버튼에서 selected 클래스 제거
+    $(element).addClass('nav-btn-selected'); // 클릭된 버튼에 selected 클래스 추가
+    };
 
 });

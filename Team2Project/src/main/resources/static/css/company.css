@@ -178,6 +178,10 @@ input[type="reset"] {
     background-color: #c0c0c0;
 }
 
+.nav-btn-selected {
+    border: 2px solid #007bff;
+}
+
 
 
 

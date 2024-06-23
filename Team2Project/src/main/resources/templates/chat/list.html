@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <link rel="icon" href="image/icon/logo_icon.png"/>
@@ -17,7 +17,7 @@
 				   th:href="@{/U/chat/insert}">질문 · 글쓰기</a></h3>
    			<br>
    			<table class="chat-user">
-   				<tr>
+   				<tr sec:authorize="isAuthenticated() and hasRole('USER')">
    					<th:block th:if="${profileList != null and profileList.size() > 0}">
    						<th:block th:each="profile : ${profileList}">
 				            <img th:if="${profile.profile_default == 'Y'}" 
@@ -30,8 +30,24 @@
    						     style="width: 90px; height: 90px; margin-left: 75px; margin-bottom: -8px;" />
    					</th:block>
    				</tr>
+   				<tr sec:authorize="isAuthenticated() and hasRole('COMPANY')">
+   					<th:block th:if="${session.cDTO.company_logo == null}">
+   						<img th:src="@{/image/profile/기본 고양이 이미지.PNG}" alt="Profile Image" 
+   						     style="width: 90px; height: 90px; margin-left: 75px; margin-bottom: -8px;" />
+   					</th:block>
+   					<th:block th:if="${session.cDTO.company_logo != null}">
+   						<img th:src="'\\image\\logo\\'+${session.cDTO.company_logo}" alt="Profile Image" 
+   						     style="width: 90px; height: 90px; margin-left: 75px; margin-bottom: -8px;" />
+   					</th:block>
+   				</tr>
+   				<tr sec:authorize="!isAuthenticated()">
+   					<th:block>
+   					<img th:src="@{/image/profile/기본 고양이 이미지.PNG}" alt="Profile Image" 
+   						     style="width: 90px; height: 90px; margin-left: 75px; margin-bottom: -8px;" />
+   					</th:block>
+   				</tr>
    				<tr>
-   					<th th:inline="text">[[${session.uDTO.user_name}]] 님</th>
+   					<th th:inline="text" sec:authorize="isAuthenticated() and hasRole('USER')">[[${session.uDTO.user_name}]] 님</th>
    				</tr>
    				<tr>
 					 <th class="chat-table">
@@ -42,8 +58,14 @@
                             <span th:inline="text">작성글 [[${chatCnt}]]</span>&nbsp;
                             <span th:inline="text">답변글 [[${replyCnt}]]</span>
                         </th:block>
-                        <th:block th:if="${null == session.uDTO}">
-                            <span>게스트</span>
+                        <th:block sec:authorize="isAuthenticated() and hasRole('COMPANY')">
+                            <span th:text="${session.cDTO.company_name}+' 님'"></span><br><br>
+                            <span>기업회원은 글과 댓글을 <br> 작성할 수 없습니다.</span>
+                        </th:block>
+                        
+                        <th:block sec:authorize="!isAuthenticated()">
+                        	<span>게스트</span><br><br>
+                            <span>게스트는 글과 댓글을 <br> 작성할 수 없습니다.</span>
                         </th:block>
                     </th>
 				</tr>

@@ -111,22 +111,34 @@ public class AllController {
 		
 		///////////////////////////////////
 		
-		UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
-
-		// 이력서의 이미지 사진
-		List<ProfileDTO> profileList = this.profileMapper.profileList(userInfo.getUser_key());
-		// 내가 작성한 게시물 갯수
-		int chatCnt = this.chatMapper.chatCnt(userInfo.getUser_key());
-		// 내가 작성한 게시물의 댓글 갯수
-		int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String role = auth.getAuthorities().toString();
 		
-		List<ChatDTO> list = this.chatMapper.list(pdto);
+		if(role.equals("[ROLE_USER]")) {
+			UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
+
+			// 이력서의 이미지 사진
+			List<ProfileDTO> profileList = this.profileMapper.profileList(userInfo.getUser_key());
+			// 내가 작성한 게시물 갯수
+			int chatCnt = this.chatMapper.chatCnt(userInfo.getUser_key());
+			// 내가 작성한 게시물의 댓글 갯수
+			int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
+			
+			List<ChatDTO> list = this.chatMapper.list(pdto);
 
 
-		model.addAttribute("List", list).addAttribute("paging", pdto);
-		model.addAttribute("chatCnt", chatCnt)
-			 .addAttribute("replyCnt", replyCnt)
-			 .addAttribute("profileList", profileList);
+			model.addAttribute("List", list).addAttribute("paging", pdto);
+			model.addAttribute("chatCnt", chatCnt)
+				 .addAttribute("replyCnt", replyCnt)
+				 .addAttribute("profileList", profileList);
+		}else {
+			List<ChatDTO> list = this.chatMapper.list(pdto);
+
+
+			model.addAttribute("List", list).addAttribute("paging", pdto);
+		}
+		
+		
 		
 			 
 		
@@ -141,19 +153,24 @@ public class AllController {
 		ChatDTO content = this.chatMapper.getContent(no);
 		this.chatMapper.readcount(no);
 		
-		UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
-		// 이력서의 이미지 사진
-		List<ProfileDTO> profileList = this.profileMapper.profileList(userInfo.getUser_key());
-		// 내가 작성한 게시물 갯수
-		int chatCnt = this.chatMapper.chatCnt(userInfo.getUser_key());
-		// 내가 작성한 게시물의 댓글 갯수
-		int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String role = auth.getAuthorities().toString();
 		
-		
-		
-		model.addAttribute("chatCnt", chatCnt)
-			 .addAttribute("replyCnt", replyCnt)
-			 .addAttribute("profileList", profileList);
+		if(role.equals("[ROLE_USER]")) {
+			UserDTO userInfo = (UserDTO)session.getAttribute("uDTO");
+			// 이력서의 이미지 사진
+			List<ProfileDTO> profileList = this.profileMapper.profileList(userInfo.getUser_key());
+			// 내가 작성한 게시물 갯수
+			int chatCnt = this.chatMapper.chatCnt(userInfo.getUser_key());
+			// 내가 작성한 게시물의 댓글 갯수
+			int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
+			
+			
+			
+			model.addAttribute("chatCnt", chatCnt)
+				 .addAttribute("replyCnt", replyCnt)
+				 .addAttribute("profileList", profileList);
+		}
 		
 		model.addAttribute("cont", content);
 
