@@ -75,10 +75,14 @@ function displayList(status, list, apply_total_map, apply_non_check_map) {
 
 function appendList(selector, list, apply_total_map, apply_non_check_map){
 	
-	list.forEach(function(list){
+	if(list && list.length > 0){
+		var row ="<tr><th class='com-board-title-width'>공고제목</th><th class='com-board-apply-width'>총 지원자</th><th class='com-board-apply-width'>미열람 지원자</th></tr>"
+		$(selector).append(row);
+		
+		list.forEach(function(list){
 		var totalApplicants = apply_total_map[list.com_board_key]; // 지원자 수가 없을 경우 0으로 설정
     	var nonCheckedApplicants = apply_non_check_map[list.com_board_key]; // 미확인 지원자 수가 없을 경우 0으로 설정
-		
+	
 		var row = "<tr>" +
 				"<td class='com-board-title-width'>"+"<div class='listTitleDiv titleDiv'>" + list.com_board_title + "</div>" + 
 				"<div class='listSubDiv titleDiv'>"+list.com_board_career +"&nbsp;&#124;&nbsp;"+ list.com_board_edu +"&nbsp;&#124;&nbsp;"+"&nbsp;&#124;&nbsp;"+ list.com_board_jobtype  + "</div>" + 
@@ -88,6 +92,13 @@ function appendList(selector, list, apply_total_map, apply_non_check_map){
 				"</tr>";
 		$(selector).append(row);
 	});
+	}else{
+		var row = "<tr>"+
+				  "<td>"+"<span>해당 공고가 없습니다.</span></td></tr>";
+		$(selector).append(row);
+	}
+	
+	
 }
 
 function appendTempList(selector, templist) {

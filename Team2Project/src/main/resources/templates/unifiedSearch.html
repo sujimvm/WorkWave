@@ -6,6 +6,38 @@
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/searchList.css}">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+	function addApply(element) {
+		
+		var checked = element.getAttribute("data-com-board-key")
+		var companyName = element.getAttribute("data-company-name")
+		debugger;
+		var toCompany = "";
+		if(companyName != undefined){
+			toCompany = companyName+"에 ";
+		}
+		debugger;
+		
+		if(confirm(toCompany+"지원을 하시겠습니까?")){
+			$.ajax({
+				url: '/ajax/apply/insert',
+				type: 'post',
+				data:{"checked":checked},
+				success: function() {
+					debugger;
+					alert("공고 지원이 완료되었습니다");
+					getComBoardList($("#getPage").val());
+				},error: function(xhr, status, error) {
+					debugger;
+					console.error(xhr);
+					alert("로그인 후 지원가능합니다.");
+				}
+			});
+		}
+	};
+
+</script>
 <style type="text/css">
 	.highlight {
 		font-weight: bolder;
@@ -29,7 +61,7 @@
 			             th:utext="${#strings.replace(companyName, paging.keyword, '&lt;span class=&quot;highlight&quot;&gt;' + paging.keyword + '&lt;/span&gt;')}"
 			             style="width: 15%; text-align: center;"
 			             class="company_name"></span>
-			       <a th:href="@{/A/comBoard/content(no=${s.com_board_key})}" style="width: 70%; margin-left: 100px;">
+			       <a th:href="@{/A/comBoard/content(P=${paging.page}, No=${s.com_board_key})}" style="width: 70%; margin-left: 100px;">
 			           <span th:utext="${#strings.replace(s.com_board_title, paging.keyword, '&lt;span class=&quot;highlight&quot;&gt;' + paging.keyword + '&lt;/span&gt;')}"
 			                 style="font-size: 15px;" 
 			                 class="com_board_title"></span>
@@ -37,7 +69,9 @@
 			           <span th:utext="${#strings.replace(s.com_board_career + ' · ' + s.com_board_edu + ' · ' + s.com_board_jobtype + ' · ' + #dates.format(s.com_board_end_date, 'yyyy-MM-dd'), paging.keyword, '&lt;span class=&quot;highlight&quot;&gt;' + paging.keyword + '&lt;/span&gt;')}"
 			                 style="color: #000000; font-size: 12px;"></span>
 			       </a>
-            		<button onclick="">지원하기</button>
+            		<button th:attr="data-com-board-key=${s.com_board_key},
+	                	        	 data-company-name=${companyName}" 
+	                	        	 onclick="addApply(this)">지원하기</button>
             	</li>
             </ul>
             

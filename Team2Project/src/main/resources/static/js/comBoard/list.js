@@ -313,6 +313,7 @@ function addApply(checked,companyName) {
 				getComBoardList($("#getPage").val());
 			},error: function(xhr, status, error) {
 				console.error(xhr);
+				alert("로그인 후 지원가능합니다.");
 			}
 		});
 	}
