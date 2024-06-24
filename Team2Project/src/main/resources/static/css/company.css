@@ -192,7 +192,9 @@ input[type="reset"] {
 	display: flex;
 }
 
-
+.com-board-apply-width {
+	width: 15% !important;
+}
 
 
 
