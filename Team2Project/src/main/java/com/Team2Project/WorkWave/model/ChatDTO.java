@@ -34,5 +34,5 @@ public class ChatDTO {
     private Date user_join_date;
     private String user_confirm;
     
- 
+    private int chat_reply_count;
 }

@@ -93,7 +93,9 @@
 		WHERE CHAT_KEY = #{chat_key}
 	</select>
 	
-	
+	<select id="getReplyCount" parameterType="int" resultType="int">
+        SELECT COUNT(*) FROM reply WHERE chat_key = #{chat_key}
+    </select>
 	
 
 
