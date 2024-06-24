@@ -125,7 +125,11 @@ public class AllController {
 			int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
 			
 			List<ChatDTO> list = this.chatMapper.list(pdto);
-
+			
+			for (ChatDTO chat : list) {
+	            int replyCount = this.chatMapper.getReplyCount(chat.getChat_key());
+	            chat.setChat_reply_count(replyCount);
+	        }
 
 			model.addAttribute("List", list).addAttribute("paging", pdto);
 			model.addAttribute("chatCnt", chatCnt)
