@@ -107,45 +107,54 @@
 						<div class="comBoardAvgDiv">
 							<h5>연령</h5>
 							<div th:unless="${#lists.isEmpty(map.avgAge)}">
+								<div th:each="avgAge:${map.avgAge}">
+									<input type="hidden" th:id="${avgAge.AGE}" th:value="${avgAge.COUNT}">
+								</div>
 								<dl class="infoDl">
 									<dt>25세 이하</dt>
-									<dd th:each="avgAge:${map.avgAge}" th:if="${avgAge.AGE == 25}" th:text="${avgAge.COUNT+'명'}">0명</dd>
+									<dd th:id="avgAge_25">0명</dd>
 									<dt>30세 이하</dt>
-									<dd th:each="avgAge:${map.avgAge}" th:if="${avgAge.AGE == 30}" th:text="${avgAge.COUNT+'명'}">0명</dd>
+									<dd th:id="avgAge_30">0명</dd>
 									<dt>35세 이하</dt>
-									<dd th:each="avgAge:${map.avgAge}" th:if="${avgAge.AGE == 35}" th:text="${avgAge.COUNT+'명'}">0명</dd>
+									<dd th:id="avgAge_35">0명</dd>
 									<dt>40세 이하</dt>
-									<dd th:each="avgAge:${map.avgAge}" th:if="${avgAge.AGE == 40}" th:text="${avgAge.COUNT+'명'}">0명</dd>
+									<dd th:id="avgAge_40">0명</dd>
 									<dt>45세 이하</dt>
-									<dd th:each="avgAge:${map.avgAge}" th:if="${avgAge.AGE == 45}" th:text="${avgAge.COUNT+'명'}">0명</dd>
+									<dd th:id="avgAge_45">0명</dd>
 									<dt>50세 이상</dt>
-									<dd th:each="avgAge:${map.avgAge}" th:if="${avgAge.AGE == 50}" th:text="${avgAge.COUNT+'명'}">0명</dd>
+									<dd th:id="avgAge_50">0명</dd>
 								</dl>
 							</div>
 						</div>
 						<div class="comBoardAvgDiv">
 							<h5>성별</h5>
 							<div th:unless="${#lists.isEmpty(map.avgGender)}">
+								<div th:each="avgGender:${map.avgGender}">
+									<input type="hidden" th:id="${avgGender.GENDER}" th:value="${avgGender.COUNT}">
+								</div>
 								<dl class="infoDl">
 									<dt>남자</dt>
-									<dd th:each="avgGender:${map.avgGender}" th:if="${avgGender.GENDER=='M'}" th:text="${avgGender.COUNT+'명'}">0명</dd>
+									<dd th:id="avgGender_M">0명</dd>
 									<dt>여자</dt>
-									<dd th:each="avgGender:${map.avgGender}" th:if="${avgGender.GENDER=='F'}" th:text="${avgGender.COUNT+'명'}">0명</dd>
+									<dd th:id="avgGender_F">0명</dd>
 								</dl>
 							</div>
 						</div>
 						<div class="comBoardAvgDiv">
 							<h5>학력</h5>
 							<div th:unless="${#lists.isEmpty(map.avgEdu)}">
+								<div th:each="avgEdu:${map.avgEdu}">
+									<input type="hidden" th:id="${avgEdu.EDU}" th:value="${avgEdu.COUNT}">
+								</div>
 								<dl class="infoDl">
 									<dt>고등학교졸업</dt>
-									<dd th:each="avgEdu:${map.avgEdu}" th:if="${avgEdu.EDU=='0'}" th:text="${avgEdu.COUNT+'명'}">0명</dd>
+									<dd th:id="avgEdu_0">0명</dd>
 									<dt>전문대학졸업</dt>
-									<dd th:each="avgEdu:${map.avgEdu}" th:if="${avgEdu.EDU=='1'}" th:text="${avgEdu.COUNT+'명'}">0명</dd>
+									<dd th:id="avgEdu_1">0명</dd>
 									<dt>대학교졸업</dt>
-									<dd th:each="avgEdu:${map.avgEdu}" th:if="${avgEdu.EDU=='2'}" th:text="${avgEdu.COUNT+'명'}">0명</dd>
+									<dd th:id="avgEdu_2">0명</dd>
 									<dt>대학원</dt>
-									<dd th:each="avgEdu:${map.avgEdu}" th:if="${avgEdu.EDU=='3'}" th:text="${avgEdu.COUNT+'명'}">0명</dd>
+									<dd th:id="avgEdu_3">0명</dd>
 								</dl>
 							</div>
 						</div>
@@ -210,6 +219,9 @@
 			    </div>
 			    
 				<div class="comBoardBtDiv_fix" style="margin-bottom: 60px;">
+					<input type="hidden" sec:authorize="isAuthenticated() and hasRole('USER')" id="company_name" th:value="${map.dto.company_name}">
+					<input type="hidden" sec:authorize="isAuthenticated() and hasRole('USER')" id="com_board_key" th:value="${map.dto.com_board_key}">
+					<input type="button" class="btCss1 btCss" sec:authorize="isAuthenticated() and hasRole('USER')" th:onclick="addApply()" value="지원하기">
 					<input type="button" class="btCss1 btCss" th:onclick="|location.href='@{/A/comBoard(P=${map.P})}'|" value="목록">
 				</div>
 			</div>

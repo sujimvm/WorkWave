@@ -287,7 +287,7 @@
 .timerDiv .infoDl{margin: 10px; margin-left: 95px;}
 .timerDiv .infoDl dd{width: 60%;}
 .comBoardAvgDiv .infoDl{margin-left: 40px;}
-.comBoardAvgDiv .infoDl dt{width: 40%;}
+.comBoardAvgDiv .infoDl dt{width: 50%;}
 .comBoardAvgDiv .infoDl dd{width: 20%;}
 
 .comBoardLogoDiv{
@@ -305,7 +305,7 @@
 	padding-bottom: 30px;
 }
 .comBoardAvgDivs{
-	
+	margin-bottom: 40px;	
 }
 .comBoardAvgDivs .comBoardAvgDiv{
 	width: 24%;
