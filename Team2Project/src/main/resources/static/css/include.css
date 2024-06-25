@@ -67,15 +67,14 @@ nav {
 	align-items: center;
 }
 .user-actions a {
-	width:70px;
 	text-decoration: none; /* 링크 밑줄 제거 */
-	color: #333; /* 링크 색상 */
+	color: #757575; /* 링크 색상 */
 	font-size: 16px;
 	font-weight: bold; /* 링크 글씨 굵게 */
 	margin-left: 20px; /* 버튼 간 간격 */
 }
 .user-actions a:hover {
-	font-size: 17px;
+	color: #000000; /* 링크 색상 */
 }
 nav ul {
 	list-style: none; /* 목록 스타일 제거 */

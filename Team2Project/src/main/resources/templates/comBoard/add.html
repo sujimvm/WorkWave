@@ -296,7 +296,7 @@
 								<th>담당자 연락처<span class="requiredText">필수</span></th>
 								<td>
 									<input name="com_board_mgr_phone" id="com_board_mgr_phone" class="textW20" maxlength="13" th:value="${session.cDTO.company_mgr_phone}">
-									<input type="hidden" id="com_board_mgr_phone_Ck">
+									<input type="hidden" id="com_board_mgr_phone_Ck" value="1">
 									<span class="requiredText" id="com_board_mgr_phone_CkText"></span>
 								</td>
 							</tr>
@@ -305,7 +305,7 @@
 								<td>
 									<input name="com_board_mgr_email" id="com_board_mgr_email" class="textW35" maxlength="30"  th:value="${session.cDTO.company_mgr_email}">
 									<span class="requiredText" id="com_board_mgr_email_CkText"></span>
-									<input type="hidden" id="com_board_mgr_email_Ck">
+									<input type="hidden" id="com_board_mgr_email_Ck" value="1">
 								</td>
 							</tr>
 						</table>

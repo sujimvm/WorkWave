@@ -36,6 +36,22 @@ $(document).ready(function() {
 			$(this).prop("checked",false);
 		}
 	});
+	
+	if($("#25").val() > 0){$("#avgAge_25").empty();$("#avgAge_25").append($("#25").val()+"명");}
+	if($("#30").val() > 0){$("#avgAge_30").empty();$("#avgAge_30").append($("#30").val()+"명");}
+	if($("#35").val() > 0){$("#avgAge_35").empty();$("#avgAge_35").append($("#35").val()+"명");}
+	if($("#40").val() > 0){$("#avgAge_40").empty();$("#avgAge_40").append($("#40").val()+"명");}
+	if($("#45").val() > 0){$("#avgAge_45").empty();$("#avgAge_45").append($("#45").val()+"명");}
+	if($("#50").val() > 0){$("#avgAge_50").empty();$("#avgAge_50").append($("#50").val()+"명");}
+	
+	if($("#M").val() > 0){$("#avgGender_M").empty();$("#avgGender_M").append($("#M").val()+"명");}
+	if($("#F").val() > 0){$("#avgGender_F").empty();$("#avgGender_F").append($("#F").val()+"명");}
+
+	if($("#0").val() > 0){$("#avgEdu_0").empty();$("#avgEdu_0").append($("#0").val()+"명");}
+	if($("#1").val() > 0){$("#avgEdu_1").empty();$("#avgEdu_1").append($("#1").val()+"명");}
+	if($("#2").val() > 0){$("#avgEdu_2").empty();$("#avgEdu_2").append($("#2").val()+"명");}
+	if($("#3").val() > 0){$("#avgEdu_3").empty();$("#avgEdu_3").append($("#3").val()+"명");}
+	
 });
 
 // 관심기업 체크 시 관심기업 등록 / 해제
@@ -152,6 +168,23 @@ function getRecommendList(page) {
 			},
 			error: function(xhr, status, error) {
 				console.error(xhr);
+			}
+		});
+	}
+}
+
+// 공고 지원 등록 / 해제
+function addApply() {
+	if(confirm($("#company_name").val()+"지원을 하시겠습니까?")){
+		$.ajax({
+			url: '/ajax/apply/insert',
+			type: 'post',
+			data:{"checked":$("#com_board_key").val()},
+			success: function() {
+				alert("공고 지원이 완료되었습니다");
+			},error: function(xhr, status, error) {
+				console.error(xhr);
+				alert("로그인 후 지원가능합니다.");
 			}
 		});
 	}
