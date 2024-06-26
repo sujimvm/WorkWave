@@ -43,7 +43,9 @@ public interface ComBoardMapper {
 	int recommendListCount(String code);//공고 상세보기 추천인재 리스트 총 갯수
 	List<ProfileDTO> getRecommendList(HashMap<String, Object> reqMapperMap);//공고 상세보기 추천인재 리스트
 	int[] getPositionSuccessList(int com_board_key); // 공고 지원 리스트
-	int insertPosition(PositionDTO dto); // 관심기업 추가
+	int insertPosition(PositionDTO dto); //  포지션 추가
+	int updatePosition(PositionDTO dto); // 포지션 수정
+	int deletePosition(int position_key); // 포지션 삭제
 
 	int updateComBoard(ComBoardDTO dto); // 공고수정
 	

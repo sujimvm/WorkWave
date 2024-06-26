@@ -17,7 +17,6 @@
 <body>
 	<div th:replace="~{include/header}"></div>
 		<div layout:fragment="content" class="content">
-			<input sec:authorize="isAuthenticated() and hasRole('USER')" type="hidden" id="sessionID" th:value="${session.uDTO.user_id}">
 			<input sec:authorize="isAuthenticated() and hasRole('COMPANY')" type="hidden" id="sessionID" th:value=1>
 			<div class="comBoardContentTotalDiv">
 				<h3 class="comBoardInputTitle topTitle">채용정보</h3>
@@ -95,7 +94,7 @@
 					</div>
 				</div><!-- 접수기간 -->
 				
-				<div sec:authorize="isAuthenticated() and hasRole('USER')" class="comBoardContentDiv">
+				<div class="comBoardContentDiv">
 					<h3 class="comBoardInputTitle">지원자 현황 통계</h3>
 					<div class="comBoardAvgDivs">
 						<div class="comBoardAvgDiv">
@@ -213,10 +212,7 @@
 			    </div>
 			    
 				<div class="comBoardBtDiv_fix" style="margin-bottom: 60px;">
-					<input type="hidden" sec:authorize="isAuthenticated() and hasRole('USER')" id="company_name" th:value="${map.dto.company_name}">
-					<input type="hidden" sec:authorize="isAuthenticated() and hasRole('USER')" id="com_board_key" th:value="${map.dto.com_board_key}">
-					<input type="button" class="btCss1 btCss" sec:authorize="isAuthenticated() and hasRole('USER')" th:onclick="addApply()" value="지원하기">
-					<input type="button" class="btCss1 btCss" th:onclick="|location.href='@{/A/comBoard(P=${map.P})}'|" value="목록">
+					<input type="button" class="btCss1 btCss" th:onclick="|location.href='@{/C/comBoardList}'|" value="목록">
 				</div>
 			</div>
 		</div>

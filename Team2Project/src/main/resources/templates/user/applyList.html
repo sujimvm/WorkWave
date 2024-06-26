@@ -58,9 +58,8 @@
 	                	  th:text="${applyInfo.apply_date.substring(0, 10)}" ></span>
 	                <span style="width: 50%; text-align: left; margin-left: 20px;">
 	                    	<span style="font-size: 13px;" th:text="${applyComList[stat.index].company_name}"></span><br>
-		                    <a th:href="@{/A/comBoard/content(no=${applyBoardList[stat.index].com_board_key})}">
-		                    	<span style="font-size: 15px;" 
-		                    	      th:utext="${#strings.abbreviate(applyBoardList[stat.index].com_board_title, 30)}"></span>
+		                    <a href="#" th:onclick="'comBoardView(' + ${applyBoardList[stat.index].com_board_key} + ')'">
+		                    	<span style="font-size: 15px;" th:utext="${#strings.abbreviate(applyBoardList[stat.index].com_board_title, 30)}"></span>
 		                    </a>
 	                </span>
 	                <span style="width: 17%; text-align: center;">
@@ -98,7 +97,9 @@
 	<div th:replace="~{include/footer :: footer}"></div>
 	
 <script type="text/javascript">
-	
+	function comBoardView(num) {
+		window.open("/A/comBoard/content?P=1&No="+num);
+	}
 	function applyCancel(apply_key) {
 		if(confirm("정말로 취소하시겠습니까?")){
 			$.ajax({

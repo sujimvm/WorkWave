@@ -107,6 +107,7 @@ function insertCheck(){
 			<h3>마이페이지</h3>
 	        <a th:href="@{/C/comBoard/insert}">공고 등록</a>
 	        <a th:href="@{/C/comBoardList}">공고 리스트</a>
+	        <a th:href="@{/C/positionList}">포지션 제안</a>
 	        <a th:href="@{/C/update/companyPwdCheck}" class="select">기업정보 수정</a>
 	        <a th:href="@{/C/update/pwd/companyPwdCheck}">비밀번호 변경</a>
 	        <a th:href="@{/C/delete/companyPwdCheck}">회원탈퇴</a>
@@ -166,8 +167,8 @@ function insertCheck(){
 					<th class="infoTh">기업 로고</th>
 					<td>
 						<img th:alt="${session.cDTO.company_logo_name}" th:src="@{'\\image\\logo\\'+${session.cDTO.company_logo}}"
-						height="100px" width="100px" id="original_logo">
-						<img id="preview_logo" height="100px" width="100px" style="display:none;">
+						height="80px" width="250px" id="original_logo">
+						<img id="preview_logo" height="80px" width="250px" style="display:none;">
 						<input type="file" name="logo" id="logo" accept=".jpeg, .jpg, .png" value="">
 					</td>
 				</tr>
