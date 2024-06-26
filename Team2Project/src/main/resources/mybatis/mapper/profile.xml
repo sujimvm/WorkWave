@@ -27,12 +27,12 @@
      
      
      <select id="schoolname" parameterType="codeDTO" resultType="codeDTO">
-         SELECT * FROM schoolData WHERE code LIKE #{code}||'%' and name LIKE '%'|| #{name} ||'%'
+         SELECT * FROM schcoolData WHERE code LIKE #{code}||'%' and name LIKE '%'|| #{name} ||'%'
      </select>
      
      <select id="department" parameterType="codeDTO" resultType="codeDTO">
      
-     select * from schoolData where length(code) = 8 and code like #{code} || '%' and name like '%' || #{name} || '%'
+     select * from schcoolData where length(code) = 8 and code like #{code} || '%' and name like '%' || #{name} || '%'
         
      </select>
      
