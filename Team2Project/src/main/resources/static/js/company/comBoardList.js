@@ -94,7 +94,7 @@ function appendList(selector, list, apply_total_map, apply_non_check_map){
 	});
 	}else{
 		var row = "<tr>"+
-				  "<td>"+"<span>해당 공고가 없습니다.</span></td></tr>";
+				  "<td style='text-align: center;'>"+"<span>해당 공고가 없습니다.</span></td></tr>";
 		$(selector).append(row);
 	}
 	
@@ -115,7 +115,7 @@ function appendTempList(selector, templist) {
 		});	
 	}else {
 		var row = "<tr>"+
-				  "<td>"+ "<span>현재 작성중인 공고가 없습니다.</span></td></tr>";
+				  "<td style='text-align: center;'>"+ "<span>현재 작성중인 공고가 없습니다.</span></td></tr>";
 		$(selector).append(row);
 	}
 }

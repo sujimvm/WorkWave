@@ -16,7 +16,7 @@ table {
 }
 
 .company-table {
-   width: 70%;
+   width: 100%;
    border-collapse: collapse;
    margin: 20px 0;
    font-size: 18px;
@@ -194,6 +194,7 @@ input[type="reset"] {
 
 .com-board-apply-width {
 	width: 15% !important;
+	text-align: center;
 }
 
 
