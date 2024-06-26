@@ -617,6 +617,7 @@ input[type=number] { /* 파이어폭스에서의 초기화 방법 */
 }
 .positionTb td{
 	border-bottom: 1px solid #eeeeee;
+	font-size: 14px;
 }
 .positionTb p{
 	margin: 0;
