@@ -29,7 +29,10 @@
 		<div class="faq-list sidebar_r">
         	<span style="font-size: 20px; font-weight: bold; margin-bottom: 10px;">포지션 제안</span>
 			<table class="positionTb">
-				<tr th:each="dto:${list}">
+		        <tr th:if="${#lists.isEmpty(list)}">
+		            <td style="text-align: center;" >데이터가 존재하지 않습니다</td>
+		        </tr>
+		        <tr th:unless="${#lists.isEmpty(list)}" th:each="dto:${list}">
 					<td width="80%">
 						<input type="hidden" th:id="'user_' + ${dto.position_key}" th:value="${dto.user_key}">
 						<input type="hidden" th:id="'name_' + ${dto.position_key}" th:value="${dto.user_name}">
