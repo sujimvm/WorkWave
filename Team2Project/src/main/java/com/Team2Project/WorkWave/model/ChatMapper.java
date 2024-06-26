@@ -45,5 +45,5 @@ public interface ChatMapper {
 	
     List<ChatReplyDTO> getRepliesByChatKey(int chat_key);
 	
-    int getReplyCount(int chat_key);
+    public int getReplyCount(int chat_key);
 }

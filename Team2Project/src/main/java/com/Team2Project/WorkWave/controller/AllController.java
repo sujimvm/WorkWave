@@ -138,14 +138,13 @@ public class AllController {
 		}else {
 			List<ChatDTO> list = this.chatMapper.list(pdto);
 
+			for (ChatDTO chat : list) {
+	            int replyCount = this.chatMapper.getReplyCount(chat.getChat_key());
+	            chat.setChat_reply_count(replyCount);
+	        }
 
 			model.addAttribute("List", list).addAttribute("paging", pdto);
 		}
-		
-		
-		
-			 
-		
 
 		return "chat/list";
 	}
@@ -169,8 +168,6 @@ public class AllController {
 			// 내가 작성한 게시물의 댓글 갯수
 			int replyCnt = this.chatMapper.replyCnt(userInfo.getUser_key());
 			
-			
-			
 			model.addAttribute("chatCnt", chatCnt)
 				 .addAttribute("replyCnt", replyCnt)
 				 .addAttribute("profileList", profileList);
@@ -180,10 +177,15 @@ public class AllController {
 
 		// 댓글 리스트
 		List<ChatReplyDTO> replylist = this.chatMapper.replylist(no);
-		model.addAttribute("list", replylist);
+		
+		// 댓글 갯수
+		int replyCount = this.chatMapper.replyCount(no);
+		
+		model.addAttribute("list", replylist)
+			 .addAttribute("replyCount", replyCount);
 
 
-		return "chat/content"; 
+		return "chat/content";
 	}
 
 	@GetMapping("/main")
