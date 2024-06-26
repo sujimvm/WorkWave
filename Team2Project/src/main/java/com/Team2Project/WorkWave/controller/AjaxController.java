@@ -403,7 +403,7 @@ public class AjaxController {
         }
     }
 	
-	// 공고 지원 
+	// 포지션제안 
 	@PostMapping("/position/insert")
 	public void addPosition(PositionDTO psDTO, HttpServletRequest request, HttpSession session) {
 		CompanyDTO cdto = (CompanyDTO)session.getAttribute("cDTO");
@@ -482,4 +482,14 @@ public class AjaxController {
 		this.companyMapper.applyProfileCheck(apply_key);
 	}
 	
+	// 포지션제안 수정 
+	@PostMapping("/position/update")
+	public void updatePosition(PositionDTO psDTO, HttpServletRequest request, HttpSession session) {
+		this.comBoardMapper.updatePosition(psDTO);
+	}
+	// 포지션제안 삭제
+	@PostMapping("/position/delete")
+	public void deletePosition(@RequestParam("position_key") int position_key) {
+		this.comBoardMapper.deletePosition(position_key);
+	}
 }

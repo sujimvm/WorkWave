@@ -53,4 +53,7 @@ public interface CompanyMapper {
 	ProfileDTO applyProfile(int apply_key);
 	UserDTO userList(int user_key);
 	void applyProfileCheck(int apply_key);
+
+	List<PositionDTO> getPositionList(int company_key);
+	int getPositionListCount(int company_key);
 }

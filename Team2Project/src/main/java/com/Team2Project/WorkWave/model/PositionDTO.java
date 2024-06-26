@@ -12,6 +12,8 @@ public class PositionDTO {
 	private String position_cont;
 	private String position_check;
 	private String position_date;
+	private String com_board_title;
+	private String user_name;
 	// 마감일
 	private String expirationDate;
 

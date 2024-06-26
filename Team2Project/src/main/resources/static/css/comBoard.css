@@ -581,3 +581,43 @@ input[type=number] { /* 파이어폭스에서의 초기화 방법 */
     color: #fff;
 	background-color: #8f00ff;
 }
+
+/* company / positionList */
+.modal{
+	font-size: 13px;
+}
+.modal p{
+	margin: 0px;
+}
+#view_Modal{
+	
+}
+
+
+.positionA a{
+	text-decoration: none;
+	font-size: 12px;
+	color: #5c5c5c;
+	margin-right: 10px;
+}
+.positionA a:hover{
+	color: #000;
+}
+.positionTitle a{
+    font-weight: 600;
+	font-size: 14px;
+}
+.positionTb{
+	width: 100%;
+	border-top: 2px solid;
+	border-spacing: 0;
+}
+.positionTb th,td{
+	padding: 10px;
+}
+.positionTb td{
+	border-bottom: 1px solid #eeeeee;
+}
+.positionTb p{
+	margin: 0;
+}

@@ -23,6 +23,7 @@ import com.Team2Project.WorkWave.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import kotlinx.serialization.descriptors.StructureKind.LIST;
 
 @Controller
 @RequestMapping("/C")
@@ -32,6 +33,8 @@ public class CompanyController {
 	private ComBoardMapper comBoardMapper;
 	@Autowired
 	private CompanyMapper companyMapper;
+	@Autowired
+	private ProfileMapper profileMapper;
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	@Autowired
@@ -349,7 +352,7 @@ public class CompanyController {
 		PrintWriter out = response.getWriter();
 
 		if (this.comBoardMapper.updateComBoard(dto) > 0) {
-			out.println("<script> alert('공고를 성공적으로 수정하였습니다'); location.href='/C/info'; </script>"); // 마이페이지로 변경 예정
+			out.println("<script> alert('공고를 성공적으로 수정하였습니다'); location.href='/C/comBoardList'; </script>"); // 마이페이지로 변경 예정
 		} else {
 			out.println("<script> alert('공고수정에 실패했습니다'); history.back(); </script>");
 		}
@@ -382,8 +385,28 @@ public class CompanyController {
 		return "company/comBoardList";
 	}
 	
+	
 	// (상세보기) 페이지 이동
-	@GetMapping("/comBoard/content") 
+	@GetMapping("/comBoardCont") 
+	public String goComBoardContent(HttpServletRequest request, Model model) {
+
+		int com_board_key = Integer.parseInt(request.getParameter("No"));
+
+		HashMap<String, Object> map = new HashMap<>(); 
+		map.put("dto", this.comBoardMapper.getComBoard(com_board_key));
+		map.put("applyTotal", this.comBoardMapper.getApplyCount(com_board_key));
+		map.put("avgAge", this.comBoardMapper.getApplyAvgAge(com_board_key));
+		map.put("avgGender", this.comBoardMapper.getApplyAvgGender(com_board_key));
+		map.put("avgEdu", this.comBoardMapper.getApplyAvgEdu(com_board_key));
+
+		model.addAttribute("map",map);
+
+		return "/company/comBoardCont"; 
+
+	}
+	
+	// (상세보기) 임시공고 수정
+	@GetMapping("/comBoard/temp") 
 	public String goComBoardContent(HttpSession session, HttpServletRequest request, Model model) {
 
 		int temp_key = Integer.parseInt(request.getParameter("No"));
@@ -420,10 +443,24 @@ public class CompanyController {
 		return "company/totalApply";
 	}
 	
+	// 해당 기업의 공고 리스트 페이지로 이동
+	@GetMapping("/positionList")
+	public String positionList(HttpSession session, Model model) {
+		CompanyDTO cDTO = (CompanyDTO) session.getAttribute("cDTO");
+		model.addAttribute("list",this.companyMapper.getPositionList(cDTO.getCompany_key()))
+		.addAttribute("count",this.companyMapper.getPositionListCount(cDTO.getCompany_key()));
+		return "/company/positionList";
+	}
 	
+	// 프로필로 이동
+	@GetMapping("/viewProfile")
+	public void viewProfile(@RequestParam("No") int user_key, HttpServletResponse response) throws IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		int key = this.comBoardMapper.selectDefaultProfile(user_key);
+		
+		out.println("<script> location.href='/CU/profile/content?no="+key+"'; </script>");
+	}
 	
-	
-	
-	
-
 }

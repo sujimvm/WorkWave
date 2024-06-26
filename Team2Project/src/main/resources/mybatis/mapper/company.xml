@@ -107,5 +107,16 @@
   	<select id="applyProfileCheck" parameterType="int">
   		update apply set apply_profile_check = 'Y' where apply_key = #{apply_key}
   	</select>
+  	
+  	<select id="getPositionList" parameterType="int" resultType="psDTO">
+  		select p.*, cb.com_board_title, u.user_name
+  		from position p 
+  		join com_board cb on p.com_board_key = cb.com_board_key
+  		join users u on p.user_key = u.user_key
+        where p.company_key = #{company_key}
+  	</select>
+  	<select id="getPositionListCount" parameterType="int" resultType="int">
+  		select count(*) from position where company_key = #{company_key}
+  	</select>
   
   </mapper>

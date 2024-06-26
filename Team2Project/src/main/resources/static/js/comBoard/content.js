@@ -141,10 +141,11 @@ function getRecommendList(page) {
 						successList.forEach(function(successList) {
 							$('#positionBt_'+successList).attr("value", "요청완료");
 							$('#positionBt_'+successList).attr("disabled", true);
+							$('#positionBt_'+successList).attr("class", "btCss_x");
 						});
 					}
 				}else{
-					$('#recommendList').append("<tr><th width='100%'>추천인재가 존재하지 않습니다.<th></tr>");
+					$('#recommendList').append("<tr><th width='100%' style='padding-top: 40px;'>추천인재가 존재하지 않습니다.<th></tr>");
 				}
 				
 				if(paging != undefined && paging.page > paging.block){

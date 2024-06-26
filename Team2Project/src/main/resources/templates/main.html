@@ -100,11 +100,10 @@
             </table>
 			</div>
 			<div class="mainLoginInfo" sec:authorize="isAuthenticated() and hasRole('COMPANY')">
-           		<div class="main-user-profile">
+           		<div class="main-user-profile" style="margin-left: 0; text-align: center;">
 					<th:block th:if="${session.cDTO.company_logo != null}">
-						<img class="main-user-profile-img" 
-							 alt="로고 이미지" 
-							 th:src="@{'/image/logo/'+${session.cDTO.company_logo}}">
+						<img class="main-user-profile-img" alt="로고 이미지" 
+							 th:src="@{'/image/logo/'+${session.cDTO.company_logo}}" style="width: 200px; height: 80px; left: 0;">
 					</th:block>
 					
 					<th:block th:if="${session.cDTO.company_logo == null}">
