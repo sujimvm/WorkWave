@@ -129,7 +129,7 @@ function getRecommendList(page) {
 						"<td>"+
 						"<a href='javascript:profileView(\""+ list.profile_key +"\")'>"+ list.profile_name +"</a>"+
 						"<p>"+ list.user_name +"("+age+") "+ gender + "</p>"+
-						"<p>"+ list.profile_group1 +list.profile_sub1 +list.profile_step1 +list.profile_group2 +list.profile_sub2 +list.profile_step2 +"</p>"+
+						"<p style='font-size:12px;'>"+ list.profile_group1+">"+list.profile_sub1+">"+list.profile_step1+"&nbsp;&nbsp;&nbsp;"+list.profile_group2+">"+list.profile_sub2+">"+list.profile_step2 +"</p>"+
 						"</td>"+
 						"<td width='12%'><input type='button' class='btCss4' id='positionBt_"+ list.user_key +"' value='포지션제안' onclick='positionInputModal("+ list.user_key +",\""+ list.user_name +"\")'></td>"+
 						"</tr>";
