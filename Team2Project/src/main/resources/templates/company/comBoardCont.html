@@ -160,7 +160,7 @@
 						<img th:if="${map.dto.company_logo != null}" th:src="@{'\\image\\logo\\'+${map.dto.company_logo}}" alt="${map.dto.company_logo_name}">
 						<img th:if="${map.dto.company_logo == null}" src="/image/icon/logo_icon.png" alt="로고미등록">
 					</div>
-					<input type="hidden" id="code" th:value="${map.dto.com_board_step}">
+					<input type="hidden" id="code" th:value="${map.dto.com_board_group}">
 					<div class="comBoardInfoDiv">
 						<p th:text="${map.dto.company_name}"></p>
 						<dl class="infoDl">
