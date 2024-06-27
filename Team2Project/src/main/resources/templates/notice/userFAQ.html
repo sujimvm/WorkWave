@@ -28,8 +28,8 @@
   <div layout:fragment="content" class="content">
       <div class="sidebar active">
       	<h3>고객센터</h3>
-        <a th:href="@{/A/userFAQ}">개인회원</a>
-        <a th:href="@{/A/companyFAQ}" class="select">기업회원</a>
+        <a th:href="@{/A/userFAQ}" class="select">개인회원</a>
+        <a th:href="@{/A/companyFAQ}">기업회원</a>
         <a th:href="@{/A/notice}">공지사항</a>
         <a sec:authorize="(isAuthenticated() and hasRole('COMPANY')) or (isAuthenticated() and hasRole('USER'))"  href="#" onclick="guest()">아이디 찾기</a>
         <a sec:authorize="(isAuthenticated() and hasRole('COMPANY')) or (isAuthenticated() and hasRole('USER'))"  href="#" onclick="guest()">비밀번호 찾기</a>
