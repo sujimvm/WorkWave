@@ -87,13 +87,13 @@
 			    <li th:inline="text" >
 				    <img src="/image/icon/eye1.png" alt="Chat Hit" style="width: 25px; height: 20px; margin-top: 2px;">
 				    [[${cont.chat_hit}]]
-				    <button id="like-btn" class="like-btn" >
+					 <button id="like-btn" class="like-btn">
 				        <img src="/image/icon/like.png" alt="Like" style="width: 20px; height: 20px;">
 				    </button>
-				    <span id="like" style="width: 20px; height: 20px;">
+				    <span  id="like" style="width: 20px; height: 20px;">
 				    	[[${cont.chat_like}]]
 				    </span>
-				    <img src="/image/icon/chat_reply.png" style="width: 20px; height: 20px; margin-left: -4px;">
+				    <img src="/image/icon/chat_reply.png" style="width: 21px; height: 21px; margin-left: -7px; margin-top: 1px;">
 				    <span style="width: 25px; height: 20px;">
 				    	[[${replyCount}]]
 				    </span>
@@ -174,7 +174,7 @@
 	    let chat_key = /*[[${cont.chat_key}]]*/ null;
 	    console.log('chat_key:', chat_key); // chat_key 값 확인
 	    let like_count = 0;
-	  
+	  	
 	    
 	    
 
@@ -268,7 +268,7 @@
 	                        let reply_date = map.reply_date;
 	                        let user_name = map.user_name;
 	                        
-	                        let $reply_box = $('#reply-box');
+	                        let $reply_box = $('#reply-box1');
 	       
 	                        $reply_box.prepend(
 	                        	    `
@@ -290,8 +290,18 @@
 	            });
 	        }
 	        
+	     
 	        $('#like-btn').click(function () {
 	            console.log('좋아요 버튼 클릭됨');
+	            
+	            var userKey = $(".user_key").text();
+	            var userId = $(".user_id").text();
+	            
+	            if (!userKey || !userId) {
+	                alert("개인회원으로 로그인 후 이용해주세요.");
+	                return;
+	            }
+	            
 	            if (like_count > 0) {
 	                alert("좋아요 버튼은 한번만 누를수 있습니다");
 	            } else {
