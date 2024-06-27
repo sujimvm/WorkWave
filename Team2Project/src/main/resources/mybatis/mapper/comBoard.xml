@@ -313,7 +313,7 @@
                      join company c on b.company_key = c.company_key
                      where (b.com_board_title like '%' || #{keyword} || '%'
                      or c.company_name like '%' || #{keyword} || '%')
-                     and b.com_board_end_date >= sysdate
+                     and b.com_board_end_date >= sysdate and b.com_board_start_date <= sysdate
                   ) b
               )
               where rnum >= #{startNo} and rnum <= #{endNo}
