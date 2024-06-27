@@ -5,6 +5,12 @@
 <title>Insert title here</title>
 <link rel="stylesheet" th:href="@{/css/include.css}">
 <link rel="stylesheet" th:href="@{/css/FAQ.css}">
+<script>
+
+    function guest() {
+    	alert('이미 로그인 되어 있습니다.');
+    }
+</script>
 </head>
 <body>
 	<div th:replace="~{include/header}"></div>
@@ -13,11 +19,13 @@
 	<div class="sidebar active">
 		<h3>공지사항</h3>
 		<a th:href="@{/A/userFAQ}">개인회원</a>
-		<a th:href="@{/A/companyFAQ}">기업회원</a>
-		<a th:href="@{/A/notice}" class="select">공지사항</a>
-		<a th:href="@{/G/findId}">아이디 찾기</a>
-		<a th:href="@{/G/findPwd}">비밀번호 찾기</a>
-		<a sec:authorize="!isAuthenticated()" th:href="@{/login}">회원탈퇴</a>
+        <a th:href="@{/A/companyFAQ}" class="select">기업회원</a>
+        <a th:href="@{/A/notice}">공지사항</a>
+        <a sec:authorize="(isAuthenticated() and hasRole('COMPANY')) or (isAuthenticated() and hasRole('USER'))"  href="#" onclick="guest()">아이디 찾기</a>
+        <a sec:authorize="(isAuthenticated() and hasRole('COMPANY')) or (isAuthenticated() and hasRole('USER'))"  href="#" onclick="guest()">비밀번호 찾기</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/G/findId}">아이디 찾기</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/G/findPwd}">비밀번호 찾기</a>
+        <a sec:authorize="!isAuthenticated()" th:href="@{/login}">회원탈퇴</a>
 		<a sec:authorize="isAuthenticated() and hasRole('USER')" th:href="@{/U/delete/userPwdCheck}">회원탈퇴</a>
 		<a sec:authorize="isAuthenticated() and hasRole('COMPANY')" th:href="@{/C/delete/companyPwdCheck}">회원탈퇴</a>
 	</div>
