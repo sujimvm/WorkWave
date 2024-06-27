@@ -159,7 +159,8 @@
 			    <a th:href="@{/CU/profile/download/ppt/{filename}(filename=${Content.profile_ppt})}" class="form-control w-50"  download th:text="${Content.profile_ppt}"></a><br><br>
 			</div>
 	  </div> 
-  </div><br><br><br>
+  </div><br><br>
+	  
   			<div align="center">
   				<h2>위의 모든 기재사항은 사실과 다름없음을 확인합니다.</h2>
   					<h4>작성자:<span th:text="${Content.user_name}"></span></h4><br>
@@ -168,7 +169,10 @@
 					<p>첨부된 문서를 신뢰하여 발생한 법적 분쟁에 책임을 지지 않습니다.</p>
 					<p>또한 구인/구직 목적 외 다른 목적으로 이용시 이력서 삭제 혹은 비공개 조치가 될 수 있습니다.</p><br>
   			</div>
-			<br>
+			
+			<div class="notice-btn">
+						    <button onclick="window.scrollTo(0, 0)">TOP</button>
+	  </div><br>
 </div>	
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
