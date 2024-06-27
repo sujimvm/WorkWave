@@ -41,7 +41,7 @@
   		select company_id, company_pwd, role from company where company_id = #{company_id}
   	</select>  
   	
-  	<select id="companyInfoByNo" parameterType="cDTO" resultType="String">
+  	<select id="companyInfoByNo" parameterType="String" resultType="cDTO">
   		select * from company where company_number = #{company_number}
   	</select>
   	

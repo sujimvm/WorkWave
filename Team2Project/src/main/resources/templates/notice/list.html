@@ -47,7 +47,7 @@
                 </li>
 
                 <li th:each="i : ${#numbers.sequence(paging.startBlock, paging.endBlock)}">
-                    <a th:href="@{/A/notice(page=${i})}" th:text="'[' + ${i} + ']'"></a>
+                    <a th:href="@{/A/notice(page=${i})}" th:text="${i}"></a>
                 </li>
 
                 <li th:if="${paging != null and paging.endBlock < paging.allPage}">

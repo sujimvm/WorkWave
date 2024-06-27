@@ -169,7 +169,7 @@ public class GeustController {
 		out.println("alert('회원가입 성공')");
 		out.println("</script>");
       
-		return "index"; 
+		return "mainLogin"; 
 	}
 	
 	// 아이디 찾기 페이지 이동
@@ -229,17 +229,17 @@ public class GeustController {
 		
 		UserDTO user_id_date = userService.findUserId(userName, userEmail);
 		
-		int idCnt = userService.idCnt(user_id_date.getUser_id());
-		
 		PrintWriter out = response.getWriter();
 		
-		if (user_id_date.getUser_id() == null) {
+		if (user_id_date == null) {
 			out.println("<script>");
 			out.println("alert('입력하신 정보에 해당하는 회원정보가 없습니다.')");
 			out.println("</script>");
 	
 			return "user/find_id";
 		}else {
+			int idCnt = userService.idCnt(user_id_date.getUser_id());
+			
 			model.addAttribute("user_id_date", user_id_date);
 			model.addAttribute("idCnt", idCnt);
 			
@@ -289,7 +289,7 @@ public class GeustController {
 	
 	// 비밀번호찾기에서 해당 유저가 존재할 시 새 비밀번호를 설정하여 업데이트
 	@PostMapping("/companyPwdUpdate")
-	public String companyPwdUpdate(@RequestParam("company_id") String company_id,
+	public void companyPwdUpdate(@RequestParam("company_id") String company_id,
 								   @RequestParam("company_pwd") String company_pwd, 
 								   HttpServletResponse response) throws IOException {
 
@@ -304,24 +304,24 @@ public class GeustController {
 		if (passwordEncoder.matches(company_pwd, dto.getCompany_pwd())) {
 			out.println("<script>");
 			out.println("alert('기존 비밀번호와 새로 입력하신 비밀번호가 같습니다.')");
+			out.println("history.back()");
 			out.println("</script>");
 			
-			return "company/find_pwd_result";
 		} else {
 			int result = this.companyMapper.companyPwdUpdate(company_id, encordedPwd);
 
 			if (result == 1) {
 				out.println("<script>");
 				out.println("alert('비밀번호 수정에 성공했습니다.')");
+				out.println("location.href='/login'");
 				out.println("</script>");
 				
-				return "mainLogin";
 			} else {
 				out.println("<script>");
 				out.println("alert('오류발생!')");
+				out.println("history.back()");
 				out.println("</script>");
-				
-				return "company/find_pwd_result";
+
 			}
 		}
 
@@ -359,7 +359,7 @@ public class GeustController {
 	
 	// 비밀번호찾기에서 해당 유저가 존재할 시 새 비밀번호를 설정하여 업데이트
 	@PostMapping("/userPwdUpdate")
-	public String userPwdUpdate(@RequestParam("user_id") String user_id,
+	public void userPwdUpdate(@RequestParam("user_id") String user_id,
 	                          @RequestParam("user_pwd") String user_pwd, 
 	                          HttpServletResponse response) throws IOException {
 
@@ -374,24 +374,24 @@ public class GeustController {
 		if (passwordEncoder.matches(user_pwd, dto.getUser_pwd())) {
 			out.println("<script>");
 			out.println("alert('기존 비밀번호와 새로 입력하신 비밀번호가 같습니다.')");
+			out.println("history.back()");
 			out.println("</script>");
 			
-			return "company/find_pwd_result";
 		} else {
 			int result = this.userMapper.userUpdatePwd(user_id, encordedPwd);
 
 			if (result == 1) {
 				out.println("<script>");
 				out.println("alert('비밀번호 수정에 성공했습니다.')");
+				out.println("location.href='/login'");
 				out.println("</script>");
-				
-				return "mainLogin";
+		
 			} else {
 				out.println("<script>");
 				out.println("alert('오류발생!')");
+				out.println("history.back()");
 				out.println("</script>");
 				
-				return "company/find_pwd_result";
 			}
 		}
 	}
