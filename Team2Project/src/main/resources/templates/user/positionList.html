@@ -48,7 +48,6 @@
 	                <span style="width: 60%; text-align: left; margin-left: 15px; padding: 10px 0 10px 0;">
 	                	  <span style="font-size: 14px;" 
 	                	  	    th:text="${positionComList[stat.index].company_name}"></span><br>
-	                	  	    
 	                	  <span  
 	                	        style="font-size: 16px; cursor: pointer; color: #0B57D0;" 
 	                	        th:text="${positionInfo.position_title}"
@@ -159,7 +158,7 @@
    	        var companyName = element.getAttribute('data-company-name');
    	        var positionDate = element.getAttribute('data-position-date');
    	        var expirationDate = element.getAttribute('data-expiration-date');
-   	        var positionCont = element.getAttribute('data-position-cont');
+   	     	var positionCont = element.getAttribute('data-position-cont');
    	        var mgrName = element.getAttribute('data-mgr-name');
    	        var mgrPhone = element.getAttribute('data-mgr-phone');
    	        var mgrEmail = element.getAttribute('data-mgr-email');
@@ -169,7 +168,7 @@
    	        document.getElementById('modal-company-name').innerText = companyName;
    	        document.getElementById('modal-position-date').innerText = positionDate.substring(0, 10);
    	        document.getElementById('modal-expiration-date').innerText = expirationDate.substring(0, 10);
-   	        document.getElementById('modal-position-cont').innerText = positionCont;
+   	        document.getElementById('modal-position-cont').innerHTML = positionCont;
 
    	        document.getElementById('modal-mgr-name').innerText = mgrName;
    	        document.getElementById('modal-mgr-phone').innerText = mgrPhone;
