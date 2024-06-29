@@ -113,7 +113,7 @@ public class CompanyController {
 
 				dto.setCompany_logo_name(file.getOriginalFilename());
 
-				String imageName = uploadFileService.upload(file, logoUploadDir);
+				String imageName = this.uploadFileService.uploadOriName(file, logoUploadDir);
 				dto.setCompany_logo(imageName);
 			}
 		}
@@ -292,7 +292,7 @@ public class CompanyController {
 
 				out.println("<script>");
 				out.println("alert('회원삭제에 성공했습니다.')");
-				out.println("location.href='/A/main'");
+				out.println("location.href='/'");
 				out.println("</script>");
 			} else {
 				out.println("<script>");

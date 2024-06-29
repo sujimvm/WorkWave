@@ -50,7 +50,7 @@
     	<div align="center">
             <h3>"<span th:text="${paging.keyword}" id="keyword"></span>" 검색 결과</h3>
             
-            <ul th:if="${SearchList != null}" class="search-list">
+            <ul th:if="${SearchList != null && SearchList.size() > 0}" class="search-list">
             	<li>
             		<span style="width: 15%; text-align: center;">기업명</span>
             		<span style="width: 75%; text-align: center;">공고 제목</span>
@@ -97,8 +97,8 @@
             </ul>
             
             <ul th:if="${SearchList == null || SearchList.isEmpty()}" class="search-list">
-            	<li>
-            		<span>검색된 공고가 없습니다. 다른 단어로 검색하여 주십시오.</span>
+            	<li style="border-bottom: 0px; text-align: center;">
+            		<span style="font-size: 20px;">검색된 공고가 없습니다. 다른 단어로 검색하여 주십시오.</span>
             	</li>
             </ul>
 
