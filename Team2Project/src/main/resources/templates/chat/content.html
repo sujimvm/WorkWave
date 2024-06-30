@@ -37,7 +37,7 @@
    					</th:block>
    					<th:block th:if="${session.cDTO.company_logo != null}">
    						<img th:src="'\\image\\logo\\'+${session.cDTO.company_logo}" alt="Profile Image" 
-   						     style="width: 90px; height: 90px; margin-left: 75px; margin-bottom: -8px;" />
+   						     style="width: 150px; height: 60px; margin-left: 47px; margin-bottom: -8px;" />
    					</th:block>
    				</tr>
    				<tr sec:authorize="!isAuthenticated()">
@@ -52,7 +52,6 @@
    				<tr>
 					 <th class="chat-table">
                         <th:block th:if="${null != session.uDTO}">
-                            <!-- <span th:text="${session.uDTO.user_name}"></span> <br> -->
                             <span class="user_id" th:text="${session.uDTO.user_id}"></span> <br>
                             <span style="display: none;" class="user_key" th:text="${session.uDTO.user_key}"></span><br>
                             <span th:inline="text">작성글 [[${chatCnt}]]</span>&nbsp;
