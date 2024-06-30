@@ -238,6 +238,7 @@
    						success: function() {
    							console.log();
    						 	$('#recommendModal').modal('hide');
+   							location.reload();
    					    
    						},error: function(xhr, status, error) {
    		   					console.error(xhr);
@@ -260,6 +261,7 @@
    					console.log();
    					alert('제안을 거절하셨습니다.');
    					$('#recommendModal').modal('hide');
+   					location.reload();
    				},error: function(xhr, status, error) {
 	   					console.error(xhr);
 	   			}

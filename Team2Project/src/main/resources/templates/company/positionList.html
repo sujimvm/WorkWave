@@ -33,7 +33,7 @@
 		            <td style="text-align: center;" >데이터가 존재하지 않습니다</td>
 		        </tr>
 		        <tr th:unless="${#lists.isEmpty(list)}" th:each="dto:${list}">
-					<td width="80%">
+					<td width="60%">
 						<input type="hidden" th:id="'user_' + ${dto.position_key}" th:value="${dto.user_key}">
 						<input type="hidden" th:id="'name_' + ${dto.position_key}" th:value="${dto.user_name}">
 						<input type="hidden" th:id="'comBoard_' + ${dto.position_key}" th:value="${dto.com_board_key}">
@@ -44,6 +44,12 @@
 							<a href="#" th:onclick="'view_profile(' + ${dto.user_key} + ')'" th:text="${dto.user_name} + '님 이력서 보기'"></a>
 							<a href="#" th:onclick="'view_comBoard(' + ${dto.com_board_key} + ')'" th:text="${dto.user_name} + '님께 제안한 공고'"></a>
 						</p>
+					</td>
+					<td style="text-align: center; border-left: 1px solid #eeeeee;" width="20%">
+						<span th:if="${dto.position_check == 'N'}">미열람</span>
+						<span th:if="${dto.position_check == 'Y'}">열람</span>
+						<span th:if="${dto.position_check == 'O'}">수락</span>
+						<span th:if="${dto.position_check == 'X'}">거절</span>
 					</td>
 					<td style="text-align: center; border-left: 1px solid #eeeeee;" class="positionBtTd positionA">
 						<a href="#" th:onclick="'update_Modal(' + ${dto.position_key} + ')'" th:text="수정"></a>
