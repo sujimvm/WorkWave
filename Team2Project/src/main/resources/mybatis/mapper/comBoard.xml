@@ -225,8 +225,8 @@
 				select COUNT(*) 
 				from (select row_number() over(order by profile_key desc) rnum, p.* 
 				from profile p where p.profile_default = 'Y' 
-				and (p.profile_step1 like '%' || #{code} || '%' 
-				or p.profile_step2 like '%' || #{code} || '%')) rp 
+				and (p.profile_group1 like '%' || #{code} || '%' 
+				or p.profile_group2 like '%' || #{code} || '%')) rp 
 				left join users u on rp.user_key = u.user_key
            ]]>
         </select>
@@ -235,8 +235,8 @@
 				select * 
 				from (select row_number() over(order by profile_key desc) rnum, p.* 
 				from profile p where p.profile_default = 'Y' 
-				and (p.profile_step1 like '%' || #{code} || '%' 
-				or p.profile_step2 like '%' || #{code} || '%')) rp 
+				and (p.profile_group1 like '%' || #{code} || '%' 
+				or p.profile_group2 like '%' || #{code} || '%')) rp 
 				left join users u on rp.user_key = u.user_key 
 				where rnum >= #{pdto.startNo} and rnum <= #{pdto.endNo} 
 				order by profile_key desc
@@ -313,7 +313,7 @@
                      join company c on b.company_key = c.company_key
                      where (b.com_board_title like '%' || #{keyword} || '%'
                      or c.company_name like '%' || #{keyword} || '%')
-                     and b.com_board_end_date >= sysdate
+                     and b.com_board_end_date >= sysdate and b.com_board_start_date <= sysdate
                   ) b
               )
               where rnum >= #{startNo} and rnum <= #{endNo}

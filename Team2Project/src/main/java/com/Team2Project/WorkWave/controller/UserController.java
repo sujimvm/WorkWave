@@ -221,19 +221,21 @@ public class UserController {
       PrintWriter out = response.getWriter();
 
       // 세션에 저장된 유저 정보를 가져옴
-      UserDTO user = (UserDTO) session.getAttribute("user_login");
+      UserDTO user = (UserDTO) session.getAttribute("uDTO");
 
       if (user != null) {
          // 입력된 비밀번호와 세션에 저장된 유저의 비밀번호가 일치하는지 확인
-         if (userPwd.equals(user.getUser_pwd())) {
+         if (passwordEncoder.matches(userPwd, user.getUser_pwd())) {
             
             int result = this.userMapper.deleteok(user.getUser_key());
 
             if (result > 0) {
+            	
+            	session.invalidate();
 
                out.println("<script>");
                out.println("alert('회원 삭제 성공')");
-               out.println("location.href='/info'");
+               out.println("location.href='/'");
                out.println("</script>");
             } else {
                out.println("<script>");

@@ -323,3 +323,13 @@ p {
 	
 	line-height: normal;
 }
+
+.notice-btn button{
+	background-color: #fff;
+	color: #6a6a6a;
+	border: 0.5px solid;
+	border-radius: 5px;
+	padding: 8px 10px;
+	cursor: pointer;
+	font-size: 11px;
+}
