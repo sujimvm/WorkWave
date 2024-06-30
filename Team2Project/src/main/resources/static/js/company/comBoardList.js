@@ -105,11 +105,13 @@ function appendTempList(selector, templist) {
 	
 	if(templist && templist.length > 0){
 		templist.forEach(function(templist){
+		var jobCode = (templist.com_board_group == null)? "미지정":templist.com_board_group +"&nbsp;&gt;&nbsp;"+ templist.com_board_sub +"&nbsp;&gt;&nbsp;"+ templist.com_board_step;
+		
 		var row = "<tr>" +
 				"<td class='com-board-title-width'>"+"<div class='listTitleDiv titleDiv'>" + templist.com_board_title + "</div>" + 
 				"<div class='listSubDiv titleDiv'>"+templist.com_board_career +"&nbsp;&#124;&nbsp;"+ templist.com_board_edu +"&nbsp;&#124;&nbsp;"+"&nbsp;&#124;&nbsp;"+ templist.com_board_jobtype  + "</div>" + 
-				"<div class='listGroupDiv titleDiv'>"+templist.com_board_group +"&nbsp;&gt;&nbsp;"+ templist.com_board_sub +"&nbsp;&gt;&nbsp;"+ templist.com_board_step + "</div>"+"</td>"+
-				"<td><a href='/C/comBoard/temp?No="+templist.com_board_key+"'>이어서 작성하기</a></td>" +
+				"<div class='listGroupDiv titleDiv'>"+ jobCode + "</div>"+"</td>"+
+				"<td><a href='/C/comBoard/temp?No="+templist.com_board_key+"'>이어서 작성하기</a><a href='javascript:deleteTempComboard("+templist.com_board_key+");' style='margin-left: 20px;'>삭제</a></td>" +
 				"</tr>";
 		$(selector).append(row);
 		});	
@@ -120,9 +122,17 @@ function appendTempList(selector, templist) {
 	}
 }
 
+
+
 function highlightSelected(element) {
     $('.nav-btn li').removeClass('nav-btn-selected'); // 모든 버튼에서 selected 클래스 제거
     $(element).addClass('nav-btn-selected'); // 클릭된 버튼에 selected 클래스 추가
-    };
+};
 
 });
+
+function deleteTempComboard(num) {
+	if(confirm("임시 공고를 삭제하시겠습니까?")){
+		location.href="/C/comBoard/tempDelete?No="+num;
+	}
+}

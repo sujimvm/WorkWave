@@ -24,6 +24,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import kotlinx.serialization.descriptors.StructureKind.LIST;
+import kotlinx.serialization.descriptors.StructureKind.MAP;
 
 @Controller
 @RequestMapping("/C")
@@ -325,7 +326,7 @@ public class CompanyController {
 			temp_key = dto.getTemp_key();
 			if (temp_key != 0)
 				this.comBoardMapper.deleteComBoardTemp(temp_key);
-			out.println("<script> alert('공고를 성공적으로 등록하였습니다'); location.href='/C/info'; </script>");
+			out.println("<script> alert('공고를 성공적으로 등록하였습니다'); location.href='/C/comBoardList'; </script>");
 		} else {
 			out.println("<script> alert('공고등록에 실패하엿습니다'); history.back(); </script>");
 		}
@@ -351,11 +352,18 @@ public class CompanyController {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 
-		if (this.comBoardMapper.updateComBoard(dto) > 0) {
-			out.println("<script> alert('공고를 성공적으로 수정하였습니다'); location.href='/C/comBoardList'; </script>"); // 마이페이지로 변경 예정
-		} else {
-			out.println("<script> alert('공고수정에 실패했습니다'); history.back(); </script>");
+		int loginCom = ((CompanyDTO)session.getAttribute("cDTO")).getCompany_key();
+		
+		if(dto.getCompany_key() == loginCom) {
+			if (this.comBoardMapper.updateComBoard(dto) > 0) {
+				out.println("<script> alert('공고를 성공적으로 수정하였습니다'); location.href='/C/comBoardCont'; </script>"); 
+			} else {
+				out.println("<script> alert('공고수정에 실패했습니다'); history.back(); </script>");
+			}
+		}else {
+			out.println("<script> alert('잘못된 접근입니다.'); history.back(); </script>");
 		}
+		
 		out.flush();
 	}
 	
@@ -463,4 +471,41 @@ public class CompanyController {
 		out.println("<script> location.href='/CU/profile/content?no="+key+"'; </script>");
 	}
 	
+	// (등록) 공고 수정
+	@GetMapping("/comBoard/delete")
+	public void deleteComBoard(@RequestParam("No") int com_board_key, HttpServletResponse response, HttpSession session) throws IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+
+		HashMap<String, Object> map = new HashMap<>(); 
+		map.put("com_board_key", com_board_key);
+		map.put("company_key", ((CompanyDTO)session.getAttribute("cDTO")).getCompany_key());
+		
+		System.out.println(map.get("company_key"));
+		
+		if (this.comBoardMapper.deleteComBoard(map) > 0) {
+			out.println("<script> alert('공고를 성공적으로 삭제하였습니다'); location.href='/C/comBoardList'; </script>"); // 마이페이지로 변경 예정
+		} else {
+			out.println("<script> alert('공고삭제에 실패했습니다'); history.back(); </script>");
+		}
+		
+		out.flush();
+	}
+	@GetMapping("/comBoard/tempDelete")
+	public void deleteTempComBoard(@RequestParam("No") int temp_key, HttpServletResponse response, HttpSession session) throws IOException {
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		HashMap<String, Object> map = new HashMap<>(); 
+		map.put("temp_key", temp_key);
+		map.put("company_key", ((CompanyDTO)session.getAttribute("cDTO")).getCompany_key());
+		
+		if (this.comBoardMapper.deleteTempComBoard(map) > 0) {
+			out.println("<script> alert('공고를 성공적으로 삭제하였습니다'); location.href='/C/comBoardList'; </script>"); // 마이페이지로 변경 예정
+		} else {
+			out.println("<script> alert('공고삭제에 실패했습니다'); history.back(); </script>");
+		}
+		
+		out.flush();
+	}
 }

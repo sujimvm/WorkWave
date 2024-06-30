@@ -18,6 +18,7 @@
 	<div layout:fragment="content" class="content">
 		<form method="post" action="/C/comBoard/updateOk" id="executionFrom">
 			<input type="hidden" name="com_board_key" id="com_board_key" th:value="${dto.com_board_key}">
+			<input type="hidden" name="company_key" id="company_key" th:value="${dto.company_key}">
 			
 			<div class="comBoardInputTotalDiv">	
 				<div class="comBoardBtDiv" id="comBoardBtDiv">
