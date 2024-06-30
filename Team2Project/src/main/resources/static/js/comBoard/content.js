@@ -194,6 +194,12 @@ function addApply() {
 	}
 }
 
+function deleteComboard(num) {
+	if(confirm("공고를 삭제하시겠습니까?")){
+		location.href="/C/comBoard/delete?No="+num;
+	}
+}
+
 function updateTimer() {
     const future = Date.parse($("#com_board_end_date").val());
     const now = new Date();

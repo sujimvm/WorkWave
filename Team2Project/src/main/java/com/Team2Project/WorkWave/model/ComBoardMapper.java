@@ -59,4 +59,6 @@ public interface ComBoardMapper {
 	
 	int countSearchList(String keyword);
 	ComBoardDTO getComBoardTemp(int temp_key);
+	int deleteComBoard(HashMap<String, Object> map); // 공고 삭제
+	int deleteTempComBoard(HashMap<String, Object> map); // 임시공고 삭제
 }

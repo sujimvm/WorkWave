@@ -212,7 +212,9 @@
 			    </div>
 			    
 				<div class="comBoardBtDiv_fix" style="margin-bottom: 60px;">
+					<input type="button" class="btCss1 btCss" th:onclick="|location.href='@{/C/comBoard/update(No=${map.dto.com_board_key})}'|" value="수정">
 					<input type="button" class="btCss1 btCss" th:onclick="|location.href='@{/C/comBoardList}'|" value="목록">
+					<input type="button" class="btCss1 btCss" th:onclick="|deleteComboard('${map.dto.com_board_key}')|" value="삭제">
 				</div>
 			</div>
 		</div>
