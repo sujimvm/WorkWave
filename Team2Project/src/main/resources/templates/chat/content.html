@@ -52,7 +52,6 @@
    				<tr>
 					 <th class="chat-table">
                         <th:block th:if="${null != session.uDTO}">
-                            <!-- <span th:text="${session.uDTO.user_name}"></span> <br> -->
                             <span class="user_id" th:text="${session.uDTO.user_id}"></span> <br>
                             <span style="display: none;" class="user_key" th:text="${session.uDTO.user_key}"></span><br>
                             <span th:inline="text">작성글 [[${chatCnt}]]</span>&nbsp;
