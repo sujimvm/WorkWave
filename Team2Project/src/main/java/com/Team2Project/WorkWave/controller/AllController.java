@@ -268,17 +268,31 @@ public class AllController {
 	// (상세보기) 페이지 이동
 
 	@GetMapping("/comBoard/content") 
-	public String goComBoardContent(HttpServletRequest request, Model model) {
+	public String goComBoardContent(HttpServletRequest request, HttpSession session, Model model) {
 
 		int com_board_key = Integer.parseInt(request.getParameter("No"));
 
+		HashMap<String, Object> paramMap = new HashMap<>(); 
 		HashMap<String, Object> map = new HashMap<>(); 
-		map.put("dto", this.comBoardMapper.getComBoard(com_board_key));
+		ComBoardDTO dto = this.comBoardMapper.getComBoard(com_board_key);
+		map.put("dto", dto);
 		map.put("P", Integer.parseInt(request.getParameter("P")));
 		map.put("applyTotal", this.comBoardMapper.getApplyCount(com_board_key));
 		map.put("avgAge", this.comBoardMapper.getApplyAvgAge(com_board_key));
 		map.put("avgGender", this.comBoardMapper.getApplyAvgGender(com_board_key));
 		map.put("avgEdu", this.comBoardMapper.getApplyAvgEdu(com_board_key));
+		map.put("applyCheck", 0);
+		map.put("interestCheck", 0);
+		
+		if(session.getAttribute("uDTO") != null) {
+			UserDTO userDTO = (UserDTO)session.getAttribute("uDTO");
+			paramMap.put("user_key", userDTO.getUser_key());
+			paramMap.put("com_board_key", com_board_key);
+			paramMap.put("company_key", dto.getCompany_key());
+			map.put("applyCheck", this.comBoardMapper.getApplyCheck_content(paramMap));
+			map.put("interestCheck", this.comBoardMapper.getInterestCheck_content(paramMap));
+		}
+		
 
 		model.addAttribute("map",map);
 

@@ -574,6 +574,11 @@ input[type=number] { /* 파이어폭스에서의 초기화 방법 */
 .btCss4:hover{    
     background-color: #ffa726;
 }
+.btCss5{
+    background-color: #8f00ff;
+    color: #fff;
+    border: 1px solid #8a8a89;
+}
 .btCss_x{    
 	width: 70px;
     height: 30px;

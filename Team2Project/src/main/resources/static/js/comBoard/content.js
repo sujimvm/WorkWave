@@ -52,16 +52,27 @@ $(document).ready(function() {
 	if($("#2").val() > 0){$("#avgEdu_2").empty();$("#avgEdu_2").append($("#2").val()+"명");}
 	if($("#3").val() > 0){$("#avgEdu_3").empty();$("#avgEdu_3").append($("#3").val()+"명");}
 	
+	if($("#applyCheck").val() > 0){
+		$('#addApplyBt').attr("value", "지원완료");
+		$('#addApplyBt').attr("disabled", true);
+		$('#addApplyBt').attr("class", "btCss5 btCss");
+	}
+	if($("#interestCheck").val() > 0){
+		$('#interest_check').attr("checked",true);
+	}
 });
 
 // 관심기업 체크 시 관심기업 등록 / 해제
 function interestCheck(check, company_key) {
-	
+	alert(check+"check");
+	alert(company_key+"company_key");
 	$.ajax({
 		url: '/ajax/interest/action',
 		type: 'post',
 		data:{"check":check,"company_key":company_key},
 		success: function() {
+			alert("관심기업 등록이 완료되었습니다");
+			location.reload();
 		},error: function(xhr, status, error) {
 			console.error(xhr);
 		}
@@ -186,6 +197,7 @@ function addApply() {
 			data:{"checked":$("#com_board_key").val()},
 			success: function() {
 				alert("공고 지원이 완료되었습니다");
+				location.reload();
 			},error: function(xhr, status, error) {
 				console.error(xhr);
 				alert("로그인 후 지원가능합니다.");

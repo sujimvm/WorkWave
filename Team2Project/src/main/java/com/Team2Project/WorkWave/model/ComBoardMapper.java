@@ -36,7 +36,7 @@ public interface ComBoardMapper {
 	int addApply(ApplyDTO dto); // 공고 지원
 	
 	ComBoardDTO getComBoard(int com_board_key);
-	int getApplyCount(int com_board_key); // 기본 프로필 키 조회
+	int getApplyCount(int com_board_key); // 지원 카운트
 	List<Map<String, Object>> getApplyAvgAge(int com_board_key);
 	List<Map<String, Object>> getApplyAvgGender(int com_board_key);
 	List<Map<String, Object>> getApplyAvgEdu(int com_board_key);
@@ -56,9 +56,11 @@ public interface ComBoardMapper {
 	
 	List<ComBoardDTO> getUnifiedSearchList(Page pdto);
 	
-	
 	int countSearchList(String keyword);
 	ComBoardDTO getComBoardTemp(int temp_key);
 	int deleteComBoard(HashMap<String, Object> map); // 공고 삭제
 	int deleteTempComBoard(HashMap<String, Object> map); // 임시공고 삭제
+	
+	int getApplyCheck_content(HashMap<String, Object> paramMap); // 지원 카운트
+	int getInterestCheck_content(HashMap<String, Object> paramMap); // 지원 카운트
 }
