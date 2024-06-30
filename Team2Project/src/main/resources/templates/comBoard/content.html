@@ -18,6 +18,8 @@
 	<div th:replace="~{include/header}"></div>
 		<div layout:fragment="content" class="content">
 			<input sec:authorize="isAuthenticated() and hasRole('USER')" type="hidden" id="sessionID" th:value="${session.uDTO.user_id}">
+			<input sec:authorize="isAuthenticated() and hasRole('USER')" type="hidden" id="applyCheck" th:value="${map.applyCheck}">
+			<input sec:authorize="isAuthenticated() and hasRole('USER')" type="hidden" id="interestCheck" th:value="${map.interestCheck}">
 			<input sec:authorize="isAuthenticated() and hasRole('COMPANY')" type="hidden" id="sessionID" th:value=1>
 			<div class="comBoardContentTotalDiv">
 				<h3 class="comBoardInputTitle topTitle">채용정보</h3>
@@ -26,7 +28,7 @@
 						<div class="top_cominfo_div">
 							<p class="comName">
 								<span th:text="${map.dto.company_name}"></span>
-								<input type="checkbox" id="interest_check" class="interest_check" th:value="${map.dto.company_name}">
+								<input type="checkbox" id="interest_check" class="interest_check" th:value="${map.dto.company_key}">
 								<label for="interest_check"></label>
 							</p>
 							<p class="comBTitle" th:text="${map.dto.com_board_title}"></p>
@@ -215,7 +217,7 @@
 				<div class="comBoardBtDiv_fix" style="margin-bottom: 60px;">
 					<input type="hidden" sec:authorize="isAuthenticated() and hasRole('USER')" id="company_name" th:value="${map.dto.company_name}">
 					<input type="hidden" sec:authorize="isAuthenticated() and hasRole('USER')" id="com_board_key" th:value="${map.dto.com_board_key}">
-					<input type="button" class="btCss1 btCss" sec:authorize="isAuthenticated() and hasRole('USER')" th:onclick="addApply()" value="지원하기">
+					<input type="button" class="btCss1 btCss" id="addApplyBt" sec:authorize="isAuthenticated() and hasRole('USER')" th:onclick="addApply()" value="지원하기">
 					<input type="button" class="btCss1 btCss" th:onclick="|location.href='@{/A/comBoard(P=${map.P})}'|" value="목록">
 				</div>
 			</div>

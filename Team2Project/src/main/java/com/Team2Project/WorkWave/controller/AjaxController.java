@@ -232,12 +232,16 @@ public class AjaxController {
 		reqMapperMap.put("keyword", request.getParameter("keyword"));
 		if(jobCode.equals(""))reqMapperMap.put("jobCode", null);
 		else reqMapperMap.put("jobCode", jobCode.split(","));
+		
 		if(locCode.equals(""))reqMapperMap.put("locCode", null);
 		else reqMapperMap.put("locCode", locCode.split(","));
+		
 		if(eduCode.equals(""))reqMapperMap.put("eduCode", null);
 		else reqMapperMap.put("eduCode", eduCode.split(","));
+		
 		if(careerCode.equals(""))reqMapperMap.put("careerCode", null);
 		else reqMapperMap.put("careerCode", careerCode.split(","));
+		
 		if(typeCode.equals(""))reqMapperMap.put("typeCode", null);
 		else reqMapperMap.put("typeCode", typeCode.split(","));
 		

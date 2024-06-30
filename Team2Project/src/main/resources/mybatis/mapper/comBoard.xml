@@ -40,6 +40,13 @@
 					#{arr}
 				</foreach>
 	  		</if>
+	  		<if test="locCode != null">
+				and b.company_key in (select company_key from company 
+				<foreach collection="locCode" item="arr" open="where " separator="or ">
+					company_addr like '%' || #{arr} || '%' 
+				</foreach>
+				)
+	  		</if>
 			<![CDATA[
 	  		)Pb join company c on c.company_key = Pb.company_key
 	  		where rnum >= #{pdto.startNo} and rnum <= #{pdto.endNo}
@@ -94,6 +101,13 @@
 					#{arr}
 				</foreach>
 	  		</if>
+	  		<if test="locCode != null">
+				and b.company_key in (select company_key from company 
+				<foreach collection="locCode" item="arr" open="where " separator="or ">
+					company_addr like '%' || #{arr} || '%' 
+				</foreach>
+				)
+	  		</if>
 			<![CDATA[
 	  		)Pb join company c on c.company_key = Pb.company_key
   			]]>
@@ -102,6 +116,7 @@
     	<select id="getApplyList" resultType="int" parameterType="int">
 	  		select com_board_key from apply 
 	  		where profile_key in (select profile_key from profile where user_key = #{user_key} and profile_default = 'Y')
+	  		and apply_check = 'N'
 	  	</select>
 	  	
 	  	
@@ -351,4 +366,18 @@
 	    	where company_key = #{company_key}
 	    	and com_board_key = #{temp_key}
 	  	</delete>
+	  	
+	  	
+	  	<!-- 상세보기 지원 / 관심기업 체크 -->
+    	<select id="getApplyCheck_content" resultType="int" parameterType="HashMap">
+	  		select count(*) from apply 
+	    	where com_board_key = #{com_board_key}
+	    	and user_key = #{user_key}
+	  		and apply_check = 'N'
+	  	</select>
+    	<select id="getInterestCheck_content" resultType="int" parameterType="HashMap">
+	  		select count(*) from interest 
+	    	where company_key = #{company_key}
+	    	and user_key = #{user_key}
+	  	</select>
   </mapper>
