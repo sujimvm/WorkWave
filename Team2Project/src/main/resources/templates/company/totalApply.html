@@ -28,7 +28,7 @@
 		
 		<div class="faq-list sidebar_r">
 		<h3>총 지원자 리스트</h3>
-		<th:block th:if="${totalApplyList != null}">
+		<th:block th:if="${totalApplyList != null && totalApplyList.size() > 0}">
 			<ul class="apply-list-header">
 				<li style="width: 22%;">이력서 사진</li>
 				<li style="width: 38%;">이력서 정보</li>
@@ -57,6 +57,14 @@
 				</tr>
 							
 			</table>
+		</th:block>
+		<th:block th:if="${totalApplyList == null || totalApplyList.isEmpty()}">
+			<ul class="apply-list-header">
+				<li style="width: 22%;">이력서 사진</li>
+				<li style="width: 38%;">이력서 정보</li>
+				<li style="width: 11%;">열람 여부</li>
+			</ul>
+			<span>본 공고에 지원자가 없습니다.</span>
 		</th:block>
 			
 		</div>
