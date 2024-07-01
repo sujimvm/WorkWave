@@ -699,7 +699,7 @@ public class UserController {
 			if(result > 0) {
 				out.println("<script>");
 				out.println("alert('게시글 수정 성공')");
-				out.println("location.href='/U/chat/content?no="+dto.getChat_key()+"'");
+				out.println("location.href='/A/chat/content?no="+dto.getChat_key()+"'");
 				out.println("</script>");
 			}else {
 				out.println("<script>");
