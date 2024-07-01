@@ -132,7 +132,7 @@
 			    
 			</ul>	
 			<br>
-			<div id="reply_box">
+			<div id="reply_box" class="reply_here">
 				<div id="reply_box1" class="reply_body" th:if="${not #lists.isEmpty(list)}" th:each="dto : ${list}">
             	        <span class="user-id">
 						    <img src="/image/profile/기본 고양이 이미지.PNG" alt="User Icon" style="width: 30px; height: 30px; margin-top: -3px; vertical-align: middle;">
@@ -267,17 +267,20 @@
 	                        let reply_date = map.reply_date;
 	                        let user_name = map.user_name;
 	                        
-	                        let $reply_box = $('#reply-box1');
-	       
+	                        let $reply_box = $('.reply_here');
+	       /* 
 	                        $reply_box.prepend(
 	                        	    `
-	                        	    <div class="reply_body">
+	                        	    <img src="/image/profile/기본 고양이 이미지.PNG" alt="User Icon" style="width: 30px; height: 30px; margin-top: -3px; vertical-align: middle;">
+	                        	    <div id="reply_box1" class="reply_body">
                         	            <span class="user-id">${map.user_id}</span>
                         	            <span class="reply-date">${map.reply_date}</span>
                         	        	<p class="reply-content">${map.reply_cont}</p>
 	                        	    </div>
 	                        	    `
 	                        	);
+	                         */
+	                         location.reload()
 	                    } else if (map.type === 'replylike') {
 	                        $('#replylike').text(parseInt($('#replylike').text()) + 1);
 	                    }
@@ -321,6 +324,7 @@
 	            formData.append("user_key", $(".user_key").text());
 	            formData.append("user_id", $(".user_id").text());
 	            ajaxGo(formData, '/ajax/reply');
+	            
 	        });
 	    });
 	</script>

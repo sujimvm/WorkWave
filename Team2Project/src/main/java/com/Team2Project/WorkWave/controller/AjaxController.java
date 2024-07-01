@@ -154,7 +154,7 @@ public class AjaxController {
 		reply.setUser_id(paramMap.get("user_id"));
 	
 		this.chatMapper.insertReply(reply);
-		ChatReplyDTO replyOut = this.chatMapper.getReplyById(chat_key);
+		ChatReplyDTO replyOut = this.chatMapper.getReplyById(reply.getReply_key());
 		
 		result.put("reply_cont", reply_cont);
 		result.put("reply_date", replyOut.getReply_date().toString());
