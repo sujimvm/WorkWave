@@ -37,12 +37,12 @@ $(document).ready(function() {
 		}
 	});
 	
+	if($("#20").val() > 0){$("#avgAge_20").empty();$("#avgAge_20").append($("#20").val()+"명");}
 	if($("#25").val() > 0){$("#avgAge_25").empty();$("#avgAge_25").append($("#25").val()+"명");}
 	if($("#30").val() > 0){$("#avgAge_30").empty();$("#avgAge_30").append($("#30").val()+"명");}
 	if($("#35").val() > 0){$("#avgAge_35").empty();$("#avgAge_35").append($("#35").val()+"명");}
 	if($("#40").val() > 0){$("#avgAge_40").empty();$("#avgAge_40").append($("#40").val()+"명");}
 	if($("#45").val() > 0){$("#avgAge_45").empty();$("#avgAge_45").append($("#45").val()+"명");}
-	if($("#50").val() > 0){$("#avgAge_50").empty();$("#avgAge_50").append($("#50").val()+"명");}
 	
 	if($("#M").val() > 0){$("#avgGender_M").empty();$("#avgGender_M").append($("#M").val()+"명");}
 	if($("#F").val() > 0){$("#avgGender_F").empty();$("#avgGender_F").append($("#F").val()+"명");}
