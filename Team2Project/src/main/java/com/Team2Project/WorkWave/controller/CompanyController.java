@@ -356,7 +356,7 @@ public class CompanyController {
 		
 		if(dto.getCompany_key() == loginCom) {
 			if (this.comBoardMapper.updateComBoard(dto) > 0) {
-				out.println("<script> alert('공고를 성공적으로 수정하였습니다'); location.href='/C/comBoardCont'; </script>"); 
+				out.println("<script> alert('공고를 성공적으로 수정하였습니다'); location.href='/C/comBoardCont?No="+dto.getCom_board_key()+"'; </script>"); 
 			} else {
 				out.println("<script> alert('공고수정에 실패했습니다'); history.back(); </script>");
 			}
